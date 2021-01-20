@@ -14,8 +14,18 @@ WORKDIR /src/PX4-Autopilot
 RUN make px4_sitl
 RUN make px4_sitl sitl_gazebo
 
-# Add entrypoint to setup PX4 gazebo plugins
-COPY sim_entrypoint.sh /
-ENTRYPOINT ["/sim_entrypoint.sh"]
+# Copy launch script across
+COPY sim.launch.xml /ros_ws/launch/
 
-CMD [ "ros2", "launch", "gazebo_ros", "gzserver.launch.py" "world_name:=worlds/empty.world" ]
+# Add ROS and PX4/Gazebo environment setup to a ros.env that is sourced by entrypoint
+RUN touch /ros.env && echo "source /opt/ros/foxy/setup.bash" >> /ros.env
+RUN echo "source /src/PX4-Autopilot/Tools/setup_gazebo.bash /src/PX4-Autopilot /src/PX4-Autopilot/build/px4_sitl_default" >> /ros.env
+
+# Copy entrypoint script
+COPY ros_entrypoint.bash /
+
+WORKDIR /ros_ws
+
+ENTRYPOINT [ "/ros_entrypoint.bash" ]
+
+CMD [ "ros2", "launch", "/ros_ws/launch/sim.launch.xml" ]

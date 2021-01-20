@@ -8,6 +8,5 @@ docker run -it --privileged \
     -e DISPLAY=:0 \
     -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics \
     -p 14570:14570/udp \
-    --name hello2 \
     --gpus all \
-    starling-sim-clover bash
+    starling-sim-clover2 "$@"
