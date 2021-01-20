@@ -18,3 +18,8 @@ sudo apt install nvidia-docker2
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
+# Build & Run
+
+Use `./build_images.sh` to build the docker images
+Use `./run_docker.sh` to start the clover2 simulator
