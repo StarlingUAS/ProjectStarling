@@ -1,0 +1,28 @@
+
+# Multi-stage build
+
+# Install ROS2
+FROM ros:foxy as ros2
+
+# Install ROS1
+RUN /bin/bash -c 'apt-get update -y; \
+    echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list;\
+    apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654;\
+    apt-get update -y;\
+    apt-get install -y ros-noetic-ros-base;'
+
+RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential;
+
+# Install mavros
+RUN /bin/bash -c 'apt-get install -y ros-noetic-mavros ros-noetic-mavros-extras;\
+    wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh;\
+    chmod a+x install_geographiclib_datasets.sh;\
+    ./install_geographiclib_datasets.sh;'
+
+# Install ros1_bridge
+RUN apt-get install -y ros-foxy-ros1-bridge
+
+# Start ros1 roscore and the ros1_bridge
+CMD /bin/bash -c '\
+    source /opt/ros/noetic/setup.bash && roslaunch mavros apm.launch fcu_url:=udp://127.0.0.1:14550@14555 &\
+    source /opt/ros/noetic/setup.bash && ros2 run ros1_bridge dynamic_bridge'
