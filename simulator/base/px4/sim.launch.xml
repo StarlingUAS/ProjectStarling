@@ -3,6 +3,6 @@
 
     <executable cwd="/root" cmd="/src/PX4-Autopilot/Tools/sitl_run.sh /src/PX4-Autopilot/build/px4_sitl_default/bin/px4 none none iris none /src/PX4-Autopilot /src/PX4-Autopilot/build" output="screen"/>
     
-    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py" />
+    <include file="/gzweb.launch.xml" />
 
 </launch>

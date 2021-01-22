@@ -8,7 +8,7 @@ RUN apt-get update \
 # Copy in the new clover_description files
 COPY clover_description /ros_ws/src/clover_description/
 
-SHELL [ "/ros_entrypoint.bash", "bash", "-c" ]
+SHELL [ "/ros_entrypoint.sh", "bash", "-c" ]
 
 # Build the package so ROS2 can find it
 RUN cd /ros_ws && . /ros.env && colcon build

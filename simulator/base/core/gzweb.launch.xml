@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py" />
+
+    <executable cwd="/root/gzweb" cmd="/gzweb_entrypoint.sh" output="screen"/>
+
+</launch>
