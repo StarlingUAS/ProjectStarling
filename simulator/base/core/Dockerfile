@@ -1,6 +1,10 @@
 # Setup common base for simulator images
 FROM ros:foxy-ros-base-focal
 
+# Overwrite existing entrypoint script to allow additional sources from /ros.env
+COPY ros_entrypoint.sh /
+RUN touch /ros.env
+
 ###
 # Steps from gazebo:gzserver11 Dockerfile
 ###
@@ -29,10 +33,14 @@ EXPOSE 11345
 # End of gazebo:gzserver11 steps
 ###
 
-# Install gazebo_ros
+# Add gazebo environemnt setup to /ros.env
+RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
+
+# Install gazebo_ros and xacro
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-foxy-gazebo-ros \
+      ros-foxy-xacro \
     && rm -rf /var/lib/apt/lists/*
 
 # Install gzweb dependencies
@@ -55,21 +63,31 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | b
 # Install node
 # Use bash shell for this next bit...
 SHELL [ "/usr/bin/bash", "-c" ]
-RUN source /root/.nvm/nvm.sh && nvm install 14
+RUN source /root/.nvm/nvm.sh && nvm install 10
 
 # Fetch gzweb
 ENV GZWEB_WS /root/gzweb
+#RUN git clone -b gzweb_1.4.1 https://github.com/osrf/gzweb ${GZWEB_WS}
 # Patched version
 #RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/eurogroep/gzweb.git ${GZWEB_WS}
-RUN git clone -b gzweb_1.4.1 https://github.com/osrf/gzweb ${GZWEB_WS}
+# Additionally atched version
+RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
+
+# Build gzweb (default model generation)
+RUN source /ros.env \
+    && source /root/.nvm/nvm.sh \
+    && cd ${GZWEB_WS} && npm run deploy --- -m
 
 # Setup ports
 EXPOSE 8080
 EXPOSE 7681
 
 # Add launch files
-COPY gzweb.launch.xml /ros_ws/
+COPY gzweb.launch.xml /ros_ws/launch/
 COPY gzweb_entrypoint.sh /
+
+# Add URDF conversion tool
+COPY tools/convertURDF.sh /ros_ws/tools/
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]

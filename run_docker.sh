@@ -2,11 +2,9 @@
 
 xhost +
 
-docker run -it --privileged \
-    --env=LOCAL_USER_ID="$(id -u)" \
-    -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-    -e DISPLAY=:0 \
-    -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics \
-    -p 14570:14570/udp \
-    --gpus all \
+docker run -it \
+    -p 18570:18570/udp \
+    -p 14580:14580/udp \
+    -p 14280:14280/udp \
+    -p 8080:8080 \
     starling-sim-clover2 "$@"

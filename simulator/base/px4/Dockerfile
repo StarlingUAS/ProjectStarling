@@ -18,10 +18,7 @@ COPY --from=px4builder /src /src
 COPY sim.launch.xml /ros_ws/launch/
 
 # Add PX4/Gazebo environment setup to a ros.env that is sourced by entrypoint
-RUN touch /ros.env && echo "source /src/PX4-Autopilot/Tools/setup_gazebo.bash /src/PX4-Autopilot /src/PX4-Autopilot/build/px4_sitl_default" >> /ros.env
-
-# Overwrite existing entrypoint script
-COPY ros_entrypoint.sh /
+RUN echo "source /src/PX4-Autopilot/Tools/setup_gazebo.bash /src/PX4-Autopilot /src/PX4-Autopilot/build/px4_sitl_default" >> /ros.env
 
 WORKDIR /ros_ws
 

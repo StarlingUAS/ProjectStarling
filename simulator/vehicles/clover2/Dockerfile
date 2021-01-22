@@ -1,10 +1,5 @@
 FROM starling-sim-base-px4
 
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-      ros-foxy-xacro \
-    && rm -rf /var/lib/apt/lists/
-
 # Copy in the new clover_description files
 COPY clover_description /ros_ws/src/clover_description/
 
@@ -13,11 +8,19 @@ SHELL [ "/ros_entrypoint.sh", "bash", "-c" ]
 # Build the package so ROS2 can find it
 RUN cd /ros_ws && . /ros.env && colcon build
 
-# Copy in the vehicle launch file
-COPY clover2.launch.xml /ros_ws/launch/
-
 # Add ros_ws setup to ros.env for entrypoint
 RUN echo "source /ros_ws/install/setup.bash" >> /ros.env
+
+# Build SDF from URDF for gzweb
+# Should get picked up in gzweb deploy
+RUN mkdir -p /ros_ws/models && /ros_ws/tools/convertURDF.sh \
+    /ros_ws/src/clover_description/urdf/clover/clover4.xacro \
+        main_camera:=false rangefinder:=false led:=false gps:=false maintain_camera_rate:=false use_clover_physics:=false \
+    > /ros_ws/models/clover.sdf
+ENV GAZEBO_MODEL_PATH /ros_ws/models:${GAZEBO_MODEL_PATH}
+
+# Copy in the vehicle launch file
+COPY clover2.launch.xml /ros_ws/launch/
 
 # Launch gazebo and spawn model
 CMD [ "ros2", "launch", "/ros_ws/launch/clover2.launch.xml" ]
