@@ -1,3 +1,2 @@
 prepend-non-duplicate;GAZEBO_MODEL_PATH;share/@PROJECT_NAME@/
-prepend-non-duplicate;GAZEBO_RESOURCE_PATH;share/@PROJECT_NAME@/meshes
-prepend-non-duplicate;GAZEBO_RESOURCE_PATH;share/@PROJECT_NAME@/media
+prepend-non-duplicate;GAZEBO_RESOURCE_PATH;share/@PROJECT_NAME@/

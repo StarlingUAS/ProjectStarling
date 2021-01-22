@@ -13,10 +13,12 @@ RUN echo "source /ros_ws/install/setup.bash" >> /ros.env
 
 # Build SDF from URDF for gzweb
 # Should get picked up in gzweb deploy
-RUN mkdir -p /ros_ws/models && /ros_ws/tools/convertURDF.sh \
-    /ros_ws/src/clover_description/urdf/clover/clover4.xacro \
-        main_camera:=false rangefinder:=false led:=false gps:=false maintain_camera_rate:=false use_clover_physics:=false \
-    > /ros_ws/models/clover.sdf
+RUN mkdir -p /ros_ws/models && /ros_ws/tools/createModel.sh \
+    /ros_ws/models/clover \
+    /ros_ws/src/clover_description/media \
+    /ros_ws/src/clover_description/meshes \
+    -- /ros_ws/src/clover_description/urdf/clover/clover4.xacro \
+        main_camera:=false rangefinder:=false led:=false gps:=false maintain_camera_rate:=false use_clover_physics:=false
 ENV GAZEBO_MODEL_PATH /ros_ws/models:${GAZEBO_MODEL_PATH}
 
 # Copy in the vehicle launch file

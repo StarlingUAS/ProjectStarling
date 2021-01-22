@@ -86,8 +86,8 @@ EXPOSE 7681
 COPY gzweb.launch.xml /ros_ws/launch/
 COPY gzweb_entrypoint.sh /
 
-# Add URDF conversion tool
-COPY tools/convertURDF.sh /ros_ws/tools/
+# Add URDF conversion tools
+COPY tools /ros_ws/tools
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]
