@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # setup environment
+# Expose default gzserver port
 EXPOSE 11345
 
 ###
@@ -70,7 +71,7 @@ ENV GZWEB_WS /root/gzweb
 #RUN git clone -b gzweb_1.4.1 https://github.com/osrf/gzweb ${GZWEB_WS}
 # Patched version
 #RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/eurogroep/gzweb.git ${GZWEB_WS}
-# Additionally atched version
+# Additionally patched version
 RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
 
 # Build gzweb (default model generation)
@@ -79,7 +80,9 @@ RUN source /ros.env \
     && cd ${GZWEB_WS} && npm run deploy --- -m
 
 # Setup ports
+# Main webserver port
 EXPOSE 8080
+# Websocket for gzweb data
 EXPOSE 7681
 
 # Add launch files
