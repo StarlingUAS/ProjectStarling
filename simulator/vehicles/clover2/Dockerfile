@@ -14,7 +14,7 @@ RUN echo "source /ros_ws/install/setup.bash" >> /ros.env
 # Build SDF from URDF for gzweb
 # Should get picked up in gzweb deploy
 RUN mkdir -p /ros_ws/models && /ros_ws/tools/createModel.sh \
-    /ros_ws/models/clover \
+    /ros_ws/models/clover_description \
     /ros_ws/src/clover_description/media \
     /ros_ws/src/clover_description/meshes \
     -- /ros_ws/src/clover_description/urdf/clover/clover4.xacro \
