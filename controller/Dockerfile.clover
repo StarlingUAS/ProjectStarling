@@ -1,0 +1,30 @@
+FROM mavros
+
+# Add new user ctrl_user to the system
+RUN useradd --create-home ctrl_user
+USER ctrl_user
+
+# Change working directory to ctrl_user directory
+WORKDIR /home/ctrl_user
+
+# Copy workspace into user root
+COPY --chown=ctrl_user workspace .
+
+WORKDIR /home/ctrl_user/catkin_ws/src
+
+# Clone and install clover
+RUN git clone https://github.com/CopterExpress/clover.git clover
+WORKDIR /home/ctrl_user/catkin_ws
+RUN rosdep install -y --from-paths src --ignore-src
+
+# Setup UDEV rules 
+WORKDIR /home/ctrl_user/catkin_ws/src/clover/clover/config
+RUN cp 99-px4fmu.rules /lib/udev/rules.d
+
+RUN ./setup_script.sh
+
+CMD /bin/bash -c ./launch.sh
+
+
+
+

@@ -12,6 +12,6 @@ COPY --chown=ctrl_user workspace .
 
 RUN ./setup_script.sh
 
-RUN ./launch.sh
+CMD /bin/bash -c ./launch.sh
 
 
