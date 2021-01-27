@@ -8,10 +8,10 @@ USER ctrl_user
 WORKDIR /home/ctrl_user
 
 # Copy workspace into user root
-COPY --chown=ctrl_user workspace .
+# COPY --chown=ctrl_user workspace .
 
-RUN ./setup_script.sh
+# RUN ./setup_script.sh
 
-CMD /bin/bash -c ./launch.sh
+# CMD /bin/bash -c ./launch.sh
 
 
