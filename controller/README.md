@@ -23,3 +23,13 @@ There are two docker files:
 ## Base Container (Mavros)
 
 We have identified that mavros is a base requirement for any drone running onboard compute in order to communicate with both the autopilot and GCS. 
+
+The mavros container exposes an environment variable `MAVROS_FCU_URL` which is passed to mavros's `fcu_url` option for configuring the mavlink connection to mavros. The default value is:
+> `MAVROS_FCU_URL=udp://127.0.0.1:14550@14555`
+
+To modify this at runtime, pass the `-e MAVROS_FCU_URL=<conenction string>` to `docker run` like so
+> `docker run -e MAVROS_FCU_URL=<conenction string> ...`
+
+This is not implemented into the Makefile [TODO]
+
+See Mavros for possible connection values
