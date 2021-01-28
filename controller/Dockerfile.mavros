@@ -1,8 +1,7 @@
-
-# Multi-stage build
-
 # Install ROS2
 FROM ros:foxy as ros2
+
+ENV MAVROS_FCU_URL=udp://127.0.0.1:14550@14555
 
 # Install ROS1
 RUN /bin/bash -c 'apt-get update -y; \
@@ -24,5 +23,5 @@ RUN apt-get install -y ros-foxy-ros1-bridge
 
 # Start ros1 roscore and the ros1_bridge
 CMD /bin/bash -c '\
-    source /opt/ros/noetic/setup.bash && roslaunch mavros apm.launch fcu_url:=udp://127.0.0.1:14550@14555 &\
+    source /opt/ros/noetic/setup.bash && roslaunch mavros apm.launch fcu_url:=${MAVROS_FCU_URL} &\
     source /opt/ros/noetic/setup.bash && ros2 run ros1_bridge dynamic_bridge'
