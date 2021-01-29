@@ -10,6 +10,7 @@ build:
 	docker tag mavros starling-mavros:latest
 	docker build -t controller -f Dockerfile.controller .
 	docker tag controller $(containername):$(tag)
+	docker build -t ardupilot-sitl-docker:starling ../../simulator/ardupilot_ar
 
 run_controller:
 	docker run -it --rm --name controller --network="bridge" controller bash
