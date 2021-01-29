@@ -24,4 +24,4 @@ RUN apt-get install -y ros-foxy-ros1-bridge
 # Start ros1 roscore and the ros1_bridge
 CMD /bin/bash -c '\
     source /opt/ros/noetic/setup.bash && roslaunch mavros apm.launch fcu_url:=${MAVROS_FCU_URL} &\
-    source /opt/ros/noetic/setup.bash && ros2 run ros1_bridge dynamic_bridge'
+    source /opt/ros/noetic/setup.bash && ros2 run ros1_bridge dynamic_bridge --bridge-all-1to2-topics'
