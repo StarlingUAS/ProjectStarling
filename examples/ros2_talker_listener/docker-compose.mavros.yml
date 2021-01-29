@@ -2,9 +2,9 @@ services:
   mavros:
     image: starling-mavros:latest
     environment: 
-      MAVROS_FCU_URL: tcp://172.17.0.2:5762
+      MAVROS_FCU_URL: tcp://sitl:5762
+      MAVROS_TGT_SYSTEM: 2
   sitl:
-    image: arthurrichards77/ardupilot-sitl-docker:latest
-
-    
-
+    image: ardupilot-sitl-docker:starling
+    environment:
+      SYSID: 2
