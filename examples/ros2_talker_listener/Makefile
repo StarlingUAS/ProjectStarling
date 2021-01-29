@@ -29,8 +29,14 @@ dev_controller:
 dev_controller_shell:
 	docker exec -it controllerdev
 
-run_mavros: 
-	docker run -it --rm --network="host" mavros bash
+run_mavros:
+	docker run -it --rm --name mvr mavros
+
+run_mavros_host: 
+	docker run -it --rm --name mvr --network="host" mavros
+
+attach_mavros_shell:
+	docker exec -it mvr bash
 
 save_controller:
 	docker image save controller |gzip > controller.tar.gz
