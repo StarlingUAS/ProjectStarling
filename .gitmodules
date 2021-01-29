@@ -1,3 +1,0 @@
-[submodule "external/ardupilot_sitl_docker"]
-	path = external/ardupilot_sitl_docker
-	url = https://github.com/arthurrichards77/ardupilot_sitl_docker.git

@@ -35,7 +35,7 @@ docker exec -it mvr bash
 #or to check without ros1/2 bridge on the ros1 side
 docker exec -it mvr /bin/bash -c 'source /opt/ros/noetic/setup.bash && rostopic echo /diagnostics'
 #or to check with ros1/2 bridge on the ros2 side
-docker exec -it mvr /bin/bash -c 'source /opt/ros/foxy/setup.bash ros2 topic echo /diagnostics'
+docker exec -it mvr /bin/bash -c 'source /opt/ros/foxy/setup.bash && ros2 topic echo /diagnostics'
 ```
 
 ### Running in Docker-Compose
