@@ -6,11 +6,13 @@ network=bridge
 flags=-it --rm --network "$(network)"
 
 build:
-	docker build -t mavros -f ../../controller/Dockerfile.mavros . 
-	docker tag mavros starling-mavros:latest
+	# build mavros container 
+	$(MAKE) -C ../../drone/mavros
+	# build modified ardupilot instance
+	$(MAKE) -C ../../simulator/ardupilot_ar
+	# build controller container
 	docker build -t controller -f Dockerfile.controller .
 	docker tag controller $(containername):$(tag)
-	docker build -t ardupilot-sitl-docker:starling ../../simulator/ardupilot_ar
 
 run_controller:
 	docker run -it --rm --name controller --network="bridge" controller bash

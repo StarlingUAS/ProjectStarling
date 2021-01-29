@@ -1,4 +1,4 @@
-FROM mavros
+FROM starling-mavros:latest
 
 # Add new user ctrl_user to the system
 RUN useradd --create-home ctrl_user
