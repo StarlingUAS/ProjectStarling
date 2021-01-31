@@ -5,7 +5,7 @@
 
     <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" />
     
-    <node unless="$(var spawn_only)" pkg="gazebo_ros" exec="spawn_entity.py" args="-entity clover -topic /robot_description -spawn_service_timeout 30.0" />
+    <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity clover_$(env PX4_SITL_PORT) -topic /robot_description -spawn_service_timeout 30.0" />
 
     <!-- Please.... https://github.com/ros2/launch_ros/issues/136 -->
 
