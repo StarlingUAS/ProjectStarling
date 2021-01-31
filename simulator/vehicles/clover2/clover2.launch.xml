@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <launch>
 
-    <include file="/ros_ws/launch/gzweb.launch.xml" />
+    <arg name="spawn_only" default="false"/>
+
+    <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" />
     
-    <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity clover -topic /robot_description -spawn_service_timeout 30.0" />
+    <node unless="$(var spawn_only)" pkg="gazebo_ros" exec="spawn_entity.py" args="-entity clover -topic /robot_description -spawn_service_timeout 30.0" />
 
     <!-- Please.... https://github.com/ros2/launch_ros/issues/136 -->
 

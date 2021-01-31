@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  simhost:
+    image: starling-sim-clover2
+    ports:
+      - "8080:8080"
+
+  spawn2:
+    image: starling-sim-clover2
+    command: ros2 launch launch/clover2.launch.xml spawn_only:=true
+    environment:
+      - "PX4_SITL_PORT=4561"
+
+  sitl1:
+    image: starling-sim-px4-sitl
+    environment:
+      - "PX4_SIM_HOST=simhost"
+  
+  mavros1:
+    image: starling-mavros
+    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14550@/?ids=1,240 tgt_system:=1
+  
+  sitl2:
+    image: starling-sim-px4-sitl
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_INSTANCE=1"
+  
+  mavros2:
+    image: starling-mavros
+    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14550@/?ids=2,240 tgt_system:=2

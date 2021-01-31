@@ -26,5 +26,7 @@ COPY clover2.launch.xml /ros_ws/launch/
 
 ENV PX4_SITL_PORT 4560
 
+WORKDIR /ros_ws
+
 # Launch gazebo and spawn model
-CMD [ "ros2", "launch", "/ros_ws/launch/clover2.launch.xml" ]
+CMD [ "ros2", "launch", "launch/clover2.launch.xml" ]
