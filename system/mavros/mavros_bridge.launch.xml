@@ -1,0 +1,13 @@
+<launch>
+
+    <arg name="fcu_url" />
+    <arg name="target_system" default="1" />
+    <arg name="system_id" default="1" />
+
+    <!-- Launch the ROS1 stack -->
+    <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch mavros px4.launch fcu_url:=$(var fcu_url) target_system:=$(var target_system)" output="screen"/>
+
+    <!-- Launch the bridge -->
+    <node pkg="ros1_bridge" exec="dynamic_bridge" args="--bridge-all-1to2-topics" />
+
+</launch>

@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-    <executable cwd="/root" cmd="/src/PX4-Autopilot/Tools/sitl_run.sh /src/PX4-Autopilot/build/px4_sitl_default/bin/px4 none none iris none /src/PX4-Autopilot /src/PX4-Autopilot/build" output="screen"/>
-    
-    <include file="/ros_ws/launch/gzweb.launch.xml" />
-
-</launch>

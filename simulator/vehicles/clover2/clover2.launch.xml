@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <include file="/ros_ws/launch/sim.launch.xml" />
+    <include file="/ros_ws/launch/gzweb.launch.xml" />
     
     <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity clover -topic /robot_description -spawn_service_timeout 30.0" />
 
@@ -10,7 +10,8 @@
     <!-- In ROS2, robot-state-publisher now publishes robot_description topic -->
     <node pkg="robot_state_publisher" exec="robot_state_publisher" output="screen" >
         <param name="robot_description" type="str" value="''$(command 'ros2 run xacro xacro $(find-pkg-share clover_description)/urdf/clover/clover4.xacro \
-            main_camera:=false rangefinder:=false led:=false gps:=false maintain_camera_rate:=false use_clover_physics:=false')''"/>
+            main_camera:=false rangefinder:=false led:=false gps:=false maintain_camera_rate:=false use_clover_physics:=false \
+            mavlink_tcp_port:=$(env PX4_SITL_PORT)')''"/>
     </node>
 
 </launch>

@@ -1,9 +1,10 @@
 # Setup common base for simulator images
 FROM ros:foxy-ros-base-focal
 
-# Overwrite existing entrypoint script to allow additional sources from /ros.env
-COPY ros_entrypoint.sh /
+# Overwrite existing entrypoint script to allow additional sources from /ros.env and /ros.env.d
 RUN touch /ros.env
+RUN mkdir /ros.env.d
+COPY ros_entrypoint.sh /
 
 ###
 # Steps from gazebo:gzserver11 Dockerfile

@@ -24,5 +24,7 @@ ENV GAZEBO_MODEL_PATH /ros_ws/models:${GAZEBO_MODEL_PATH}
 # Copy in the vehicle launch file
 COPY clover2.launch.xml /ros_ws/launch/
 
+ENV PX4_SITL_PORT 4560
+
 # Launch gazebo and spawn model
 CMD [ "ros2", "launch", "/ros_ws/launch/clover2.launch.xml" ]
