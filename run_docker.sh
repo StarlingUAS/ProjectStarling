@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-docker run -it \
-    -p 8080:8080 \
-    starling-sim-clover2 "$@"
+swarm_state=$(docker info 2> /dev/null | grep Swarm | awk '{print $2}')
+
+[ ! $swarm_state == active ] && docker swarm init
+
+docker stack deploy -c docker-compose.swarm.yml multisim
