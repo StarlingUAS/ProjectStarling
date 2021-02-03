@@ -1,0 +1,9 @@
+services:
+  talker:
+    image: starling-controller:latest
+    command: ./launch_talker.sh
+    network_mode: host
+  listener:
+    image: starling-controller:latest
+    command: ./launch_listener.sh
+    network_mode: host

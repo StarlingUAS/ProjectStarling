@@ -1,18 +1,45 @@
 
-
+containername=starling-controller
+tag=latest
+name=controller
+network=bridge
+flags=-it --rm --network "$(network)"
 
 build:
-	docker build -t mavros -f Dockerfile.mavros . 
+	# build mavros container 
+	$(MAKE) -C ../../drone/mavros 
+	# build modified ardupilot instance
+	$(MAKE) -C ../../simulator/ardupilot_ar
+	# build controller container
 	docker build -t controller -f Dockerfile.controller .
+	docker tag controller $(containername):$(tag)
 
 run_controller:
-	docker run -it --rm --network="host" controller bash
+	docker run -it --rm --name controller --network="bridge" controller bash
+
+run_listener_only:
+	docker run $(flags) --name ctrl_listener controller ./launch_listener.sh
+
+run_talker_only:
+	docker run $(flags) --name ctrl_talker controller ./launch_talker.sh
 
 run_controller_shell:
-	docker exec -it 
+	docker exec -it controller
 
-run_mavros: 
-	docker run -it --rm --network="host" mavros bash
+dev_controller:
+	docker run -it --rm --network="bridge" --name controllerdev -v $(shell pwd)/workspace:/home/ctrl_user/workspace controller bash
+
+dev_controller_shell:
+	docker exec -it controllerdev
+
+run_mavros:
+	docker run -it --rm --name mvr mavros
+
+run_mavros_host: 
+	docker run -it --rm --name mvr --network="host" mavros
+
+attach_mavros_shell:
+	docker exec -it mvr bash
 
 save_controller:
 	docker image save controller |gzip > controller.tar.gz

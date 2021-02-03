@@ -1,0 +1,11 @@
+services:
+  mavros:
+    image: starling-mavros:latest
+    environment: 
+      MAVROS_FCU_URL: tcp://sitl:5762
+      MAVROS_TGT_SYSTEM: 2
+  sitl:
+    image: starling-ardupilot-sitl:latest
+    hostname: sitl
+    environment:
+      SYSID: 2
