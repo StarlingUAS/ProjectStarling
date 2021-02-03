@@ -1,6 +1,6 @@
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-all: clover2
+all: clover2 ardupilot_ar
 
 base:
 	$(MAKE) -C base
