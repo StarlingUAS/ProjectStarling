@@ -51,8 +51,5 @@ COPY ros_entrypoint.sh /ros_entrypoint.sh
 WORKDIR /ros_ws
 
 COPY mavros_setup.sh .
-COPY launch.sh .
 
-CMD ["./launch.sh"]
-
-# CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml", "fcu_url:=udp://@" ]
+CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml", "fcu_url:=udp://@" ]
