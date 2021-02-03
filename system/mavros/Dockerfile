@@ -1,9 +1,5 @@
 FROM ros:foxy-ros1-bridge
 
-ENV MAVROS_FCU_URL="udp://127.0.0.1:14550@14555"
-ENV MAVROS_TGT_SYSTEM=1
-ENV MAVROS_TGT_FIRMWARE="px4"
-
 # Install mavros
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -50,9 +46,4 @@ COPY ros_entrypoint.sh /ros_entrypoint.sh
 
 WORKDIR /ros_ws
 
-COPY mavros_setup.sh .
-COPY launch.sh .
-
-CMD ["./launch.sh"]
-
-# CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml", "fcu_url:=udp://@" ]
+CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml", "fcu_url:=udp://@" ]
