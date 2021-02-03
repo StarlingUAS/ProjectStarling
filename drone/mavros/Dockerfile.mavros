@@ -25,10 +25,10 @@ RUN apt-get install -y ros-foxy-ros1-bridge
 # Do any additional setup as specified in mavros_setup.sh
 # E.g. manipulate environment variables
 COPY mavros_setup.sh .
-RUN /bin/bash -c 'source mavros_setup.sh'
 
 # Start ros1 roscore and the ros1_bridge
 CMD /bin/bash -c '\
+    source mavros_setup.sh;\
     echo "Launching MAVROS with fcu_url=${MAVROS_FCU_URL} targeting system with sysid=${MAVROS_TGT_SYSTEM}";\
     source /opt/ros/noetic/setup.bash && roslaunch mavros apm.launch fcu_url:=${MAVROS_FCU_URL} tgt_system:=${MAVROS_TGT_SYSTEM} &\
     source /opt/ros/noetic/setup.bash && ros2 run ros1_bridge dynamic_bridge --bridge-all-1to2-topics'

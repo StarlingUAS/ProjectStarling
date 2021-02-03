@@ -7,7 +7,7 @@ flags=-it --rm --network "$(network)"
 
 build:
 	# build mavros container 
-	$(MAKE) -C ../../drone/mavros
+	$(MAKE) -C ../../drone/mavros 
 	# build modified ardupilot instance
 	$(MAKE) -C ../../simulator/ardupilot_ar
 	# build controller container

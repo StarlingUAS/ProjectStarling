@@ -5,6 +5,7 @@ services:
       MAVROS_FCU_URL: tcp://sitl:5762
       MAVROS_TGT_SYSTEM: 2
   sitl:
-    image: ardupilot-sitl-docker:starling
+    image: starling-ardupilot-sitl:latest
+    hostname: sitl
     environment:
       SYSID: 2
