@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://127.0.0.1:14550@14555)"/>
+    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://:14550@)"/>
     <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM 1)" />
     <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM 1)" />
     <arg name="firmware" default="$(env MAVROS_TGT_FIRMWARE px4)" />
