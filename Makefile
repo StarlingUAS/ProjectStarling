@@ -1,4 +1,4 @@
-all: simulator system
+all: simulator system controllers
 
 simulator:
 	$(MAKE) -C simulator
@@ -6,7 +6,10 @@ simulator:
 system:
 	$(MAKE) -C system
 
+controllers:
+	$(MAKE) -C controllers
+
 run:
 	docker-compose up
 
-.PHONY: all simulator system run
+.PHONY: all simulator system controllers run

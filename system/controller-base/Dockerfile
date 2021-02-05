@@ -14,3 +14,6 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && cd /ros_ws \
     && colcon build --packages-select mavros_msgs
 
+COPY ros_entrypoint.sh /ros_entrypoint.sh
+
+WORKDIR /ros_ws

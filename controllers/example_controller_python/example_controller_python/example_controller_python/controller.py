@@ -1,20 +1,25 @@
 import math
 
 import rclpy
-from rclpy.node import node
+from rclpy.node import Node
 
 from geometry_msgs.msg import PoseStamped
-import mavros_msgs
+import mavros_msgs.msg, mavros_msgs.srv
 
-class RateLimitedRepeat():
+class RateLimiter():
     def __init__(self,min_period,clock):
         self.min_period = min_period
         self.clock = clock
-        self.time_of_last = 0
+        self.time_of_last = None
     
-    def call(func):
-        time_since_last = self.clock.now() - self.time_of_last
-        if time_since_last > min_period:
+    def call(self,func):
+        if self.time_of_last is None:
+            self.time_of_last = self.clock.now()
+            time_since_last = self.min_period + 1
+        else:
+            time_since_last = self.clock.now() - self.time_of_last
+        
+        if time_since_last > self.min_period:
             func()
 
 class DemoController(Node):
@@ -56,6 +61,9 @@ class DemoController(Node):
         timer_period = 0.02
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
+        self.vehicle_position = PoseStamped()
+        self.vehicle_state = mavros_msgs.msg.State()
+
     def position_callback(self,msg):
         self.vehicle_position = msg
 
@@ -64,18 +72,18 @@ class DemoController(Node):
 
     def timer_callback(self):
         if self.state == 'Init':
-            if self.vehicle_state.mode is not "OFFBOARD":
-                modeSetCall = mavros_msgs.srv.SetMode()
-                modeSetCall.request.custom_mode = "OFFBOARD"
-                offboard_rate_limiter.call(lambda: self.offboardClient.call(modeSetCall))
+            if self.vehicle_state.mode != "OFFBOARD":
+                modeSetCall = mavros_msgs.srv.SetMode.Request()
+                modeSetCall.custom_mode = "OFFBOARD"
+                self.offboard_rate_limiter.call(lambda: self.offboard_client.call(modeSetCall))
             else:
                 self.state = 'Arming'
 
         if self.state == 'Arming':
-            if self.vehicle_state.armed is not True:
-                armingCall = mavros_msgs.srv.CommandBool()
-                armingCall.request.value = True
-                arm_rate_limiter.call(lambda: self.arming_client.call(armingCall))
+            if self.vehicle_state.armed != True:
+                armingCall = mavros_msgs.srv.CommandBool.Request()
+                armingCall.value = True
+                self.arm_rate_limiter.call(lambda: self.arming_client.call(armingCall))
             else:
                 self.state = 'Takeoff'
 
@@ -106,7 +114,7 @@ def main(args=None):
 
     rclpy.spin(demo_controller)
 
-    demo_controller.destry_node()
+    demo_controller.destroy_node()
     rclpy.shutdown()
 
 if __name__ == "__main__":

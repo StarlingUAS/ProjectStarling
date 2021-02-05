@@ -8,4 +8,7 @@ controller-base:
 mavros:
 	docker build -t starling-mavros $(MAKEFILE_DIR)/mavros
 
+%.image:
+	docker build -t starling-$% $(MAKEFILE_DIR)/$%
+
 .PHONY: mavros controller-base all
