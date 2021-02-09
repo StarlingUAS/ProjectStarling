@@ -8,14 +8,14 @@ import mavros_msgs.msg, mavros_msgs.srv
 
 class RateLimiter():
     def __init__(self,min_period,clock):
-        self.min_period = min_period
+        self.min_period = rclpy.duration.Duration(seconds=min_period)
         self.clock = clock
         self.time_of_last = None
     
     def call(self,func):
         if self.time_of_last is None:
             self.time_of_last = self.clock.now()
-            time_since_last = self.min_period + 1
+            time_since_last = self.min_period
         else:
             time_since_last = self.clock.now() - self.time_of_last
         
@@ -41,7 +41,7 @@ class DemoController(Node):
 
         self.setpoint_publisher = self.create_publisher(
             PoseStamped,
-            '/mavros/setpoint_posiiton/local',
+            '/mavros/setpoint_position/local',
             1)
 
         self.offboard_rate_limiter = RateLimiter(1,self.get_clock())
@@ -64,6 +64,8 @@ class DemoController(Node):
         self.vehicle_position = PoseStamped()
         self.vehicle_state = mavros_msgs.msg.State()
 
+        self.angle = 0
+
     def position_callback(self,msg):
         self.vehicle_position = msg
 
@@ -75,7 +77,7 @@ class DemoController(Node):
             if self.vehicle_state.mode != "OFFBOARD":
                 modeSetCall = mavros_msgs.srv.SetMode.Request()
                 modeSetCall.custom_mode = "OFFBOARD"
-                self.offboard_rate_limiter.call(lambda: self.offboard_client.call(modeSetCall))
+                self.offboard_rate_limiter.call(lambda: self.offboard_client.call_async(modeSetCall))
             else:
                 self.state = 'Arming'
 
@@ -83,29 +85,29 @@ class DemoController(Node):
             if self.vehicle_state.armed != True:
                 armingCall = mavros_msgs.srv.CommandBool.Request()
                 armingCall.value = True
-                self.arm_rate_limiter.call(lambda: self.arming_client.call(armingCall))
+                self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
             else:
                 self.state = 'Takeoff'
 
         setpoint_msg = PoseStamped()
-        setpoint_msg.stamp = self.get_clock().now()
+        setpoint_msg.header.stamp = self.get_clock().now().to_msg()
         setpoint_msg.pose = self.vehicle_position.pose
 
         if self.state == 'Takeoff':
             if self.takeoff_offset < 1.0:
                 self.takeoff_offset += 0.01
-                setpoint_msg.pose.z += self.takeoff_offset
+                setpoint_msg.pose.position.z += self.takeoff_offset
             else:
                 self.state = 'Flight'
 
         if self.state == 'Flight':
             radius = 1.0
-            angle = (angle + 0.0001) % (2*math.pi)
-            setpoint_msg.pose.x = radius * cos(angle)
-            setpoint_msg.pose.y = radius * sin(angle)
-            setpoint_msg.pose.z = 1.0
+            self.angle = (self.angle + 0.0001) % (2*math.pi)
+            setpoint_msg.pose.position.x = radius * math.cos(self.angle)
+            setpoint_msg.pose.position.y = radius * math.sin(self.angle)
+            setpoint_msg.pose.position.z = 1.0
 
-        self.setpoint_publisher.publish(msg)
+        self.setpoint_publisher.publish(setpoint_msg)
 
 def main(args=None):
     rclpy.init(args=args)
