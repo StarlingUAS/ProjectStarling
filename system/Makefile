@@ -5,4 +5,7 @@ all: mavros
 mavros:
 	docker build -t starling-mavros $(MAKEFILE_DIR)/mavros
 
-.PHONY: mavros
+ui:
+	docker build -t starling-ui $(MAKEFILE_DIR)/ui
+
+.PHONY: mavros ui all
