@@ -5,7 +5,7 @@ ros_debug_node:
 	docker tag ros_demo mickeyli789/ros_debug
 
 multi-platform:
-	docker buildx build --push --platform linux/arm64,linux/amd64,linux/arm/v7 --tag mickeyli789/ros_debug:latest .
+	docker buildx build --push --platform linux/arm64,linux/amd64 --tag mickeyli789/ros_debug:latest .
 
 push:
 	docker push mickeyli789/ros_debug

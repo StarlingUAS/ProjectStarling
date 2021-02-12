@@ -10,6 +10,11 @@ WORKDIR /home/ctrl_user
 # Copy workspace into user root
 COPY --chown=ctrl_user workspace .
 
-# RUN ./setup_script.sh
+RUN ./setup_script.sh
+
+COPY --chown=ctrl_user ros_entrypoint.sh .
+
+ENTRYPOINT [ "/home/ctrl_user/ros_entrypoint.sh" ]
+CMD ["ros2", "run", "ros_debug_nodes", "talker"]
 
 

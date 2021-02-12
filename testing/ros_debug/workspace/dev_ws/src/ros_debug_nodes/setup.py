@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'talker = ros_debug_nodes.broadcast_node_details:main'
         ],
     },
 )
