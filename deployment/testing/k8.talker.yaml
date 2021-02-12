@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: demo-talker
 spec:
+  hostNetwork: true
+  shareProcessNamespace: true
   containers:
   - name: ros-talker
     image: ros_demo

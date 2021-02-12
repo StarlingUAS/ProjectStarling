@@ -80,6 +80,8 @@ The final command should display the token. Copy and paste that into the browser
 In the dashboard, they key views are **nodes** and **pods** (within the default namespace).
 Once a pod is running, there are options to view the logs and execute (exec) directly into the containers.
 
+> Note: if you have reinstalled k3s dashboard and get the error `square/go-jose: error in cryptographic primitive`, you have a stale cookie!
+
 ## Running the test cases
 
 ### Ros2 talker/ listener

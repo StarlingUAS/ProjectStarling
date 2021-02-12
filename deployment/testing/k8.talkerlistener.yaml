@@ -3,64 +3,20 @@ kind: Pod
 metadata:
   name: demo-talkerlistener
 spec:
-  # hostNetwork: true
+  hostNetwork: true
+  shareProcessNamespace: true
   containers:
   - name: ros-talker
     image: mickeyli789/ros_demo
     imagePullPolicy: IfNotPresent
-    # ports:
-    # - containerPort: 8080
-    #   name: http
-    # - containerPort: 11345
-    #   name: tcp
-    # - containerPort: 7400
-    #   name: dds1
-    #   protocol: UDP
-    # - containerPort: 7401
-    #   name: dds2
-    #   protocol: UDP
-    # - containerPort: 7410
-    #   name: dds3
-    #   protocol: UDP
-    # - containerPort: 7411
-    #   name: dds4
-    #   protocol: UDP
-    # - containerPort: 7412
-    #   name: dds5
-    #   protocol: UDP
-    # - containerPort: 7413
-    #   name: dds6
-    #   protocol: UDP
-    # - containerPort: 7414
-    #   name: dds7
-    #   protocol: UDP
-    # - containerPort: 7415
-    #   name: dds8
-    #   protocol: UDP
-    # - containerPort: 7418
-    #   name: dds9
-    #   protocol: UDP
-    # - containerPort: 7419
-    #   name: dds10
-    #   protocol: UDP
-    # - containerPort: 7422
-    #   name: dds11
-    #   protocol: UDP
-    # - containerPort: 7423
-    #   name: dds12
-    #   protocol: UDP
-    # - containerPort: 10318
-    #   name: dds13
-    #   protocol: UDP
-    # - containerPort: 10317
-    #   name: dds14
-    #   protocol: UDP
-    args: ["ros2", "run", "demo_nodes_py", "talker"]
-  - name: ros-listener
+    args: ["ros2", "run", "demo_nodes_py", "talker", "&&", "ros2", "run", "demo_nodes_py", "listener"]
+  - name: ros-listener1
     image: mickeyli789/ros_demo
     imagePullPolicy: IfNotPresent
-    # ports:
-    # - containerPort: 5762
+    args: ["ros2", "run", "demo_nodes_py", "listener"]
+  - name: ros-listener2
+    image: mickeyli789/ros_demo
+    imagePullPolicy: IfNotPresent
     args: ["ros2", "run", "demo_nodes_py", "listener"]
   - name: network-toolbox
     image: praqma/network-multitool
