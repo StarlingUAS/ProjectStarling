@@ -1,10 +1,12 @@
+.PHONY: all ros_debug_node multi-platform push run_dev run
+
 all: ros_debug_node
 
 ros_debug_node:
 	docker build -t ros_debug .
 	docker tag ros_debug mickeyli789/ros_debug
 
-multi-platform:
+multi-platform: ros_debug_node
 	docker buildx build --push --platform linux/arm64,linux/amd64 --tag mickeyli789/ros_debug:latest .
 
 push:
