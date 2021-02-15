@@ -13,7 +13,9 @@ Refer to the kubernetes notes with the onenote notebook for more usage informati
 ## Installation instructions
 
 Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately:
-```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -```
+```
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
+```
 
 > Once installed, the equivalent instruction is `sudo k3s server --docker`
 
@@ -22,18 +24,40 @@ For the raspberry pi, ensure docker is installed, and then these instructions ar
 For testing purposes (inside testing dir), the containers have already been built for both amd64 and arm64 and uploaded onto hub.docker: [mickeyli789/ros_demo](https://hub.docker.com/r/mickeyli789/ros_demo).
 
 Also recommended you alias kubectl (kubernetes cli) in your bashrc
-```alias kubectl='sudo k3s kubectl`
+```
+alias kubectl='sudo k3s kubectl
+```
 
 ## Running instructions
 
 ### Laptop
 
-To run the master kubernetes server using docker (instead of containerd if you need access to local images). In one terminal run:
-```sudo k3s server --docker```
+To run the master kubernetes server using docker (instead of containerd if you need access to local images). In one terminal run either:
+1. '```sudo k3s server --docker```' (will start in local terminal)
+2. '```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -``` ' (will run in background as systemd - check `systemctl status k3s`)
 
-This will open up a server with entrypoint on 0.0.0.0:6443. 
+This will open up a server with entrypoint on `0.0.0.0:6443` which corresponds to `<host local ip address>:6443` 
 
-### Pi
+### Pi / Drone / Agent
+First ensure that the pi has been correctly set up with an airgapped installation of k3s, [see here for installation instructions](https://rancher.com/docs/k3s/latest/en/installation/airgap/). Follow the Manually Deploy Images Method.
+
+#### Setup script via ssh
+
+Identify the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run
+```bash
+./start_k3s_agent.sh <remote username> <remote ip address> <node name>
+```
+e.g.
+```bash
+./start_k8_agent.sh ubuntu 192.168.0.110 clover1
+```
+You can specify the k3s server address by setting the environment variable before calling:
+```bash
+K3S_SERVER=https://192.168.0.63:6443 k3s_agent ubuntu 192.168.0.96 raspi1
+```
+
+#### Manual, old setup method.
+
 First SSH onto the pi
 
 First ensure you run `k3s-killall.sh` to make sure there is no master server running as you only want `k3s agent` to run.
@@ -58,58 +82,10 @@ Consider running the above using screen or somehow in the background just in cas
 
 ### Post actions
 #### Dashboard
-[See the original site for more details](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
-Back on the laptop, open up a new terminal then in this directory, run:
-
-```bash
-sudo kubectl apply -f k3.dashboard.yaml
-sudo kubectl proxy # Open up connections to host
-```
-Kubectl will make Dashboard available at http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
-
-For first time setup, you will need to create an access token, refer to this article: https://www.replex.io/blog/how-to-install-access-and-add-heapster-metrics-to-the-kubernetes-dashboard 
-
-```bash
-kubectl create serviceaccount dashboard-admin-sa
-kubectl create clusterrolebinding dashboard-admin-sa  --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa
-kubectl get secrets
-kubectl describe secret dashboard-admin-sa-token-kw7vn
-```
-The final command should display the token. Copy and paste that into the browser, and you should be in. 
-
-In the dashboard, they key views are **nodes** and **pods** (within the default namespace).
-Once a pod is running, there are options to view the logs and execute (exec) directly into the containers.
-
-> Note: if you have reinstalled k3s dashboard and get the error `square/go-jose: error in cryptographic primitive`, you have a stale cookie!
-
+[See the k3s docs for info on how to run](https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/)
 ## Running the test cases
 
-### Ros2 talker/ listener
+Go to [testing directory for more info](testing/README.md)
 
-For the testing so far, we have 3 pods inside the [testing](testing) directory.
-1. `k8.listener.yaml` runs a pod called `demo-listener` containing a ros2 listener node and a network toolbox. It will run on any node.
-2. `k8.talkerlistener.yaml` runs a pod called `demo-talkerlistener` containg a ros2 listener node, a ros2 talker node an a network toolbox. Using the `nodeSelector` option, this pod will only run on arm64 nodes (i.e. nodes with the label `kubernetes.io/arch`)
-3. `k8.talker.yaml` runs a pod called `demo-talker` containing a ros2 talker node. Will run on any node.
 
-To 'deploy' these pods onto kubernetes, open another terminal and run:
-```kubectl apply -f <file>.yaml```
-These can also be strung together, for example
-```kubectl apply -f k8.talkerlistener.yaml -f k8.listener.yaml```
-Will run both the talker listener node on the pi and the listner node on the master. 
 
-Once applied, both nodes should be able to be seen in the Pod section of the dashboard. Clicking on the pod names will reveale more information including ip address, status etc. The top right should have some buttons to see pod logs and also execute into the pod. Clicking on the logs (or exec), you can switch between the containers within the pod with a drop down menu above the logs. 
-
-Replacing `apply` with `delete` will also delete the pods. If you want the pods to exit immediately, add the following flags onto the end
-```kubectl delete -f k8.talkerlistener.yaml -f k8.listener.yaml --wait=false --grace-period=0 --force```
-
-#### Expected outcome
-
-Running the talker listener on the pi and the listener on the master node, I would expect that both listener nodes will be able to hear messages from the talker. 
-
-#### Current Situation
-
-Running both listener and talker on the same node (whether in separate pods or the same pod) runs fine mostly. 
-
-Running the talker listener on the pi and the listener on the master node, either the listener on the pi hears, or the listener on the master hears and very rarely they do sometimes both hear at the same time. 
-
-I susepct that there may be some race condition type effect. If only the talkerlistener is run, sometimes not observing or interacting with the logs for some time will cause the chatter to come through. Other times, the dashboard log may show that nothing has been received, however exec'ing into the listener and manually either running (after sourcing `ros_entrypoint.sh`) `ros2 topic echo /chatter` or `ros2 run demo_nodes_py listener` will produce an output. 
