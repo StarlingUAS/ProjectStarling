@@ -10,7 +10,10 @@ services:
     image: starling-sim-px4-sitl
     environment:
       - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros"
+    ports:
+      - "18570:18570/udp"
   
   mavros:
     image: starling-mavros
-    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14550@/?ids=1,240 tgt_system:=1
+    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14540@/?ids=1,240 tgt_system:=1
