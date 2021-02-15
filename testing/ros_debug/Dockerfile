@@ -10,8 +10,6 @@ WORKDIR /home/ctrl_user
 # Copy workspace into user root
 COPY --chown=ctrl_user workspace workspace
 COPY --chown=ctrl_user ros_entrypoint.sh .
-# COPY --chown=ctrl_user setup_script.sh .
-# RUN ./setup_script.sh
 
 WORKDIR /home/ctrl_user/workspace/dev_ws
 RUN /bin/bash -c '\

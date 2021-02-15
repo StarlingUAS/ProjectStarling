@@ -9,3 +9,13 @@ The `ros_debug_nodes` package contains one node `talker` which
 Also contains an example kubernetes file which runs multiple instances of these ros nodes on all k8nodes in the cluster. (Currently set to raspi1, clover1 and anything which matches amd64)
 
 This is also an example of a ros2/ docker development environment where the 'workspace' directory is copied into the image and colcon built is run. However for development you can run `make run_dev` which also binds the workspace into the container, allowing you to make changes to the code natively, but then colcon build the code within the contianer itself. 
+
+## Running
+
+To run first start up the k3s kubernetes cluster ([follow instructions here](../deployment/README.md)), then apply the configuration:
+```bash
+sudo k3s kubectl apply -f ros_debug/kubernetes.yaml
+```
+replace `apply` with `delete` to remove the node
+
+## Deployment details
