@@ -16,4 +16,3 @@ services:
   
   mavros:
     image: starling-mavros
-    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14540@/?ids=1,240 tgt_system:=1

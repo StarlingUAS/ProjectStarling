@@ -44,6 +44,12 @@ COPY run_ros1.sh /ros_ws/scripts/
 
 COPY ros_entrypoint.sh /ros_entrypoint.sh
 
+ENV MAVROS_FCU_URL="udp://:14540@"
+ENV MAVROS_TGT_SYSTEM=1
+ENV MAVROS_TGT_FIRMWARE="px4"
+
 WORKDIR /ros_ws
 
-CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml", "fcu_url:=udp://@" ]
+COPY mavros_setup.sh .
+
+CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml" ]
