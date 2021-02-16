@@ -7,7 +7,7 @@ spec:
   shareProcessNamespace: true
   containers:
   - name: ros-listener
-    image: ros_demo
+    image: uobflightlabstarling/ros_demo:latest
     imagePullPolicy: IfNotPresent
     # ports:
     # - containerPort: 5762

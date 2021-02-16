@@ -8,10 +8,10 @@ spec:
   shareProcessNamespace: true
   containers:
   - name: ros-talker1
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: ros-talker2
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: network-toolbox
     image: praqma/network-multitool
@@ -29,10 +29,10 @@ spec:
   shareProcessNamespace: true
   containers:
   - name: ros-talker1
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: ros-talker2
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: network-toolbox
     image: praqma/network-multitool
@@ -50,10 +50,10 @@ spec:
   shareProcessNamespace: true
   containers:
   - name: ros-talker1
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: ros-talker2
-    image: mickeyli789/ros_debug
+    image: uobflightlabstarling/ros_debug
     imagePullPolicy: Always
   - name: network-toolbox
     image: praqma/network-multitool

@@ -7,15 +7,15 @@ spec:
   shareProcessNamespace: true
   containers:
   - name: ros-talker
-    image: mickeyli789/ros_demo
+    image: uobflightlabstarling/ros_demo
     imagePullPolicy: IfNotPresent
     args: ["ros2", "run", "demo_nodes_py", "talker", "&&", "ros2", "run", "demo_nodes_py", "listener"]
   - name: ros-listener1
-    image: mickeyli789/ros_demo
+    image: uobflightlabstarling/ros_demo
     imagePullPolicy: IfNotPresent
     args: ["ros2", "run", "demo_nodes_py", "listener"]
   - name: ros-listener2
-    image: mickeyli789/ros_demo
+    image: uobflightlabstarling/ros_demo
     imagePullPolicy: IfNotPresent
     args: ["ros2", "run", "demo_nodes_py", "listener"]
   - name: network-toolbox
