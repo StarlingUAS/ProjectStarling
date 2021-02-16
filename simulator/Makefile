@@ -1,6 +1,6 @@
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-all: clover2
+all: clover2 iris
 
 base:
 	$(MAKE) -C base
@@ -8,4 +8,7 @@ base:
 clover2: base
 	docker build -t starling-sim-clover2 $(MAKEFILE_DIR)/vehicles/clover2
 
-.PHONY: all base clover2
+iris: base
+	docker build -t starling-sim-iris $(MAKEFILE_DIR)/vehicles/iris
+
+.PHONY: all base clover2 iris

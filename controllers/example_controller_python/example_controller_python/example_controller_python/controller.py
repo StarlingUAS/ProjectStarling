@@ -64,6 +64,8 @@ class DemoController(Node):
         self.vehicle_position = PoseStamped()
         self.vehicle_state = mavros_msgs.msg.State()
 
+        self.initial_position = None
+
         self.angle = 0
 
     def position_callback(self,msg):
@@ -74,11 +76,23 @@ class DemoController(Node):
 
     def timer_callback(self):
         if self.state == 'Init':
+            if self.initial_position == None and self.vehicle_position != None:
+                self.initial_position = self.vehicle_position
+                print("Got initial position: ({},{},{})".format(
+                    self.initial_position.pose.position.x,
+                    self.initial_position.pose.position.y,
+                    self.initial_position.pose.position.z
+                    ))
+                print("Going to ModeSwitch")
+                self.state = 'ModeSwitch'
+
+        if self.state == 'ModeSwitch':
             if self.vehicle_state.mode != "OFFBOARD":
                 modeSetCall = mavros_msgs.srv.SetMode.Request()
                 modeSetCall.custom_mode = "OFFBOARD"
                 self.offboard_rate_limiter.call(lambda: self.offboard_client.call_async(modeSetCall))
             else:
+                print("Going to Arming")
                 self.state = 'Arming'
 
         if self.state == 'Arming':
@@ -88,26 +102,34 @@ class DemoController(Node):
                 self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
             else:
                 self.state = 'Takeoff'
+                print("Going to Takeoff")
 
-        setpoint_msg = PoseStamped()
-        setpoint_msg.header.stamp = self.get_clock().now().to_msg()
-        setpoint_msg.pose = self.vehicle_position.pose
+        setpoint_msg = None
+        if self.initial_position != None:
+            setpoint_msg = PoseStamped()
+            setpoint_msg.header.stamp = self.get_clock().now().to_msg()
+            setpoint_msg.pose = self.initial_position.pose
 
         if self.state == 'Takeoff':
             if self.takeoff_offset < 1.0:
-                self.takeoff_offset += 0.01
+                self.takeoff_offset += 0.05
                 setpoint_msg.pose.position.z += self.takeoff_offset
             else:
-                self.state = 'Flight'
+                setpoint_msg.pose.position.z += self.takeoff_offset
+                # Wait for takeoff to be complete
+                if self.vehicle_position.pose.position.z > 0.95:
+                    print("Going to Flight")
+                    self.state = 'Flight'
 
         if self.state == 'Flight':
             radius = 1.0
-            self.angle = (self.angle + 0.0001) % (2*math.pi)
+            self.angle = (self.angle + 0.005) % (2*math.pi)
             setpoint_msg.pose.position.x = radius * math.cos(self.angle)
             setpoint_msg.pose.position.y = radius * math.sin(self.angle)
             setpoint_msg.pose.position.z = 1.0
 
-        self.setpoint_publisher.publish(setpoint_msg)
+        if setpoint_msg != None:
+            self.setpoint_publisher.publish(setpoint_msg)
 
 def main(args=None):
     rclpy.init(args=args)
