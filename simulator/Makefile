@@ -5,7 +5,7 @@ all: clover2 ardupilot_sitl iris
 base:
 	$(MAKE) -C base
 
-ardupilot_sitl:
+ardupilot_ar:
 	$(MAKE) -C ardupilot_ar
 
 clover2: base
