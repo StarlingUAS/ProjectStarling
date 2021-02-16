@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-talkerlistener
+spec:
+  hostNetwork: true
+  shareProcessNamespace: true
+  containers:
+  - name: ros-talker
+    image: uobflightlabstarling/ros_demo
+    imagePullPolicy: IfNotPresent
+    args: ["ros2", "run", "demo_nodes_py", "talker", "&&", "ros2", "run", "demo_nodes_py", "listener"]
+  - name: ros-listener1
+    image: uobflightlabstarling/ros_demo
+    imagePullPolicy: IfNotPresent
+    args: ["ros2", "run", "demo_nodes_py", "listener"]
+  - name: ros-listener2
+    image: uobflightlabstarling/ros_demo
+    imagePullPolicy: IfNotPresent
+    args: ["ros2", "run", "demo_nodes_py", "listener"]
+  - name: network-toolbox
+    image: praqma/network-multitool
+  nodeSelector:
+    kubernetes.io/arch: arm64
+    # k3s.io/hostname: clover1
+  
