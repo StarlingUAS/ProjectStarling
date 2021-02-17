@@ -15,6 +15,6 @@ source "/opt/ros/$ROS2_DISTRO/setup.bash"
 source "/bridge_ws/install/setup.bash"
 
 # Source the mavros_setup for any user defined edits to the environment
-source "mavros_setup.sh"
+source "/ros_ws/mavros_setup.sh"
 
 exec "$@"

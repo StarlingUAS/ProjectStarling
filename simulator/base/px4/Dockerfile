@@ -22,4 +22,9 @@ RUN echo "source /src/PX4-Autopilot/Tools/setup_gazebo.bash /src/PX4-Autopilot /
 
 WORKDIR /ros_ws
 
+# Set the gazebo origin's geographic coordinates
+ENV PX4_HOME_LAT 51.501582
+ENV PX4_HOME_LON -2.551791
+ENV PX4_HOME_ALT 0.0
+
 CMD [ "ros2", "launch", "/ros_ws/launch/sim.launch.xml" ]
