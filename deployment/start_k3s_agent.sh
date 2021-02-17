@@ -20,6 +20,6 @@ echo "K3S Token is $K3S_TOKEN"
 echo "K3S Server is $K3S_SERVER"
 echo "Connecting to $2 with user $1, starting k3s agent node named $3"
 
-ssh $1@$2 "INSTALL_K3S_SKIP_DOWNLOAD=true K3S_NODE_NAME=$3 K3S_URL=${K3S_SERVER} K3S_TOKEN=${K3S_TOKEN} INSTALL_K3S_EXEC=${INSTALL_K3S_EXEC} ./k3s-install.sh;";
+ssh $1@$2 "k3s-killall.sh; INSTALL_K3S_SKIP_DOWNLOAD=true K3S_NODE_NAME=$3 K3S_URL=${K3S_SERVER} K3S_TOKEN=${K3S_TOKEN} INSTALL_K3S_EXEC=${INSTALL_K3S_EXEC} ./k3s-install.sh;";
 
 exit -1

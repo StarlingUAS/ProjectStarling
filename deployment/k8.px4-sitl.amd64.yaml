@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starling-px4-sitl
+  labels:
+    app: starling
+    platform: sitl
+spec:
+  selector: 
+    matchLabels:
+      app: starling
+      firmware: px4
+      platform: sitl
+  template:
+    metadata:
+      labels:
+        app: starling
+        firmware: px4
+        platform: sitl
+    spec:
+      shareProcessNamespace: true
+      containers:
+      - name: starling-px4-sitl
+        image: uobflightlabstarling/starling-sim-px4-sitl:latest
+        imagePullPolicy: Always
+        env:
+        - name: PX4_SIM_HOST
+          value: "sim-gazebo.gazebo-srv"
+      - name: starling-mavros
+        image: uobflightlabstarling/starling-mavros:latest
+        imagePullPolicy: Always
+        env:
+        - name: MAVROS_FCU_URL
+          value: "udp://127.0.0.1:14540@"
+        - name: MAVROS_TGT_FIRMWARE
+          value: "px4"
+        - name: MAVROS_TGT_SYSTEM
+          value: "1"
+        args: [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
+      nodeSelector:
+        kubernetes.io/arch: "amd64"
