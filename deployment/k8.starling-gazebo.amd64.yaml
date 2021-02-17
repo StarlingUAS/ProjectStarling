@@ -78,7 +78,7 @@ spec:
       shareProcessNamespace: true
       containers:
       - name: gazebo
-        image: uobflightlabstarling/starling-sim-clover2:latest
+        image: uobflightlabstarling/starling-sim-iris:latest
         resources:
           requests:
             cpu: "100m"

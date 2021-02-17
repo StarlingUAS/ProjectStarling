@@ -26,6 +26,9 @@ spec:
         env:
         - name: PX4_SIM_HOST
           value: "sim-gazebo.gazebo-srv"
+        ports:
+          - containerPort: 18570
+            protocol: "UDP"
       - name: starling-mavros
         image: uobflightlabstarling/starling-mavros:latest
         imagePullPolicy: Always
