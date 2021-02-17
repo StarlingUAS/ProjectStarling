@@ -127,10 +127,29 @@
   <!-- Macro to add the gps_plugin. -->
   <xacro:macro name="gps_plugin_macro" params="namespace gps_noise">
     <gazebo>
-      <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
-        <robotNamespace>${namespace}</robotNamespace>
-        <gpsNoise>${gps_noise}</gpsNoise>
-      </plugin>
+    <!-- Something posessed the PX4 team to make GPSs an embedded model -->
+      <model name="gps0">
+        <link name="link">
+          <pose>0 0 0 0 0 0</pose>
+          <sensor name="gps" type="gps">
+            <pose>0 0 0 0 0 0</pose>
+            <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
+              <robotNamespace/>
+              <gpsNoise>1</gpsNoise>
+              <gpsXYRandomWalk>2.0</gpsXYRandomWalk>
+              <gpsZRandomWalk>4.0</gpsZRandomWalk>
+              <gpsXYNoiseDensity>0.0002</gpsXYNoiseDensity>
+              <gpsZNoiseDensity>0.0004</gpsZNoiseDensity>
+              <gpsVXYNoiseDensity>0.2</gpsVXYNoiseDensity>
+              <gpsVZNoiseDensity>0.4</gpsVZNoiseDensity>
+            </plugin>
+          </sensor>
+        </link>
+      </model>
+      <joint name="gps0_joint" type="fixed">
+        <parent>base_link</parent>
+        <child>gps0::link</child>
+      </joint>
     </gazebo>
   </xacro:macro>
 
