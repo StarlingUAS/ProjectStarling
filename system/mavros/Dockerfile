@@ -53,12 +53,4 @@ WORKDIR /ros_ws
 
 COPY mavros_setup.sh .
 
-<<<<<<< HEAD
 CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
-=======
-ENV MAVROS_FCU_URL udp://:14540@
-ENV MAVROS_TGT_SYSTEM 1
-ENV MAVROS_TGT_FIRMWARE px4
-
-CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml" ]
->>>>>>> master
