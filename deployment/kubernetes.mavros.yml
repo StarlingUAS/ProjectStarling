@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starling
+  labels:
+    app: starling
+spec:
+  selector: 
+    matchLabels:
+      app: starling
+  template:
+    metadata:
+      labels:
+        app: starling
+    spec:
+      containers:
+      - name: starling-mavros
+        image: starling-mavros
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MAVROS_FCU_URL
+          value: tcp://127.0.0.1:5762
+        - name: MAVROS_TGT_FIRMWARE
+          value: "px4"
+        - name: MAVROS_TGT_SYSTEM
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        ports:
+        - containerPort: 5762
+      nodeSelector:
+        kubernetes.io/arch: "arm"
+  

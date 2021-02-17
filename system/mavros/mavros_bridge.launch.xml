@@ -1,13 +1,13 @@
 <launch>
 
-    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://127.0.0.1:14550@14555)"/>
+    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://:14550@)"/>
     <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM 1)" />
-    <arg name="system_id" default="1" />
+    <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM 1)" />
     <arg name="firmware" default="$(env MAVROS_TGT_FIRMWARE px4)" />
     <arg name="gcs_url" default="$(env MAVROS_GCS_URL udp-pb://@:14553)" />
 
     <!-- Launch the ROS1 stack -->
-    <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch mavros $(var firmware).launch fcu_url:=$(var fcu_url) gcs_url:=$(var gcs_url) tgt_system:=$(var target_system)" output="screen"/>
+    <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch mavros $(var firmware).launch fcu_url:=$(var fcu_url)/?ids=$(var system_id),240 gcs_url:=$(var gcs_url) tgt_system:=$(var target_system)" output="screen"/>
 
     <!-- Launch the bridge -->
     <node pkg="ros1_bridge" exec="dynamic_bridge" args="--bridge-all-1to2-topics" />

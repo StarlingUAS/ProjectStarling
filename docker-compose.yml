@@ -2,7 +2,7 @@ version: '3'
 
 services:
   simhost:
-    image: uobflightlabstarling/starling-sim-clover2
+    image: uobflightlabstarling/starling-sim-iris
     ports:
       - "8080:8080"
 
@@ -10,6 +10,9 @@ services:
     image: uobflightlabstarling/starling-sim-px4-sitl
     environment:
       - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros"
+    ports:
+      - "18570:18570/udp"
   
   mavros:
     image: uobflightlabstarling/starling-mavros
