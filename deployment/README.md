@@ -10,6 +10,35 @@ Key concepts are as follows:
 
 Refer to the kubernetes notes with the onenote notebook for more usage information.
 
+## Quick Reference to files:
+The .yaml files in this directory are all kubernetes configurations for various combinations of systems. The cpu architecture refers to where the containers have been specified to run - amd64 specifies for running on master machine, and arm64 specifies for running on the raspberry pi node over the network (see below for setup). All of these config files pull their images from the [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories).
+
+### Files
+
+- **k8.starling-gazebo.amd64.yaml** :- Currently runs the `starling-sim-iris` image and a Service which exposes the gzweb statically on `10.43.226.5:8080`. This service has a cluster internal hostname of `sim-gazebo.gazebo-srv`
+- **k8.px4-sitl.amd64.yaml** :- Currently runs a pod containing two containers
+    - `starling-sim-px4-sitl` - emulating px4-sitl. Talks to GCS software on port 14550 with replies on 18570.
+    - `starling-mavros` - contains a ROS2 mavros node connected via udp://localhost:14540 to sitl. Talks to GCS on udp broadcast port 14553.
+- **k8.ap-sitl.amd64.yaml** :-  [Needs updating]Currently runs a pod containing two containers
+    - `starling-ardupilot-sitl` - emulating ardupilot-sitl. Talks to GCS over 14553 as well. 
+    - `starling-mavros` - contains a ROS2 mavros node connected via tcp://localhost:5762 to sitl. Talks to GCS on udp broadcast port 14553.
+- **k8.mavros.arm64.yaml** :- A mavros node designed to run on the raspberry pi/ drone control computer. This pod contains a single `starling-mavros` container. It reads of a px4 pixhawk assumed to be talking over usb serial connection `/dev/px4fmu` (set up via udev symlinks). Currently assumes mavlink sysid is 1.
+- **k8.ros_monitor.amd64.yaml** :- runs `starling-mavros` and a network-tools container. Can be used for debugging ROS2 and networking issues
+
+### Using files
+Once k3s has been installed (see below, or run `./run_k3s.sh` in the home directory), these configurations can be used in the cluster as follows:
+```bash
+# Applying/ Creating them
+sudo k3s kubectl apply -f <filename.yaml> 
+# Deleting the deployment
+sudo k3s kubectl delete -f <filename.yaml> -f <filename.yaml>
+```
+This can also be done in the gui dashboard application.
+
+> **Note:**
+> Local images can be used if `imagePullPolicy` is set to `ifNotPresent` instead of `Always`. In that case it will attempt to find a local image with the given image name.
+> arm64 images must be cross compiled using docker buildx (make multi-arch or make cross-compile or similar in the relevant docker files) and always pulled from docker hub.
+
 ## Installation instructions
 
 Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately:
@@ -81,8 +110,15 @@ The Pi should now be setup
 Consider running the above using screen or somehow in the background just in case your ssh connection is unstable or you want to close it. 
 
 ### Post actions
+
+If you want to stop kubernetes completely, the internet install script comes with two options which are on the PATH and can be run in the terminal.
+1. `k3s-killall.sh` will stop all k3s nodes and the systemd
+2. `k3s-uninstall.sh` will delete everything k3s and remove the systemd
+
 #### Dashboard
 [See the k3s docs for info on how to run](https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/)
+
+Are started automatically in the `./run_k3s.sh` script.
 ## Running the test cases
 
 Go to [testing directory for more info](testing/README.md)

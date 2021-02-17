@@ -1,11 +1,38 @@
-# Build & Run
+# Project Starling
+
+## Build & Run
+
+There are two methods to run:
+
+### 1. Container Method
 
 With `make` installed, run `make` in the root folder to build the docker images
 Use `make run` to start the gazebo, sitl and mavros containers
 
 Go to http://127.0.0.1:8080 to (hopefully) see the simulator
 
-# Details
+Use this method for quick and easy local testing on a single machine.
+
+### 2. Kubernetes Deployment Method
+
+Use this method for simualting real drones or using real drones.
+
+All container images required have already been prebuilt and are either on [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories) or somewhere else.
+
+In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo/ px4-sitl/ mavros example, equivalent to `make run`. This will (automatically) open up gazebo web on http://10.43.226.5:8080/ and the local k3s dashboard.
+
+Opening a ground control station (gcs) program such as QGroundControl and creating a comms link to `udp://localhost:14553` and `udp://10.42.0.1:14553` will allow local monitoring.
+
+A drone running the specified 64 bit debian/ubuntu iso can be added to the cluster. Identifying the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run
+```bash
+./deployment/start_k3s_agent.sh <remote username> <remote ip address> <node name>
+```
+A mavros node can be placed on the drone by then applying the following configuration:
+```bash
+sudo k3s kubectl apply -f deployment/k8.mavros.arm64.yaml
+```
+See [the following README.md for further details](deployment/README.md)
+## Container Details
 
 The root `Makefile` delegates to submakes to build various images:
  - `starling-sim-base-core` containing Gazebo, ROS2 and gzweb
@@ -26,7 +53,7 @@ script to spawn an instance of the Clover model in Gazebo. This model comes
 from the `/robot_description` topic which is published by ROS2's
 `robot_state_publisher`.
 
-## Scaling
+### Scaling
 
 Scaling this setup involves spawning additional models on the Gazebo server and
 running additional SITL and MAVROS instances. The `px4-sitl` image provides an
