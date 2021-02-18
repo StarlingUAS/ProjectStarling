@@ -15,4 +15,4 @@ mavros_all_arch:
 %.image:
 	docker build -t starling-$% $(MAKEFILE_DIR)/$%
 
-.PHONY: mavros mavros_all_arch controller-base-all
+.PHONY: mavros mavros_all_arch controller-base all
