@@ -31,10 +31,10 @@ spec:
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
             value: "1"
-          - name: ROS_HOSTNAME
-            value: "localhost"
-          - name: ROS_MASTER_URI
-            value: "http://localhost:11311"
+          # - name: ROS_HOSTNAME
+          #   value: "localhost"
+          # - name: ROS_MASTER_URI
+          #   value: "http://localhost:11311"
           ports:
           - containerPort: 14553
             protocol: "UDP"
@@ -44,7 +44,6 @@ spec:
           volumeMounts:
           - mountPath: /dev/px4fmu
             name: ttypx4
-          args: [ "ros2", "launch", "launch/mavros_bridge.launch.xml" ]
 
       volumes:
       - name: ttypx4

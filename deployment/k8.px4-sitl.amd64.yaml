@@ -39,6 +39,5 @@ spec:
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
           value: "1"
-        args: [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
       nodeSelector:
         kubernetes.io/arch: "amd64"
