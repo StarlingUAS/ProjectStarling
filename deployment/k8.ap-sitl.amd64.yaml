@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: starling-ap-itl
+  name: starling-ap-sitl
   labels:
     app: starling
     platform: sitl
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: starling-ardupilot-sitl
-        image: starling-ardupilot-sitl
+        image: uobflightlabstarling/starling-ardupilot-sitl
         imagePullPolicy: IfNotPresent
         env:
         - name: SYSID
