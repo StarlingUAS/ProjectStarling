@@ -2,12 +2,12 @@ version: '3'
 
 services:
   simhost:
-    image: starling-sim-iris
+    image: uobflightlabstarling/starling-sim-iris
     ports:
       - "8080:8080"
 
   sitl:
-    image: starling-sim-px4-sitl
+    image: uobflightlabstarling/starling-sim-px4-sitl
     environment:
       - "PX4_SIM_HOST=simhost"
       - "PX4_OFFBOARD_HOST=mavros"
@@ -15,4 +15,5 @@ services:
       - "18570:18570/udp"
   
   mavros:
-    image: starling-mavros
+    image: uobflightlabstarling/starling-mavros
+    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14550@/?ids=1,240 tgt_system:=1

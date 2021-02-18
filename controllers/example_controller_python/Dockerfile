@@ -1,4 +1,4 @@
-FROM starling-controller-base
+FROM uobflightlabstarling/starling-controller-base
 
 COPY example_controller_python /ros_ws/src/
 

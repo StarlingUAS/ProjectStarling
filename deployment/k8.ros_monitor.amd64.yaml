@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mavros-monitor-debug
+spec:
+  hostNetwork: true
+  shareProcessNamespace: true
+  containers:
+  - name: mavros-monitor-debug
+    image: uobflightlabstarling/starling-mavros:latest
+    imagePullPolicy: Always
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300; done;" ]
+  - name: network-toolbox
+    image: praqma/network-multitool
+  nodeSelector:
+    kubernetes.io/arch: amd64
+    # k3s.io/hostname: clover1

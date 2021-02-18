@@ -1,21 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: starling-sitl
+  name: starling-ap-sitl
   labels:
-    app: starling-sitl
+    app: starling
+    platform: sitl
 spec:
   selector: 
     matchLabels:
-      app: starling-sitl
+      app: starling-ap-sitl
   template:
     metadata:
       labels:
-        app: starling-sitl
+        app: starling
+        firmware: ardupilot
+        platform: sitl
     spec:
       containers:
       - name: starling-ardupilot-sitl
-        image: starling-ardupilot-sitl
+        image: uobflightlabstarling/starling-ardupilot-sitl
         imagePullPolicy: IfNotPresent
         env:
         - name: SYSID
@@ -29,7 +32,7 @@ spec:
         - containerPort: 5762
         - containerPort: 5763
       - name: starling-mavros
-        image: starling-mavros
+        image: uobflightlabstarling/starling-mavros:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: MAVROS_FCU_URL
@@ -46,4 +49,3 @@ spec:
       #   image: praqma/network-multitool
       nodeSelector:
         kubernetes.io/arch: "amd64"
-  
