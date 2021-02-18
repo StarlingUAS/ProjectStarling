@@ -23,7 +23,7 @@ In this file directory run `./run_k3s.sh` this will install k3s (lightweight kub
 
 Opening a ground control station (gcs) program such as QGroundControl and creating a comms link to `udp://localhost:14553` and `udp://10.42.0.1:14553` will allow local monitoring.
 
-A drone running the specified 64 bit debian/ubuntu iso can be added to the cluster. Identifying the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run
+A drone running the specified 64 bit debian/ubuntu iso can be added to the cluster. Identifying the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run (you wll need to neter local machine password to access the master node token)
 ```bash
 ./deployment/start_k3s_agent.sh <remote username> <remote ip address> <node name>
 ```
