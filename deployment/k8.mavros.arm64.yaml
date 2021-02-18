@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starling-drones
+  labels:
+    app: starling
+    platform: pixhawk
+spec:
+  selector: 
+    matchLabels:
+      app: starling
+  template:
+    metadata:
+      name: starling-drone
+      labels: 
+        app: starling
+        platform: pixhawk
+    spec:
+      hostNetwork: true
+      shareProcessNamespace: true
+      containers:
+        - name: starling-mavros
+          image: uobflightlabstarling/starling-mavros:latest
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          env:
+          - name: MAVROS_FCU_URL
+            value: "/dev/px4fmu"
+          - name: MAVROS_TGT_FIRMWARE
+            value: "px4"
+          - name: MAVROS_TGT_SYSTEM
+            value: "1"
+          # - name: ROS_HOSTNAME
+          #   value: "localhost"
+          # - name: ROS_MASTER_URI
+          #   value: "http://localhost:11311"
+          ports:
+          - containerPort: 14553
+            protocol: "UDP"
+          - containerPort: 5760
+          - containerPort: 5762
+          - containerPort: 5763
+          volumeMounts:
+          - mountPath: /dev/px4fmu
+            name: ttypx4
+
+      volumes:
+      - name: ttypx4
+        hostPath:
+          path: /dev/px4fmu
+      nodeSelector:
+        kubernetes.io/arch: arm64
+        # k3s.io/hostname: clover1
