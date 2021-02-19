@@ -27,8 +27,8 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && source /root/.nvm/nvm.sh && npm 
 COPY ui.launch.xml /ros_ws/launch/ui.launch.xml
 COPY node_entrypoint.sh /node_entrypoint.sh
 
-# Add stop button example
-COPY html/stop.html /ros_ws/src/ros2-web-bridge/examples/html/stop.html
+# Add all html file example
+COPY html/ /ros_ws/src/ros2-web-bridge/examples/html/
 
 # Change the working directory
 WORKDIR /ros_ws
