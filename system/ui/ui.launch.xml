@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <executable cmd="/node_entrypoint.sh /ros_ws/src/ros2-web-bridge/bin/rosbridge.js" output="screen"/>
+
+    <executable cwd="/ros_ws/src/ros2-web-bridge/examples" cmd="/node_entrypoint.sh index.js" output="screen"/>
+
+</launch>

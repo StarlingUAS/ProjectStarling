@@ -15,4 +15,8 @@ mavros_all_arch:
 %.image:
 	docker build -t starling-$% $(MAKEFILE_DIR)/$%
 
-.PHONY: mavros mavros_all_arch controller-base all
+ui:
+	docker build -t starling-ui $(MAKEFILE_DIR)/ui
+	docker tag starling-ui uobflightlabstarling/starling-ui
+
+.PHONY: mavros mavros_all_arch controller-base ui all
