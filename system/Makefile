@@ -17,5 +17,6 @@ mavros_all_arch:
 
 ui:
 	docker build -t starling-ui $(MAKEFILE_DIR)/ui
+	docker tag starling-ui uobflightlabstarling/starling-ui
 
 .PHONY: mavros mavros_all_arch controller-base ui all

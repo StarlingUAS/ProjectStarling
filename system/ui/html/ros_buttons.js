@@ -11,6 +11,11 @@
     console.log(error);
   });
 
+  ros.on('error', function(error) {
+    console.log('Maybe on k3s cluster, attempting to connect to localhost:30001')
+    ros.connect('ws://localhost:30001')
+  })
+
   // Find out exactly when we made a connection.
   ros.on('connection', function() {
     console.log('Connection made!');
