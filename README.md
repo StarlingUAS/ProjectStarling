@@ -19,7 +19,7 @@ Use this method for simualting real drones or using real drones.
 
 All container images required have already been prebuilt and are either on [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories) or somewhere else.
 
-In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo/ px4-sitl/ mavros example, equivalent to `make run`. This will (automatically) open up gazebo web on http://10.43.226.5:8080/ and the local k3s dashboard.
+In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo/ px4-sitl/ mavros example, equivalent to `make run`. This will (automatically) open up gazebo web on http://10.43.226.5:8080/, the local k3s dashboard and the starling-ui on http://localhost:30000.
 
 Opening a ground control station (gcs) program such as QGroundControl and creating a comms link to `udp://localhost:14553` and `udp://10.42.0.1:14553` will allow local monitoring.
 
