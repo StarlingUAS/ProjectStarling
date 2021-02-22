@@ -32,9 +32,12 @@ The only dependency is that you have Docker installed [see prerequists](#Prerequ
 
 Use this method for quick and easy local testing on a single machine.
 
-In the root directory, simply execute `make run` or `docker-compose up` in a terminal. This will start (1) Gazebo running 1 Iris quadcopter (2) A PX4-SITL instance (3) A Mavros node connected to the SITL instance. 
+In the root directory, simply execute `make run` or `docker-compose up` in a terminal. This might take a few minutes as it needs to download the images. 
+This will start (1) Gazebo running 1 Iris quadcopter (2) A PX4-SITL instance (3) A Mavros node connected to the SITL instance. 
 
 Go to http://127.0.0.1:8080 in a browser to (hopefully) see the gazebo simulator
+
+If a mavros or sitl instance is running, there will be a GCS link on `udp://localhost:14553` (hopefully). This means that you can run a GCS such as QGroundControl, create a comms link to `localhost:14553` on UDP and you should be able to control any sitl drone through a standard mavlink interface. This is a quick an easy way to spin up a SITL instance.
 
 An example offboard ROS2 controller can then be conncted to SITL by running the following in a separate terminal:
 ```bash
@@ -75,6 +78,7 @@ Each container essentially runs its own operating system (see wiki for more deta
 docker exec -it example_controller bash
 ```
 > Where `example_controller` is the name we gave the running instance. We essentially tell the container to execute `bash` for us to get a command line
+
 Inside you can `source install/setup.bash` and run ROS2 commands like normal. 
 
 ### Creating your own from scratch
@@ -101,11 +105,12 @@ Use `make run` to start the gazebo, sitl and mavros containers
 
 The root `Makefile` delegates to submakes to build various images:
  - `starling-sim-base-core` containing Gazebo, ROS2 and gzweb
- - `starling-sim-base-px4` built on top of `-core`, containing the PX4 Gazebo
-    plugins
- - `starling-sim-clover2` built on top of `-px4`, containing the Clover model
-    and textures
+ - `starling-sim-base-px4` built on top of `-core`, containing the PX4 Gazebo plugins
+ - `starling-sim-clover2` built on top of `-px4`, containing the Clover model and textures
+ - `starling-sim-iris` built on top of `-px4`, containing the Iris model and textures
  - `starling-sim-px4-sitl` containing just the PX4 SITL binary
+ - `starling-mavros` built on top of `ros:foxy` and runs ROS1 Mavros with the ROS1/2 Bridge to expose ROS2 mavros topics.
+ - `starling-ui` built on top of `ros:foxy` and constructs the simple go/stop ui.
 
 A `docker-compose` file sets up three containers; one for the Gazebo server,
 one for the PX4 SITL, and one for mavros.
