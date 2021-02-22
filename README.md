@@ -1,23 +1,52 @@
 # Project Starling
 
-## Build & Run
+The purpose of Starling is to update the control systems within the Bristol Robotics Laboratory Flight Arena in order to reduce the barrier to entry for those who wish to experiment with, and fly real drones.
 
-There are two methods to run:
+This project takes recent advancements in cloud computing, namely containerisation (docker) and container orchestration (kubernetes) as the core framework to manage networking and drone deployment, whether virtual (using SITL) or on real drones running companion computers (e.g. raspberry pi).
 
-### 1. Container Method
+This systems provides a number of key features.
 
-With `make` installed, run `make` in the root folder to build the docker images
-Use `make run` to start the gazebo, sitl and mavros containers
+- Primary support for ROS2 and MavLink
+- Built in simulation stack based on Gazebo
+- Quick transition to flying controllers on real drones.
 
-Go to http://127.0.0.1:8080 to (hopefully) see the simulator
+## Prerequisites
+
+This system has been tested on **linux ubuntu 20.04**. It should be compatible with any linux distribution compatible with Docker. It may work on windows and MacOS, however it is untested and there may be networking issues [See Link](https://github.com/arthurrichards77/ardupilot_sitl_docker#mission-planner-on-windows).
+
+This system also assumes the use of ROS2 Foxy for communication between nodes, MavLink for autopilot communication with Mavros used as the bridge. PX4 is currently the main tested firmware, although ardupilot is also on the list. 
+
+This system primarily uses containerisation technology ([Docker](https://www.docker.com/)) to encapsulate the dependencies of core systems. This means that running containered applications do not require any installation of extra dependencies apart from the Docker runtime. Full Install instructions are here: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/). The core container images (i.e. container executables) of this system are all hosted in the uobflightlabstarling docker hub repository: [https://hub.docker.com/orgs/uobflightlabstarling/repositories](https://hub.docker.com/orgs/uobflightlabstarling/repositories)
+
+In our system each Docker Container can contain one or more ROS2 nodes. For example the `uobflightlabstarling / starling-mavros` container contains Mavros and its dependencies and require no modification by most users. Each docker container can be run by using `Docker run...`. Multiple containers can be run simultaneously using the `docker-compose` tool and specifying a yaml configuration file. 
+
+When real drone hardware is added to the system a container deployment system is required, as docker (and docker-compose) only runs on one physical machine. [Kubernetes](https://kubernetes.io/) is what is known as a container orchestration platform controlling the deployment of groups of containers (known as pods) onto physical machines. The system can also be run within kubernetes locally on a single machine to test deployment before running on real hardware.
+
+Note that most of this is for the users information, we have wrapped up most of this functionality into Makefiles for ease of use. For more information about specifics, see the wiki page (TODO). 
+
+## Running Starling Examples
+
+The only dependency is that you have Docker installed [see prerequists](#Prerequisites). All container images required for the examples have already been prebuilt and are  on [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories).
+
+### 1. Docker Container
 
 Use this method for quick and easy local testing on a single machine.
 
-### 2. Kubernetes Deployment Method
+In the root directory, simply execute `make run` or `docker-compose up` in a terminal. This will start (1) Gazebo running 1 Iris quadcopter (2) A PX4-SITL instance (3) A Mavros node connected to the SITL instance. 
 
-Use this method for simualting real drones or using real drones.
+Go to http://127.0.0.1:8080 in a browser to (hopefully) see the gazebo simulator
 
-All container images required have already been prebuilt and are either on [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories) or somewhere else.
+An example offboard ROS2 controller can then be conncted to SITL by running the following in a separate terminal:
+```bash
+docker run -it --rm --network projectstarling_default uobflightlabstarling/example_controller_python
+```
+> This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `make run` or `docker-compose`. The default network name is `<foldername>_default`.
+
+Once connected, you should see the drone fly around in circles in gazebo.
+
+### 2. Kubernetes Deployment
+
+Use this method for simualting real drone network architecture or using real drones.
 
 In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo/ px4-sitl/ mavros example, equivalent to `make run`. This will (automatically) open up gazebo web on http://10.43.226.5:8080/, the local k3s dashboard and the starling-ui on http://localhost:30000.
 
@@ -32,7 +61,43 @@ A mavros node can be placed on the drone by then applying the following configur
 sudo k3s kubectl apply -f deployment/k8.mavros.arm64.yaml
 ```
 See [the following README.md for further details](deployment/README.md)
-## Container Details
+
+## Implementing a Controller
+### Modifying the example controller
+In the [controllers](controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package can be built by running `make` in the controllers directory. This will use colcon build to build the node and output a local image named `example_controller_python`. This local image can be run as follows:
+```bash
+docker run -it --name example_controller --rm --network projectstarling_default example_controller_python
+```
+> Note that because `uobflightlabstarling` is not referenced, it will look locally for a docker image. `--name` gives this instance a name which we can refer to.
+
+Each container essentially runs its own operating system (see wiki for more details). Just as you could ssh into another machine, you can also inspect a running container:
+```bash
+docker exec -it example_controller bash
+```
+> Where `example_controller` is the name we gave the running instance. We essentially tell the container to execute `bash` for us to get a command line
+Inside you can `source install/setup.bash` and run ROS2 commands like normal. 
+
+### Creating your own from scratch
+
+Of course you can create your own controller from scratch. Inside your controller repository, the following is required
+1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
+2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](controllers/example_controller_python/Dockerfile) as a template. 
+
+Your Dockerfile can be built by running the following in the directory with the Dockerfile.
+```
+docker build -t <name of your controller> .
+```
+
+Your container can then be run as above.
+
+## Core Starling Containers
+
+### Building
+
+With `make` installed, run `make` in the root folder to build the docker images
+Use `make run` to start the gazebo, sitl and mavros containers
+
+### Container Details
 
 The root `Makefile` delegates to submakes to build various images:
  - `starling-sim-base-core` containing Gazebo, ROS2 and gzweb
@@ -53,6 +118,7 @@ script to spawn an instance of the Clover model in Gazebo. This model comes
 from the `/robot_description` topic which is published by ROS2's
 `robot_state_publisher`.
 
+## Extra Notes
 ### Scaling
 
 Scaling this setup involves spawning additional models on the Gazebo server and
@@ -67,13 +133,13 @@ for the `mavros` image provides the adjustment for the MAVROS side.
 Example of how scaling might work is in `docker-compose.multiple.yml` but this
 hasn't been tested.
 
-# Ideas
+## Additional Ideas
 
 Ideally, baking the model into the image would not be required. Unfortunately,
 gzweb needs model-specific assets before it can display a model. Custom plugins
 may also be needed by the Gazebo server before a model can be loaded. Volumes
 might provide a neater, if less user friendly way to do this.
 
-## `ros.env.d`
+### `ros.env.d`
 Adding a folder to a `/ros.env.d` could provide an extendable way to add to the
 ros environment. e.g. including additional model/plugin paths for Gazebo.
