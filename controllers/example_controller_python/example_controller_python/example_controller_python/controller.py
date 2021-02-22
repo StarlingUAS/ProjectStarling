@@ -171,52 +171,52 @@ class DemoController(Node):
 
         if self.state == 'Land':
             print(vehicle_position.pose.position.z)
-            if self.land_offset < 1.0:
-                self.land_offset += 0.05
-                setpoint_msg.pose.position.z -= self.land_offset
+            if self.vehicle_position.pose.position.z > 0.1:
+                self.land()
             else:
-                setpoint_msg.pose.position.z -= self.land_offset
-                if self.vehicle_position.pose.position.z < 0.5:
-                    self.state = 'Disarming'
-                    self.takeoff_offset = 0
-                    print('Going to Disarming')
+                self.state = 'Disarming'
+                print('Going to Disarming')
 
         if self.controller_command == 'Run':
             if self.state == 'Takeoff':
-                height = 1
+                height = 1.0
                 if self.vehicle_position.pose.position.z < height * 0.95:
                     self.takeoff(height)
-                # if self.takeoff_offset < 1.0:
-                #     self.takeoff_offset += 0.05
-                #     setpoint_msg.pose.position.z += self.takeoff_offset
                 else:
-                    # setpoint_msg.pose.position.z += self.takeoff_offset
-                    # Wait for takeoff to be complete
-                    if self.vehicle_position.pose.position.z > 0.95:
-                        print("Going to Flight")
-                        self.state = 'Flight'
+                    print("Going to Flight")
+                    self.state = 'Flight'
 
             if self.state == 'Flight':
                 radius = 1.0
                 self.angle = (self.angle + 0.005) % (2*math.pi)
                 setpoint_msg.pose.position.x = radius * math.cos(self.angle)
                 setpoint_msg.pose.position.y = radius * math.sin(self.angle)
-                setpoint_msg.pose.position.z = 1.0
+                setpoint_msg.pose.position.z = self.pose.position.z
 
         if setpoint_msg != None:
             self.setpoint_publisher.publish(setpoint_msg)
 
         
-    def takeoff(self, attitude):
+    def takeoff(self, altitude):
         print('Attempting Takeoff')
         takeoffCommandTOLCall = mavros_msgs.srv.CommandTOL.Request()
         takeoffCommandTOLCall.min_pitch = 0.5
         takeoffCommandTOLCall.yaw = 0.0
         takeoffCommandTOLCall.latitude = self.vehicle_gps_position.latitude
         takeoffCommandTOLCall.longitude = self.vehicle_gps_position.longitude
-        takeoffCommandTOLCall.attitude = attitude
+        takeoffCommandTOLCall.altitude = altitude
         self.takeoff_rate_limiter.call(lambda: self.takeoff_client.call_async(takeoffCommandTOLCall))
 
+
+    def land(self):
+        print('Attempting Takeoff')
+        landCommandTOLCall = mavros_msgs.srv.CommandTOL.Request()
+        landCommandTOLCall.min_pitch = 0.5
+        landCommandTOLCall.yaw = 0.0
+        landCommandTOLCall.latitude = self.vehicle_gps_position.latitude
+        landCommandTOLCall.longitude = self.vehicle_gps_position.longitude
+        landCommandTOLCall.altitude = 0.0
+        self.landing_rate_limiter.call(lambda: self.landing_client.call_async(landCommandTOLCall))
 
 def main(args=None):
     rclpy.init(args=args)
