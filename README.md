@@ -32,9 +32,12 @@ The only dependency is that you have Docker installed [see prerequists](#Prerequ
 
 Use this method for quick and easy local testing on a single machine.
 
-In the root directory, simply execute `make run` or `docker-compose up` in a terminal. This will start (1) Gazebo running 1 Iris quadcopter (2) A PX4-SITL instance (3) A Mavros node connected to the SITL instance. 
+In the root directory, simply execute `make run` or `docker-compose up` in a terminal. This will start (1) Gazebo running 1 Iris quadcopter (2) A PX4-SITL instance (3) A Mavros node connected to the SITL instance (4) A simple UI with a go and estop button. 
 
-Go to http://127.0.0.1:8080 in a browser to (hopefully) see the gazebo simulator
+> Note this might take a while to download the images off of hub.docker.com 
+
+- Go to http://localhost:8080 in a browser to (hopefully) see the gazebo simulator
+- Go to http://localhost:3000/html/main.html in a browser to see the starling user interface
 
 An example offboard ROS2 controller can then be conncted to SITL by running the following in a separate terminal:
 ```bash
@@ -42,7 +45,7 @@ docker run -it --rm --network projectstarling_default uobflightlabstarling/examp
 ```
 > This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `make run` or `docker-compose`. The default network name is `<foldername>_default`.
 
-Once connected, you should see the drone fly around in circles in gazebo.
+When run, the example will confirm in the terminal that it has connected and that it is waiting for mission start. To start the mission, press the green go button in the [starling user interface](http://localhost:3000/html/main.html) which will send a message over `/mission_start` topic. A confirmation message should appear in the terminal, and the drone will arm (drone propellors spinning up) and takeoff. It will fly in circles for 10 seconds before landing and disarming. 
 
 ### 2. Kubernetes Deployment
 
