@@ -88,6 +88,8 @@ class DemoController(Node):
         self.vehicle_state = mavros_msgs.msg.State()
 
         self.initial_position = None
+        self.flight_start_time = None
+        self.flight_duration = rclpy.duration.Duration(seconds=10.0)
 
         self.angle = 0
     
@@ -113,7 +115,6 @@ class DemoController(Node):
             # Currently will just land and disarm
             self.eSTOP()
             self.state = 'DEAD'
-            
 
         if self.state == 'Init':
             if self.initial_position == None and self.vehicle_position != None:
@@ -123,7 +124,7 @@ class DemoController(Node):
                     self.initial_position.pose.position.y,
                     self.initial_position.pose.position.z
                     ))
-                print("Going to ModeSwitch")
+                print("Initialisation Confirmed, Going to ModeSwitch")
                 self.state = 'ModeSwitch'
 
         if self.state == 'ModeSwitch':
@@ -132,17 +133,8 @@ class DemoController(Node):
                 modeSetCall.custom_mode = "OFFBOARD"
                 self.offboard_rate_limiter.call(lambda: self.offboard_client.call_async(modeSetCall))
             else:
-                print("Going to Arming")
-                self.state = 'Arming'
-
-        if self.state == 'Arming':
-            if self.vehicle_state.armed != True:
-                armingCall = mavros_msgs.srv.CommandBool.Request()
-                armingCall.value = True
-                self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
-            else:
-                self.state = 'Takeoff'
-                print("Going to Takeoff, Waiting for Missin Start")
+                print("Mode Switch Confirmed, Waiting for Mission Start, Before Arming")
+                self.state = 'Arming'       
         
         if self.state == 'Disarming':
             if self.vehicle_state.armed == True:
@@ -150,7 +142,9 @@ class DemoController(Node):
                 armingCall.value = False
                 self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
             else:
-                print("Disarmed, switch off or restart drone")
+                print("Disarm Completed, Switch Off or Restart Drone")
+                print("CTRL+C To Exit")
+                self.timer.cancel()
 
         setpoint_msg = None
         if self.initial_position != None:
@@ -159,7 +153,6 @@ class DemoController(Node):
             setpoint_msg.pose = self.initial_position.pose
 
         if self.state == 'Land':
-            print(self.vehicle_position.pose.position.z)
             if self.land_offset < 1.0:
                 self.land_offset += 0.05
                 setpoint_msg.pose.position.z -= self.land_offset
@@ -168,9 +161,18 @@ class DemoController(Node):
                 if self.vehicle_position.pose.position.z < 0.1:
                     self.state = 'Disarming'
                     self.takeoff_offset = 0
-                    print('Going to Disarming')
+                    print('Landing Confirmed, Going to Disarming')
 
         if self.controller_command == 'Run':
+            if self.state == 'Arming':
+                if self.vehicle_state.armed != True:
+                    armingCall = mavros_msgs.srv.CommandBool.Request()
+                    armingCall.value = True
+                    self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
+                else:
+                    self.state = 'Takeoff'
+                    print("Arm Completed, Going to Takeoff")
+                    
             if self.state == 'Takeoff':
                 if self.takeoff_offset < 1.0:
                     self.takeoff_offset += 0.05
@@ -178,16 +180,22 @@ class DemoController(Node):
                 else:
                     setpoint_msg.pose.position.z += self.takeoff_offset
                     # Wait for takeoff to be complete
-                    if self.vehicle_position.pose.position.z > 0.95 * self.flight_height:
-                        print("Going to Land")
-                        self.state = 'Land'
+                    if self.vehicle_position.pose.position.z > self.flight_height:
+                        print("Takeoff Confirmed, Going to Flight")
+                        self.state = 'Flight'
 
             if self.state == 'Flight':
-                radius = 1.0
-                self.angle = (self.angle + 0.005) % (2*math.pi)
-                setpoint_msg.pose.position.x = radius * math.cos(self.angle)
-                setpoint_msg.pose.position.y = radius * math.sin(self.angle)
-                setpoint_msg.pose.position.z = 1.0
+                if self.flight_start_time is None:
+                    self.flight_start_time = self.get_clock().now()
+                elif self.get_clock().now() - self.flight_start_time > self.flight_duration:
+                    print("Flight Completed, Going for Landing")
+                    self.state = 'Land'
+                else:
+                    radius = 1.0
+                    self.angle = (self.angle + 0.005) % (2*math.pi)
+                    setpoint_msg.pose.position.x = radius * math.cos(self.angle)
+                    setpoint_msg.pose.position.y = radius * math.sin(self.angle)
+                    setpoint_msg.pose.position.z = 1.0
 
         if setpoint_msg != None:
             self.setpoint_publisher.publish(setpoint_msg)
