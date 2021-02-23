@@ -159,13 +159,13 @@ class DemoController(Node):
             setpoint_msg.pose = self.initial_position.pose
 
         if self.state == 'Land':
-            print(vehicle_position.pose.position.z)
+            print(self.vehicle_position.pose.position.z)
             if self.land_offset < 1.0:
                 self.land_offset += 0.05
                 setpoint_msg.pose.position.z -= self.land_offset
             else:
                 setpoint_msg.pose.position.z -= self.land_offset
-                if self.vehicle_position.pose.position.z < 0.2:
+                if self.vehicle_position.pose.position.z < 0.1:
                     self.state = 'Disarming'
                     self.takeoff_offset = 0
                     print('Going to Disarming')
