@@ -74,8 +74,8 @@ class DemoController(Node):
         )
         
         self.takeoff_offset = 0
-        self.land_offset = 0
-        self.flight_height = 2.5
+        self.land_offset = None
+        self.flight_height = 5.0
 
         self.controller_command = 'Init'
 
@@ -106,9 +106,6 @@ class DemoController(Node):
 
     def state_callback(self,msg):
         self.vehicle_state = msg
-
-    def gps_position_callback(self,msg):
-        self.vehicle_gps_position = msg
 
     def timer_callback(self):
         if self.controller_command == 'eStop':
@@ -153,14 +150,16 @@ class DemoController(Node):
             setpoint_msg.pose = self.initial_position.pose
 
         if self.state == 'Land':
-            if self.land_offset < 1.0:
-                self.land_offset += 0.05
+            if self.land_offset is None:
+                self.land_offset = self.vehicle_position.pose.position.z
+            if self.land_offset > 0.05:
+                self.land_offset -= 0.05
                 setpoint_msg.pose.position.z -= self.land_offset
             else:
                 setpoint_msg.pose.position.z -= self.land_offset
                 if self.vehicle_position.pose.position.z < 0.1:
                     self.state = 'Disarming'
-                    self.takeoff_offset = 0
+                    # self.takeoff_offset = 0
                     print('Landing Confirmed, Going to Disarming')
 
         if self.controller_command == 'Run':
@@ -174,7 +173,7 @@ class DemoController(Node):
                     print("Arm Completed, Going to Takeoff")
                     
             if self.state == 'Takeoff':
-                if self.takeoff_offset < 1.0:
+                if self.takeoff_offset < self.flight_height:
                     self.takeoff_offset += 0.05
                     setpoint_msg.pose.position.z += self.takeoff_offset
                 else:
@@ -195,7 +194,7 @@ class DemoController(Node):
                     self.angle = (self.angle + 0.005) % (2*math.pi)
                     setpoint_msg.pose.position.x = radius * math.cos(self.angle)
                     setpoint_msg.pose.position.y = radius * math.sin(self.angle)
-                    setpoint_msg.pose.position.z = 1.0
+                    setpoint_msg.pose.position.z = self.flight_height
 
         if setpoint_msg != None:
             self.setpoint_publisher.publish(setpoint_msg)
