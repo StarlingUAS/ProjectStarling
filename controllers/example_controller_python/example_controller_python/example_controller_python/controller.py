@@ -75,6 +75,7 @@ class DemoController(Node):
         
         self.takeoff_offset = 0
         self.land_offset = 0
+        self.flight_height = 2.5
 
         self.controller_command = 'Init'
 
@@ -164,7 +165,7 @@ class DemoController(Node):
                 setpoint_msg.pose.position.z -= self.land_offset
             else:
                 setpoint_msg.pose.position.z -= self.land_offset
-                if self.vehicle_position.pose.position.z < 0.5:
+                if self.vehicle_position.pose.position.z < 0.2:
                     self.state = 'Disarming'
                     self.takeoff_offset = 0
                     print('Going to Disarming')
@@ -177,9 +178,9 @@ class DemoController(Node):
                 else:
                     setpoint_msg.pose.position.z += self.takeoff_offset
                     # Wait for takeoff to be complete
-                    if self.vehicle_position.pose.position.z > 0.95:
-                        print("Going to Flight")
-                        self.state = 'Flight'
+                    if self.vehicle_position.pose.position.z > 0.95 * self.flight_height:
+                        print("Going to Land")
+                        self.state = 'Land'
 
             if self.state == 'Flight':
                 radius = 1.0
