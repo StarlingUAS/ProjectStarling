@@ -1,0 +1,45 @@
+# This defines the admin-user service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+---
+# In tutorials this is referred to as
+# dashboard.admin-user-role.yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+
+---
+# Dashboard Service to forward service onto localhost 31771                                                                                                                        
+apiVersion: v1                                                                                                                                                        
+kind: Service                                                                                                                                                         
+metadata:                                                                                                                                                             
+  labels:                                                                                                                                                             
+    k8s-app: kubernetes-dashboard                                                                                                                                     
+  name: kubernetes-dashboard                                                                                                                                          
+  namespace: kubernetes-dashboard                                                                                                                                     
+spec:                                                                                                                                                                 
+  externalTrafficPolicy: Cluster                                                                                                                                      
+  ports:                                                                                                                                                              
+  - nodePort: 31771                                                                                                                                                   
+    port: 443                                                                                                                                                         
+    protocol: TCP                                                                                                                                                     
+    targetPort: 8443                                                                                                                                                  
+  selector:                                                                                                                                                           
+    k8s-app: kubernetes-dashboard                                                                                                                                     
+  sessionAffinity: None                                                                                                                                               
+  type: NodePort                                                                                                                                                      
+status:                                                                                                                                                               
+  loadBalancer: {}     
