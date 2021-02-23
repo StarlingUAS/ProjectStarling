@@ -20,5 +20,27 @@ versioning and is used for distributing the core Starling files. It can be downl
 
 ## Getting Starling
 
-Clone the `ProjectStarling` repo to a working folder on your computer. You probably want to avoid any
-cloud-backed folders as these tend to interfere with git.
+Clone the `ProjectStarling` repo to a working folder on your computer. You probably want to avoid
+any cloud-backed folders as these tend to interfere with git.
+
+## Running
+
+With Docker installed and the repo downloaded, navigate into the project folder in a terminal.
+Once there you should see a file called `docker-compose.yml`. This contains instructions for a tool
+called `docker-compose` to setup a set of containers for you.
+
+To launch the containers, make sure you're in the root of the ProjectStarling repo and run:
+```ps
+docker-compose up
+```
+
+You should see the tool begin to "pull" (download) the files needed to run the project. These have
+been built from files in the Starling repo and uploaded to DockerHub to save you time. Some of these
+files are quite big, so be prepared to wait a while for downloading to finish. After the first run,
+the system will use the already-downloaded files which will speed up the process.
+
+One the downloading process is complete, the tool will begin to setup the containers. At this point,
+Windows may prompt you to allow "Docker Container Backend" to connect to networks
+
+With everything running, and docker allowed to access the network, open a web browser and go to
+[localhost:8080](http://localhost:8080) where you should see the web-based Gazebo interface.
