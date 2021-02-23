@@ -102,7 +102,10 @@ xcode-select --install
 
 # Deployment
 
-Once built, the Matlab script calls `ros.internal.custommsgs.updatePreferences(msgFullName,{},{},{},'ros2',genDir)`,
+~Once built, the Matlab script calls `ros.internal.custommsgs.updatePreferences(msgFullName,{},{},{},'ros2',genDir)`,
 where `genDir = fullfile(folderPath, 'matlab_msg_gen', computer('arch'));` (e.g. `matlab_msgs/matlab_msg_gen/win64`),
 and `msgFullName` is a cell array containing `${PKG_NAME}/${MSG_NAME}` strings. How to do this without the build
-process? I don't know...
+process? I don't know...~
+
+Maybe solved, see MATLAB answers:
+[uk.mathworks.com/matlabcentral/answers/616223](https://uk.mathworks.com/matlabcentral/answers/616223)
