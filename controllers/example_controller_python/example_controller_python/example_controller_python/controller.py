@@ -1,4 +1,5 @@
 import math
+import copy
 
 import rclpy
 from rclpy.node import Node
@@ -115,7 +116,7 @@ class DemoController(Node):
 
         if self.state == 'Init':
             if self.initial_position == None and self.vehicle_position != None:
-                self.initial_position = self.vehicle_position
+                self.initial_position = copy.deepcopy(self.vehicle_position)
                 print("Got initial position: ({},{},{})".format(
                     self.initial_position.pose.position.x,
                     self.initial_position.pose.position.y,
@@ -147,20 +148,18 @@ class DemoController(Node):
         if self.initial_position != None:
             setpoint_msg = PoseStamped()
             setpoint_msg.header.stamp = self.get_clock().now().to_msg()
-            setpoint_msg.pose = self.initial_position.pose
+            setpoint_msg.pose = copy.deepcopy(self.initial_position.pose)
 
         if self.state == 'Land':
             if self.land_offset is None:
                 self.land_offset = self.vehicle_position.pose.position.z
-            if self.land_offset > 0.05:
-                self.land_offset -= 0.05
-                setpoint_msg.pose.position.z -= self.land_offset
+            if self.land_offset > -50 and self.vehicle_position.pose.position.z > 0.05:
+                self.land_offset -= 0.01
+                setpoint_msg.pose.position.z += self.land_offset
+                print(self.vehicle_position.pose.position.z)
             else:
-                setpoint_msg.pose.position.z -= self.land_offset
-                if self.vehicle_position.pose.position.z < 0.1:
-                    self.state = 'Disarming'
-                    # self.takeoff_offset = 0
-                    print('Landing Confirmed, Going to Disarming')
+                self.state = 'Disarming'
+                print('Landing Confirmed, Going to Disarming')
 
         if self.controller_command == 'Run':
             if self.state == 'Arming':
@@ -179,7 +178,7 @@ class DemoController(Node):
                 else:
                     setpoint_msg.pose.position.z += self.takeoff_offset
                     # Wait for takeoff to be complete
-                    if self.vehicle_position.pose.position.z > self.flight_height:
+                    if self.vehicle_position.pose.position.z > self.flight_height * 0.95:
                         print("Takeoff Confirmed, Going to Flight")
                         self.state = 'Flight'
 
