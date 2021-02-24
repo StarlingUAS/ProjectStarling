@@ -15,7 +15,7 @@ The .yaml files in this directory are all kubernetes configurations for various 
 
 ### Files
 
-- **k8.starling-gazebo.amd64.yaml** :- Currently runs the `starling-sim-iris` image and a Service which exposes the gzweb statically on `localhost:8080`. This service has a cluster internal hostname of `sim-gazebo.gazebo-srv`
+- **k8.gazebo-iris.amd64.yaml** :- Currently runs the `starling-sim-iris` image and a Service which exposes the gzweb statically on `localhost:8080`. This service has a cluster internal hostname of `sim-gazebo.gazebo-srv`
 - **k8.px4-sitl.amd64.yaml** :- Currently runs a pod containing two containers
     - `starling-sim-px4-sitl` - emulating px4-sitl. Talks to GCS software on port 14550 with replies on 18570.
     - `starling-mavros` - contains a ROS2 mavros node connected via udp://localhost:14540 to sitl. Talks to GCS on udp broadcast port 14553.

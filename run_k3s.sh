@@ -20,28 +20,32 @@ echo $DASHBOARD_TOKEN
 echo $DASHBOARD_TOKEN | xclip -selection clipboard -i
 echo "The token has been copied onto your clipboard"
 echo "Note: your browser may not like the self signed ssl certificate, ignore and containue for now"
+echo "To get the token yourself run: sudo k3s kubectl -n kubernetes-dashboard describe secret admin-user-token"
 echo "==================="
 
 echo "Deploying Starling Modules (this may take a while)"
 echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
-sudo k3s kubectl apply -f deployment/k8.starling-gazebo.amd64.yaml
-
-echo "Deploying px4-sitl with mavros"
-sudo k3s kubectl apply -f deployment/k8.px4-sitl.amd64.yaml
+sudo k3s kubectl apply -f deployment/k8.gazebo-iris.amd64.yaml
 
 echo "Deploying web ui"
 sudo k3s kubectl apply -f system/ui/kubernetes.yaml
 
+echo "Waiting 20s for Gazebo to start to ensure proper connection"
+sleep 20s
+
+echo "Deploying px4-sitl with mavros"
+sudo k3s kubectl apply -f deployment/k8.px4-sitl.amd64.yaml
+
 echo "Wait for containers to initialise"
 sleep 10s
 
-echo "Opening Starling UI"
+echo "Opening Starling UI to http://localhost:3000/html/main.html"
 xdg-open http://localhost:3000/html/main.html
 
-echo "Opening gazebo"
+echo "Opening gazebo to http://localhost:8080"
 xdg-open http://localhost:8080
 
-echo "Opening Dashboard"
+echo "Opening Dashboard to https://localhost:31771"
 xdg-open https://localhost:31771
 
 echo "All actions completed"
