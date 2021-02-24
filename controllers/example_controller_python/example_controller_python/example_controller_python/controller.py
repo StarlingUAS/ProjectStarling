@@ -28,6 +28,7 @@ class DemoController(Node):
 
     def __init__(self):
         super().__init__('demo_controller')
+        self.logger = self.get_logger()
 
         self.start_mission_subscriber = self.create_subscription(
             String,
@@ -99,11 +100,11 @@ class DemoController(Node):
     
     def mission_start_callback(self, msg):
         self.controller_command = "Run"
-        print('\033[92m' + 'MISSION START RECEIVED: ' + str(msg) + '\033[0m')
+        self.logger.info('\033[92m' + 'MISSION START RECEIVED: ' + str(msg) + '\033[0m')
 
     def emergency_stop_callback(self, msg):
         self.controller_command = "eStop"
-        print('\033[91m' + 'EMERGENCY: ESTOP PRESS RECEIVED' + '\033[0m')
+        self.logger.fatal('\033[91m' + 'EMERGENCY: ESTOP PRESS RECEIVED' + '\033[0m')
 
     def position_callback(self,msg):
         self.vehicle_position = msg
@@ -114,7 +115,7 @@ class DemoController(Node):
     def timer_callback(self):
         
         if self.state == 'DEAD':
-            print('Drone in Dead State, Switch Off or Restart Controller')
+            self.logger.info('Drone in Dead State, Switch Off or Restart Controller')
             self.timer.cancel()
             self.destroy_node()
 
@@ -126,12 +127,12 @@ class DemoController(Node):
         if self.state == 'Init':
             if self.initial_position == None and self.vehicle_position != None:
                 self.initial_position = copy.deepcopy(self.vehicle_position)
-                print("Got initial position: ({},{},{})".format(
+                self.logger.info("Got initial position: ({},{},{})".format(
                     self.initial_position.pose.position.x,
                     self.initial_position.pose.position.y,
                     self.initial_position.pose.position.z
                     ))
-                print("Initialisation Confirmed, Going to ModeSwitch")
+                self.logger.info("Initialisation Confirmed, Going to ModeSwitch")
                 self.state = 'ModeSwitch'
 
         if self.state == 'ModeSwitch':
@@ -140,7 +141,7 @@ class DemoController(Node):
                 modeSetCall.custom_mode = "OFFBOARD"
                 self.offboard_rate_limiter.call(lambda: self.offboard_client.call_async(modeSetCall))
             else:
-                print("Mode Switch Confirmed, Waiting for Mission Start, Before Arming")
+                self.logger.info("Mode Switch Confirmed, Waiting for Mission Start, Before Arming")
                 self.state = 'Arming'       
         
         if self.state == 'Disarming':
@@ -149,7 +150,7 @@ class DemoController(Node):
                 armingCall.value = False
                 self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
             else:
-                print("Disarm Completed")
+                self.logger.info("Disarm Completed")
                 self.state = 'DEAD'
 
         setpoint_msg = None
@@ -167,11 +168,11 @@ class DemoController(Node):
                 setpoint_msg.pose.position.z += self.land_offset
             elif self.get_clock().now() - self.land_start_time > self.land_duration_before_estop:
                 self.eSTOP()
-                print('Exceeded Time Required To Land eSTOP activated')
+                self.logger.info('Exceeded Time Required To Land eSTOP activated')
                 self.state = 'DEAD'
             else:
                 self.state = 'Disarming'
-                print('Landing Confirmed, Going to Disarming')
+                self.logger.info('Landing Confirmed, Going to Disarming')
 
         if self.controller_command == 'Run':
             if self.state == 'Arming':
@@ -181,7 +182,7 @@ class DemoController(Node):
                     self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
                 else:
                     self.state = 'Takeoff'
-                    print("Arm Completed, Going to Takeoff")
+                    self.logger.info("Arm Completed, Going to Takeoff")
                     
             if self.state == 'Takeoff':
                 if self.takeoff_offset < self.flight_height:
@@ -191,14 +192,14 @@ class DemoController(Node):
                     setpoint_msg.pose.position.z += self.takeoff_offset
                     # Wait for takeoff to be complete
                     if self.vehicle_position.pose.position.z > self.flight_height * 0.95:
-                        print("Takeoff Confirmed, Going to Flight")
+                        self.logger.info("Takeoff Confirmed, Going to Flight")
                         self.state = 'Flight'
 
             if self.state == 'Flight':
                 if self.flight_start_time is None:
                     self.flight_start_time = self.get_clock().now()
                 elif self.get_clock().now() - self.flight_start_time > self.flight_duration:
-                    print("Flight Completed, Going for Landing")
+                    self.logger.info("Flight Completed, Going for Landing")
                     self.state = 'Land'
                 else:
                     radius = 1.0
@@ -226,19 +227,20 @@ class DemoController(Node):
         commandCall.param6 = 0.0
         commandCall.param7 = 0.0
         self.command_rate_limiter.call(lambda: self.command_client.call_async(commandCall))
-        print('\033[91m' + 'EMERGENCY: KILL SIGNAL SENT' + '\033[0m')
+        self.logger.fatal('\033[91m' + 'EMERGENCY: KILL SIGNAL SENT' + '\033[0m')
 
 
 def main(args=None):
     rclpy.init(args=args)
 
     demo_controller = DemoController()
+    demo_controller.get_logger().info('STARTING DEMO CONTROLLER NOW!')
 
     try:
         rclpy.spin(demo_controller)
     except rclpy.handle.InvalidHandle as e:
         # Raised by node destroying itself.
-        print('demo_controller exited')
+        demo_controller.get_logger().info('demo_controller exited')
     else:
         demo_controller.destroy_node()
 
