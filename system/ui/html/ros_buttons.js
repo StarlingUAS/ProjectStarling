@@ -54,9 +54,11 @@
     example.publish({data: message});
     console.log("Emergency Stop Pressed")
     $('#eStopSentMessage').show()
+    document.getElementById('eStopButton').style.filter="brightness(50%)"
     setTimeout(function() {
         $('#eStopSentMessage').hide()
-      }, 4000);
+        document.getElementById('eStopButton').style.filter="brightness(100%)"
+      }, 1000);
   }
 
   function sendMissionStart() {
@@ -64,9 +66,11 @@
     start_publisher.publish({data: message})
     console.log("Mission Start Pressed")
     $('#missionStartSentMessage').show()
+    document.getElementById('missionStartButton').style.filter="brightness(50%)"
     setTimeout(function() {
         $('#missionStartSentMessage').hide()
-      }, 4000);
+        document.getElementById('missionStartButton').style.filter="brightness(100%)"
+      }, 1000);
   }
 
   document.getElementById('eStopButton').addEventListener('click',sendEmergencyStop);
