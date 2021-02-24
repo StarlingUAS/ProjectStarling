@@ -27,15 +27,12 @@ kind: Service
 metadata:
   name: starling-ui-srv
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: starling-ui 
   ports:
     - port: 3000
-      nodePort: 30000
       name: http
     - port: 9090
-      targetPort: 9090
-      nodePort: 30001
       name: ros-bridge
     

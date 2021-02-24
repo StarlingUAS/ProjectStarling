@@ -23,7 +23,7 @@ echo "Note: your browser may not like the self signed ssl certificate, ignore an
 echo "==================="
 
 echo "Deploying Starling Modules (this may take a while)"
-echo "Deploying Gazebo-iris to 10.43.226.5:8080 and wait for start"
+echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
 sudo k3s kubectl apply -f deployment/k8.starling-gazebo.amd64.yaml
 
 echo "Deploying px4-sitl with mavros"
@@ -36,10 +36,10 @@ echo "Wait for containers to initialise"
 sleep 10s
 
 echo "Opening Starling UI"
-xdg-open http://localhost:30000/html/main.html
+xdg-open http://localhost:3000/html/main.html
 
 echo "Opening gazebo"
-xdg-open http://10.43.226.5:8080
+xdg-open http://localhost:8080
 
 echo "Opening Dashboard"
 xdg-open https://localhost:31771

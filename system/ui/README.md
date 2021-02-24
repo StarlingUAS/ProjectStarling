@@ -55,10 +55,10 @@ The UI can also be run within the kubernetes deployment and network. To start as
 sudo k3s kubectl apply -f kubernetes.yaml
 ```
 
-This will both start the `uobflightlabstarling/starling-ui` image, and a kubernetes service which exposes the website to outside of the cluster. The web page is then located at [https://localhost:30000/html/main.html](https://localhost:30000/html/main.html). 
+This will both start the `uobflightlabstarling/starling-ui` image, and a kubernetes service which exposes the website to outside of the cluster. The web page is then located at [https://localhost:3000/html/main.html](https://localhost:3000/html/main.html). 
 
 > **NOTE**:
-> Due to kubernetes port allowances, port 9090 for ros web bridge traffic has been remapped to 30001. The webpage [html/ros_button.js](html/ros_button.js) attempts to always first connect to `localhost:9090` but on failure will assume it may be running in kubernetes and will attempt to connect to `localhost:30001`.
+> Localhost port 9090 is also used for `ros_bridge` traffic
 
 ### Notes
 
