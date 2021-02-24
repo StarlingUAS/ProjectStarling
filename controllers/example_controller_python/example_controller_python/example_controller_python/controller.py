@@ -92,6 +92,9 @@ class DemoController(Node):
         self.flight_start_time = None
         self.flight_duration = rclpy.duration.Duration(seconds=10.0)
 
+        self.land_start_time = None
+        self.land_duration_before_estop = rclpy.duration.Duration(seconds=60.0)
+
         self.angle = 0
     
     def mission_start_callback(self, msg):
@@ -109,6 +112,12 @@ class DemoController(Node):
         self.vehicle_state = msg
 
     def timer_callback(self):
+        
+        if self.state == 'DEAD':
+            print('Drone in Dead State, Switch Off or Restart Controller')
+            self.timer.cancel()
+            self.destroy_node()
+
         if self.controller_command == 'eStop':
             # Currently will just land and disarm
             self.eSTOP()
@@ -140,9 +149,8 @@ class DemoController(Node):
                 armingCall.value = False
                 self.arm_rate_limiter.call(lambda: self.arming_client.call_async(armingCall))
             else:
-                print("Disarm Completed, Switch Off or Restart Drone")
-                print("CTRL+C To Exit")
-                self.timer.cancel()
+                print("Disarm Completed")
+                self.state = 'DEAD'
 
         setpoint_msg = None
         if self.initial_position != None:
@@ -153,10 +161,14 @@ class DemoController(Node):
         if self.state == 'Land':
             if self.land_offset is None:
                 self.land_offset = self.vehicle_position.pose.position.z
-            if self.land_offset > -50 and self.vehicle_position.pose.position.z > 0.05:
+                self.land_start_time = self.get_clock().now()
+            elif self.land_offset > -10:
                 self.land_offset -= 0.01
                 setpoint_msg.pose.position.z += self.land_offset
-                print(self.vehicle_position.pose.position.z)
+            elif self.get_clock().now() - self.land_start_time > self.land_duration_before_estop:
+                self.eSTOP()
+                print('Exceeded Time Required To Land eSTOP activated')
+                self.state = 'DEAD'
             else:
                 self.state = 'Disarming'
                 print('Landing Confirmed, Going to Disarming')
@@ -202,6 +214,7 @@ class DemoController(Node):
     def eSTOP(self):
         # eStop achieved by sending ARM command (400)
         # with param2 set to 21196
+        # see: https://github.com/PX4/PX4-Autopilot/issues/14465#issuecomment-603265985 
         commandCall = mavros_msgs.srv.CommandLong.Request()
         commandCall.broadcast = False
         commandCall.command = 400
@@ -221,9 +234,14 @@ def main(args=None):
 
     demo_controller = DemoController()
 
-    rclpy.spin(demo_controller)
+    try:
+        rclpy.spin(demo_controller)
+    except rclpy.handle.InvalidHandle as e:
+        # Raised by node destroying itself.
+        print('demo_controller exited')
+    else:
+        demo_controller.destroy_node()
 
-    demo_controller.destroy_node()
     rclpy.shutdown()
 
 if __name__ == "__main__":
