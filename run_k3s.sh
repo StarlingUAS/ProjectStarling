@@ -15,7 +15,10 @@ sudo k3s kubectl apply -f deployment/resources/dashboard.admin.yaml #dashboard.a
 echo "==================="
 
 echo "Here is the dashboard token, use it to log in to the dashboard."
-sudo k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep ^token
+DASHBOARD_TOKEN=`sudo k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep ^token | cut -c 13-`
+echo $DASHBOARD_TOKEN
+echo $DASHBOARD_TOKEN | xclip -selection clipboard -i
+echo "The token has been copied onto your clipboard"
 echo "Note: your browser may not like the self signed ssl certificate, ignore and containue for now"
 echo "==================="
 
