@@ -50,13 +50,26 @@ docker run -it --rm --network projectstarling_default uobflightlabstarling/examp
 When run, the example will confirm in the terminal that it has connected and that it is waiting for mission start. To start the mission, press the green go button in the [starling user interface](http://localhost:3000/html/main.html) which will send a message over `/mission_start` topic. A confirmation message should appear in the terminal, and the drone will arm (drone propellors spinning up) and takeoff. It will fly in circles for 10 seconds before landing and disarming. 
 
 ### 2. Kubernetes Deployment
-
 Use this method for simualting real drone network architecture or using real drones.
+#### Local Testing
 
-In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo/ px4-sitl/ mavros example, equivalent to `make run`. This will (automatically) open up gazebo web on http://localhost:8080/, the local k3s dashboard and the starling-ui on http://localhost:3000.
+In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo, px4-sitl, mavros and the go/stop ui containers example, equivalent to the docker command`. This will (automatically) open up 
+- Gazebo web on http://localhost:8080/, 
+- GO/ESTOP UI on http://localhost:3000/html/main.html 
+- Kubernetes dashboard on http://localhost:31771. To log in, you will need the login Token which is displayed by the `run_k3s` script. The token should also be automatically placed onto your clipboard for pasting. 
+
+> Note: Dashboard may complain of self-signed certificates depending on browser. On Firefox click Advanced -> Continue. 
 
 Opening a ground control station (gcs) program such as QGroundControl and creating a comms link to `udp://localhost:14553` and `udp://10.42.0.1:14553` will allow local monitoring.
 
+The `example_controller_python` can then be run by running:
+```bash
+kubectl apply -f controllers/example_controller_python/k8.example_controller_python.amd64.yaml
+```
+Waiting a minute for download/ startup, pressing the Mission Start on the UI should get the Gazebo Drone to fly!
+
+You can see the logs from the container by going to the dashboard (Pods -> s-example-controller-python-<randomstring> -> View Logs (top right icon on the blue ribbon))). 
+#### Adding A drone to the cluster
 A drone running the specified 64 bit debian/ubuntu iso can be added to the cluster. Identifying the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run (you wll need to neter local machine password to access the master node token)
 ```bash
 ./deployment/start_k3s_agent.sh <remote username> <remote ip address> <node name>
