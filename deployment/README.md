@@ -5,6 +5,7 @@ This system is intended to run as a cloud platform. We utilse [k3s](https://ranc
 Key concepts are as follows:
 - **pods** are a k8 concept. A pod contains one or more containers and has its own ip address. Containers within a pod communicate over localhost
 - **node** is the machine (physical e.g. pi or virtual machine) upon which pods are run. (Separate from 'ros2 nodes' or 'ros nodes')
+- **kubectl** is the command line program required to interface with kubernetes.
 - **cni** container networking interface (default is flannel for k3s) is the underlying networking for all containers
 - **dds/ fast-rtps** Is the default communications middleware for ros2 comms.
 
@@ -37,16 +38,17 @@ This can also be done in the gui dashboard application.
 
 > **Note:**
 > Local images can be used if `imagePullPolicy` is set to `ifNotPresent` instead of `Always`. In that case it will attempt to find a local image with the given image name.
+
 > arm64 images must be cross compiled using docker buildx (make multi-arch or make cross-compile or similar in the relevant docker files) and always pulled from docker hub.
 
 ## Installation instructions
 
-Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately:
+**It is recommended that you use the `./run_k3s.sh` script in the root of the repository. This script can be re-run at any time after install. If k3s is already installed and the relevant pods are running it will not do anything**
+
+Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately in the background:
 ```
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
 ```
-
-> Once installed, the equivalent instruction is `sudo k3s server --docker`
 
 For the raspberry pi, ensure docker is installed, and then these instructions are the same on the raspberry pi (64 bit os).
 
@@ -61,14 +63,16 @@ alias kubectl='sudo k3s kubectl
 
 ### Laptop
 
-To run the master kubernetes server using docker (instead of containerd if you need access to local images). In one terminal run either:
-1. '```sudo k3s server --docker```' (will start in local terminal)
-2. '```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -``` ' (will run in background as systemd - check `systemctl status k3s`)
+**It is recommended that you use the `./run_k3s.sh` script in the root of the repository.**
+
+This script will download the latest version of k3s run the master kubernetes server using docker (instead of containerd if you need access to local images)
+'```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -``` '
+(will run in background as systemd - check `systemctl status k3s`)
 
 This will open up a server with entrypoint on `0.0.0.0:6443` which corresponds to `<host local ip address>:6443` 
 
 ### Pi / Drone / Agent
-First ensure that the pi has been correctly set up with an airgapped installation of k3s, [see here for installation instructions](https://rancher.com/docs/k3s/latest/en/installation/airgap/). Follow the Manually Deploy Images Method.
+First ensure that the pi has been correctly set up with an airgapped installation of k3s, [see here for installation instructions](https://rancher.com/docs/k3s/latest/en/installation/airgap/). Follow the Manually Deploy Images Method. The script below assumes that the the images file and the k3s executable are in the user home directory.
 
 #### Setup script via ssh
 
