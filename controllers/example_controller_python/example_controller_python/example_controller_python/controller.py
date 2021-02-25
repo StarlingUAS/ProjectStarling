@@ -104,7 +104,7 @@ class DemoController(Node):
 
     def emergency_stop_callback(self, msg):
         self.controller_command = "eStop"
-        self.logger.fatal('\033[91m' + 'EMERGENCY: ESTOP PRESS RECEIVED' + '\033[0m')
+        self.logger.warn('\033[91m' + 'EMERGENCY: ESTOP PRESS RECEIVED' + '\033[0m')
 
     def position_callback(self,msg):
         self.vehicle_position = msg
@@ -227,7 +227,7 @@ class DemoController(Node):
         commandCall.param6 = 0.0
         commandCall.param7 = 0.0
         self.command_rate_limiter.call(lambda: self.command_client.call_async(commandCall))
-        self.logger.fatal('\033[91m' + 'EMERGENCY: KILL SIGNAL SENT' + '\033[0m')
+        self.logger.warn('\033[91m' + 'EMERGENCY: KILL SIGNAL SENT' + '\033[0m')
 
 
 def main(args=None):

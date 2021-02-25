@@ -53,7 +53,7 @@ When run, the example will confirm in the terminal that it has connected and tha
 Use this method for simualting real drone network architecture or using real drones.
 #### Local Testing
 
-In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo, px4-sitl, mavros and the go/stop ui containers example, equivalent to the docker command`. This will (automatically) open up 
+In this file directory run `./run_k3s.sh` this will install k3s (lightweight kubernetes) and run the gazebo, px4-sitl, mavros and the go/stop ui containers example, equivalent to the docker command. This will (automatically) open up 
 - Gazebo web on http://localhost:8080/, 
 - GO/ESTOP UI on http://localhost:3000/html/main.html 
 - Kubernetes dashboard on http://localhost:31771. To log in, you will need the login Token which is displayed by the `run_k3s` script. The token should also be automatically placed onto your clipboard for pasting. 
