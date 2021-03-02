@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "----- Start: $0 -----"
+# Parse arguments
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -32,9 +34,15 @@ then
     exit -1
 fi
 
+if [[ ! "systemctl is-active --quiet k3s" ]]
+then
+    echo "k3s is not active as a systemd"
+    echo "Please start and download k3s using start_k3s.sh"
+    exit -1
+fi
+
 SCRIPTSDIR="${BASH_SOURCE%/*}"
 SYSTEMDIR="$SCRIPTSDIR/../system"
-DEPLOYMENTDIR="$SCRIPTSDIR../deployment"
 
 # Start dashboard
 ./$SCRIPTSDIR/start_dashboard.sh
@@ -50,4 +58,4 @@ then
     echo "Opening Dashboard to https://localhost:31771"
     xdg-open https://localhost:31771
 fi
-
+echo "----- End: $0 -----"
