@@ -26,5 +26,11 @@ WORKDIR /ros_ws
 ENV PX4_HOME_LAT 51.501582
 ENV PX4_HOME_LON -2.551791
 ENV PX4_HOME_ALT 0.0
+ENV PX4_SIM_MODEL iris
+ENV PX4_INSTANCE 0
+
+# Add entrypoint to handle PX4_SIM_HOST instead of IP
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "ros2", "launch", "/ros_ws/launch/sim.launch.xml" ]

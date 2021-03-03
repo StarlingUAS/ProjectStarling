@@ -6,6 +6,6 @@
 
     <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" />
     
-    <node unless="$(var sim_only)" pkg="gazebo_ros" exec="spawn_entity.py" args="-entity iris_$(env PX4_INSTANCE) -database iris -spawn_service_timeout 30.0" />
+    <node unless="$(var sim_only)" pkg="gazebo_ros" exec="spawn_entity.py" args="-entity $(env PX4_SIM_MODEL)_$(env PX4_INSTANCE) -file /tmp/$(env PX4_SIM_MODEL)_$(env PX4_INSTANCE).sdf -spawn_service_timeout 30.0" />
 
 </launch>
