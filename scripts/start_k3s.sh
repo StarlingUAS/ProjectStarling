@@ -17,4 +17,3 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
 echo "All actions completed"
 echo "k3s will run in the background systemd permanently"
 echo "run 'k3s-uninstall.sh' to remove all of k3s"
-./$SCRIPTSDIR/start_dashboard.sh
