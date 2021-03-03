@@ -93,17 +93,19 @@ spec:
       hostname: sim-gazebo
       subdomain: gazebo-srv
       shareProcessNamespace: true
+      nodeSelector:
+          beta.kubernetes.io/arch: "amd64"
       containers:
       - name: gazebo
-        image: uobflightlabstarling/starling-sim-iris:latest
+        image: starling-sim-iris:latest
         resources:
           requests:
             cpu: "100m"
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
+        args: [ "ros2", "launch", "launch/iris.launch.xml" , sim_only:=true]
         ports:
         - containerPort: 8080
         - containerPort: 7681
         - containerPort: 11345
         - containerPort: 4560
-      nodeSelector:
-          beta.kubernetes.io/arch: "amd64"
+ 

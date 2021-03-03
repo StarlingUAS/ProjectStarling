@@ -19,25 +19,36 @@ spec:
         platform: sitl
     spec:
       shareProcessNamespace: true
+      initContainers:
+      - name: gazebo-spawn-iris
+        image: starling-sim-iris:latest
+        imagePullPolicy: IfNotPresent
+        args: [ "ros2", "launch", "launch/iris.launch.xml" , spawn_only:=true]
+        env:
+        - name: PX4_INSTANCE 
+          value: "0"  
       containers:
       - name: starling-px4-sitl
-        image: uobflightlabstarling/starling-sim-px4-sitl:latest
-        imagePullPolicy: Always
+        image: starling-sim-px4-sitl:latest
+        imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
           value: "sim-gazebo.gazebo-srv"
+        - name: PX4_INSTANCE 
+          value: "0"
         ports:
           - containerPort: 18570
             protocol: "UDP"
       - name: starling-mavros
-        image: uobflightlabstarling/starling-mavros:latest
-        imagePullPolicy: Always
+        image: starling-mavros:latest
+        imagePullPolicy: IfNotPresent
         env:
+        # VEHICLE_NAMESPACE unset default to SYSID
         - name: MAVROS_FCU_URL
           value: "udp://127.0.0.1:14540@"
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
-          value: "1"
+          value: "0"
       nodeSelector:
         kubernetes.io/arch: "amd64"
