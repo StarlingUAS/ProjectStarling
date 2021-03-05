@@ -20,8 +20,8 @@ fi
 if [ "$PX4_INSTANCE" -eq "0" ]; then
     IPADDR=`ifconfig eth0  | grep 'inet' | awk '{print $2}'`
     read A B C D <<< "${IPADDR//./ }"
-    export PX4_INSTANCE=$D;
-    echo "PX4_INSTANCE set to $D from IP ADDRESS: $IPADDR (was zero)"
+    export PX4_INSTANCE=$((D-1));
+    echo "PX4_INSTANCE set to $PX4_INSTANCE from IP ADDRESS: $IPADDR (was zero)"
 else
     echo "PX4_INSTANCE setting as specified: $PX4_INSTANCE"
 fi

@@ -2,7 +2,7 @@
 
 # If MAVROS_TGT_SYSTEM is zero, then set instance id to IP address last digit
 if [ "$MAVROS_TGT_SYSTEM" -eq "0" ]; then
-    if [ -f "/etc/drone.config"]; then 
+    if [ -f "/etc/drone.config" ]; then 
         echo "MAVROS_TGT_SYSTEM will be read from file not yet implemented, set to 1 for now"
         MAVROS_TGT_SYSTEM=1
     else

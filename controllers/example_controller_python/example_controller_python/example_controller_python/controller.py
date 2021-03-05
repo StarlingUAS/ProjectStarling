@@ -1,5 +1,6 @@
 import math
 import copy
+import os
 
 import rclpy
 from rclpy.node import Node
@@ -26,9 +27,11 @@ class RateLimiter():
 
 class DemoController(Node):
 
-    def __init__(self):
+    def __init__(self, target_name):
         super().__init__('demo_controller')
         self.logger = self.get_logger()
+
+        self.logger.info(f'Mavros Topic Target is {target_name}')
 
         self.start_mission_subscriber = self.create_subscription(
             String,
@@ -44,35 +47,35 @@ class DemoController(Node):
 
         self.position_subscriber = self.create_subscription(
             PoseStamped,
-            '/mavros/local_position/pose',
+            f'/{target_name}/mavros/local_position/pose',
             self.position_callback,
             1)
         
         self.state_subscriber = self.create_subscription(
             mavros_msgs.msg.State,
-            '/mavros/state',
+            f'/{target_name}/mavros/state',
             self.state_callback,
             1)
 
         self.setpoint_publisher = self.create_publisher(
             PoseStamped,
-            '/mavros/setpoint_position/local',
+            f'/{target_name}/mavros/setpoint_position/local',
             1)
 
         self.offboard_rate_limiter = RateLimiter(1,self.get_clock())
         self.offboard_client = self.create_client(
             mavros_msgs.srv.SetMode,
-            '/mavros/set_mode')
+            f'/{target_name}/mavros/set_mode')
         
         self.arm_rate_limiter = RateLimiter(1,self.get_clock())
         self.arming_client = self.create_client(
             mavros_msgs.srv.CommandBool,
-            '/mavros/cmd/arming')
+            f'/{target_name}/mavros/cmd/arming')
 
         self.command_rate_limiter = RateLimiter(1, self.get_clock())
         self.command_client = self.create_client(
             mavros_msgs.srv.CommandLong,
-            '/mavros/cmd/command'
+            f'/{target_name}/mavros/cmd/command'
         )
         
         self.takeoff_offset = 0
@@ -233,7 +236,11 @@ class DemoController(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    demo_controller = DemoController()
+    target_name = os.getenv('TARGET_NAME')
+    if target_name is None:
+        target_name = '' 
+    
+    demo_controller = DemoController(target_name)
     demo_controller.get_logger().info('STARTING DEMO CONTROLLER NOW!')
 
     try:

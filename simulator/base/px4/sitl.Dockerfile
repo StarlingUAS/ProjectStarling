@@ -27,6 +27,10 @@ RUN sed -i 's/\(mavlink start -x -u $udp_offboard_port_local -r 4000000 -m onboa
 # Modify startup script to enable mavlink broadcasting
 RUN sed -i '/param set IMU_INTEG_RATE 250/a param set MAV_BROADCAST 1' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS
 
+# Set offboard udp to be a constant value
+RUN sed -i 's/udp_offboard_port_remote=$((14540+px4_instance))/udp_offboard_port_remote=14540/'  /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS
+RUN sed -i '/[ $px4_instance -gt 9 ] && udp_offboard_port_remote=14549 # use the same ports for more than 10 instances to avoid port overlaps/d' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS
+
 # Add entrypoint to handle PX4_SIM_HOST instead of IP
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]

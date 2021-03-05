@@ -1,11 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: starling-px4-sitl-srv
+  labels:
+    app: starling-px4-sitl
+spec:
+  ports:
+  - port: 14560
+  clusterIP: None
+  selector:
+    app: starling
+
+---
+
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: starling-px4-sitl
   labels:
     app: starling
     platform: sitl
 spec:
+  serviceName: starling-px4-sitl-srv
   selector: 
     matchLabels:
       app: starling
@@ -18,6 +34,7 @@ spec:
         firmware: px4
         platform: sitl
     spec:
+      terminationGracePeriodSeconds: 10
       shareProcessNamespace: true
       initContainers:
       - name: gazebo-spawn-iris

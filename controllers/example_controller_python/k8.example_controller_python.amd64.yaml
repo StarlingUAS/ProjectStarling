@@ -24,6 +24,9 @@ spec:
       - name: s-example-controller-python # Name of container, must be unique.
         image: example_controller_python # Name of the docker image of your container
         imagePullPolicy: IfNotPresent # Required for local containers
+        env:
+          - name: TARGET_NAME
+            value: 'vehicle_30'
       nodeSelector:
         kubernetes.io/arch: "amd64"
 ---
