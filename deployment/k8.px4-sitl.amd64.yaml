@@ -40,7 +40,7 @@ spec:
       - name: gazebo-spawn-iris
         image: starling-sim-iris:latest
         imagePullPolicy: IfNotPresent
-        args: [ "ros2", "launch", "launch/iris.launch.xml" , spawn_only:=true]
+        args: [ "ros2", "launch", "launch/iris.launch.xml" , "spawn_only:=true"]
         env:
         - name: PX4_INSTANCE 
           value: "0"  
@@ -53,19 +53,23 @@ spec:
           value: "sim-gazebo.gazebo-srv"
         - name: PX4_INSTANCE 
           value: "0"
-        ports:
-          - containerPort: 18570
-            protocol: "UDP"
+        - name: PX4_SYSID_SITL_BASE
+          value: "150"
       - name: starling-mavros
         image: starling-mavros:latest
         imagePullPolicy: IfNotPresent
         env:
-        # VEHICLE_NAMESPACE unset default to SYSID
+        - name: VEHICLE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: MAVROS_FCU_URL
           value: "udp://127.0.0.1:14540@"
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
           value: "0"
+        - name: MAVROS_TGT_SYSTEM_BASE
+          value: "150"
       nodeSelector:
         kubernetes.io/arch: "amd64"

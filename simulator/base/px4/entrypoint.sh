@@ -16,14 +16,16 @@ else
     echo "PX4_OFFBOARD_HOST not set, assuming loopback"
 fi
 
-# If PX4_INSTANCE is zero, then set instance id to IP address last digit
+# If PX4_INSTANCE is zero, then set instance id to take PX4_SYSID_SITL_BASE + ORDINAL-1 from StatefulSet hostname
+# Therefore SYSID is set to PX4_SYSID_SITL_BASE + ORDINAL
+# Hostname is of the form '<stateful set name>-<ordinal>'
 if [ "$PX4_INSTANCE" -eq "0" ]; then
-    IPADDR=`ifconfig eth0  | grep 'inet' | awk '{print $2}'`
-    read A B C D <<< "${IPADDR//./ }"
-    export PX4_INSTANCE=$((D-1));
-    echo "PX4_INSTANCE set to $PX4_INSTANCE from IP ADDRESS: $IPADDR (was zero)"
+    ORDINAL="${HOSTNAME##*-}"
+    export PX4_INSTANCE=$((PX4_SYSID_SITL_BASE + ORDINAL-1));
+    echo "PX4_INSTANCE is zero therefore set to $PX4_INSTANCE (from hostname: $HOSTNAME)"
 else
     echo "PX4_INSTANCE setting as specified: $PX4_INSTANCE"
 fi
+echo "PX4 SYSID is set to $((PX4_INSTANCE + 1))"
 
 /ros_entrypoint.sh "$@"

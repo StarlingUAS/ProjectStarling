@@ -12,6 +12,7 @@ FROM ros:foxy-ros-base-focal
 COPY --from=px4sitl /src /src
 
 ENV PX4_INSTANCE 0
+ENV PX4_SYSID_SITL_BASE 150
 ENV PX4_SIM_IP 127.0.0.1
 ENV PX4_OFFBOARD_IP 127.0.0.1
 ENV PX4_BUILD_PATH /src/PX4-Autopilot/build/

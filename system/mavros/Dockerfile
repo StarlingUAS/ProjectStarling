@@ -51,7 +51,8 @@ COPY mavros_setup.sh .
 COPY mavros.launch /ros_ws/launch/mavros.launch
 
 ENV MACROS_FCU_URL="udp://@" 
-ENV MAVROS_TGT_SYSTEM=1
+ENV MAVROS_TGT_SYSTEM=0
+ENV MAVROS_TGT_SYSTEM_BASE=0
 ENV MAVROS_TGT_FIRMWARE="px4"
 
 CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
