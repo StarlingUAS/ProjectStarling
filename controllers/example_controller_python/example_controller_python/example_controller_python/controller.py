@@ -27,10 +27,16 @@ class RateLimiter():
 
 class DemoController(Node):
 
-    def __init__(self, target_name):
+    def __init__(self):
         super().__init__('demo_controller')
         self.logger = self.get_logger()
 
+        target_name = os.getenv('TARGET_NAME')
+        if target_name is None or target_name == '':
+            self.declare_parameter('target', '')
+            target_name = self.get_parameter('target').get_parameter_value().string_value
+            target_name = f'/{target_name}' if target_name != '' else ''
+        
         self.logger.info(f'Mavros Topic Target is {target_name}')
 
         self.start_mission_subscriber = self.create_subscription(
@@ -47,35 +53,35 @@ class DemoController(Node):
 
         self.position_subscriber = self.create_subscription(
             PoseStamped,
-            f'/{target_name}/mavros/local_position/pose',
+            f'{target_name}/mavros/local_position/pose',
             self.position_callback,
             1)
         
         self.state_subscriber = self.create_subscription(
             mavros_msgs.msg.State,
-            f'/{target_name}/mavros/state',
+            f'{target_name}/mavros/state',
             self.state_callback,
             1)
 
         self.setpoint_publisher = self.create_publisher(
             PoseStamped,
-            f'/{target_name}/mavros/setpoint_position/local',
+            f'{target_name}/mavros/setpoint_position/local',
             1)
 
         self.offboard_rate_limiter = RateLimiter(1,self.get_clock())
         self.offboard_client = self.create_client(
             mavros_msgs.srv.SetMode,
-            f'/{target_name}/mavros/set_mode')
+            f'{target_name}/mavros/set_mode')
         
         self.arm_rate_limiter = RateLimiter(1,self.get_clock())
         self.arming_client = self.create_client(
             mavros_msgs.srv.CommandBool,
-            f'/{target_name}/mavros/cmd/arming')
+            f'{target_name}/mavros/cmd/arming')
 
         self.command_rate_limiter = RateLimiter(1, self.get_clock())
         self.command_client = self.create_client(
             mavros_msgs.srv.CommandLong,
-            f'/{target_name}/mavros/cmd/command'
+            f'{target_name}/mavros/cmd/command'
         )
         
         self.takeoff_offset = 0
@@ -236,11 +242,7 @@ class DemoController(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    target_name = os.getenv('TARGET_NAME')
-    if target_name is None:
-        target_name = '' 
-    
-    demo_controller = DemoController(target_name)
+    demo_controller = DemoController()
     demo_controller.get_logger().info('STARTING DEMO CONTROLLER NOW!')
 
     try:

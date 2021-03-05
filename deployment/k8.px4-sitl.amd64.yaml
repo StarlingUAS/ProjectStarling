@@ -44,6 +44,8 @@ spec:
         env:
         - name: PX4_INSTANCE 
           value: "0"  
+        - name: PX4_SYSID_SITL_BASE
+          value: "150"
       containers:
       - name: starling-px4-sitl
         image: starling-sim-px4-sitl:latest

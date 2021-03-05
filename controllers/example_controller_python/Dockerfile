@@ -7,6 +7,6 @@ RUN . /ros_ws/install/setup.sh \
 
 # This may be needed for python print output in kubernetes logging
 # Either set to 1 or zero
-# ENV PYTHONBUFERED=1 
+ENV PYTHONBUFERED=1 
 
-CMD [ "ros2", "run", "example_controller_python", "controller" ]
+CMD [ "ros2", "launch", "example_controller_python", "example_fly_all.launch.py" ]
