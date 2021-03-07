@@ -31,13 +31,11 @@ class DemoController(Node):
         super().__init__('demo_controller')
         self.logger = self.get_logger()
 
-        target_name = os.getenv('TARGET_NAME')
-        if target_name is None or target_name == '':
-            self.declare_parameter('target', '')
-            target_name = self.get_parameter('target').get_parameter_value().string_value
-            target_name = f'/{target_name}' if target_name != '' else ''
+        # if target_name is None or target_name == '':
+        #     self.declare_parameter('target', '')
+        #     target_name = self.get_parameter('target').get_parameter_value().string_value
         
-        self.logger.info(f'Mavros Topic Target is {target_name}')
+        self.logger.info(f'Controller namespace is {self.get_namespace()}')
 
         self.start_mission_subscriber = self.create_subscription(
             String,
@@ -53,35 +51,35 @@ class DemoController(Node):
 
         self.position_subscriber = self.create_subscription(
             PoseStamped,
-            f'{target_name}/mavros/local_position/pose',
+            f'mavros/local_position/pose',
             self.position_callback,
             1)
         
         self.state_subscriber = self.create_subscription(
             mavros_msgs.msg.State,
-            f'{target_name}/mavros/state',
+            f'mavros/state',
             self.state_callback,
             1)
 
         self.setpoint_publisher = self.create_publisher(
             PoseStamped,
-            f'{target_name}/mavros/setpoint_position/local',
+            f'mavros/setpoint_position/local',
             1)
 
         self.offboard_rate_limiter = RateLimiter(1,self.get_clock())
         self.offboard_client = self.create_client(
             mavros_msgs.srv.SetMode,
-            f'{target_name}/mavros/set_mode')
+            f'mavros/set_mode')
         
         self.arm_rate_limiter = RateLimiter(1,self.get_clock())
         self.arming_client = self.create_client(
             mavros_msgs.srv.CommandBool,
-            f'{target_name}/mavros/cmd/arming')
+            f'mavros/cmd/arming')
 
         self.command_rate_limiter = RateLimiter(1, self.get_clock())
         self.command_client = self.create_client(
             mavros_msgs.srv.CommandLong,
-            f'{target_name}/mavros/cmd/command'
+            f'mavros/cmd/command'
         )
         
         self.takeoff_offset = 0

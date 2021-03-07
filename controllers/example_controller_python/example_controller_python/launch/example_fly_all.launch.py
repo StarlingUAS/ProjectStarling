@@ -33,9 +33,9 @@ def generate_launch_description():
             executable='controller',
             name='example_controller',
             output='screen',
-            parameters=[
-                {"target": name}
-            ]
+            # parameters=[
+            #     {"target": name}
+            # ]
         )
         for i, name in enumerate(namespaces)
     ]
