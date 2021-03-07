@@ -2,7 +2,25 @@
 set -e
 
 
-if [[ $# -ge 1 || "$1" = "--help" ]]
+# Parse arguments
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+    key="$1"
+    case $key in
+        -h|--help)
+            HELP=1
+            shift # past argument
+            ;;
+        *)    # unknown option
+            POSITIONAL+=("$1") # save it in an array for later
+            shift # past argument
+            ;;
+    esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [[ $HELP ]]
 then
     echo "Script starts the kubernetes dashboard and reports the connection token"
     echo "Assumes that kubernetes is already running on the system"

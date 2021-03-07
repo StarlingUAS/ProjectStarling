@@ -19,6 +19,10 @@ do
             OPENWEBPAGE=1
             shift # past argument
             ;;
+        -d|--delete)
+            DELETE=1
+            shift
+            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -41,24 +45,31 @@ SCRIPTSDIR="${BASH_SOURCE%/*}"
 SYSTEMDIR="$SCRIPTSDIR/../system"
 DEPLOYMENTDIR="$SCRIPTSDIR/../deployment"
 
-# Start/ Check starling base
-echo "Starting Starling Base, args: $ARGS"
-./$SCRIPTSDIR/start_starling_base.sh $ARGS
+if [[ ! $DELETE ]]; then
+    # Start/ Check starling base
+    echo "Starting Starling Base, args: $ARGS"
+    ./$SCRIPTSDIR/start_starling_base.sh $ARGS
 
-echo "Deploying Starling Modules (this may take a while)"
-echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
-sudo k3s kubectl apply -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
+    echo "Deploying Starling Modules (this may take a while)"
+    echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
+    sudo k3s kubectl apply -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
 
-echo "Waiting 20s for Gazebo to start to ensure proper connection"
-sleep 20s
+    echo "Waiting 5s for Gazebo to start to ensure proper connection"
+    sleep 5s
 
-echo "Deploying px4-sitl with mavros"
-sudo k3s kubectl apply -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
+    echo "Deploying px4-sitl with mavros"
+    sudo k3s kubectl apply -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
 
-if [[ $OPENWEBPAGE ]]
-then
-    echo "Opening gazebo to http://localhost:8080"
-    xdg-open http://localhost:8080
+    if [[ $OPENWEBPAGE ]]
+    then
+        echo "Opening gazebo to http://localhost:8080"
+        xdg-open http://localhost:8080
+    fi
+else
+    echo "Deleting Gazebo-iris"
+    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
+    echo "Deleting px4-sitl with mavros"
+    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
 fi
 
 echo "----- End: $0 -----"
