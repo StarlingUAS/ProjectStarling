@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# If MAVROS_TGT_SYSTEM is zero, then set instance id to take MAVROS_TGT_SYSTEM_BASE + ORDINAL-1 from StatefulSet hostname
+# If MAVROS_TGT_SYSTEM is zero, then set instance id to take MAVROS_TGT_SYSTEM_BASE + ORDINAL from StatefulSet hostname
 # Hostname is of the form '<stateful set name>-<ordinal>'
 if [ "$MAVROS_TGT_SYSTEM" -eq "0" ]; then
     if [ -f "/etc/drone.config" ]; then 

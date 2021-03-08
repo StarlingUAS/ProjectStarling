@@ -55,6 +55,8 @@ if [[ ! $DELETE ]]; then
         # Start/ Check starling base
         echo "Starting Starling Base, args: $ARGS"
         ./$SCRIPTSDIR/start_starling_base.sh $ARGS
+    else
+        echo "Skipping Base Check"
     fi
 
     echo "Deploying Starling Modules (this may take a while)"
