@@ -1,0 +1,11 @@
+site_name: Project Starling
+theme: readthedocs
+repo_url: https://github.com/UoBFlightLab/ProjectStarling
+site_description: 'BRL Flight Arena 2.0'
+copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
+
+nav:
+  - "Home":
+    - "Overview": 'README.md'
+  - "Getting Started":
+    - "Background": 'installation/background.md' 
