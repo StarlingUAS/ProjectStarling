@@ -17,6 +17,11 @@ fi
 
 export MAVROS_TGT_SYSTEM=$MAVROS_TGT_SYSTEM
 
-# Ensure VEHICLE_NAMESPACE is a valid topic name
-# Replace all '-' with '_'
-export VEHICLE_NAMESPACE=${VEHICLE_NAMESPACE//-/_}
+
+if [ ! -v $VEHICLE_NAMESPACE ]; then
+    # If set Ensure VEHICLE_NAMESPACE is a valid topic name
+    # Replace all '-' with '_'
+    export VEHICLE_NAMESPACE=${VEHICLE_NAMESPACE//-/_}
+    echo "VEHICLE_NAMESPACE setting to $VEHICLE_NAMESPACE"
+    # unset VEHICLE_NAMESPACE
+fi
