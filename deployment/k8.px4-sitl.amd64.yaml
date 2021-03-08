@@ -61,12 +61,10 @@ spec:
         image: starling-mavros:latest
         imagePullPolicy: IfNotPresent
         env:
-        - name: VEHICLE_NAMESPACE
+        - name: VEHICLE_NAMESPACE # Optional but unique
           valueFrom:
             fieldRef:
-              fieldPath: metadata.name
-        - name: MAVROS_FCU_URL
-          value: "udp://127.0.0.1:14540@"
+              fieldPath: metadata.name # Pod name
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
