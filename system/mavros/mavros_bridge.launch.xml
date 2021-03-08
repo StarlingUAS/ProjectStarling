@@ -2,7 +2,7 @@
 
     <arg name="vehicle_namespace" default="$(env VEHICLE_NAMESPACE vehicle_$(env MAVROS_TGT_SYSTEM 1))" />
     <arg name="firmware" default="$(env MAVROS_TGT_FIRMWARE px4)" />
-    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://:14550@)"/>
+    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://:14830@)"/>
     <arg name="gcs_url" default="$(env MAVROS_GCS_URL udp-pb://@:14553)" />
     <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM 1)" />
     <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM 1)" />

@@ -26,6 +26,7 @@ if [ "$PX4_INSTANCE" -eq "0" ]; then
 else
     echo "PX4_INSTANCE setting as specified: $PX4_INSTANCE"
 fi
-echo "PX4 SYSID is set to $((PX4_INSTANCE + 1))"
+export PX4_SYSID=$((PX4_INSTANCE + 1))
+echo "PX4 SYSID is set to $PX4_SYSID"
 
 /ros_entrypoint.sh "$@"
