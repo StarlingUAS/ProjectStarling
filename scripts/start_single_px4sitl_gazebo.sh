@@ -23,6 +23,10 @@ do
             DELETE=1
             shift
             ;;
+        -sk|--skip-base-check)
+            SKIP_BASE=1
+            shift
+            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -46,9 +50,12 @@ SYSTEMDIR="$SCRIPTSDIR/../system"
 DEPLOYMENTDIR="$SCRIPTSDIR/../deployment"
 
 if [[ ! $DELETE ]]; then
-    # Start/ Check starling base
-    echo "Starting Starling Base, args: $ARGS"
-    ./$SCRIPTSDIR/start_starling_base.sh $ARGS
+
+    if [[ ! $SKIP_BASE ]]; then
+        # Start/ Check starling base
+        echo "Starting Starling Base, args: $ARGS"
+        ./$SCRIPTSDIR/start_starling_base.sh $ARGS
+    fi
 
     echo "Deploying Starling Modules (this may take a while)"
     echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
