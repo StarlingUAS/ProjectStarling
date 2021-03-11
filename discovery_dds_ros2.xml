@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dds>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <participant profile_name="default_participant" is_default_profile="true">
+        <rtps>
+            <!-- <defaultMulticastLocatorList>
+                <locator>
+                    <udpv4>
+                        <address>127.0.0.1</address>
+                        <port>7412</port>
+                    </udpv4>
+                </locator>
+                <locator>
+                    <udpv4>
+                        <address>192.168.0.63</address>
+                        <port>7412</port>
+                    </udpv4>
+                </locator>
+                <locator>
+                    <udpv4>
+                        <address>0.0.0.0</address>
+                        <port>7412</port>
+                    </udpv4>
+                </locator>    
+            </defaultMulticastLocatorList> -->
+            <builtin>
+                <!-- <metatrafficMulticastLocatorList>
+                    <locator>
+                        <udpv4>
+                            <address>127.0.0.1</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <address>192.168.0.63</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <address>0.0.0.0</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>    
+                </metatrafficMulticastLocatorList> -->
+                <!-- <initialPeersList>
+                    <locator>
+                        <udpv4>
+                            <address>127.0.0.1</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <address>192.168.0.63</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <address>0.0.0.0</address>
+                            <port>7412</port>
+                        </udpv4>
+                    </locator>    
+                </initialPeersList> -->
+                <!-- <avoid_builtin_multicast>true</avoid_builtin_multicast> -->
+            </builtin>
+        </rtps>
+    </participant>
+
+    <data_writer profile_name="default_datawriter_profile" is_default_profile="true">
+        <qos>
+            <publishMode>
+                <kind>ASYNCHRONOUS</kind>
+            </publishMode>
+        </qos>
+        <multicastLocatorList>
+            <locator>
+                <udpv4>
+                    <address>127.0.0.1</address>
+                    <port>7412</port>
+                </udpv4>
+            </locator>
+            <locator>
+                <udpv4>
+                    <address>192.168.0.63</address>
+                    <port>7412</port>`
+                </udpv4>
+            </locator>
+            <locator>
+                <udpv4>
+                    <address>0.0.0.0</address>
+                    <port>7412</port>
+                </udpv4>
+            </locator>
+        </multicastLocatorList>
+        <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
+    </data_writer>
+
+    <data_reader profile_name="default_datareader_profile" is_default_profile="true">
+        <multicastLocatorList>
+            <locator>
+                <udpv4>
+                    <address>127.0.0.1</address>
+                    <port>7412</port>
+                </udpv4>
+            </locator>
+            <locator>
+                <udpv4>
+                    <address>192.168.0.63</address>
+                    <port>7412</port>
+                </udpv4>
+            </locator>
+            <locator>
+                <udpv4>
+                    <address>0.0.0.0</address>
+                    <port>7412</port>
+                </udpv4>
+            </locator>
+        </multicastLocatorList>
+        <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
+    </data_reader>
+
+</profiles>
+</dds>
