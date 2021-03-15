@@ -1,0 +1,16 @@
+<launch>
+
+    <arg name="vehicle_namespace"/>
+    <arg name="firmware"/>
+    <arg name="fcu_url"/>
+    <arg name="gcs_url"/>
+    <arg name="target_system"/>
+    <arg name="system_id"/>
+
+    <include file="$(find mavros)/launch/$(arg firmware).launch" ns="$(arg vehicle_namespace)">
+        <arg name="fcu_url" value="$(arg fcu_url)/?ids=$(arg system_id),240"/>
+        <arg name="gcs_url" value="$(arg gcs_url)"/>
+        <arg name="tgt_system" value="$(arg target_system)"/>
+    </include>
+
+</launch>

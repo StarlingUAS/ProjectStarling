@@ -1,11 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: starling-px4-sitl-srv
+  labels:
+    app: starling-px4-sitl
+spec:
+  ports:
+  - port: 14560
+  clusterIP: None
+  selector:
+    app: starling
+
+---
+
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: starling-px4-sitl
   labels:
     app: starling
     platform: sitl
 spec:
+  serviceName: starling-px4-sitl-srv
   selector: 
     matchLabels:
       app: starling
@@ -18,26 +34,42 @@ spec:
         firmware: px4
         platform: sitl
     spec:
+      terminationGracePeriodSeconds: 10
       shareProcessNamespace: true
+      initContainers:
+      - name: gazebo-spawn-iris
+        image: starling-sim-iris:latest
+        imagePullPolicy: IfNotPresent
+        args: [ "ros2", "launch", "launch/iris.launch.xml" , "spawn_only:=true"]
+        env:
+        - name: PX4_INSTANCE 
+          value: "ordinal"  
+        - name: PX4_SYSID_SITL_BASE
+          value: "200"
       containers:
       - name: starling-px4-sitl
-        image: uobflightlabstarling/starling-sim-px4-sitl:latest
-        imagePullPolicy: Always
+        image: starling-sim-px4-sitl:latest
+        imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
           value: "sim-gazebo.gazebo-srv"
-        ports:
-          - containerPort: 18570
-            protocol: "UDP"
+        - name: PX4_INSTANCE 
+          value: "ordinal"
+        - name: PX4_SYSID_SITL_BASE
+          value: "200"
       - name: starling-mavros
-        image: uobflightlabstarling/starling-mavros:latest
-        imagePullPolicy: Always
+        image: starling-mavros:latest
+        imagePullPolicy: IfNotPresent
         env:
-        - name: MAVROS_FCU_URL
-          value: "udp://127.0.0.1:14540@"
+        - name: VEHICLE_NAMESPACE # Optional but unique
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name # Pod name
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
-          value: "1"
+          value: "auto"
+        - name: MAVROS_TGT_SYSTEM_BASE
+          value: "200"
       nodeSelector:
         kubernetes.io/arch: "amd64"

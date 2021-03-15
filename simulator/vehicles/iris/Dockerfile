@@ -3,8 +3,11 @@ FROM starling-sim-base-px4
 # Copy in the vehicle launch file
 COPY iris.launch.xml /ros_ws/launch/
 
+COPY xacro_launch.sh /ros.env.d/xacro/setup.bash
+
 ENV PX4_SITL_PORT 4560
 ENV PX4_INSTANCE 0
+ENV PX4_SIM_MODEL iris
 
 RUN echo 'export PX4_SITL_PORT=$((PX4_SITL_PORT + PX4_INSTANCE))' >> /ros.env
 
