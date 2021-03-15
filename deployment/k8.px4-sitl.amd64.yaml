@@ -43,7 +43,7 @@ spec:
         args: [ "ros2", "launch", "launch/iris.launch.xml" , "spawn_only:=true"]
         env:
         - name: PX4_INSTANCE 
-          value: "0"  
+          value: "ordinal"  
         - name: PX4_SYSID_SITL_BASE
           value: "200"
       containers:
@@ -54,7 +54,7 @@ spec:
         - name: PX4_SIM_HOST
           value: "sim-gazebo.gazebo-srv"
         - name: PX4_INSTANCE 
-          value: "0"
+          value: "ordinal"
         - name: PX4_SYSID_SITL_BASE
           value: "200"
       - name: starling-mavros
@@ -68,7 +68,7 @@ spec:
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
-          value: "0"
+          value: "auto"
         - name: MAVROS_TGT_SYSTEM_BASE
           value: "200"
       nodeSelector:

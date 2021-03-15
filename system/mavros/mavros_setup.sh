@@ -1,18 +1,30 @@
 #!/bin/bash
 
+if [ ! -v $MAVLINK_SYSID ]; then
+    MAVROS_TGT_SYSTEM = $MAVLINK_SYSID
+fi
+
 # If MAVROS_TGT_SYSTEM is zero, then set instance id to take MAVROS_TGT_SYSTEM_BASE + ORDINAL from StatefulSet hostname
 # Hostname is of the form '<stateful set name>-<ordinal>'
-if [ "$MAVROS_TGT_SYSTEM" -eq "0" ]; then
+if [ "$MAVROS_TGT_SYSTEM" -eq "auto" ]; then
+    echo "MAVROS_TGT_SYSTEM set to auto"
     if [ -f "/etc/drone.config" ]; then 
         echo "MAVROS_TGT_SYSTEM will be read from file not yet implemented, set to 1 for now"
-        MAVROS_TGT_SYSTEM=1
+        MAVROS_TGT_SYSTEM=1 # TODO
     else
         ORDINAL="${HOSTNAME##*-}"
-        MAVROS_TGT_SYSTEM=$((MAVROS_TGT_SYSTEM_BASE + ORDINAL));
-        echo "MAVROS_TGT_SYSTEM set to $MAVROS_TGT_SYSTEM (from hostname: $HOSTNAME), was set to zero and /etc/drone.config not found"
+        if [ ! -z "$ORDINAL" ]; then
+            MAVROS_TGT_SYSTEM=$((MAVROS_TGT_SYSTEM_BASE + ORDINAL));
+            echo "MAVROS_TGT_SYSTEM set to $MAVROS_TGT_SYSTEM (from hostname: $HOSTNAME), was set to zero and /etc/drone.config not found"
+        else
+            MAVROS_TGT_SYSTEM=1;
+            echo "MAVROS_TGT_SYSTEM set to $MAVROS_TGT_SYSTEM, ordinal could not parsed from hostname: $HOSTNAME and /etc/drone.config not found"
+        fi
     fi
-else
+elif (($MAVROS_TGT_SYSTEM >= 1 && $MAVROS_TGT_SYSTEM <= 256 )); then
     echo "MAVROS_TGT_SYSTEM setting as specified: $MAVROS_TGT_SYSTEM"
+else
+    echo "MAVROS_TGT_SYSTEM is invalid. Must either be set to 'auto' where it will either look  or number between 1 and 256" 
 fi
 
 export MAVROS_TGT_SYSTEM=$MAVROS_TGT_SYSTEM
