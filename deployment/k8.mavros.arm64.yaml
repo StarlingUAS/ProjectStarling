@@ -50,6 +50,7 @@ spec:
             name: ttypx4
           - mountPath: /etc/drone.config
             name: droneconfig
+            readOnly: true
       volumes:
       - name: ttypx4
         hostPath:
@@ -58,7 +59,6 @@ spec:
         hostPath:
           path: /etc/drone.config
           type: File
-          readOnly: true
       nodeSelector:
         kubernetes.io/arch: arm64
         # k3s.io/hostname: clover1
