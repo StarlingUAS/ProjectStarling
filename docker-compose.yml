@@ -16,7 +16,9 @@ services:
   
   mavros:
     image: uobflightlabstarling/starling-mavros
-    command: ros2 launch launch/mavros_bridge.launch.xml fcu_url:=udp://:14550@/?ids=1,240 tgt_system:=1
+    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment: 
+      - "MAVROS_TGT_SYSTEM=1"
 
   ui: 
     image: uobflightlabstarling/starling-ui
