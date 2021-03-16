@@ -34,7 +34,7 @@ spec:
           - name: MAVROS_TGT_FIRMWARE
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
-            value: "0" # Look up on system /etc/drone.config
+            value: "auto" # Look up on system /etc/drone.config
           - name: ROS_HOSTNAME # Required for ROS1 bridge in hostNetwork mode
             value: "localhost" # ROS1 will ping HOSTNAME, defaults to system hostname
           - name: ROS_MASTER_URI
