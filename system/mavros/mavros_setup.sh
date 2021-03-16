@@ -31,10 +31,10 @@ function get_instance {
 
 # If MAVROS_TGT_SYSTEM is auto, then set instance id to take MAVROS_TGT_SYSTEM_BASE + ORDINAL from StatefulSet hostname
 # Hostname is of the form '<stateful set name>-<ordinal>'
-if [ "$MAVROS_TGT_SYSTEM" -eq "auto" ]; then
+if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
     echo "MAVROS_TGT_SYSTEM set to auto"
     if [ $HAS_DRONE_CONFIG = true ]; then 
-        echo "MAVROS_TGT_SYSTEM set to MAVLINK_SYSID from /etc/drone.config"
+        echo "MAVROS_TGT_SYSTEM set to MAVLINK_SYSID ($MAVLINK_SYSID) from /etc/drone.config"
         MAVROS_TGT_SYSTEM=$MAVLINK_SYSID
     else
         INSTANCE=$(get_instance)
@@ -50,6 +50,7 @@ elif (($MAVROS_TGT_SYSTEM >= 1 && $MAVROS_TGT_SYSTEM <= 255 )); then
     echo "MAVROS_TGT_SYSTEM setting as specified: $MAVROS_TGT_SYSTEM"
 else
     echo "MAVROS_TGT_SYSTEM is invalid. Must either be set to 'auto' or a integer between 1 and 255" 
+    exit 1
 fi
 
 export MAVROS_TGT_SYSTEM=$MAVROS_TGT_SYSTEM
