@@ -53,8 +53,9 @@ COPY mavros.launch /ros_ws/launch/mavros.launch
 ENV MAVROS_FCU_CONN="udp"
 ENV MAVROS_FCU_IP="127.0.0.1"
 ENV MAVROS_FCU_UDP_BASE="14830"
-ENV MAVROS_TGT_SYSTEM=0
-ENV MAVROS_TGT_SYSTEM_BASE=0
+ENV MAVROS_TGT_SYSTEM="auto"
+ENV PX4_INSTANCE_BASE=0
 ENV MAVROS_TGT_FIRMWARE="px4"
+ENV MAVROS_GCS_URL="udp-pb://@:14550"
 
 CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
