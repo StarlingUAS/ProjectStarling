@@ -21,7 +21,7 @@ fi
 # Hostname is of the form '<stateful set name>-<ordinal>'
 if [ "$PX4_INSTANCE" -eq "ordinal" ]; then
     ORDINAL="${HOSTNAME##*-}"
-    export PX4_INSTANCE=$((PX4_SYSID_SITL_BASE + ORDINAL-1));
+    export PX4_INSTANCE=$((PX4_INSTANCE_BASE + ORDINAL));
     echo "PX4_INSTANCE is zero therefore set to $PX4_INSTANCE (from hostname: $HOSTNAME)"
 elif (($PX4_INSTANCE >= 0 && $PX4_INSTANCE <= 255 )); then
     echo "PX4_INSTANCE setting as specified: $PX4_INSTANCE"
