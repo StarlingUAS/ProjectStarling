@@ -40,12 +40,14 @@ spec:
       - name: gazebo-spawn-iris
         image: starling-sim-iris:latest
         imagePullPolicy: IfNotPresent
-        args: [ "ros2", "launch", "launch/iris.launch.xml" , "spawn_only:=true"]
+        args: [ "./spawn_iris.sh" ]
         env:
         - name: PX4_INSTANCE 
           value: "ordinal"  
         - name: PX4_INSTANCE_BASE
           value: "200"
+        - name: IGNORE_FAILURE
+          value: "true"
       containers:
       - name: starling-px4-sitl
         image: starling-sim-px4-sitl:latest
