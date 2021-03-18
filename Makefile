@@ -9,6 +9,12 @@ system:
 controllers:
 	$(MAKE) -C controllers
 
+docs:
+	mkdocs build
+
+serve-docs:
+	mkdocs serve -a 0.0.0.0:8000
+
 run:
 	docker-compose up
 

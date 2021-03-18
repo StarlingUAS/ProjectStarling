@@ -4,8 +4,24 @@ repo_url: https://github.com/UoBFlightLab/ProjectStarling
 site_description: 'BRL Flight Arena 2.0'
 copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
 
+markdown_extensions:
+  - toc:
+      permalink: True
+
+plugins:
+  - search
+  - macros
+
 nav:
   - "Home":
     - "Overview": 'README.md'
-  - "Getting Started":
-    - "Background": 'installation/background.md' 
+  - "User Guides":
+    - "Quick Single Drone Local Machine": "guide/single-drone-local-machine.md"
+    - "Real Single Drone Local Machine": "guide/kube-single-drone-local-machine.md"
+    - "Multiple Drone Local Machine": "guide/multiple-drone-local-machine.md"
+    - "Single Drone on Hardware": "guide/single-drone-drones.md"
+    - "Multiple Drone on Hardware": "guide/multiple-drone-drones.md"
+    - "Offboard Control": "guide/offboard-control.md"
+    - "Onboard Control": "guide/onboard-control.md"
+  - "Advanced Usage":
+    - "Background": 'details/background.md' 
