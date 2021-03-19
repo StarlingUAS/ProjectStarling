@@ -78,7 +78,7 @@ A mavros node can be placed on the drone by then applying the following configur
 ```bash
 sudo k3s kubectl apply -f deployment/k8.mavros.arm64.yaml
 ```
-<!-- See [the following README.md for further details](/deployment/README.md) -->
+See [the following README.md for further details](deployment/README.md)
 
 ## Implementing a Controller
 ### Modifying the example controller

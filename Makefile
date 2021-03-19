@@ -1,3 +1,4 @@
+MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 all: simulator system controllers
 
 simulator:
@@ -10,6 +11,7 @@ controllers:
 	$(MAKE) -C controllers
 
 docs:
+	cp ${MAKEFILE_DIR}/documentation/README.md ${MAKEFILE_DIR}/README.md
 	mkdocs build
 
 serve-docs:
