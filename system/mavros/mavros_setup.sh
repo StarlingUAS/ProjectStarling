@@ -20,7 +20,7 @@ function get_instance {
         return 2
     fi
 
-    if ! [ "$1" -ge 0 ] 2>/dev/null; then
+    if ! [ "$ORDINAL" -ge 0 ] 2>/dev/null; then
         # Ordinal is not an integer, assume non-kubernetes container and use default of 0
         echo "0"
         return 3
@@ -39,7 +39,7 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
     else
         INSTANCE=$(get_instance)
         RESULT=$?
-        MAVROS_TGT_SYSTEM=$((INSTANCE + 1));
+        MAVROS_TGT_SYSTEM=$((INSTANCE + 1))
         if [ $RESULT -ne 0 ]; then
             echo "Could not parse ordinal, using default instance of 0. MAVROS_TGT_SYSTEM will be 1"
         else
