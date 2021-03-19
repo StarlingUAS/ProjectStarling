@@ -36,7 +36,7 @@ fi
 SCRIPTSDIR=scripts
 
 # Start K3S
-./$SCRIPTSDIR/start_k3s_agent.sh $ARGS
+./$SCRIPTSDIR/start_k3s.sh $ARGS
 
 if [ ! $DELETE ]; then
     # Start Gazebo and Single PX4 drone

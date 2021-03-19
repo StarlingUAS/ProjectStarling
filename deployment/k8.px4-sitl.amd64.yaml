@@ -44,7 +44,7 @@ spec:
         env:
         - name: PX4_INSTANCE 
           value: "ordinal"  
-        - name: PX4_SYSID_SITL_BASE
+        - name: PX4_INSTANCE_BASE
           value: "200"
       containers:
       - name: starling-px4-sitl
@@ -55,7 +55,7 @@ spec:
           value: "sim-gazebo.gazebo-srv"
         - name: PX4_INSTANCE 
           value: "ordinal"
-        - name: PX4_SYSID_SITL_BASE
+        - name: PX4_INSTANCE_BASE
           value: "200"
       - name: starling-mavros
         image: starling-mavros:latest
