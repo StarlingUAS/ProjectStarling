@@ -19,6 +19,7 @@ ENV PX4_OFFBOARD_PORT_BASE 14830
 ENV PX4_BUILD_PATH /src/PX4-Autopilot/build/
 ENV PX4_SIM_MODEL iris
 ENV PX4_SIM_INIT_LOC_X=0 PX4_SIM_INIT_LOC_Y=0 PX4_SIM_INIT_LOC_Z=0
+ENV PX4_SIM_FORCE_USE_SET_POSITION false
 ENV SIM_WD /sim_wd
 
 # Modify startup script to use environment for server IP
