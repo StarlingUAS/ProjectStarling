@@ -9,9 +9,9 @@ The initial process of starting the container goes through `ros_entrypoint.sh`. 
 runs a setup script which configures the environment to tell MAVROS how to talk to the drone and where to publish its
 topics. The setup script works in a couple of different ways depending on where the container is running.
 
-If the container is running on a drone, it expects to be able to find the `/etc/drone.config` file. This file contains
-some information that MAVROS needs to be able to communicate with the flight controller. An example `drone.config` file
-is included below.
+If the container is running on a drone, it expects to be able to find the `/etc/starling/vehicle.config` file. This file
+contains some information that MAVROS needs to be able to communicate with the flight controller. An example
+`vehicle.config` file is included below.
 
 If the container is started as part of a Kubernetes StatefulSet deployment, the setup script will attempt to get the
 ordinal of its containing pod from the hostname. It will then use this ordinal to set up the ports and the system ID to
@@ -54,20 +54,20 @@ package needs to be built from source. In addition, to ensure support for custom
 to be built from source. The build process also includes some additional steps to complete the installation of MAVROS
 under ROS1.
 
-## Example `drone.config`
+## Example `vehicle.config`
 
 ```bash
-FCU_URL=/dev/px4fmu
-FIRMWARE=px4
-MAVLINK_SYSID=23
-VICON_NAME=clover23
+VEHICLE_FCU_URL=/dev/px4fmu
+VEHICLE_FIRMWARE=px4
+VEHICLE_MAVLINK_SYSID=23
+VEHICLE_VICON_NAME=clover23
 ```
 
 ## Behaviour Notes
 
 ### Running on a vehicle
 
-Ensure `/etc/drone.config` is mounted. The container is then configured from the contents of that file.
+Ensure `/etc/starling/vehicle.config` is mounted. The container is then configured from the contents of that file.
 
 ### Running under Kubernetes StatefulSet
 

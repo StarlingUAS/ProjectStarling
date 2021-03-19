@@ -1,13 +1,13 @@
 #!/bin/bash
 
-HAS_DRONE_CONFIG=false
+HAS_VEHICLE_CONFIG=false
 
-# If we have a drone.config file, assume we are running on a real drone
-if [ -f "/etc/drone.config" ]; then 
-    echo "Found drone.config"
-    HAS_DRONE_CONFIG=true
-    # Source MAVLINK_SYSID, VICON_NAME, FCU_URL and FIRMWARE
-    source /etc/drone.config
+# If we have a vehicle.config file, assume we are running on a real vehicle
+if [ -f "/etc/starling/vehicle.config" ]; then 
+    echo "Found vehicle.config"
+    HAS_VEHICLE_CONFIG=true
+    # Source VEHICLE_MAVLINK_SYSID, VEHICLE_VICON_NAME, VEHICLE_FCU_URL and VEHICLE_FIRMWARE
+    source /etc/starling/vehicle.config
 fi
 
 function get_instance {
@@ -33,9 +33,9 @@ function get_instance {
 # Hostname is of the form '<stateful set name>-<ordinal>'
 if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
     echo "MAVROS_TGT_SYSTEM set to auto"
-    if [ $HAS_DRONE_CONFIG = true ]; then 
-        echo "MAVROS_TGT_SYSTEM set to MAVLINK_SYSID ($MAVLINK_SYSID) from /etc/drone.config"
-        MAVROS_TGT_SYSTEM=$MAVLINK_SYSID
+    if [ $HAS_VEHICLE_CONFIG = true ]; then 
+        echo "MAVROS_TGT_SYSTEM set to VEHICLE_MAVLINK_SYSID ($VEHICLE_MAVLINK_SYSID) from /etc/starling/vehicle.config"
+        MAVROS_TGT_SYSTEM=$VEHICLE_MAVLINK_SYSID
     else
         INSTANCE=$(get_instance)
         RESULT=$?
@@ -68,13 +68,17 @@ fi
 
 if [ -v $MAVROS_FCU_URL ]; then
     # If not set, then generate automatically
-    if ! [ $HAS_DRONE_CONFIG = true ]; then
-        # No drone.config, generate based on subparameters and the target system id dynamically
+    if ! [ $HAS_VEHICLE_CONFIG = true ]; then
+        # No vehicle.config, generate based on subparameters and the target system id dynamically
         INSTANCE=$(get_instance)
         MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
+        echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
+    else
+        # Use value from vehicle.config
+        export MAVROS_FCU_URL=$VEHICLE_FCU_URL
+        echo "MAVROS_FCU_URL set to: $MAVROS_FCU_URL from vehicle.config"
     fi
-    echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
 else
-    echo "MAVROS_FCU_URL setting to $MAVROS_FCU_URL"
+    echo "MAVROS_FCU_URL was set to $MAVROS_FCU_URL"
 fi

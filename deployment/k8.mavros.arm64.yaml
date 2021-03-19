@@ -48,8 +48,8 @@ spec:
           volumeMounts:
           - mountPath: /dev/px4fmu
             name: ttypx4
-          - mountPath: /etc/drone.config
-            name: droneconfig
+          - mountPath: /etc/starling/vehicle.config
+            name: vehicleconfig
             readOnly: true
       volumes:
       - name: ttypx4
@@ -57,7 +57,7 @@ spec:
           path: /dev/px4fmu
       - name: droneconfig
         hostPath:
-          path: /etc/drone.config
+          path: /etc/starling/vehicle.config
           type: File
       nodeSelector:
         kubernetes.io/arch: arm64
