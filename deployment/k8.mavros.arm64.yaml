@@ -29,8 +29,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: MAVROS_FCU_URL
-            value: "/dev/px4fmu"
           - name: MAVROS_TGT_FIRMWARE
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
@@ -39,12 +37,6 @@ spec:
             value: "localhost" # ROS1 will ping HOSTNAME, defaults to system hostname
           - name: ROS_MASTER_URI
             value: "http://localhost:11311"
-          ports:
-          - containerPort: 14553
-            protocol: "UDP"
-          - containerPort: 5760
-          - containerPort: 5762
-          - containerPort: 5763
           volumeMounts:
           - mountPath: /dev/px4fmu
             name: ttypx4
