@@ -71,7 +71,7 @@ if [ -v $MAVROS_FCU_URL ]; then
     if ! [ $HAS_VEHICLE_CONFIG = true ]; then
         # No vehicle.config, generate based on subparameters and the target system id dynamically
         INSTANCE=$(get_instance)
-        MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@"
+        MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
         echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
     else
