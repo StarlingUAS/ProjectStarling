@@ -11,10 +11,6 @@ do
             HELP=1
             shift # past argument
             ;;
-        -d|--delete)
-            DELETE=1
-            shift
-            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -35,10 +31,10 @@ fi
 
 SCRIPTSDIR=scripts
 
-# Start K3S
+# Start K3S 
+# Only accepts -u|--uninstall 
 ./$SCRIPTSDIR/start_k3s.sh $ARGS
 
-if [ ! $DELETE ]; then
-    # Start Gazebo and Single PX4 drone
-    ./SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS
-fi
+# Start Gazebo and Single PX4 drone
+# Accepts the following [-ow|--open], [-d|--delete], [-sk|--skip-base-check], [-r|--restart]
+./SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS

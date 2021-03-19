@@ -12,8 +12,8 @@ do
             HELP=1
             shift # past argument
             ;;
-        -d|--delete)
-            DELETE=1
+        -u|--uninstall)
+            UNINSTALL=1
             shift
             ;;
         *)    # unknown option
@@ -31,7 +31,7 @@ then
     exit -1
 fi
 
-if [[ ! $DELETE ]]; then
+if [[ ! $UNINSTALL ]]; then
     # Only needs to be run once per system
     # Download and start kubernetes master node 
     echo "Downloading and Running K3s in systemd (Will not do anything if k3s already installed and running"
@@ -39,7 +39,7 @@ if [[ ! $DELETE ]]; then
 
     echo "All actions completed"
     echo "k3s will run in the background systemd permanently"
-    echo "run this script with the --delete flag or 'k3s-uninstall.sh' to remove all of k3s"
+    echo "run this script with the --uninstall flag or 'k3s-uninstall.sh' to remove all of k3s"
 else
     echo "Removing k3s"
     k3s-uninstall.sh
