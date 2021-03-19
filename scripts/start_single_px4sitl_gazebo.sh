@@ -27,6 +27,11 @@ do
             SKIP_BASE=1
             shift
             ;;
+        -r|--restart)
+            DELETE=1
+            RESTART=1
+            shift
+            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -49,7 +54,20 @@ SCRIPTSDIR="${BASH_SOURCE%/*}"
 SYSTEMDIR="$SCRIPTSDIR/../system"
 DEPLOYMENTDIR="$SCRIPTSDIR/../deployment"
 
-if [[ ! $DELETE ]]; then
+
+if [[ $DELETE ]]; then
+    echo "Deleting Gazebo-iris"
+    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
+    echo "Deleting px4-sitl with mavros"
+    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
+fi
+
+if [[ $RESTART ]]; then
+    echo "Restarting, sleeping 30";
+    sleep 30;
+fi
+
+if [[ ! $DELETE || $RESTART ]]; then
 
     if [[ ! $SKIP_BASE ]]; then
         # Start/ Check starling base
@@ -74,11 +92,6 @@ if [[ ! $DELETE ]]; then
         echo "Opening gazebo to http://localhost:8080"
         xdg-open http://localhost:8080
     fi
-else
-    echo "Deleting Gazebo-iris"
-    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
-    echo "Deleting px4-sitl with mavros"
-    sudo k3s kubectl delete -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
 fi
 
 echo "----- End: $0 -----"
