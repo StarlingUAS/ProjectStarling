@@ -1,4 +1,4 @@
-# Single Drone Local Machine Emulating the Actual Drone Software/Communications Architecture
+# Single Drone on Local Machine Using Cluster Architecture
 
 Follow these instructions for quick and easy testing of controllers on a single drone on a single local machine. **Use in the following scenarios**:
 
@@ -15,17 +15,23 @@ Follow these instructions for quick and easy testing of controllers on a single 
 [TOC]
 
 ## Drone and Simulator on a local cluster
-
 ### Starting the cluster
 
-In the root directory run `./run_k3s.sh` in a terminal. This will start the following:
+In the root directory run one of the following in a terminal
+```bash
+./run_k3s.sh
+./run_k3s.sh -ow # Will automatically open the UI webpages for you. 
+``` 
+This will start the following:
 
-1. The cluster root node which governs the running of all the other parts.
-2. Gazebo simulation enviornment running 1 Iris quadcopter model 
-3. A SITL (Software In The Loop) instance running the PX4 autopilot.
-4. A Mavros node connected to the SITL instance 
-5. A simple UI with a go and estop button. 
-6. The cluster control dashboard (printing out the access key string)
+1. Install the cluster root node which governs the running of all the other parts.
+2. A node running the Gazebo simulation environment 
+3. A node running the following:
+    1. An initialisation routine spawning 1 Iris quadcopter model 
+    2. A SITL (Software In The Loop) instance running the PX4 autopilot.
+    3. A MAVROS node connected to the SITL instance 
+4. A simple UI with a go and estop button. 
+5. The cluster control dashboard (printing out the access key string)
 
 > **Note:** this might take a while on first run as downloads are required.
 
@@ -34,18 +40,39 @@ The User Interfaces are available in the following locations:
 - Go to [`http://localhost:8080`](http://localhost:8080) in a browser to (hopefully) see the gazebo simulator.
 - Go to [`http://localhost:3000/html/main.html`](http://localhost:3000/html/main.html) in a browser to see the starling user interface containing go/stop buttons.
 - Go to [`http://localhost:31771`](http://localhost:31771) in a browser to see the cluster dashboard. There is a lot here, and this guide will point you to the key functions. Please see [this page](../details/kubernetes-dashboard.md) for further details.
+    - Your browser of choice may not like the web-page and complain of certificate errors. Please ignore this and continue onwards. You may have to click 'advanced' or a similar option for the browser to let you in.
+    - To log in to the site, you will need the long login Token which is hopefully displayed by `run_k3s.sh`. This token should also be automatically placed onto your clipboard for pasting.
 
 > **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address. (TODO: starling ui not yet functioning in this use case.)
 
-> **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the right hand pane.  
+> **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.  
 
+### Restarting or deleting the drone or simulator in the cluster
+
+There may be cases where you wish to restart or refresh either the software running on the drones or the simulator itself (e.g. removing old models):
+```bash
+./run_k3s.sh -d # or --delete will remove the gazebo and drone instances
+./run_k3s.sh -r # or --restart will restart the gazebo and drone instances
+```
+
+If you wish to remove the cluster and all associated software from the machine, you will need to uninstall:
+```bash
+./run_k3s.sh --uninstall 
+```
+> **Note:** This will remove everything to do with the starling cluster. The dashboard access token will be deleted. The container images will remain on your machine, but to remove those as well run `docker system prune --volumes`. 
+
+### Accessing logs on the dashboard
+
+Please see the [instructions here](/details/kubernetes-dashboard)
+
+## Controlling the Drones
 ### Offboard Control
 There are two supported methods for offboard control of either the SITL or real drones.
 
 1. Control drone directly via Mavlink, by Ground Control Station (GCS) or other Mavlink compatible method (e.g. Dronekit).
 2. Control drone via ROS2 node
 
-### 1. Connecting a Ground Control Station via Mavlink
+#### 1. Connecting a Ground Control Station via Mavlink
 
 If a mavros or sitl instance is running, there will be a GCS link on `udp://localhost:14553` (hopefully). This means that you can run a GCS such as QGroundControl or Mission Planner:
 
@@ -55,22 +82,37 @@ If a mavros or sitl instance is running, there will be a GCS link on `udp://loca
 
 This is a quick an easy way to control the SITL instance via Mavlink.
 
-### 2. Running Example ROS2 Offboard Controller node
+#### 2. Running Example ROS2 Offboard Controller node
 
+An example offboard ROS2 controller can then be connected to SITL by running the following in a terminal:
+
+```bash
+./scripts/start_example_controller.sh
+```
+
+This will first build the example controller so it is available locally. Then deploy the example controller to the cluster. It will take a few minutes to startup.
+
+When run, the example will confirm in the terminal that it has connected and that it is waiting for mission start. To start the mission, press the green go button in the [starling user interface](http://localhost:3000/html/main.html) which will send a message over `/mission_start` topic. A confirmation message should appear in the terminal, and the drone will arm (drone propellors spinning up) and takeoff. It will fly in circles for 10 seconds before landing and disarming. 
+
+Once the controller has completed, the process will exit and the controller will restart, allowing you to repeat the controller.
+
+
+If used with multiple vehicles, it will automatically find all drones broadcasting mavros topics, and start a controller for each one. 
+
+To remove or restart the controller, use the `-d` or `-r` options respectively with the script. 
+
+```bash
+./scripts/start_example_controller.sh -d # Delete or Remove controller
+./scripts/start_example_controller.sh -r # Restart controller
+```
 
 ### Onboard Control
-{% include 'guide/onboard-control.md' %}
-
+{% include 'snippets/onboard-control.md' %}
 
 
 ## Development on the Drone and Simulator 
 
 There are a number of useful scripts in the `/scripts` directory of this repository. Scripts can be run from any location, but for this tutorial we assume the user is in the root directory.
-
-
-
-
-
 ### Starting the cluster root node
 
 

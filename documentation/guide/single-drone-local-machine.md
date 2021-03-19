@@ -29,7 +29,7 @@ The User Interfaces are available in the following locations:
 
 > **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address. (TODO: starling ui not yet functioning in this use case.)
 
-> **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the right hand pane.  
+> **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.  
 
 ## Offboard Control
 There are two supported methods for offboard control of either the SITL or real drones.
@@ -59,12 +59,8 @@ This will download and run the `example_controller_python` image from `uobflight
 > **Note:** The controller may complain that it cannot find the drone. Double check that the name of the root folder matches the one passed to `--network`.
 
 When run, the example will confirm in the terminal that it has connected and that it is waiting for mission start. To start the mission, press the green go button in the [starling user interface](http://localhost:3000/html/main.html) which will send a message over `/mission_start` topic. A confirmation message should appear in the terminal, and the drone will arm (drone propellors spinning up) and takeoff. It will fly in circles for 10 seconds before landing and disarming. 
-
-If used with multiple vehicles, it will automatically find all drones broadcasting mavros topics, and start a controller for each one. 
-
-
 ## Onboard Control
-{% include 'guide/onboard-control.md' %}
+{% include 'snippets/onboard-control.md' %}
 
 
 ## Controller Development on the Drone and Simulator 

@@ -19,12 +19,14 @@ nav:
     - "How To Use Starling": 'guide/development-process.md'
     - "Background": 'details/background.md' 
   - "User Guides":
-    - "Quick Single Drone Local Machine": "guide/single-drone-local-machine.md"
-    - "Real Single Drone Local Machine": "guide/kube-single-drone-local-machine.md"
-    - "Multiple Drone Local Machine": "guide/multiple-drone-local-machine.md"
+    - "Single Drone on Local Machine": "guide/single-drone-local-machine.md"
+    - "Single Drone on Local Cluster": "guide/kube-single-drone-local-machine.md"
     - "Single Drone on Hardware": "guide/single-drone-drones.md"
-    - "Multiple Drone on Hardware": "guide/multiple-drone-drones.md"
-  # - "Advanced Usage":
-  #   - "Offboard Control": "guide/offboard-control.md"
-  #   - "Onboard Control": "guide/onboard-control.md"
-    
+    - "Multiple Drones on Local Cluster": "guide/multiple-drone-local-machine.md"
+    - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+  - "Additional Guides":
+    - "Dashboard Guide": 'details/kubernetes-dashboard.md'
+    - "Understanding Docker": 'details/docker.md'    
+    - "Understanding Kubernetes": "details/kubernetes.md"
+  - "Implementation":
+    - "PX4 Details": "details/px4.md"
