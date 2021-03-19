@@ -49,8 +49,8 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
 elif (($MAVROS_TGT_SYSTEM >= 1 && $MAVROS_TGT_SYSTEM <= 255 )); then
     echo "MAVROS_TGT_SYSTEM setting as specified: $MAVROS_TGT_SYSTEM"
 else
-    echo "MAVROS_TGT_SYSTEM is invalid. Must either be set to 'auto' or a integer between 1 and 255" 
-    exit 1
+    echo "MAVROS_TGT_SYSTEM (set to $MAVROS_TGT_SYSTEM) is invalid, setting to 1. Must either be set to 'auto' where it will either look  or number between 1 and 256" 
+    MAVROS_TGT_SYSTEM=1
 fi
 
 export MAVROS_TGT_SYSTEM=$MAVROS_TGT_SYSTEM
