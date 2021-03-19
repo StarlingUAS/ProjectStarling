@@ -25,14 +25,18 @@ spec:
           securityContext:
             privileged: true
           env:
+          - name: VEHICLE_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           - name: MAVROS_FCU_URL
             value: "/dev/px4fmu"
           - name: MAVROS_TGT_FIRMWARE
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
-            value: "1"
-          - name: ROS_HOSTNAME
-            value: "localhost"
+            value: "0" # Look up on system /etc/drone.config
+          - name: ROS_HOSTNAME # Required for ROS1 bridge in hostNetwork mode
+            value: "localhost" # ROS1 will ping HOSTNAME, defaults to system hostname
           - name: ROS_MASTER_URI
             value: "http://localhost:11311"
           ports:
