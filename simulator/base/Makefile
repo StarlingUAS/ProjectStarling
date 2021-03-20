@@ -8,7 +8,7 @@ core:
 px4-builder:
 	docker build --target px4builder -t starling-px4-builder ${MAKEFILE_DIR}/px4
 
-base-px4: px4-builder
+base-px4: px4-builder core
 	docker build -t starling-sim-base-px4 ${MAKEFILE_DIR}/px4
 
 px4-sitl: px4-builder
