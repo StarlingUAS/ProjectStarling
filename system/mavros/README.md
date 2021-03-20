@@ -70,7 +70,7 @@ Note that the extended form of the serial URL is required for MAVROS's target "q
 VEHICLE_FCU_URL=serial:///dev/px4fmu:115200
 VEHICLE_FIRMWARE=px4
 VEHICLE_MAVLINK_SYSID=23
-VEHICLE_VICON_NAME=clover23
+VEHICLE_NAME=clover23
 ```
 
 ## Behaviour Notes

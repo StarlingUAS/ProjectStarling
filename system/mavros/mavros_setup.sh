@@ -6,7 +6,7 @@ HAS_VEHICLE_CONFIG=false
 if [ -f "/etc/starling/vehicle.config" ]; then 
     echo "Found vehicle.config"
     HAS_VEHICLE_CONFIG=true
-    # Source VEHICLE_MAVLINK_SYSID, VEHICLE_VICON_NAME, VEHICLE_FCU_URL and VEHICLE_FIRMWARE
+    # Source VEHICLE_MAVLINK_SYSID, VEHICLE_NAME, VEHICLE_FCU_URL and VEHICLE_FIRMWARE
     source /etc/starling/vehicle.config
 fi
 
