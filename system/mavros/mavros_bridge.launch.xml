@@ -1,11 +1,11 @@
 <launch>
 
-    <arg name="vehicle_namespace" default="$(env VEHICLE_NAMESPACE vehicle_$(env MAVROS_TGT_SYSTEM 1))" />
-    <arg name="firmware" default="$(env MAVROS_TGT_FIRMWARE px4)" />
-    <arg name="fcu_url" default="$(env MAVROS_FCU_URL udp://:14830@)"/>
-    <arg name="gcs_url" default="$(env MAVROS_GCS_URL udp-pb://@:14553)" />
-    <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM 1)" />
-    <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM 1)" />
+    <arg name="vehicle_namespace" default="$(env VEHICLE_NAMESPACE vehicle_$(env MAVROS_TGT_SYSTEM))" />
+    <arg name="firmware" default="$(env MAVROS_TGT_FIRMWARE)" />
+    <arg name="fcu_url" default="$(env MAVROS_FCU_URL)"/>
+    <arg name="gcs_url" default="$(env MAVROS_GCS_URL)" />
+    <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM)" />
+    <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM)" />
     
     <!-- Launch the ROS1 stack -->
     <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch /ros_ws/launch/mavros.launch
