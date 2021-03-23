@@ -28,5 +28,7 @@ nav:
     - "Dashboard Guide": 'details/kubernetes-dashboard.md'
     - "Understanding Docker": 'details/docker.md'    
     - "Understanding Kubernetes": "details/kubernetes.md"
+    - "BRL Flight Arena": "details/flight_arena.md"
   - "Implementation":
     - "PX4 Details": "details/px4.md"
+    - "Example Controller": "guide/example-controller.md"

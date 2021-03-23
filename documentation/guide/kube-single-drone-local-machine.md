@@ -7,9 +7,9 @@ Follow these instructions for quick and easy testing of controllers on a single 
 3. Local development of distributed onboard (drone control software running on drone itself)
 4. Testing controllers/software on the real drone software/ communications architecture that would be used in the BRL.
 
-**This is considered to be step 2 for the Starling development process.**
+**This is considered to be step 2a for the Starling development process.**
 
-> **NOTE:** Reading the [background](../details/background.md) may be useful but not necessary.
+> **Note:** Reading the [background](../details/background.md) may be useful but not necessary.
 
 ## Contents
 [TOC]
@@ -96,7 +96,6 @@ When run, the example will confirm in the terminal that it has connected and tha
 
 Once the controller has completed, the process will exit and the controller will restart, allowing you to repeat the controller.
 
-
 If used with multiple vehicles, it will automatically find all drones broadcasting mavros topics, and start a controller for each one. 
 
 To remove or restart the controller, use the `-d` or `-r` options respectively with the script. 
@@ -112,8 +111,21 @@ To remove or restart the controller, use the `-d` or `-r` options respectively w
 
 ## Development on the Drone and Simulator 
 
-There are a number of useful scripts in the `/scripts` directory of this repository. Scripts can be run from any location, but for this tutorial we assume the user is in the root directory.
-### Starting the cluster root node
+### Useful Scripts:
 
+There are a number of useful scripts in the `/scripts` directory of this repository. Scripts can be run from any location, but for this tutorial we assume the user is in the root directory.
+
+1. `./scripts/start_k3s.sh` - This starts the cluster 
+    -  `-u` will uninstall the cluster from the machine (and remove any running processes)
+2. `./scripts/start_single_px4sitl_gazebo.sh` - This starts the starling core functions (Dashboard and UI). It also starts the gazebo simulator and a 'drone' process running the PX4 SITL and a connected Mavros ROS2 node. Assumes the cluster has been started.
+    - `-d` will stop the gazebo and all connected 'drone' processes only (use if reloading the controller).
+    - `-r` will restart the gazebo and all connected 'drone' processes. 
+    - `-sk` will skip the starting/check that the starling core functions are running.
+    - `-ow` will automatically open the UI webpages.
+3. `./scripts/start_starling_base.sh` - This starts the starling user interface and dashboard. Automatically run by `start_single_px4sitl_gazebo.sh` 
+4. `./scripts/start_dashboard.sh` - This starts the dashboard process on the cluster. Assumes the cluster has already been started. Automatically run by `start_single_px4sitl_gazebo.sh` and `start_starling_base.sh` 
+    - `-ow` will automatically open the UI webpages.
+
+> **Note:** The `./run_k3s` script internally runs `start_k3s.sh` and `start_single_px4sitl_gazebo.sh`. Any options passed will be forwarded to the relevant script.
 
 ## Troubleshooting/ FAQs
