@@ -35,3 +35,5 @@ nav:
     - "Example Kubernetes Deployments": "details/kubernetes-deployment.md"
     - "Mavros Container": "details/starling-mavros.md"
     - "Starling UI": "details/starling-ui.md"
+  - "Miscellaneous":
+    - "Ideas": "other/ideas.md"
