@@ -1,8 +1,14 @@
-# Initial UI
+# Starling Initial UI
 
 Builds a container that serves a web-based UI for the system. Uses
 RobotWebTools' `ros2-web-bridge` and `rclnodejs` internally.
 
+![starling-ui](/img/starling-ui.png)
+
+## Contents
+[TOC]
+
+## Layout
 Contains several elements:
 - Contains a main page which publishes `std_msgs/String` to either the topic `/emergency_stop` or `/mission_start` depending on the button pressed
 - The javascript file `html/ros_buttons.js` contains the javascript control for the buttons
@@ -60,7 +66,7 @@ This will both start the `uobflightlabstarling/starling-ui` image, and a kuberne
 > **NOTE**:
 > Localhost port 9090 is also used for `ros_bridge` traffic
 
-### Notes
+## Notes
 
 To support the full gamut of MAVROS messages, this will likely need to be built
 on top of an image containing the mavros_msgs package for ROS2. Lots of things

@@ -1,131 +1,58 @@
-# Deployment with kubernetes (k8)
+# Kubernetes Dashboard
 
-This system is intended to run as a cloud platform. We utilse [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/) as our kubernetes manager. 
+[TOC]
 
-Key concepts are as follows:
-- **pods** are a k8 concept. A pod contains one or more containers and has its own ip address. Containers within a pod communicate over localhost
-- **node** is the machine (physical e.g. pi or virtual machine) upon which pods are run. (Separate from 'ros2 nodes' or 'ros nodes')
-- **kubectl** is the command line program required to interface with kubernetes.
-- **cni** container networking interface (default is flannel for k3s) is the underlying networking for all containers
-- **dds/ fast-rtps** Is the default communications middleware for ros2 comms.
+## Quick GIF
 
-Refer to the kubernetes notes with the onenote notebook for more usage information.
+![Dashboard GIF](/img/starling-dashboard.gif)
 
-## Quick Reference to files:
-The .yaml files in this directory are all kubernetes configurations for various combinations of systems. The cpu architecture refers to where the containers have been specified to run - amd64 specifies for running on master machine, and arm64 specifies for running on the raspberry pi node over the network (see below for setup). All of these config files pull their images from the [uobflightlabstarling docker hub](https://hub.docker.com/orgs/uobflightlabstarling/repositories).
+## Logging In
 
-### Files
+Connecting to [`https://localhost:31771`](https://localhost:31771) may show a security problem. This is caused by certificate issues. 
 
-- **k8.gazebo-iris.amd64.yaml** :- Currently runs the `starling-sim-iris` image and a Service which exposes the gzweb statically on `localhost:8080`. This service has a cluster internal hostname of `sim-gazebo.gazebo-srv`
-- **k8.px4-sitl.amd64.yaml** :- Currently runs a pod containing two containers
-    - `starling-sim-px4-sitl` - emulating px4-sitl. Talks to GCS software on port 14550 with replies on 18570.
-    - `starling-mavros` - contains a ROS2 mavros node connected via udp://localhost:14540 to sitl. Talks to GCS on udp broadcast port 14553.
-- **k8.ap-sitl.amd64.yaml** :-  [Needs updating]Currently runs a pod containing two containers
-    - `starling-ardupilot-sitl` - emulating ardupilot-sitl. Talks to GCS over 14553 as well. 
-    - `starling-mavros` - contains a ROS2 mavros node connected via tcp://localhost:5762 to sitl. Talks to GCS on udp broadcast port 14553.
-- **k8.mavros.arm64.yaml** :- A mavros node designed to run on the raspberry pi/ drone control computer. This pod contains a single `starling-mavros` container. It reads of a px4 pixhawk assumed to be talking over usb serial connection `/dev/px4fmu` (set up via udev symlinks). Currently assumes mavlink sysid is 1.
-- **k8.ros_monitor.amd64.yaml** :- runs `starling-mavros` and a network-tools container. Can be used for debugging ROS2 and networking issues
+![page1](/img/starling-dashboard-1.png) 
 
-### Using files
-Once k3s has been installed (see below, or run `./run_k3s.sh` in the home directory), these configurations can be used in the cluster as follows:
+This will give the following log on page 
+
+![page2](/img/starling-dashboard-2.png) 
+
+The token can be found from the initial start of the dashboard, or can be accessed using the following command:
 ```bash
-# Applying/ Creating them
-sudo k3s kubectl apply -f <filename.yaml> 
-# Deleting the deployment
-sudo k3s kubectl delete -f <filename.yaml> -f <filename.yaml>
+sudo k3s kubectl -n kubernetes-dashboard describe secret admin-user-token
 ```
-This can also be done in the gui dashboard application.
+![token](/img/starling-dashboard-token.png) 
 
-> **Note:**
-> Local images can be used if `imagePullPolicy` is set to `ifNotPresent` instead of `Always`. In that case it will attempt to find a local image with the given image name.
+## Navigating the Dashboard
 
-> arm64 images must be cross compiled using docker buildx (make multi-arch or make cross-compile or similar in the relevant docker files) and always pulled from docker hub.
+Once logged in, the dashboard frontpage looks like the following. This can be accessed via the 'Workloads' button. It shows the current status of the cluster. On the left hand side there is a navigation bar showing the various 'resources' or computational loads which are running on the cluster. 
 
-## Installation instructions
+![page3](/img/starling-dashboard-3.png) 
 
-**It is recommended that you use the `./run_k3s.sh` script in the root of the repository. This script can be re-run at any time after install. If k3s is already installed and the relevant pods are running it will not do anything**
+The key types of resources for us is the *Deployment*, *Pod*, *Stateful Set* and *Services*. See [kubernetes docs page](/details/kubernetes.md) for more details. For example, selecting the *Pods* on the left hand panel opens up the currently running pods on the cluster.
 
-Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately in the background:
-```
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
-```
+Here you can see *starling-px4-0*, *gazebo-v1-<characters>* pods which run the simulated drone and the gazebo simulator, as well as a numver of other pods running networking and other functions. 
 
-For the raspberry pi, ensure docker is installed, and then these instructions are the same on the raspberry pi (64 bit os).
+Any particular Pod can be inspected by clicking on the Pods name.
+![page](/img/starling-dashboard-4.png) 
 
-For testing purposes (inside testing dir), the containers have already been built for both amd64 and arm64 and uploaded onto hub.docker: [mickeyli789/ros_demo](https://hub.docker.com/r/mickeyli789/ros_demo).
+For example, inspecting the *starling-px4-0* gives the following page. It specifies several useful details including:
 
-Also recommended you alias kubectl (kubernetes cli) in your bashrc
-```
-alias kubectl='sudo k3s kubectl
-```
+- pod name, 
+- pod creation time, 
+- pod labels, 
+- ip address
+- and a number of other things
 
-## Running instructions
+You can access both the container *logs* and also access the container shell to directly execute commands for testing. The buttons for both are in the top right corner of the UI.
 
-### Laptop
+![page](/img/starling-dashboard-5.png) 
 
-**It is recommended that you use the `./run_k3s.sh` script in the root of the repository.**
+Once you have clicked the logs icon, the logs are streamed from the container inside the pod. For example here we see the *starling-px4-sitl* container within the *starling-px4-sitl-0* pod. 
 
-This script will download the latest version of k3s run the master kubernetes server using docker (instead of containerd if you need access to local images)
-'```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -``` '
-(will run in background as systemd - check `systemctl status k3s`)
+The terminal can be scrolled up and down, but has maximum size. If the terminal output has reached maximum size, the arrows in the bottom right can be used to navigate terminal 'pages'. Also note that the terminal does not update in real time. To force update the terminal, click on one of the arrows in the bottom right, or select the auto-update option in the options menu in the top right next to the downloads symbol.
 
-This will open up a server with entrypoint on `0.0.0.0:6443` which corresponds to `<host local ip address>:6443` 
+![page](/img/starling-dashboard-6.png) 
 
-### Pi / Drone / Agent
-First ensure that the pi has been correctly set up with an airgapped installation of k3s, [see here for installation instructions](https://rancher.com/docs/k3s/latest/en/installation/airgap/). Follow the Manually Deploy Images Method. The script below assumes that the the images file and the k3s executable are in the user home directory.
+Finally, if a pod has multiple containers running within it, the logs of each container can be viewed using the drop down menu accessed by clicking the container name.
 
-#### Setup script via ssh
-
-Identify the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run
-```bash
-./start_k3s_agent.sh <remote username> <remote ip address> <node name>
-```
-e.g.
-```bash
-./start_k8_agent.sh ubuntu 192.168.0.110 clover1
-```
-You can specify the k3s server address by setting the environment variable before calling:
-```bash
-K3S_SERVER=https://192.168.0.63:6443 k3s_agent ubuntu 192.168.0.96 raspi1
-```
-
-#### Manual, old setup method.
-
-First SSH onto the pi
-
-First ensure you run `k3s-killall.sh` to make sure there is no master server running as you only want `k3s agent` to run.
-
-The K3S_TOKEN is the contents of the file `/var/lib/rancher/k3s/server/node-token`
-
-```bash
-K3S_TOKEN=<contents of the file /var/lib/rancher/k3s/server/node-token>
-#e.g. K3S_TOKEN=K103b62838822f40f3e41j51f10cb127236f2c3014c120ede19263da9f33fbfc859::server:2dcbb32a4cad16e20d714d88dbce4af8
-K3S_SERVER=https://<Your main machine ip address>:6443
-K3S_NODE_NAME=clover1
-
-echo "Killing all k3s services and instances first"
-k3s-killall.sh
-
-echo "Starting k3s agent only"
-sudo k3s agent -t ${K3S_TOKEN} -s ${K3S_SERVER} --node-name ${K3S_NODE_NAME}
-```
-The Pi should now be setup
-
-Consider running the above using screen or somehow in the background just in case your ssh connection is unstable or you want to close it. 
-
-### Post actions
-
-If you want to stop kubernetes completely, the internet install script comes with two options which are on the PATH and can be run in the terminal.
-1. `k3s-killall.sh` will stop all k3s nodes and the systemd
-2. `k3s-uninstall.sh` will delete everything k3s and remove the systemd
-
-#### Dashboard
-[See the k3s docs for info on how to run](https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/)
-
-Are started automatically in the `./run_k3s.sh` script.
-## Running the test cases
-
-Go to [testing directory for more info](testing/README.md)
-
-
-
+![page](/img/starling-dashboard-7.png) 
