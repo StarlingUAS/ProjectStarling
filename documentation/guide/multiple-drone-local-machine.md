@@ -164,9 +164,39 @@ There are a number of useful scripts in the `/scripts` directory of this reposit
     - `-ow` will automatically open the UI webpages.
 
 > **Note:** The `./run_k3s` script internally runs `start_k3s.sh` and `start_single_px4sitl_gazebo.sh`. Any options passed will be forwarded to the relevant script.
+### Modifying the example controller
+In the [controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package can be built by running `make` in the controllers directory. This will use colcon build to build the node and output a local image named `example_controller_python`. 
 
-### Development Workflow
+Inside the controllers folder, there is an annotated kubernetes config file [`k8.example_controller_python.amd64.yaml`](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/k8.example_controller_python.amd64.yaml). This specifies the deployment of a *pod* which contains your local `example_controller_python` image ([this line](https://github.com/UoBFlightLab/ProjectStarling/blob/227b22fbd97ac58f5b34e4154e58d01f72f29988/controllers/example_controller_python/k8.example_controller_python.amd64.yaml#L49)). 
 
+Similar to before you can start up the local example controller by using the script:
+```bash
+./scripts/start_example_controller.sh
+```
+But if you have made a copy, or wish to run your own version of the configuration, you can manually deploy your controller by running the following:
+```bash
+sudo k3s apply -f k8.example_controller_python.amd64.yaml
+sudo k3s delete -f k8.example_controller_python.amd64.yaml # To delete
+```
+See [kuberenets configuration](../details/kubernetes.md) for more details.  
 
+For debugging, you can both see the logs, and execute on your controller container through the dashboard. See [instructions here](../details/kubernetes-dashboard.md)
+
+Inside you can `source install/setup.bash` and run ROS2 commands like normal. 
+
+### Creating your own from scratch
+
+Of course you can create your own controller from scratch. Inside your controller repository, the following is required
+1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
+2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](controllers/example_controller_python/Dockerfile) as a template. 
+3. A Kubernetes YAML config file specifying either a Pod or a deployment. Use the example `k8.example_controller_python.amd64.yaml` as a template. There are annoated comments. Also see [here](../details/kubernetes.md) for more details.  
+
+Your Dockerfile can be built by running the following in the directory with the Dockerfile.
+```
+docker build -t <name of your controller> .
+```
+Once built, the configuration file must have a container config specifying your own image name. 
+
+Your container can then be deployed manually using `k3s apply -f <your config>.yaml` as above.
 
 ## Troubleshooting/ FAQs

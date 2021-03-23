@@ -62,7 +62,33 @@ When run, the example will confirm in the terminal that it has connected and tha
 ## Onboard Control
 {% include 'snippets/onboard-control.md' %}
 
+## Implementing a Controller
+### Modifying the example controller
+In the [controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package can be built by running `make` in the controllers directory. This will use colcon build to build the node and output a local image named `example_controller_python`. This local image can be run as follows:
+```bash
+docker run -it --name example_controller --rm --network projectstarling_default example_controller_python
+```
+> Note that because `uobflightlabstarling` is not referenced, it will look locally for a docker image. `--name` gives this instance a name which we can refer to.
 
-## Controller Development on the Drone and Simulator 
+Each container essentially runs its own operating system (see wiki for more details). Just as you could ssh into another machine, you can also inspect a running container:
+```bash
+docker exec -it example_controller bash
+```
+> Where `example_controller` is the name we gave the running instance. We essentially tell the container to execute `bash` for us to get a command line
+
+Inside you can `source install/setup.bash` and run ROS2 commands like normal. 
+
+### Creating your own from scratch
+
+Of course you can create your own controller from scratch. Inside your controller repository, the following is required
+1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
+2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](controllers/example_controller_python/Dockerfile) as a template. 
+
+Your Dockerfile can be built by running the following in the directory with the Dockerfile.
+```
+docker build -t <name of your controller> .
+```
+
+Your container can then be run as above.
 
 ## Troubleshooting/ FAQs
