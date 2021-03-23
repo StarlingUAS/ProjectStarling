@@ -2,7 +2,7 @@ site_name: Project Starling
 theme: readthedocs
 repo_url: https://github.com/UoBFlightLab/ProjectStarling
 site_description: 'BRL Flight Arena 2.0'
-docs_dir: 'documentation'
+docs_dir: 'docs'
 copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
 
 markdown_extensions:
@@ -34,3 +34,4 @@ nav:
     - "Example Python Controller": "guide/example-controller.md"
     - "Example Kubernetes Deployments": "details/kubernetes-deployment.md"
     - "Mavros Container": "details/starling-mavros.md"
+    - "Starling UI": "details/starling-ui.md"
