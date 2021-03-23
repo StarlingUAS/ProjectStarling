@@ -20,4 +20,4 @@ serve-docs:
 run:
 	docker-compose up
 
-.PHONY: all simulator system controllers run
+.PHONY: all simulator system controllers run docs 
