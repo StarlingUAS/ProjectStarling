@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starling-ui-nethost
+spec:
+  selector:
+    matchLabels:
+      app: starling-ui-nethost
+  template:
+    metadata:
+      labels:
+        app: starling-ui-nethost
+    spec:
+      hostNetwork: true
+      shareProcessNamespace: true
+      containers:
+      - name: starling-ui-nethost
+        image: uobflightlabstarling/starling-ui
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        - containerPort: 9090
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: starling-ui-nethost-srv
+spec:
+  type: LoadBalancer
+  selector:
+    app: starling-ui-nethost
+  ports:
+    - port: 3000
+      name: http
+    - port: 9090
+      name: ros-bridge
+    

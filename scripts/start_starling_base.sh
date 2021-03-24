@@ -16,6 +16,10 @@ do
             OPENWEBPAGE=1
             shift # past argument
             ;;
+        -nh|--nethost)
+            NETHOST=1
+            shift
+            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -48,7 +52,11 @@ SYSTEMDIR="$SCRIPTSDIR/../system"
 ./$SCRIPTSDIR/start_dashboard.sh
 
 # Start starling UI
-sudo k3s kubectl apply -f "$SYSTEMDIR/ui/kubernetes.yaml"
+if [ $NETHOST ]; then
+    sudo k3s kubectl apply -f "$SYSTEMDIR/ui/kubernetes-nethost.yaml"
+else
+    sudo k3s kubectl apply -f "$SYSTEMDIR/ui/kubernetes.yaml"
+fi
 
 if [[ $OPENWEBPAGE ]]
 then

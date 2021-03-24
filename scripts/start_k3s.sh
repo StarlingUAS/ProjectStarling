@@ -2,6 +2,7 @@
 set -e
 
 
+
 # Parse arguments
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -14,6 +15,11 @@ do
             ;;
         -d|--delete)
             DELETE=1
+            shift
+            ;;
+        -ip | --external-ip)
+            K3S_NODE_EXTERNAL_IP="$2"
+            shift
             shift
             ;;
         *)    # unknown option
@@ -32,10 +38,11 @@ then
 fi
 
 if [[ ! $DELETE ]]; then
+    NODE_IP=${K3S_NODE_EXTERNAL_IP:-192.168.10.85}
     # Only needs to be run once per system
     # Download and start kubernetes master node 
     echo "Downloading and Running K3s in systemd (Will not do anything if k3s already installed and running"
-    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker --node-external-ip ${NODE_IP} --node-ip ${NODE_IP}" sh -
 
     echo "All actions completed"
     echo "k3s will run in the background systemd permanently"

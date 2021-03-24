@@ -84,7 +84,7 @@ class DemoController(Node):
         
         self.takeoff_offset = 0
         self.land_offset = None
-        self.flight_height = 5.0
+        self.flight_height = 1.0
 
         self.controller_command = 'Init'
 
