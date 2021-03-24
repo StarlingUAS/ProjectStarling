@@ -47,7 +47,7 @@ spec:
       - name: ttypx4
         hostPath:
           path: /dev/px4fmu
-      - name: droneconfig
+      - name: vehicleconfig
         hostPath:
           path: /etc/starling/vehicle.config
           type: File
