@@ -5,9 +5,6 @@ on:
   push:
     tags:
       - 'v*'
-    
-  # Allows running this workflow manually from the Actions tab
-  workflow_dispatch:
 
 jobs:
   bake:
