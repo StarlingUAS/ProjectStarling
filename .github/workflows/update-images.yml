@@ -37,6 +37,6 @@ jobs:
             ./buildtools/docker-bake.hcl
           targets: |
             default
-          push: false
+          push: true
         env:
           TAG: ${{ steps.tag_name.outputs.GITHUB_TAG }}
