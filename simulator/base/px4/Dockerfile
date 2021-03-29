@@ -1,12 +1,13 @@
 # syntax = edrevo/dockerfile-plus
 ARG VERSION=latest
+ARG REGISTRY
 
 INCLUDE+ ./px4builder.Dockerfile
 
 # Build the gazebo link
 RUN make px4_sitl sitl_gazebo
 
-FROM uobflightlabstarling/starling-sim-base-core:${VERSION}
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}
 
 # Copy built PX4 repo into this image
 COPY --from=px4builder /src/PX4-Autopilot/build/px4_sitl_default/build_gazebo /src/PX4-Autopilot/build/px4_sitl_default/build_gazebo

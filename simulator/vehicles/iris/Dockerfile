@@ -1,5 +1,6 @@
 ARG VERSION=latest
-FROM uobflightlabstarling/starling-sim-base-px4:${VERSION}
+ARG REGISTRY
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${VERSION}
 
 # Copy in the vehicle launch file
 COPY iris.launch.xml /ros_ws/launch/

@@ -6,7 +6,7 @@ set -e
 # Setting the VERSION environment variable will use that as tag instead. Additionally, this is passed to
 #  the `.hcl` file to ensure that images that depend on other starling images are linked to the correct
 #  version.
-# Images are only build for the primary host platform (The first listed in `docker buildx inspect default`)
+# Images are only built for the primary host platform (The first listed in `docker buildx inspect default`)
 # If the currently in-use builder does not use the docker driver, images are built using the `default` builder. 
 #
 

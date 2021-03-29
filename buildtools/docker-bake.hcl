@@ -73,7 +73,10 @@ group "simulator-px4" {
 // This target depends on starling-sim-base-core
 target "starling-sim-base-px4" {
     context = "simulator/base/px4"
-    args = { "VERSION": "${VERSION}" }
+    args = { 
+        "VERSION": "${VERSION}",
+        "REGISTRY": "${REGISTRY}"
+        }
     tags = ["${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${VERSION}"]
     platforms = ["linux/amd64"]
 }
@@ -91,7 +94,10 @@ target "starling-sim-px4-sitl" {
 // This target depends on starling-controller-base
 target "example_python_controller" {
     context = "controllers/example_controller_python"
-    args = { "VERSION": "${VERSION}" }
+    args = { 
+        "VERSION": "${VERSION}",
+        "REGISTRY": "${REGISTRY}"
+        }
     tags = ["${REGISTRY}uobflightlabstarling/example_controller_python:${VERSION}"]
     platforms = ["linux/amd64", "linux/arm64"]
 }
@@ -102,7 +108,10 @@ target "example_python_controller" {
 // This target depends on starling-sim-base-px4
 target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
-    args = { "VERSION": "${VERSION}" }
+    args = { 
+        "VERSION": "${VERSION}",
+        "REGISTRY": "${REGISTRY}"
+        }
     tags = ["${REGISTRY}uobflightlabstarling/starling-sim-iris:${VERSION}"]
     platforms = ["linux/amd64"]
 }
