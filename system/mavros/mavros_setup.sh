@@ -39,9 +39,9 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
     else
         set +e
         INSTANCE=$(get_instance)
-        set -e
         RESULT=$?
         MAVROS_TGT_SYSTEM=$((INSTANCE + 1))
+        set -e
         if [ $RESULT -ne 0 ]; then
             echo "Could not parse ordinal, using default instance of 0. MAVROS_TGT_SYSTEM will be 1"
         else
@@ -74,10 +74,10 @@ if [ -v $MAVROS_FCU_URL ]; then
         # No vehicle.config, generate based on subparameters and the target system id dynamically
         set +e
         INSTANCE=$(get_instance)
-        set -e
         MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
         echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
+        set -e
     else
         # Use value from vehicle.config
         export MAVROS_FCU_URL=$VEHICLE_FCU_URL
