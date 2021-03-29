@@ -37,4 +37,4 @@ SCRIPTSDIR=scripts
 
 # Start Gazebo and Single PX4 drone
 # Accepts the following [-ow|--open], [-d|--delete], [-sk|--skip-base-check], [-r|--restart]
-./SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS
+./$SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS
