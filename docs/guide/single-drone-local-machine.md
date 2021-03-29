@@ -13,6 +13,8 @@ Follow these instructions for quick and easy testing of controllers on a single 
 
 ## Starting the Drone and Simulator 
 
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](/guide/getting-started)
+
 In the root directory, execute `make run` (or `docker-compose up`) in a terminal. This will start the following:
 
 1. Gazebo simulation enviornment running 1 Iris quadcopter model 

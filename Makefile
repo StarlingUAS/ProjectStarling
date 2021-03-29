@@ -11,8 +11,7 @@ controllers:
 	$(MAKE) -C controllers
 
 docs:
-	cp ${MAKEFILE_DIR}/documentation/README.md ${MAKEFILE_DIR}/README.md
-	mkdocs build
+	$(MAKEFILE_DIR)/scripts/build_docs.sh
 
 serve-docs:
 	mkdocs serve -a 0.0.0.0:8000
