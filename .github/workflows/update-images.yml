@@ -1,10 +1,11 @@
 name: 'Update images'
 
 on:
-  # Triggers on push to any tag of form v*
+  # Triggers on push to any tag of form v* or latest
   push:
     tags:
       - 'v*'
+      - 'latest'
 
 jobs:
   bake:
@@ -32,13 +33,35 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push (Stage 1)
         uses: docker/bake-action@master
         with:
           files: |
             ./buildtools/docker-bake.hcl
           targets: |
-            default
+            stage1
           push: true
         env:
-          TAG: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+
+        - name: Build and push (Stage 2)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            stage2
+          push: true
+        env:
+          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+
+        - name: Build and push (Stage 3)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            stage3
+          push: true
+        env:
+          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
