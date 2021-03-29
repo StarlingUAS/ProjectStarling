@@ -44,7 +44,7 @@ jobs:
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
 
-        - name: Build and push (Stage 2)
+      - name: Build and push (Stage 2)
         uses: docker/bake-action@master
         with:
           files: |
@@ -55,7 +55,7 @@ jobs:
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
 
-        - name: Build and push (Stage 3)
+      - name: Build and push (Stage 3)
         uses: docker/bake-action@master
         with:
           files: |
