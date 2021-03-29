@@ -37,7 +37,9 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
         echo "MAVROS_TGT_SYSTEM set to VEHICLE_MAVLINK_SYSID ($VEHICLE_MAVLINK_SYSID) from /etc/starling/vehicle.config"
         MAVROS_TGT_SYSTEM=$VEHICLE_MAVLINK_SYSID
     else
-        INSTANCE=get_instance
+        set +e
+        INSTANCE=$(get_instance)
+        set -e
         RESULT=$?
         MAVROS_TGT_SYSTEM=$((INSTANCE + 1))
         if [ $RESULT -ne 0 ]; then
@@ -70,7 +72,9 @@ if [ -v $MAVROS_FCU_URL ]; then
     # If not set, then generate automatically
     if ! [ $HAS_VEHICLE_CONFIG = true ]; then
         # No vehicle.config, generate based on subparameters and the target system id dynamically
-        INSTANCE=get_instance
+        set +e
+        INSTANCE=$(get_instance)
+        set -e
         MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
         echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
