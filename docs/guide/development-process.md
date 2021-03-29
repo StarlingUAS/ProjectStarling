@@ -1,1 +1,0 @@
-# Starling Development Process

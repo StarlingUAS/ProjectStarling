@@ -15,6 +15,8 @@ Follow these instructions for quick and easy testing of controllers on a single 
 [TOC]
 
 ## Drone and Simulator on a local cluster
+
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](/guide/getting-started)
 ### Starting the cluster
 
 In the root directory run one of the following in a terminal

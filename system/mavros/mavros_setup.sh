@@ -27,7 +27,7 @@ function get_instance {
     fi
 
     echo $((PX4_INSTANCE_BASE + ORDINAL))
-    }
+}
 
 # If MAVROS_TGT_SYSTEM is auto, then set instance id to take MAVROS_TGT_SYSTEM_BASE + ORDINAL from StatefulSet hostname
 # Hostname is of the form '<stateful set name>-<ordinal>'
@@ -37,9 +37,11 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
         echo "MAVROS_TGT_SYSTEM set to VEHICLE_MAVLINK_SYSID ($VEHICLE_MAVLINK_SYSID) from /etc/starling/vehicle.config"
         MAVROS_TGT_SYSTEM=$VEHICLE_MAVLINK_SYSID
     else
+        set +e
         INSTANCE=$(get_instance)
         RESULT=$?
         MAVROS_TGT_SYSTEM=$((INSTANCE + 1))
+        set -e
         if [ $RESULT -ne 0 ]; then
             echo "Could not parse ordinal, using default instance of 0. MAVROS_TGT_SYSTEM will be 1"
         else
@@ -70,9 +72,11 @@ if [ -v $MAVROS_FCU_URL ]; then
     # If not set, then generate automatically
     if ! [ $HAS_VEHICLE_CONFIG = true ]; then
         # No vehicle.config, generate based on subparameters and the target system id dynamically
+        set +e
         INSTANCE=$(get_instance)
         MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
+        set -e
         echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
     else
         # Use value from vehicle.config
