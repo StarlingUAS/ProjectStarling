@@ -76,8 +76,8 @@ if [ -v $MAVROS_FCU_URL ]; then
         INSTANCE=$(get_instance)
         MAVROS_FCU_URL="$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/"
         export MAVROS_FCU_URL=$MAVROS_FCU_URL
-        echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
         set -e
+        echo "MAVROS_FCU_URL automatically set to: $MAVROS_FCU_URL"
     else
         # Use value from vehicle.config
         export MAVROS_FCU_URL=$VEHICLE_FCU_URL
