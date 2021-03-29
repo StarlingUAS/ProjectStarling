@@ -29,30 +29,28 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: MAVROS_FCU_URL
-            value: "/dev/px4fmu"
           - name: MAVROS_TGT_FIRMWARE
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
-            value: "0" # Look up on system /etc/drone.config
+            value: "auto" # Look up on system /etc/drone.config
           - name: ROS_HOSTNAME # Required for ROS1 bridge in hostNetwork mode
             value: "localhost" # ROS1 will ping HOSTNAME, defaults to system hostname
           - name: ROS_MASTER_URI
             value: "http://localhost:11311"
-          ports:
-          - containerPort: 14553
-            protocol: "UDP"
-          - containerPort: 5760
-          - containerPort: 5762
-          - containerPort: 5763
           volumeMounts:
           - mountPath: /dev/px4fmu
             name: ttypx4
-
+          - mountPath: /etc/starling/vehicle.config
+            name: vehicleconfig
+            readOnly: true
       volumes:
       - name: ttypx4
         hostPath:
           path: /dev/px4fmu
+      - name: droneconfig
+        hostPath:
+          path: /etc/starling/vehicle.config
+          type: File
       nodeSelector:
         kubernetes.io/arch: arm64
         # k3s.io/hostname: clover1

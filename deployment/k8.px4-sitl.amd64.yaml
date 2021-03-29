@@ -71,7 +71,7 @@ spec:
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
           value: "auto"
-        - name: MAVROS_TGT_SYSTEM_BASE
+        - name: PX4_INSTANCE_BASE
           value: "200"
       nodeSelector:
         kubernetes.io/arch: "amd64"
