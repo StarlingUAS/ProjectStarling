@@ -11,9 +11,6 @@ mavros:
 mavros_all_arch: 
 	docker buildx build --push --platform linux/arm64,linux/amd64 --tag uobflightlabstarling/starling-mavros:latest $(MAKEFILE_DIR)/mavros 
 
-%.image:
-	docker build -t starling-$% $(MAKEFILE_DIR)/$%
-
 ui:
 	docker build -t starling-ui $(MAKEFILE_DIR)/ui
 

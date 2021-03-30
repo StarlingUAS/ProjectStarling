@@ -1,7 +1,8 @@
-# Use image built for the gazebo plugins
-FROM starling-px4-builder as px4sitl
+# syntax = edrevo/dockerfile-plus
 
-# Add support for remote host in SITL
+INCLUDE+ ./px4builder.Dockerfile
+
+# Add support for remote host in SITL & build it
 RUN git fetch --recurse-submodules=no origin fe7908feb0de5ee8a4465619098f09b987ab011d \
     && git cherry-pick --no-commit fe7908feb0de5ee8a4465619098f09b987ab011d
 RUN make px4_sitl
@@ -9,7 +10,7 @@ RUN make px4_sitl
 FROM ros:foxy-ros-base-focal
 
 # Copy built PX4 repo into this image
-COPY --from=px4sitl /src /src
+COPY --from=px4builder /src /src
 
 ENV PX4_INSTANCE 0
 ENV PX4_INSTANCE_BASE 0

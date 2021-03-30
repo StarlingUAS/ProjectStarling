@@ -1,4 +1,6 @@
-FROM uobflightlabstarling/starling-controller-base
+ARG VERSION=latest
+ARG REGISTRY
+FROM ${REGISTRY}uobflightlabstarling/starling-controller-base:${VERSION}
 
 COPY example_controller_python /ros_ws/src/
 
