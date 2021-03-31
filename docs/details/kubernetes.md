@@ -51,7 +51,7 @@ users:
 
 To therefore access the master node (and the dashboard and kubectl etc) on another machine, you must.
 
-1. Copy the `k3s.yaml` file off of the server onto your own machine. 
+1. Copy the `k3s.yaml` file off of the server onto your own machine. (For the BRL, see below)
 2. In the `k3s.yaml` change the server ip from `127.0.0.1` to the ip address of the master machine. 
 3. Ensure that either KUBECONFIG is set, or you have replaced the filee at `~/.kube/config/k3s.yaml` with your own modified one (may need sudo)
 
@@ -64,6 +64,8 @@ k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep ^tok
 Also then verify that you can run any of the kubernetes deployments, and that they will be deployed to the master cluster (and not your own).
 
 > **Note:** Even if the cluster is not running on your local machine, you will still need to install the k3s binaries. The command run by `run_k3s.sh` or `./scripts/start_k3s.sh` both download and then automatically start k3s in the background of your machine. To stop it from starting, pass the `--do-not-start` option to either command. If you have already have k3s running, run `k3s-killall.sh` which will stop all k3s processes without uninstalling it entirely (so you still get access to the k3s command line tools). 
+
+In the BRL, to get the k3s.yaml file, you should simply be able to scp (ssh copy) the file from the master machine `~/.kube/config/k3s.yaml` to your local machine, and change the IP address.
 
 ## Configuration Files
 
