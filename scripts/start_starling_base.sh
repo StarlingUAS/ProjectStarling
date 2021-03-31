@@ -48,7 +48,7 @@ SYSTEMDIR="$SCRIPTSDIR/../system"
 ./$SCRIPTSDIR/start_dashboard.sh
 
 # Start starling UI
-sudo k3s kubectl apply -f "$SYSTEMDIR/ui/kubernetes.yaml"
+k3s kubectl apply -f "$SYSTEMDIR/ui/kubernetes.yaml"
 
 if [[ $OPENWEBPAGE ]]
 then

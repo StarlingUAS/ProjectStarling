@@ -97,7 +97,7 @@ spec:
           beta.kubernetes.io/arch: "amd64"
       containers:
       - name: gazebo
-        image: starling-sim-iris:latest
+        image: uobflightlabstarling/starling-sim-iris:latest
         resources:
           requests:
             cpu: "100m"

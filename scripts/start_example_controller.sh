@@ -41,7 +41,7 @@ SCRIPTSDIR="${BASH_SOURCE%/*}"
 CONTROLLERSDIR="$SCRIPTSDIR/../controllers"
 
 if [[ $DELETE ]]; then
-    sudo k3s delete -f $CONTROLLERSDIR/example_controller_python/k8.example_controller_python.amd64.yaml
+    k3s delete -f $CONTROLLERSDIR/example_controller_python/k8.example_controller_python.amd64.yaml
 fi
 
 if [[ $RESTART ]]; then
@@ -51,5 +51,5 @@ fi
 
 if [[ ! $DELETE || $RESTART ]]; then
     make controllers 
-    sudo k3s apply -f $CONTROLLERSDIR/example_controller_python/k8.example_controller_python.amd64.yaml
+    k3s apply -f $CONTROLLERSDIR/example_controller_python/k8.example_controller_python.amd64.yaml
 fi
