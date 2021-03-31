@@ -9,6 +9,8 @@ declare -a RCFILES=(
     ~/.bashrc
 )
 
+SKIPENABLE=0
+
 # Parse arguments
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -26,6 +28,10 @@ do
         --config-file)
             CONFIGFILE=$2 
             shift
+            shift
+            ;;
+        --do-not-start)
+            SKIPENABLE=1
             shift
             ;;
         *)    # unknown option
@@ -46,20 +52,15 @@ fi
 
 if [[ ! $UNINSTALL ]]; then
 
+    echo "Created directory $(dirname "${CONFIGFILE}") for storing config file"
+    mkdir -p "$(dirname "${CONFIGFILE}")"
+
     # Only needs to be run once per system
     # Download and start kubernetes master node 
     echo "Downloading and Running K3s in systemd (Will not do anything if k3s already installed and running"
     echo "The configuration file will be placed in $CONFIGFILE"
     echo "root is required for initial installation (running of the kubernetes systemd)"
-    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sudo sh -
-
-    # Making local directory for storing config file
-    echo "Created directory $(dirname "${CONFIGFILE}") for storing config file"
-    mkdir -p "$(dirname "${CONFIGFILE}")"
-    sudo cp /etc/rancher/k3s/k3s.yaml $CONFIGFILE
-    sudo chmod 644 $CONFIGFILE
-    sudo chown $USER:$USER $CONFIGFILE
-    echo "Copied /etc/rancher/k3s/k3s.yaml -> $CONFIGFILE"
+    curl -sfL https://get.k3s.io | sudo bash -s - --docker --write-kubeconfig $CONFIGFILE --write-kubeconfig-mode  644
 
     echo "Setting KUBECONFIG in rcfiles"
     for rcfile in "${RCFILES[@]}"; do
@@ -91,7 +92,11 @@ else
     echo "Removing k3s"
     sudo k3s-uninstall.sh
     echo "Removed k3s from system"
-    rm -r $KUBECONFIGDIR
+    sudo rm -r $KUBECONFIGDIR
     echo "Removed k3s config from $KUBECONFIGDIR"
     exit 1
+fi
+
+if [[ $SKIPENABLE ]]; then
+    k3s-killall.sh
 fi
