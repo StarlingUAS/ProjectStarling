@@ -6,6 +6,10 @@ variable "REGISTRY" {
     default = ""
 }
 
+variable "NAMEDTAG" {
+    default = ""
+}
+
 /*
  * Groups for target ordering
  */
@@ -30,19 +34,28 @@ group "system" {
 
 target "starling-ui" {
     context = "system/ui"
-    tags = ["${REGISTRY}uobflightlabstarling/starling-ui:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-ui:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-ui:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64"]
 }
 
 target "starling-controller-base" {
     context = "system/controller-base"
-    tags = ["${REGISTRY}uobflightlabstarling/starling-controller-base:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-controller-base:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-controller-base:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64", "linux/arm64"]
 }
 
 target "starling-mavros" {
     context = "system/mavros"
-    tags = ["${REGISTRY}uobflightlabstarling/starling-mavros:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-mavros:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-mavros:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64", "linux/arm64"]
 }
 
@@ -59,7 +72,10 @@ group "simulator" {
 
 target "starling-sim-base-core" {
     context = "simulator/base/core"
-    tags = ["${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-base-core:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64"]
 }
 
@@ -77,14 +93,20 @@ target "starling-sim-base-px4" {
         "VERSION": "${VERSION}",
         "REGISTRY": "${REGISTRY}"
         }
-    tags = ["${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64"]
 }
 
 target "starling-sim-px4-sitl" {
     context = "simulator/base/px4"
     dockerfile = "sitl.Dockerfile"
-    tags = ["${REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64"]
 }
 
@@ -98,7 +120,10 @@ target "example_python_controller" {
         "VERSION": "${VERSION}",
         "REGISTRY": "${REGISTRY}"
         }
-    tags = ["${REGISTRY}uobflightlabstarling/example_controller_python:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/example_controller_python:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/example_controller_python:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64", "linux/arm64"]
 }
 
@@ -112,6 +137,9 @@ target "starling-sim-iris" {
         "VERSION": "${VERSION}",
         "REGISTRY": "${REGISTRY}"
         }
-    tags = ["${REGISTRY}uobflightlabstarling/starling-sim-iris:${VERSION}"]
+    tags = [
+        "${REGISTRY}uobflightlabstarling/starling-sim-iris:${VERSION}",
+        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-iris:${NAMEDTAG}": "",
+        ]
     platforms = ["linux/amd64"]
 }

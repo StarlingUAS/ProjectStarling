@@ -1,10 +1,10 @@
-name: 'Update images'
+name: 'Update dev images'
 
 on:
-  # Triggers on push to any tag of form vX.X.X
+  # Triggers on push to any tag of form vX.X.X-dev
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-dev'
 
 jobs:
   bake_controller:
@@ -42,7 +42,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
       - name: Build and push (example_python_controller)
         uses: docker/bake-action@master
@@ -54,7 +54,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
   bake_simulator:
     runs-on: ubuntu-latest
@@ -91,7 +91,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
       - name: Build and push (PX4)
         uses: docker/bake-action@master
@@ -103,7 +103,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
       - name: Build and push (Iris)
         uses: docker/bake-action@master
@@ -115,7 +115,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
   bake_ui:
     runs-on: ubuntu-latest
@@ -152,7 +152,7 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly
 
   bake_mavros:
     runs-on: ubuntu-latest
@@ -189,4 +189,4 @@ jobs:
           push: true
         env:
           VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          NAMEDTAG: nightly

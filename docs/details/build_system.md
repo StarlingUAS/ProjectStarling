@@ -24,3 +24,15 @@ significantly complicates things. **At present there is a problem with the ARM b
 Similar to the `VERSION` argument outlined above, the use of a local registry requires a `REGISTRY` build argument be
 used in the Dockerfiles. Again this is provided by the `bake.hcl` script. It defaults to blank, which is equivalent to
 using Docker Hub. Once built, the images can be pulled from the local registry using a `localhost:5000/` prefix.
+
+The `bake.hcl` script takes values from the environment to be passed on to the Dockerfiles. Two of these are the
+`VERSION` and `REGISTRY` arguments outlined above. One other value can be supplied to the `bake.hcl` script: `NAMEDTAG`.
+It defaults to blank. If set, all images will be tagged with both the tag specified by `VERSION` and that specified by
+`NAMEDTAG`. This is primarily to ease the use of GitHub actions.
+
+## The GitHub Actions Workflows
+
+When a tag of the form `vX.Y.Z` is pushed to the repo, a workflow will be started. This workflow builds all the images
+from the `bake.hcl` script, tags them with both the version tag and `:latest`, and pushes them to Docker Hub. A similar
+workflow exists for development images. A tag of the form `vX.Y.Z-dev` will cause the images to be built and tagged with
+both the tag name and `nightly`, before being pushed to DockerHub.
