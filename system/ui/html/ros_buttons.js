@@ -33,7 +33,7 @@
   });
 
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect('ws://localhost:9090');
+  ros.connect('ws://'+window.location.hostname+':9090');
 
   // Publish a Topic
   var example = new ROSLIB.Topic({

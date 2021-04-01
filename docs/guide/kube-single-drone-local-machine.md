@@ -45,7 +45,7 @@ The User Interfaces are available in the following locations:
     - Your browser of choice may not like the web-page and complain of certificate errors. Please ignore this and continue onwards. You may have to click 'advanced' or a similar option for the browser to let you in.
     - To log in to the site, you will need the long login Token which is hopefully displayed by `run_k3s.sh`. This token should also be automatically placed onto your clipboard for pasting.
 
-> **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address. (TODO: starling ui not yet functioning in this use case.)
+> **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address.
 
 > **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.  
 

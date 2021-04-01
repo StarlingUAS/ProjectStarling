@@ -14,7 +14,7 @@ spec:
       shareProcessNamespace: true
       containers:
       - name: starling-ui
-        image: uobflightlabstarling/starling-ui
+        image: uobflightlabstarling/starling-ui:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
