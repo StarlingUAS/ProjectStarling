@@ -7,7 +7,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  bake_controller:
+  build_controller:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,30 +33,33 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push (controller-base)
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-controller-base
+          context: system/controller-base
+          tags: |
+            uobflightlabstarling/starling-controller-base:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-controller-base:latest
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          cache-from: uobflightlabstarling/starling-controller-base:cache
+          cache-to: uobflightlabstarling/starling-controller-base:cache
+          platforms: linux/amd64,linux/arm64
 
-      - name: Build and push (example_python_controller)
-        uses: docker/bake-action@master
+      - name: Build and push (example_controller_python)
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            example_python_controller
+          context: controllers/example_controller_python
+          build-args:
+            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
+          tags: |
+            uobflightlabstarling/example_controller_python:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/example_controller_python:latest
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          cache-from: uobflightlabstarling/example_controller_python:cache
+          cache-to: uobflightlabstarling/example_controller_python:cache
+          platforms: linux/amd64,linux/arm64
 
-  bake_simulator:
+
+  build_simulator:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -67,10 +70,66 @@ jobs:
         run: |
           echo ::set-output name=GITHUB_TAG::${GITHUB_REF#refs/tags/}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
         with:
-          platforms: arm64
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push (sim-base-core)
+        uses: docker/build-push-action@v2
+        with:
+          context: simulator/base/core
+          tags: |
+            uobflightlabstarling/starling-sim-base-core:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-sim-base-core:latest
+          push: true
+          cache-from: uobflightlabstarling/starling-sim-base-core:cache
+          cache-to: uobflightlabstarling/starling-sim-base-core:cache
+          platforms: linux/amd64
+      
+      - name: Build and push (sim-base-px4)
+        uses: docker/build-push-action@v2
+        with:
+          context: simulator/base/px4
+          build-args:
+            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
+          tags: |
+            uobflightlabstarling/starling-sim-base-px4:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-sim-base-px4:latest
+          push: true
+          cache-from: uobflightlabstarling/starling-sim-base-px4:cache
+          cache-to: uobflightlabstarling/starling-sim-base-px4:cache
+          platforms: linux/amd64
+
+      - name: Build and push (sim-iris)
+        uses: docker/build-push-action@v2
+        with:
+          context: simulator/vehicles/iris
+          build-args:
+            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
+          tags: |
+            uobflightlabstarling/starling-sim-iris:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-sim-iris:latest
+          push: true
+          cache-from: uobflightlabstarling/starling-sim-iris:cache
+          cache-to: uobflightlabstarling/starling-sim-iris:cache
+          platforms: linux/amd64
+
+
+  build_sitl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Get tag name
+        id: tag_name
+        run: |
+          echo ::set-output name=GITHUB_TAG::${GITHUB_REF#refs/tags/}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -81,43 +140,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push (base-core)
-        uses: docker/bake-action@master
+      - name: Build and push (px4-sitl)
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            simulator
+          context: simulator/base/px4
+          file: simulator/base/px4/sitl.Dockerfile
+          tags: |
+            uobflightlabstarling/starling-sim-px4-sitl:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-sim-px4-sitl:latest
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          cache-from: uobflightlabstarling/starling-sim-px4-sitl:cache
+          cache-to: uobflightlabstarling/starling-sim-px4-sitl:cache
+          platforms: linux/amd64
 
-      - name: Build and push (PX4)
-        uses: docker/bake-action@master
-        with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            simulator-px4
-          push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
 
-      - name: Build and push (Iris)
-        uses: docker/bake-action@master
-        with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-sim-iris
-          push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
-
-  bake_ui:
+  build_ui:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -143,18 +180,19 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-ui
+          context: system/ui
+          tags: |
+            uobflightlabstarling/starling-ui:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-ui:latest
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          cache-from: uobflightlabstarling/starling-ui:cache
+          cache-to: uobflightlabstarling/starling-ui:cache
+          platforms: linux/amd64,linux/arm64
 
-  bake_mavros:
+
+  build_mavros:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -180,13 +218,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-mavros
+          context: system/mavros
+          tags: |
+            uobflightlabstarling/starling-mavros:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-mavros:latest
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: latest
+          cache-from: uobflightlabstarling/starling-mavros:cache
+          cache-to: uobflightlabstarling/starling-mavros:cache
+          platforms: linux/amd64,linux/arm64

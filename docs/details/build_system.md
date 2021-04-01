@@ -36,3 +36,8 @@ When a tag of the form `vX.Y.Z` is pushed to the repo, a workflow will be starte
 from the `bake.hcl` script, tags them with both the version tag and `:latest`, and pushes them to Docker Hub. A similar
 workflow exists for development images. A tag of the form `vX.Y.Z-dev` will cause the images to be built and tagged with
 both the tag name and `nightly`, before being pushed to DockerHub.
+
+The actions workflows attempt to make use of `buildx`'s cache to repository. The `:cache` and `:cache-dev` tags are used
+for each image for the caches. In order to do this, the `bake.hcl` file isn't really used in the action workflow so
+keeping them in sync will unfortunately require some careful maintainence (Another action?). There's also likely the
+opportunity to streamline the two workflows into one, which should reduce maintainence.
