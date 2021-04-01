@@ -7,7 +7,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+-dev'
 
 jobs:
-  bake_controller:
+  build_controller:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,28 +33,29 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push (controller-base)
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-controller-base
+          context: system/controller-base
+          tags: |
+            uobflightlabstarling/starling-controller-base:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-controller-base:nightly
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: nightly
+          cache-from: uobflightlabstarling/starling-controller-base:cache-dev
+          cache-to: uobflightlabstarling/starling-controller-base:cache-dev
+          platforms: linux/amd64,linux/arm64
 
-      - name: Build and push (example_python_controller)
-        uses: docker/bake-action@master
+      - name: Build and push (example_controller_python)
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            example_python_controller
+          context: controllers/example_controller_python
+          tags: |
+            uobflightlabstarling/example_controller_python:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/example_controller_python:nightly
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: nightly
+          cache-from: uobflightlabstarling/example_controller_python:cache-dev
+          cache-to: uobflightlabstarling/example_controller_python:cache-dev
+          platforms: linux/amd64,linux/arm64
+
 
   bake_simulator:
     runs-on: ubuntu-latest
@@ -143,16 +144,16 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/bake-action@master
+        uses: docker/build-push-action@v2
         with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-ui
+          context: system/ui
+          tags: |
+            uobflightlabstarling/starling-ui:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-ui:nightly
           push: true
-        env:
-          VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          NAMEDTAG: nightly
+          cache-from: uobflightlabstarling/starling-ui:cache-dev
+          cache-to: uobflightlabstarling/starling-ui:cache-dev
+          platforms: linux/amd64,linux/arm64
 
   bake_mavros:
     runs-on: ubuntu-latest
