@@ -41,7 +41,7 @@ jobs:
             uobflightlabstarling/starling-controller-base:nightly
           push: true
           cache-from: uobflightlabstarling/starling-controller-base:cache-dev
-          cache-to: uobflightlabstarling/starling-controller-base:cache-dev
+          cache-to: uobflightlabstarling/starling-controller-base:cache
           platforms: linux/amd64,linux/arm64
 
       - name: Build and push (example_controller_python)
@@ -55,7 +55,7 @@ jobs:
             uobflightlabstarling/example_controller_python:nightly
           push: true
           cache-from: uobflightlabstarling/example_controller_python:cache-dev
-          cache-to: uobflightlabstarling/example_controller_python:cache-dev
+          cache-to: uobflightlabstarling/example_controller_python:cache
           platforms: linux/amd64,linux/arm64
 
 
@@ -88,7 +88,7 @@ jobs:
             uobflightlabstarling/starling-sim-base-core:nightly
           push: true
           cache-from: uobflightlabstarling/starling-sim-base-core:cache-dev
-          cache-to: uobflightlabstarling/starling-sim-base-core:cache-dev
+          cache-to: uobflightlabstarling/starling-sim-base-core:cache
           platforms: linux/amd64
       
       - name: Build and push (sim-base-px4)
@@ -102,7 +102,7 @@ jobs:
             uobflightlabstarling/starling-sim-base-px4:nightly
           push: true
           cache-from: uobflightlabstarling/starling-sim-base-px4:cache-dev
-          cache-to: uobflightlabstarling/starling-sim-base-px4:cache-dev
+          cache-to: uobflightlabstarling/starling-sim-base-px4:cache
           platforms: linux/amd64
 
       - name: Build and push (sim-iris)
@@ -116,7 +116,7 @@ jobs:
             uobflightlabstarling/starling-sim-iris:nightly
           push: true
           cache-from: uobflightlabstarling/starling-sim-iris:cache-dev
-          cache-to: uobflightlabstarling/starling-sim-iris:cache-dev
+          cache-to: uobflightlabstarling/starling-sim-iris:cache
           platforms: linux/amd64
 
 
@@ -150,7 +150,7 @@ jobs:
             uobflightlabstarling/starling-sim-px4-sitl:nightly
           push: true
           cache-from: uobflightlabstarling/starling-sim-px4-sitl:cache-dev
-          cache-to: uobflightlabstarling/starling-sim-px4-sitl:cache-dev
+          cache-to: uobflightlabstarling/starling-sim-px4-sitl:cache
           platforms: linux/amd64
 
 
@@ -188,7 +188,7 @@ jobs:
             uobflightlabstarling/starling-ui:nightly
           push: true
           cache-from: uobflightlabstarling/starling-ui:cache-dev
-          cache-to: uobflightlabstarling/starling-ui:cache-dev
+          cache-to: uobflightlabstarling/starling-ui:cache
           platforms: linux/amd64,linux/arm64
 
 
@@ -226,5 +226,5 @@ jobs:
             uobflightlabstarling/starling-mavros:nightly
           push: true
           cache-from: uobflightlabstarling/starling-mavros:cache-dev
-          cache-to: uobflightlabstarling/starling-mavros:cache-dev
+          cache-to: uobflightlabstarling/starling-mavros:cache
           platforms: linux/amd64,linux/arm64
