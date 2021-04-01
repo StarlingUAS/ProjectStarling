@@ -189,3 +189,4 @@ jobs:
           push: true
           cache-from: uobflightlabstarling/starling-mavros:cache-dev
           cache-to: uobflightlabstarling/starling-mavros:cache-dev
+          platforms: linux/amd64,linux/arm64
