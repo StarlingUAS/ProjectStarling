@@ -59,7 +59,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
 
-  bake_simulator:
+  build_simulator:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -125,7 +125,7 @@ jobs:
           platforms: linux/amd64
 
 
-  bake_sitl:
+  build_sitl:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -154,7 +154,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: simulator/base/px4
-          file: sitl.Dockerfile
+          file: simulator/base/px4/sitl.Dockerfile
           tags: |
             uobflightlabstarling/starling-sim-px4-sitl:${{ steps.tag_name.outputs.GITHUB_TAG }}
             uobflightlabstarling/starling-sim-px4-sitl:nightly
@@ -164,7 +164,7 @@ jobs:
           platforms: linux/amd64
 
 
-  bake_ui:
+  build_ui:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -202,7 +202,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
 
-  bake_mavros:
+  build_mavros:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
