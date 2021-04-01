@@ -183,9 +183,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: system/mavros
-          tags:
-            - uobflightlabstarling/starling-mavros:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            - uobflightlabstarling/starling-mavros:nightly
+          tags: |
+            uobflightlabstarling/starling-mavros:${{ steps.tag_name.outputs.GITHUB_TAG }}
+            uobflightlabstarling/starling-mavros:nightly
           push: true
           cache-from: uobflightlabstarling/starling-mavros:cache-dev
           cache-to: uobflightlabstarling/starling-mavros:cache-dev
