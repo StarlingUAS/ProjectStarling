@@ -163,7 +163,7 @@ jobs:
   #
   # Call bake for the UI
   #
-  build_ui:
+  bake_ui:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -204,7 +204,7 @@ jobs:
   #
   # Call bake for mavros
   #
-  build_mavros:
+  bake_mavros:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
