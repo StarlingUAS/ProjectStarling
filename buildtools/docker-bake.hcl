@@ -1,12 +1,16 @@
-variable "VERSION" {
+variable "BAKE_VERSION" {
     default = "latest"
 }
 
-variable "REGISTRY" {
+variable "BAKE_REGISTRY" {
     default = ""
 }
 
-variable "NAMEDTAG" {
+variable "BAKE_RELEASENAME" {
+    default = ""
+}
+
+variable "BAKE_CACHENAME" {
     default = ""
 }
 
@@ -35,28 +39,34 @@ group "system" {
 target "starling-ui" {
     context = "system/ui"
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-ui:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-ui:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_CACHENAME}" : "" ]
 }
 
 target "starling-controller-base" {
     context = "system/controller-base"
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-controller-base:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-controller-base:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_CACHENAME}" : "" ]
 }
 
 target "starling-mavros" {
     context = "system/mavros"
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-mavros:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-mavros:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHENAME}" : "" ]
 }
 
 
@@ -73,10 +83,12 @@ group "simulator" {
 target "starling-sim-base-core" {
     context = "simulator/base/core"
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-base-core:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHENAME}" : "" ]
 }
 
 group "simulator-px4" {
@@ -90,24 +102,28 @@ group "simulator-px4" {
 target "starling-sim-base-px4" {
     context = "simulator/base/px4"
     args = { 
-        "VERSION": "${VERSION}",
-        "REGISTRY": "${REGISTRY}"
+        "BAKE_VERSION": "${BAKE_VERSION}",
+        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-base-px4:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHENAME}" : "" ]
 }
 
 target "starling-sim-px4-sitl" {
     context = "simulator/base/px4"
     dockerfile = "sitl.Dockerfile"
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_CACHENAME}" : "" ]
 }
 
 /*
@@ -117,14 +133,16 @@ target "starling-sim-px4-sitl" {
 target "example_python_controller" {
     context = "controllers/example_controller_python"
     args = { 
-        "VERSION": "${VERSION}",
-        "REGISTRY": "${REGISTRY}"
+        "BAKE_VERSION": "${BAKE_VERSION}",
+        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${REGISTRY}uobflightlabstarling/example_controller_python:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/example_controller_python:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_CACHENAME}" : "" ]
 }
 
 /*
@@ -134,12 +152,14 @@ target "example_python_controller" {
 target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
     args = { 
-        "VERSION": "${VERSION}",
-        "REGISTRY": "${REGISTRY}"
+        "BAKE_VERSION": "${BAKE_VERSION}",
+        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${REGISTRY}uobflightlabstarling/starling-sim-iris:${VERSION}",
-        notequal("",NAMEDTAG) ? "${REGISTRY}uobflightlabstarling/starling-sim-iris:${NAMEDTAG}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHENAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHENAME}" : "" ]
 }
