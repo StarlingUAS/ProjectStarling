@@ -38,7 +38,7 @@ spec:
       shareProcessNamespace: true
       initContainers:
       - name: gazebo-spawn-iris
-        image: starling-sim-iris:latest
+        image: uobflightlabstarling/starling-sim-iris:latest
         imagePullPolicy: IfNotPresent
         args: [ "./spawn_iris.sh" ]
         env:
@@ -50,7 +50,7 @@ spec:
           value: "true"
       containers:
       - name: starling-px4-sitl
-        image: starling-sim-px4-sitl:latest
+        image: uobflightlabstarling/starling-sim-px4-sitl:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
@@ -60,7 +60,7 @@ spec:
         - name: PX4_INSTANCE_BASE
           value: "200"
       - name: starling-mavros
-        image: starling-mavros:latest
+        image: uobflightlabstarling/starling-mavros:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: VEHICLE_NAMESPACE # Optional but unique
