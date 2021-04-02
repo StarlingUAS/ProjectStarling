@@ -48,9 +48,9 @@ fi
 cd $SCRIPT_DIR/..
 
 set -e
-REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage1
-REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage2
-REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage3
+BAKE_REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage1
+BAKE_REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage2
+BAKE_REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --push -f $SCRIPT_DIR/docker-bake.hcl stage3
 
 echo "Registry at localhost:5000 has your images"
 echo "Pull the images by appending localhost:5000. e.g.:"

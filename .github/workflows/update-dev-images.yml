@@ -1,10 +1,10 @@
-name: 'Update images'
+name: 'Update dev images'
 
 on:
-  # Triggers on push to any tag of form vX.X.X
+  # Triggers on push to any tag of form vX.X.X-dev
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-dev'
 
 jobs:
 
@@ -46,8 +46,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
       - name: Build and push (example_python_controller)
         uses: docker/bake-action@master
@@ -59,8 +59,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
   #
   # Call bake for each simulator image in sequence
@@ -95,8 +95,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
       - name: Build and push (sim-base-px4)
         uses: docker/bake-action@master
@@ -108,8 +108,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
       - name: Build and push (sim-iris)
         uses: docker/bake-action@master
@@ -121,8 +121,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
   #
   # Call bake for the SITL
@@ -157,8 +157,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
   #
   # Call bake for the UI
@@ -198,8 +198,8 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
 
   #
   # Call bake for mavros
@@ -239,5 +239,5 @@ jobs:
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHENAME: cache
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHENAME: cache-dev
