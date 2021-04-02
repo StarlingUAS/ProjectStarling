@@ -7,7 +7,11 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  build_controller:
+
+  #
+  # Call bake for each controller image in sequence
+  #
+  bake_controller:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,33 +37,35 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push (controller-base)
-        uses: docker/build-push-action@v2
+        uses: docker/bake-action@master
         with:
-          context: system/controller-base
-          tags: |
-            uobflightlabstarling/starling-controller-base:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-controller-base:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-controller-base
           push: true
-          cache-from: uobflightlabstarling/starling-controller-base:cache
-          cache-to: uobflightlabstarling/starling-controller-base:cache
-          platforms: linux/amd64,linux/arm64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
-      - name: Build and push (example_controller_python)
-        uses: docker/build-push-action@v2
+      - name: Build and push (example_python_controller)
+        uses: docker/bake-action@master
         with:
-          context: controllers/example_controller_python
-          build-args:
-            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
-          tags: |
-            uobflightlabstarling/example_controller_python:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/example_controller_python:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            example_python_controller
           push: true
-          cache-from: uobflightlabstarling/example_controller_python:cache
-          cache-to: uobflightlabstarling/example_controller_python:cache
-          platforms: linux/amd64,linux/arm64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
-
-  build_simulator:
+  #
+  # Call bake for each simulator image in sequence
+  #
+  bake_simulator:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -80,47 +86,48 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push (sim-base-core)
-        uses: docker/build-push-action@v2
+        uses: docker/bake-action@master
         with:
-          context: simulator/base/core
-          tags: |
-            uobflightlabstarling/starling-sim-base-core:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-sim-base-core:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-sim-base-core
           push: true
-          cache-from: uobflightlabstarling/starling-sim-base-core:cache
-          cache-to: uobflightlabstarling/starling-sim-base-core:cache
-          platforms: linux/amd64
-      
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
+
       - name: Build and push (sim-base-px4)
-        uses: docker/build-push-action@v2
+        uses: docker/bake-action@master
         with:
-          context: simulator/base/px4
-          build-args:
-            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
-          tags: |
-            uobflightlabstarling/starling-sim-base-px4:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-sim-base-px4:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-sim-base-px4
           push: true
-          cache-from: uobflightlabstarling/starling-sim-base-px4:cache
-          cache-to: uobflightlabstarling/starling-sim-base-px4:cache
-          platforms: linux/amd64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
       - name: Build and push (sim-iris)
-        uses: docker/build-push-action@v2
+        uses: docker/bake-action@master
         with:
-          context: simulator/vehicles/iris
-          build-args:
-            VERSION=${{ steps.tag_name.outputs.GITHUB_TAG }}
-          tags: |
-            uobflightlabstarling/starling-sim-iris:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-sim-iris:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-sim-iris
           push: true
-          cache-from: uobflightlabstarling/starling-sim-iris:cache
-          cache-to: uobflightlabstarling/starling-sim-iris:cache
-          platforms: linux/amd64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
-
-  build_sitl:
+  #
+  # Call bake for the SITL
+  #
+  bake_sitl:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -140,20 +147,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push (px4-sitl)
-        uses: docker/build-push-action@v2
+      - name: Build and push (sim-px4-sitl)
+        uses: docker/bake-action@master
         with:
-          context: simulator/base/px4
-          file: simulator/base/px4/sitl.Dockerfile
-          tags: |
-            uobflightlabstarling/starling-sim-px4-sitl:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-sim-px4-sitl:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-sim-px4-sitl
           push: true
-          cache-from: uobflightlabstarling/starling-sim-px4-sitl:cache
-          cache-to: uobflightlabstarling/starling-sim-px4-sitl:cache
-          platforms: linux/amd64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
-
+  #
+  # Call bake for the UI
+  #
   build_ui:
     runs-on: ubuntu-latest
     steps:
@@ -179,19 +188,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
+      - name: Build and push (UI)
+        uses: docker/bake-action@master
         with:
-          context: system/ui
-          tags: |
-            uobflightlabstarling/starling-ui:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-ui:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-ui
           push: true
-          cache-from: uobflightlabstarling/starling-ui:cache
-          cache-to: uobflightlabstarling/starling-ui:cache
-          platforms: linux/amd64,linux/arm64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
 
-
+  #
+  # Call bake for mavros
+  #
   build_mavros:
     runs-on: ubuntu-latest
     steps:
@@ -217,14 +229,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
+      - name: Build and push (mavros)
+        uses: docker/bake-action@master
         with:
-          context: system/mavros
-          tags: |
-            uobflightlabstarling/starling-mavros:${{ steps.tag_name.outputs.GITHUB_TAG }}
-            uobflightlabstarling/starling-mavros:latest
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-mavros
           push: true
-          cache-from: uobflightlabstarling/starling-mavros:cache
-          cache-to: uobflightlabstarling/starling-mavros:cache
-          platforms: linux/amd64,linux/arm64
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHENAME: cache
