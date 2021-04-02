@@ -102,8 +102,8 @@ group "simulator-px4" {
 target "starling-sim-base-px4" {
     context = "simulator/base/px4"
     args = { 
-        "BAKE_VERSION": "${BAKE_VERSION}",
-        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_VERSION}",
@@ -133,8 +133,8 @@ target "starling-sim-px4-sitl" {
 target "example_python_controller" {
     context = "controllers/example_controller_python"
     args = { 
-        "BAKE_VERSION": "${BAKE_VERSION}",
-        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_VERSION}",
@@ -152,8 +152,8 @@ target "example_python_controller" {
 target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
     args = { 
-        "BAKE_VERSION": "${BAKE_VERSION}",
-        "BAKE_REGISTRY": "${BAKE_REGISTRY}"
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_VERSION}",
