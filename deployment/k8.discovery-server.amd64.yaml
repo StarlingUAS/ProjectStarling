@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ros-discovery-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ros-discovery-service
+  template:
+    metadata:
+      labels:
+        app: ros-discovery-service
+    spec:
+      shareProcessNamespace: true
+      nodeSelector:
+        kubernetes.io/arch: "amd64"    
+      containers:
+      - name: ros-discovery-service
+        image: mickeyli789/starling-discovery:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 11811
+          protocol: UDP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ros-discovery-service-srv
+  labels:
+    app: ros-discovery-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 11811
+    protocol: UDP
+    name: ros-dds-discovery
+  - port: 7400
+    name: dds1
+    protocol: UDP
+  - port: 7401
+    name: dds2
+    protocol: UDP
+  - port: 7410
+    name: dds3
+    protocol: UDP
+  - port: 7411
+    name: dds4
+    protocol: UDP
+  - port: 7412
+    name: dds5
+    protocol: UDP
+  - port: 7413
+    name: dds6
+    protocol: UDP
+  - port: 7414
+    name: dds7
+    protocol: UDP
+  - port: 7415
+    name: dds8
+    protocol: UDP
+  - port: 7418
+    name: dds9
+    protocol: UDP
+  - port: 7419
+    name: dds10
+    protocol: UDP
+  - port: 7422
+    name: dds11
+    protocol: UDP
+  - port: 7423
+    name: dds12
+    protocol: UDP
+  - port: 10318
+    name: dds13
+    protocol: UDP
+  - port: 10317
+    name: dds14
+    protocol: UDP
+  selector:
+    app: ros-discovery-service

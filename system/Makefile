@@ -1,6 +1,6 @@
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-all: mavros controller-base
+all: mavros controller-base ui discovery
 
 controller-base:
 	docker build -t starling-controller-base $(MAKEFILE_DIR)/controller-base
@@ -14,4 +14,7 @@ mavros_all_arch:
 ui:
 	docker build -t starling-ui $(MAKEFILE_DIR)/ui
 
-.PHONY: mavros mavros_all_arch controller-base ui all
+discovery:
+	docker build -t starling-discovery $(MAKEFILE_DIR)/discovery
+
+.PHONY: mavros mavros_all_arch controller-base ui discovery all
