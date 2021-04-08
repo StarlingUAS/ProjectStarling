@@ -11,6 +11,7 @@ spec:
       labels:
         app: starling-ui
     spec:
+      hostNetwork: true
       shareProcessNamespace: true
       containers:
       - name: starling-ui
@@ -20,19 +21,19 @@ spec:
         - containerPort: 3000
         - containerPort: 9090
 
----
+# ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: starling-ui-srv
-spec:
-  type: LoadBalancer
-  selector:
-    app: starling-ui 
-  ports:
-    - port: 3000
-      name: http
-    - port: 9090
-      name: ros-bridge
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: starling-ui-srv
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app: starling-ui 
+#   ports:
+#     - port: 3000
+#       name: http
+#     - port: 9090
+#       name: ros-bridge
     

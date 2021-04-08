@@ -33,8 +33,8 @@ echo "See: https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/ f
 echo "==================="
 GITHUB_URL=https://github.com/kubernetes/dashboard/releases
 VERSION_KUBE_DASHBOARD=$(curl -w '%{url_effective}' -I -L -s -S ${GITHUB_URL}/latest -o /dev/null | sed -e 's|.*/||')
-k3s kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/${VERSION_KUBE_DASHBOARD}/aio/deploy/recommended.yaml
-k3s kubectl apply -f ${SCRIPT_DIR}/../deployment/resources/dashboard.admin.yaml #dashboard.admin-user.yml -f deployment/resources/dashboard.admin-user-role.yml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/${VERSION_KUBE_DASHBOARD}/aio/deploy/recommended.yaml
+kubectl apply -f ${SCRIPT_DIR}/../deployment/resources/dashboard.admin.yaml #dashboard.admin-user.yml -f deployment/resources/dashboard.admin-user-role.yml
 echo "==================="
 
 DASHBOARD_TOKEN=`k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep ^token | cut -c 13-`
