@@ -6,7 +6,7 @@ metadata:
     app: starling-px4-sitl
 spec:
   ports:
-  - port: 14560
+  - port: 14550
   clusterIP: None
   selector:
     app: starling
@@ -34,6 +34,7 @@ spec:
         firmware: px4
         platform: sitl
     spec:
+      hostNetwork: true
       terminationGracePeriodSeconds: 10
       shareProcessNamespace: true
       initContainers:
@@ -48,17 +49,25 @@ spec:
           value: "200"
         - name: IGNORE_FAILURE
           value: "true"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       containers:
       - name: starling-px4-sitl
         image: uobflightlabstarling/starling-sim-px4-sitl:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
-          value: "sim-gazebo.gazebo-srv"
+          value: "localhost"
         - name: PX4_INSTANCE 
           value: "ordinal"
         - name: PX4_INSTANCE_BASE
           value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       - name: starling-mavros
         image: uobflightlabstarling/starling-mavros:latest
         imagePullPolicy: IfNotPresent
@@ -73,5 +82,9 @@ spec:
           value: "auto"
         - name: PX4_INSTANCE_BASE
           value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       nodeSelector:
         kubernetes.io/arch: "amd64"

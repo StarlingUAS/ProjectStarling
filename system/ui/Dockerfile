@@ -30,6 +30,10 @@ COPY node_entrypoint.sh /node_entrypoint.sh
 # Add all html file example
 COPY html/ /ros_ws/src/ros2-web-bridge/examples/html/
 
+# Add custom ROS DDS configuration (force UDP always) 
+COPY fastrtps_profiles.xml /ros_ws/
+ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
 # Change the working directory
 WORKDIR /ros_ws
 
