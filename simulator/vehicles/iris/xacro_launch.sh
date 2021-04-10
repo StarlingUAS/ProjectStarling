@@ -18,7 +18,7 @@ echo "Specific SDF saved to /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf"
 re_number='^[0-9]+$'
 ORDINAL="${HOSTNAME##*-}"
 if [[ $ORDINAL =~ $re_number ]] && ! ${PX4_SIM_FORCE_USE_SET_POSITION} ; then
-    echo "Startling location set by spiral"
+    echo "Starting location set by spiral"
     separation_distance=${PX4_SIM_SPAWN_SEP_DISTANCE:-1}
     x=0
     y=0
