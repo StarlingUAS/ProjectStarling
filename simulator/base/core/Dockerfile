@@ -23,10 +23,8 @@ RUN . /etc/os-release \
     && echo "deb http://packages.osrfoundation.org/gazebo/$ID-stable `lsb_release -sc` main" > /etc/apt/sources.list.d/gazebo-latest.list
 
 # install gazebo packages
-RUN apt-get update && apt-get install -y \
-    libgazebo11=11.3.0-1* \
-    gazebo11-common=11.3.0-1*\
-    gazebo11=11.3.0-1* \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gazebo11 \
     && rm -rf /var/lib/apt/lists/*
 
 # setup environment
