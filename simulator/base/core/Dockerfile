@@ -24,7 +24,7 @@ RUN . /etc/os-release \
 
 # install gazebo packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gazebo11=11.3.0-1* \
+    gazebo11 \
     && rm -rf /var/lib/apt/lists/*
 
 # setup environment
@@ -92,6 +92,10 @@ COPY gzweb_entrypoint.sh /
 
 # Add URDF conversion tools
 COPY tools /ros_ws/tools
+
+# Add custom ROS DDS configuration (force UDP always) 
+COPY fastrtps_profiles.xml /ros_ws/
+ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]

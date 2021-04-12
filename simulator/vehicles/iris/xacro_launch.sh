@@ -17,7 +17,8 @@ echo "Specific SDF saved to /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf"
 # Drones will start in a spiral starting from (PX4_SIM_INIT_LOC_X, PX4_SIM_INIT_LOC_Y)
 re_number='^[0-9]+$'
 ORDINAL="${HOSTNAME##*-}"
-if [[ $ORDINAL =~ $re_number && ! ${PX4_SIM_FORCE_USE_SET_POSITION} ]] ; then
+if [[ $ORDINAL =~ $re_number ]] && ! ${PX4_SIM_FORCE_USE_SET_POSITION} ; then
+    echo "Starting location set by spiral"
     separation_distance=${PX4_SIM_SPAWN_SEP_DISTANCE:-1}
     x=0
     y=0
@@ -39,6 +40,8 @@ if [[ $ORDINAL =~ $re_number && ! ${PX4_SIM_FORCE_USE_SET_POSITION} ]] ; then
 
     export PX4_SIM_INIT_LOC_X=$(( PX4_SIM_INIT_LOC_X + x*separation_distance ))
     export PX4_SIM_INIT_LOC_Y=$(( PX4_SIM_INIT_LOC_Y + y*separation_distance ))
+else
+    echo "Using user specified starting location"
 fi
 echo "Starting location set to ($PX4_SIM_INIT_LOC_X, $PX4_SIM_INIT_LOC_Y, $PX4_SIM_INIT_LOC_Z)"
 

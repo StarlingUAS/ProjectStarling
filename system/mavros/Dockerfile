@@ -52,6 +52,11 @@ COPY mavros_setup.sh .
 
 COPY mavros.launch /ros_ws/launch/mavros.launch
 
+
+# Add custom ROS DDS configuration (force UDP always) 
+COPY fastrtps_profiles.xml /ros_ws/
+ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
 ENV MAVROS_FCU_CONN="udp"
 ENV MAVROS_FCU_IP="127.0.0.1"
 ENV MAVROS_FCU_UDP_BASE="14830"

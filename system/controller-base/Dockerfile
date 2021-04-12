@@ -19,4 +19,8 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
 
 COPY ros_entrypoint.sh /ros_entrypoint.sh
 
+# Add custom ROS DDS configuration (force UDP always) 
+COPY fastrtps_profiles.xml /ros_ws/
+ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
 WORKDIR /ros_ws

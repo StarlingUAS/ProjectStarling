@@ -57,9 +57,9 @@ DEPLOYMENTDIR="$SCRIPTSDIR/../deployment"
 
 if [[ $DELETE ]]; then
     echo "Deleting Gazebo-iris"
-    k3s kubectl delete -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
+    kubectl delete -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
     echo "Deleting px4-sitl with mavros"
-    k3s kubectl delete -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
+     kubectl delete -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
 fi
 
 if [[ $RESTART ]]; then
@@ -79,13 +79,13 @@ if [[ ! $DELETE || $RESTART ]]; then
 
     echo "Deploying Starling Modules (this may take a while)"
     echo "Deploying Gazebo-iris to localhost:8080 and wait for start"
-    k3s kubectl apply -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
+    kubectl apply -f $DEPLOYMENTDIR/k8.gazebo-iris.amd64.yaml
 
     echo "Waiting 5s for Gazebo to start to ensure proper connection"
     sleep 5s
 
     echo "Deploying px4-sitl with mavros"
-    k3s kubectl apply -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
+    kubectl apply -f $DEPLOYMENTDIR/k8.px4-sitl.amd64.yaml
 
     if [[ $OPENWEBPAGE ]]
     then
