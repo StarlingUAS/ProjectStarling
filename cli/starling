@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+# See https://click.palletsprojects.com/
 import click
 
+# See https://github.com/kubernetes-client/python
 from kubernetes import client, config
 
 @click.group()
