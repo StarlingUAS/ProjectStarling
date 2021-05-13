@@ -23,7 +23,8 @@ RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
 RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
     && cd /ros_ws \
-    && colcon build --packages-select mavros_msgs
+    && colcon build --packages-select mavros_msgs \
+    && rm -r build
 
 # We then need to build the bridge from source
 #  (So we probably don't need to use the ros1-bridge image...)
@@ -37,7 +38,8 @@ RUN cd /bridge_ws \
     && . /opt/ros/${ROS2_DISTRO}/setup.sh \
     && . /ros_ws/install/local_setup.sh \
     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
-    && colcon build --packages-select ros1_bridge --cmake-force-configure
+    && colcon build --packages-select ros1_bridge --cmake-force-configure \
+    && rm -r build
 
 COPY mavros_bridge.launch.xml /ros_ws/launch/
 COPY run_ros1.sh /ros_ws/scripts/
@@ -48,9 +50,19 @@ WORKDIR /ros_ws
 
 COPY mavros_setup.sh .
 
-# ENV MAVROS_FCU_URL="udp://127.0.0.1:14550@14555"
-ENV MACROS_FCU_URL="udp://@" 
-ENV MAVROS_TGT_SYSTEM=1
+COPY mavros.launch /ros_ws/launch/mavros.launch
+
+
+# Add custom ROS DDS configuration (force UDP always) 
+COPY fastrtps_profiles.xml /ros_ws/
+ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
+ENV MAVROS_FCU_CONN="udp"
+ENV MAVROS_FCU_IP="127.0.0.1"
+ENV MAVROS_FCU_UDP_BASE="14830"
+ENV MAVROS_TGT_SYSTEM="auto"
+ENV PX4_INSTANCE_BASE=0
 ENV MAVROS_TGT_FIRMWARE="px4"
+ENV MAVROS_GCS_URL="udp-pb://@:14550"
 
 CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]

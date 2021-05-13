@@ -2,5 +2,6 @@ build/
 install/
 log/
 devel/
-.*
 !/.gitignore
+site/
+.mypy_cache/

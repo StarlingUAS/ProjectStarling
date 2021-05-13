@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: starling-px4-sitl
   labels:
     app: starling
     platform: sitl
 spec:
+  serviceName: starling-px4-sitl-srv
   selector: 
     matchLabels:
       app: starling
@@ -18,26 +19,57 @@ spec:
         firmware: px4
         platform: sitl
     spec:
+      hostNetwork: true
+      terminationGracePeriodSeconds: 10
       shareProcessNamespace: true
+      initContainers:
+      - name: gazebo-spawn-iris
+        image: uobflightlabstarling/starling-sim-iris:latest
+        imagePullPolicy: IfNotPresent
+        args: [ "./spawn_iris.sh" ]
+        env:
+        - name: PX4_INSTANCE 
+          value: "ordinal"  
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: IGNORE_FAILURE
+          value: "true"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       containers:
       - name: starling-px4-sitl
         image: uobflightlabstarling/starling-sim-px4-sitl:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
-          value: "sim-gazebo.gazebo-srv"
-        ports:
-          - containerPort: 18570
-            protocol: "UDP"
+          value: "localhost"
+        - name: PX4_INSTANCE 
+          value: "ordinal"
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       - name: starling-mavros
         image: uobflightlabstarling/starling-mavros:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
-        - name: MAVROS_FCU_URL
-          value: "udp://127.0.0.1:14540@"
+        - name: VEHICLE_NAMESPACE # Optional but unique
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name # Pod name
         - name: MAVROS_TGT_FIRMWARE
           value: "px4"
         - name: MAVROS_TGT_SYSTEM
-          value: "1"
+          value: "auto"
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       nodeSelector:
         kubernetes.io/arch: "amd64"
