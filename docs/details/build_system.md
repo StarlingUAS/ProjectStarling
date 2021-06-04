@@ -40,6 +40,13 @@ both the tag specified by `BAKE_VERSION` (or `latest` if that is not set) and th
 If set, `BAKE_CACHENAME` will tell `bake` to use a registry based cache to speed up builds. Both of these options are
 primarily to ease the use of GitHub actions.
 
+Finally, there are some further options to control caching further. `BAKE_CACHE_REGISTRY` overrides the destination
+registry for the cache images. By default, it will have the same value as `BAKE_REGISTRY`. This exists to allow local
+builds to be cached from online sources and pushed to a local registry or to allow local builds to be used to populate
+the online caches. The other options are `BAKE_CACHENAME_FROM` and `BAKE_CACHENAME_TO`, which by default take their
+value from `BAKE_CACHENAME`. When not set, no caches will be used. These exist to allow one-directional caching, _e.g._
+to refresh the online caches.
+
 ## The GitHub Actions Workflows
 
 When a tag of the form `vX.Y.Z` is pushed to the repo, a workflow will be started. This workflow builds all the images
