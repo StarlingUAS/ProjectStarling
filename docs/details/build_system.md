@@ -34,18 +34,16 @@ using Docker Hub. Once built, the images can be pulled from the local registry u
 Override by setting `BAKE_REGISTRY` in the environment before calling `bake`.
 
 The `bake.hcl` script takes values from the environment to be passed on to the Dockerfiles. Two of these are the
-`BAKE_VERSION` and `BAKE_REGISTRY` arguments outlined above. Two other values can be supplied to the `bake.hcl` script:
-`BAKE_RELEASENAME` and `BAKE_CACHENAME`. `BAKE_RELEASENAME` defaults to blank. If set, all images will be tagged with
-both the tag specified by `BAKE_VERSION` (or `latest` if that is not set) and that specified by `BAKE_RELEASENAME`.
-If set, `BAKE_CACHENAME` will tell `bake` to use a registry based cache to speed up builds. Both of these options are
-primarily to ease the use of GitHub actions.
+`BAKE_VERSION` and `BAKE_REGISTRY` arguments outlined above. `BAKE_RELEASENAME` can also be supplied to the `bake.hcl`
+script. `BAKE_RELEASENAME` defaults to blank. If it is set, all images will be tagged with both the tag specified by
+`BAKE_VERSION` (or `latest` if that is not set) and that specified by `BAKE_RELEASENAME`.
 
-Finally, there are some further options to control caching further. `BAKE_CACHE_REGISTRY` overrides the destination
-registry for the cache images. By default, it will have the same value as `BAKE_REGISTRY`. This exists to allow local
-builds to be cached from online sources and pushed to a local registry or to allow local builds to be used to populate
-the online caches. The other options are `BAKE_CACHENAME_FROM` and `BAKE_CACHENAME_TO`, which by default take their
-value from `BAKE_CACHENAME`. When not set, no caches will be used. These exist to allow one-directional caching, _e.g._
-to refresh the online caches.
+Finally, there are some further options to control caching. The main options are `BAKE_CACHETO_NAME` and
+`BAKE_CACHEFROM_NAME`, which by default are blank. These exists to allow local builds to be cached from online sources
+and pushed to a local registry or to allow local builds to be used to populate the online caches. When they are blank,
+no caches will be used. This allows for one-directional caching, _e.g._ refreshing the online caches from local builds.
+Two further caching options are available: `BAKE_CACHETO_REGISTRY` and `BAKE_CACHEFROM_REGISTRY`. These control the
+destination and source registries for the cache images. By default, they will be blank, equivalent to using Docker Hub. 
 
 ## The GitHub Actions Workflows
 
