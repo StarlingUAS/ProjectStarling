@@ -19,7 +19,14 @@ to the images and passed as the `VERSION` build argument to dockerfiles that dep
 Multiplatform support is more complicated. The local docker image store cannot handle multi-platform images so
 `buildx`'s default `docker` driver cannot be used. `build_local_multiplatform.sh` deals with this by spawning a new
 builder using the `docker-container` driver alongside a local container registry that the builder interacts with. This
-significantly complicates things. **At present there is a problem with the ARM builds**
+significantly complicates things.
+
+To setup your local machine to do the multiplatform builds, you need to install the required emulators for the `arm64`
+builds. Luckily someone has already done the hard work. All that should be required is:
+
+```
+docker run --privileged --rm tonistiigi/binfmt --install arm64
+```
 
 Similar to the `VERSION` argument outlined above, the use of a local registry requires a `REGISTRY` build argument be
 used in the Dockerfiles. Again this is provided by the `bake.hcl` script. It defaults to blank, which is equivalent to
