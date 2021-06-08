@@ -24,6 +24,7 @@ nav:
     - "Single Drone on Hardware": "guide/single-drone-drones.md"
     - "Multiple Drones on Local Cluster": "guide/multiple-drone-local-machine.md"
     - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+    - "Windows Support": "guide/windows-support.md"
   - "Additional Guides":
     - "Dashboard Guide": 'details/kubernetes-dashboard.md'
     - "Understanding Docker": 'details/docker.md'    
@@ -38,3 +39,4 @@ nav:
     - "Build System": "details/build_system.md"
   - "Miscellaneous":
     - "Ideas": "other/ideas.md"
+    - "MATLAB (unstable)": "other/MATLAB.md"
