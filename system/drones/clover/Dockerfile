@@ -48,4 +48,5 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
         clover_ros2 \
     && rm -r build
 
+
 CMD [ "ros2", "launch", "clover_ros2", "clover.launch.xml"]

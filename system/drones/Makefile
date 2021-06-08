@@ -6,7 +6,7 @@ clover-local:
 	docker build -t starling-clover ${MAKEFILE_DIR}/clover
 
 clover: 
-	docker buildx build --push --platform linux/arm64,linux/amd64 --tag mickeyli789/starling-clover:latest $(MAKEFILE_DIR)/clover 
+	docker buildx build --no-cache --push --platform linux/arm64,linux/amd64 --tag mickeyli789/starling-clover:latest $(MAKEFILE_DIR)/clover 
 
 .PHONY: clover-local clover
 
