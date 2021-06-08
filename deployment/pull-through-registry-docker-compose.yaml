@@ -1,5 +1,4 @@
 registry:
-    name: starlingmp_registry
     restart: always
     image: registry:2
     ports:
