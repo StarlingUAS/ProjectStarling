@@ -9,8 +9,6 @@ declare -a RCFILES=(
     ~/.bashrc
 )
 
-SKIPENABLE=0
-
 # Parse arguments
 POSITIONAL=()
 while [[ $# -gt 0 ]]
