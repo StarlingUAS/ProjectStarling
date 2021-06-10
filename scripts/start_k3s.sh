@@ -60,7 +60,7 @@ if [[ ! $UNINSTALL ]]; then
 
     K3S_ADDITIONAL_ARGS="--docker --write-kubeconfig $CONFIGFILE --write-kubeconfig-mode  644"
 
-    if [[ $EXTERNAL_IP ]]
+    if [[ $EXTERNAL_IP ]]; then
         echo "External IP set to ${EXTERNAL_IP}"
         K3S_ADDITIONAL_ARGS="${K3S_ADDITIONAL_ARGS} --node-external-ip ${EXTERNAL_IP}"
     fi
