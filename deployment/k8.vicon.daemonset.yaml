@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: starling-vicon-daemon
+  labels:
+    app: starling
+
+spec:
+  selector:
+    matchLabels:
+      name: starling-vicon-daemon
+
+  template:
+    metadata:
+      labels:
+        name: starling-vicon-daemon
+
+    spec:
+      nodeSelector:
+        starling.dev/type: vehicle
+
+      tolerations:
+        - key: starling.dev/type
+          operator: Equal
+          value: vehicle
+          effect: NoSchedule
+      
+      hostNetwork: true
+      shareProcessNamespace: true
+      
+      containers:
+        - name: starling-vicon
+          image: uobflightlabstarling/starling-vicon:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 51001
+            protocol: UDP
+          volumeMounts:
+          - mountPath: /etc/starling/vehicle.config
+            name: vehicleconfig
+            readOnly: true
+
+      volumes:
+        - name: vehicleconfig
+          hostPath:
+            path: /etc/starling/vehicle.config
+            type: File
