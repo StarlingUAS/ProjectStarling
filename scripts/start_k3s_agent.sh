@@ -28,7 +28,7 @@ ssh $1@$2 " \
  sudo cp k3s-airgap-images-arm64.tar /var/lib/rancher/k3s/agent/images/; \ 
  sudo chmod +x k3s-arm64; \
  sudo cp k3s-arm64 /usr/local/bin/k3s; \
- INSTALL_K3S_SKIP_DOWNLOAD=true K3S_NODE_NAME=$3 K3S_URL=${K3S_SERVER} K3S_TOKEN=${K3S_TOKEN} INSTALL_K3S_EXEC=${INSTALL_K3S_EXEC} ./k3s-install.sh;";
+ INSTALL_K3S_SKIP_DOWNLOAD=true K3S_NODE_NAME=$3 K3S_URL=${K3S_SERVER} K3S_TOKEN=${K3S_TOKEN} INSTALL_K3S_EXEC=${INSTALL_K3S_EXEC} ./k3s_install.sh;";
 
 
 exit -1
