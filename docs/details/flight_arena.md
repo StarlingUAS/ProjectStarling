@@ -12,7 +12,14 @@
 For setting up a "master" server. All that should be needed is a Docker installation. Following
 [Docker's instructions](https://docs.docker.com/engine/install/ubuntu/) is sufficient.
 
-Then setup a Docker registry image to run as a "pull-through cache", again following
+#### Running a local registry
+
+If the vehicle network is not connected to the internet, you can setup a local registry on a machine
+that is connected to both the vehicle network and the internet to act as a "pull-through cache".
+This allows vehicles to pull images from the local registry, which will act as a cache and pull them
+from the main registry.
+
+Setup a Docker registry image to run as a "pull-through cache", again following
 [Docker's instructions](https://docs.docker.com/registry/recipes/mirror/). Sufficient is to run:
 
 ```sh
@@ -26,6 +33,15 @@ To check on the status of the registry, use:
 
 ```sh
 docker logs registry_mirror
+```
+
+#### Configure vehicle to use local registry
+
+Add to `/etc/docker/daemon.json` to include the new mirror:
+```json
+{
+    "registry-mirrors": ["http://192.168.10.80:5000"]
+}
 ```
 
 ### Time Synchronisation
