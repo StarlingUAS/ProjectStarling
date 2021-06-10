@@ -32,6 +32,11 @@ do
             SKIPENABLE=1
             shift
             ;;
+        --node-external-ip
+            EXTERNAL_IP=$2
+            shift
+            shift
+            ;;
         *)    # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
@@ -53,12 +58,19 @@ if [[ ! $UNINSTALL ]]; then
     echo "Created directory $(dirname "${CONFIGFILE}") for storing config file"
     mkdir -p "$(dirname "${CONFIGFILE}")"
 
+    K3S_ADDITIONAL_ARGS="--docker --write-kubeconfig $CONFIGFILE --write-kubeconfig-mode  644"
+
+    if [[ $EXTERNAL_IP ]]
+        echo "External IP set to ${EXTERNAL_IP}"
+        K3S_ADDITIONAL_ARGS="${K3S_ADDITIONAL_ARGS} --node-external-ip ${EXTERNAL_IP}"
+    fi
+
     # Only needs to be run once per system
     # Download and start kubernetes master node 
     echo "Downloading and Running K3s in systemd (Will not do anything if k3s already installed and running"
     echo "The configuration file will be placed in $CONFIGFILE"
     echo "root is required for initial installation (running of the kubernetes systemd)"
-    curl -sfL https://get.k3s.io | sudo bash -s - --docker --write-kubeconfig $CONFIGFILE --write-kubeconfig-mode  644
+    curl -sfL https://get.k3s.io | sudo bash -s - ${K3S_ADDITIONAL_ARGS}
 
     echo "Setting KUBECONFIG in rcfiles"
     for rcfile in "${RCFILES[@]}"; do
