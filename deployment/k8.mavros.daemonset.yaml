@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: starling-daemon
+  name: starling-mavros-daemon
   labels:
     app: starling
 
 spec:
   selector:
     matchLabels:
-      name: starling-daemon
+      name: starling-mavros-daemon
 
   template:
     metadata:
       labels:
-        name: starling-daemon
+        name: starling-mavros-daemon
 
     spec:
       nodeSelector:
