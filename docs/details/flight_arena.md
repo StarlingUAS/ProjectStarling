@@ -1,10 +1,32 @@
 # Flight Arena Architecture and Set Up
 
+## Contents
 [TOC]
 
 ## Architecture 
 
 ## Flight Arena Details
+
+### Server Setup
+
+For setting up a "master" server. All that should be needed is a Docker installation. Following
+[Docker's instructions](https://docs.docker.com/engine/install/ubuntu/) is sufficient.
+
+Then setup a Docker registry image to run as a "pull-through cache", again following
+[Docker's instructions](https://docs.docker.com/registry/recipes/mirror/). Sufficient is to run:
+
+```sh
+docker run -d -p 5000:5000 --restart=always --name registry_mirror \
+           -e REGISTRY_PROXY_REMOTEURL='https://registry-1.docker.io' \
+           -e REGISTRY_DELETE_ENABLED=true \
+           registry
+```
+
+To check on the status of the registry, use:
+
+```sh
+docker logs registry_mirror
+```
 
 ### Time Synchronisation
 
