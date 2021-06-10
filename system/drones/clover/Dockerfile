@@ -12,26 +12,6 @@ RUN apt-get update \
 ## Install Raspberry Pi GPIO drivers
 RUN pip3 install RPi.GPIO
 
-## Geographic Lib if neccessary
-# RUN git clone \
-#         --filter=blob:none --no-checkout\
-#         --single-branch --branch ros2 \
-#         https://github.com/ros-geographic-info/geographic_info.git \
-#         /ros_ws/src/geographic_info \
-#     && cd /ros_ws/src/geographic_info \
-#     && git checkout master --geographic_msgs
-
-## mavros_msgs should already be installed
-## Install ROS2 version just in case
-# RUN git clone \
-#         --no-checkout --depth 1\
-#         --single-branch --branch ros2 \
-#         https://github.com/mavlink/mavros.git \
-#         /ros_ws/src/mavros \
-#     && cd /ros_ws/src/mavros \
-#     && git sparse-checkout init --cone \
-#     && git sparse-checkout set mavros_msgs
-
 ## My own files for clover core libraries
 RUN git clone https://github.com/UoBFlightLab/clover_ros2_pkgs.git \
         /ros_ws/src/clover_ros2_pkgs
@@ -48,4 +28,7 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
         clover_ros2 \
     && rm -r build
 
-CMD [ "ros2", "launch", "clover_ros2", "clover.launch.xml"]
+COPY starling-clover.launch.xml .
+COPY run.sh .
+
+CMD ["./run.sh"]
