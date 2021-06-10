@@ -13,6 +13,7 @@ example configuration from a Clover is given below:
 node-taint:
   - "starling.dev/type=vehicle:NoSchedule"
 node-label:
+  - "starling.dev/type=vehicle"
   - "starling.dev/vehicle-class=rotary"
   - "starling.dev/vehicle-type=clover"
 ```
@@ -20,7 +21,8 @@ node-label:
 In Kubernetes, a taint is applied to a node and is used to prevent workloads from being assigned to
 it unless they explicitly "tolerate the taint" through a toleration in the deployment file. Here we
 use it for ensuring that only workloads that are explicity allowed on a vehicle will be scheduled
-on one.
+on one. Note that a label with the same content still needs to be added if that is to be used as a
+`nodeSelector`.
 
 Kubernetes scheduling can also be controlled by selectors and affinities. A selector is a hard
 requirement for a particular label on a node and an affinity is a more flexible version. The labels
