@@ -1,0 +1,42 @@
+site_name: Project Starling
+theme: readthedocs
+repo_url: https://github.com/UoBFlightLab/ProjectStarling
+site_description: 'BRL Flight Arena 2.0'
+docs_dir: 'docs'
+copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
+
+markdown_extensions:
+  - toc:
+      permalink: True
+
+plugins:
+  - search
+  - macros
+
+nav:
+  - "Home":
+    - "Overview": 'README.md'
+    - "Getting Started": 'guide/getting-started.md'
+    - "Background": 'details/background.md' 
+  - "User Guides":
+    - "Single Drone on Local Machine": "guide/single-drone-local-machine.md"
+    - "Single Drone on Local Cluster": "guide/kube-single-drone-local-machine.md"
+    - "Single Drone on Hardware": "guide/single-drone-drones.md"
+    - "Multiple Drones on Local Cluster": "guide/multiple-drone-local-machine.md"
+    - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+    - "Windows Support": "guide/windows-support.md"
+  - "Additional Guides":
+    - "Dashboard Guide": 'details/kubernetes-dashboard.md'
+    - "Understanding Docker": 'details/docker.md'    
+    - "Understanding Kubernetes": "details/kubernetes.md"
+    - "BRL Flight Arena": "details/flight_arena.md"
+  - "Implementation":
+    - "PX4 Details": "details/px4.md"
+    - "Example Python Controller": "guide/example-controller.md"
+    - "Example Kubernetes Deployments": "details/kubernetes-deployment.md"
+    - "Mavros Container": "details/starling-mavros.md"
+    - "Starling UI": "details/starling-ui.md"
+    - "Build System": "details/build_system.md"
+  - "Miscellaneous":
+    - "Ideas": "other/ideas.md"
+    - "MATLAB (unstable)": "other/MATLAB.md"

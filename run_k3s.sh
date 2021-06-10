@@ -11,8 +11,8 @@ do
             HELP=1
             shift # past argument
             ;;
-        -d|--delete)
-            DELETE=1
+        -sk|--skip-install)
+            SKIP=1
             shift
             ;;
         *)    # unknown option
@@ -30,15 +30,18 @@ then
     echo "Usage: './run_k3s.sh [-h|--help] [-d|--delete]"
     echo "-h|--help: prints this dialogue"
     echo "-d|--delete: removes everything k3s on the system (k3s-uninstall)"
+    echo "-sk|--skip-install: skips the installation (and requirement for sudo"
     exit -1
 fi
 
 SCRIPTSDIR=scripts
 
-# Start K3S
-./$SCRIPTSDIR/start_k3s.sh $ARGS
-
-if [ ! $DELETE ]; then
-    # Start Gazebo and Single PX4 drone
-    ./SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS
+if [[ ! $SKIP ]]; then
+    # Start K3S 
+    # Only accepts -u|--uninstall 
+    ./$SCRIPTSDIR/start_k3s.sh $ARGS
 fi
+
+# Start Gazebo and Single PX4 drone
+# Accepts the following [-ow|--open], [-d|--delete], [-sk|--skip-base-check], [-r|--restart]
+./$SCRIPTSDIR/start_single_px4sitl_gazebo.sh $ARGS
