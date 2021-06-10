@@ -34,10 +34,6 @@ spec:
           securityContext:
             privileged: true
           env:
-          - name: VEHICLE_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
           - name: MAVROS_TGT_FIRMWARE
             value: "px4"
           - name: MAVROS_TGT_SYSTEM
@@ -56,11 +52,6 @@ spec:
         - name: starling-vicon
           image: uobflightlabstarling/starling-vicon:latest
           imagePullPolicy: IfNotPresent
-          env:
-          - name: VEHICLE_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
           ports:
           - containerPort: 51001
             protocol: UDP
