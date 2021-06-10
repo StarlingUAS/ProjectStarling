@@ -32,7 +32,7 @@ do
             SKIPENABLE=1
             shift
             ;;
-        --node-external-ip
+        --node-external-ip)
             EXTERNAL_IP=$2
             shift
             shift
