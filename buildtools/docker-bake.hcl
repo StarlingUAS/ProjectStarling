@@ -45,7 +45,7 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["starling-ui", "starling-controller-base", "starling-mavros"]
+    targets = ["starling-ui", "starling-controller-base", "starling-mavros", "starling-vicon"]
 }
 
 target "starling-ui" {
@@ -79,6 +79,17 @@ target "starling-mavros" {
     platforms = ["linux/amd64", "linux/arm64"]
     cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
+target "starling-vicon" {
+    context = "system/vicon"
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 
