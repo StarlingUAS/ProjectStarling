@@ -20,11 +20,11 @@ spec:
     spec:
       hostNetwork: true
       shareProcessNamespace: true
-#      tolerations:
-#        - key: "starling.uas/type"
-#          operator: "Equal"
-#          value: "vehicle"
-#          effect: "NoSchedule"
+      tolerations:
+        - key: "starling.dev/type"
+          operator: "Equal"
+          value: "vehicle"
+          effect: "NoSchedule"
 
       containers:
 
@@ -80,5 +80,4 @@ spec:
 
       nodeSelector:
         kubernetes.io/arch: arm64
-        #starling.uas/type: vehicle
-        # k3s.io/hostname: clover1
+        starling.dev/type: vehicle
