@@ -17,4 +17,4 @@ ui:
 vicon:
 	docker build -t starling-vicon $(MAKEFILE_DIR)/vicon
 
-.PHONY: mavros mavros_all_arch controller-base ui all
+.PHONY: mavros mavros_all_arch controller-base ui vicon all
