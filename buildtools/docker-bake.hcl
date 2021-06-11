@@ -138,6 +138,43 @@ target "starling-sim-px4-sitl" {
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
+group "simulator-ardupilot" {
+    targets = [
+        "starling-sim-ardupilot-copter",
+        "starling-sim-ardupilot-plane"
+    ]
+}
+
+target "starling-sim-arducopter" {
+    context = "simulator/base/ardupilot"
+    args = {
+        "VEHICLE": "copter",
+        "BRANCH": "ArduCopter-stable"
+    }
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-arducopter:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
+target "starling-sim-arduplane" {
+    context = "simulator/base/ardupilot"
+    args = {
+        "VEHICLE": "plane",
+        "BRANCH": "ArduPlane-stable"
+    }
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-arduplane:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
 /*
  * Controller targets
  */

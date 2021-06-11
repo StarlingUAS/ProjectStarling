@@ -5,6 +5,14 @@ BAKE:=cd ../.. && docker buildx bake --builder default --load --set *.platform=$
 
 all: gazebo px4-gazebo px4-sitl
 
+ardupilot: arduplane arducopter
+
+arduplane:
+	$(BAKE) starling-sim-arduplane
+
+arducopter:
+	$(BAKE) starling-sim-arducopter
+
 gazebo:
 	$(BAKE) starling-sim-base-gazebo
 

@@ -1,29 +1,27 @@
+ARG VERSION=latest
+ARG REGISTRY
+
 # Perform multistage build to avoid a pile of ardupilot deps
 FROM ardupilot/ardupilot-dev-chibios as ardupilot_builder
 
+ARG VEHICLE=copter
+ARG BRANCH=ArduCopter-stable
+
 # Fetch ArduPilot
 RUN git clone --recurse-submodules --depth 1 --shallow-submodules -j4 \
-    -b Copter-4.0.5 https://github.com/ArduPilot/ardupilot /src/ardupilot
+    -b ${BRANCH} https://github.com/ArduPilot/ardupilot /src/ardupilot
 
 # Build the SITL
 WORKDIR /src/ardupilot
-RUN ./waf configure && ./waf copter
+RUN ./waf configure && ./waf ${VEHICLE}
 
-# Fetch the ArduPilot gazebo plugin
-RUN git clone --depth 1 https://github.com/khancyr/ardupilot_gazebo /src/ardupilot_gazebo
+WORKDIR /home/root
+COPY entrypoint.sh /home/root/
 
-FROM starling-sim-base-core
+# The VEHICLE environment variable should not be overridden as
+#  the build will not exist for it
+ENV VEHICLE=${VEHICLE}
+ENV AP_SYSID_BASE 0
+ENV AP_SYSID=0
 
-# Copy ardupilot sources from builder stage
-COPY --from=ardupilot_builder /src /src/
-
-# Build & install the gazebo link
-RUN cd /src/ardupilot_gazebo \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-    && make \
-    && make install
-
-CMD [ "gzserver", "worlds/iris_arducopter_runway.world"]
-
+ENTRYPOINT [ "/home/root/entrypoint.sh" ]
