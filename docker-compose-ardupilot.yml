@@ -6,7 +6,6 @@ services:
   
   mavros:
     image: uobflightlabstarling/starling-mavros:latest
-    command: ros2 launch launch/mavros_bridge.launch.xml
     environment: 
       - "MAVROS_FCU_URL=tcp://sitl:5760"
 
