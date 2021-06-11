@@ -12,6 +12,7 @@ RUN apt-get update \
 ## Install Raspberry Pi GPIO drivers
 RUN pip3 install RPi.GPIO
 
+ARG START_HERE=blah
 ## My own files for clover core libraries
 RUN git clone https://github.com/UoBFlightLab/clover_ros2_pkgs.git \
         /ros_ws/src/clover_ros2_pkgs

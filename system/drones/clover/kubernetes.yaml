@@ -1,35 +1,51 @@
----
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: DaemonSet
 metadata:
-  name: starling-clover
+  name: starling-clover-daemon
+  labels:
+    app: starling
+
 spec:
-  hostNetwork: true
-  shareProcessNamespace: true
-  tolerations:
-  - key: "starling.dev/type"
-    operator: "Equal"
-    value: "vehicle"
-    effect: "NoSchedule"
-  containers:
-  - name: starling-clover
-    image: mickeyli789/starling-clover
-    imagePullPolicy: Always
-    securityContext:
-      privileged: true
-    volumeMounts:
-    - mountPath: /dev/gpiomem
-      name: rpi-gpio
-    - mountPath: /etc/starling/vehicle.config
-      name: vehicleconfig
-      readOnly: true
-  nodeSelector:
-    k3s.io/hostname: clover12   
-  volumes:
-  - name: rpi-gpio
-    hostPath:
-      path: /dev/gpiomem
-  - name: vehicleconfig
-    hostPath:
-      path: /etc/starling/vehicle.config
-      type: File
+  selector: 
+    matchLabels:
+      name: starling-clover-daemon
+
+  template:
+    metadata:
+      labels:
+        name: starling-clover-daemon
+
+    spec:
+      nodeSelector:
+        starling.dev/vehicle-type: clover  
+      
+      tolerations:
+      - key: "starling.dev/type"
+        operator: "Equal"
+        value: "vehicle"
+        effect: "NoSchedule"
+
+      hostNetwork: true
+      shareProcessNamespace: true
+      
+      containers:
+      - name: starling-clover
+        image: mickeyli789/starling-clover
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /dev/gpiomem
+          name: rpi-gpio
+        - mountPath: /etc/starling/vehicle.config
+          name: vehicleconfig
+          readOnly: true
+      
+      volumes:
+      - name: rpi-gpio
+        hostPath:
+          path: /dev/gpiomem
+      - name: vehicleconfig
+        hostPath:
+          path: /etc/starling/vehicle.config
+          type: File
