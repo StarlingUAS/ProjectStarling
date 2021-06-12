@@ -31,16 +31,18 @@ echo SYSID_THISMAV $AP_SYSID >> set_sysid.parm
 
 if [ "${AP_VEHICLE}" = copter ]; then
     AP_MODEL=${AP_MODEL:-quad}
-    AP_PARAM_FILE=${AP_PARAM_FILE:-copter.parm}
 else
     AP_MODEL=${AP_MODEL:-plane}
-    AP_PARAM_FILE=${AP_PARAM_FILE:-plane.parm}
 fi
 
 AP_PARAM_PATH=${AP_PARAM_PATH:-/src/ardupilot/Tools/autotest/default_params}
 
+if [ "${AP_PARAM_FILES}" == "" ]; then
+    # Param file not set, lookup defaults
+    AP_PARAM_FILES=$(/home/root/lookup_parameter_files.py ${AP_VEHICLE} ${AP_MODEL} ${AP_PARAM_PATH}/../ )
+fi
 
 exec /src/ardupilot/build/sitl/bin/ardu${AP_VEHICLE} \
     --model=${AP_MODEL} \
     --home=$(/home/root/offset_location.py ${AP_HOME} ${AP_OFFSET_X} ${AP_OFFSET_Y}) \
-    --defaults=${AP_PARAM_PATH}/${AP_PARAM_FILE},$(pwd)/set_sysid.parm
+    --defaults=${AP_PARAM_FILES},$(pwd)/set_sysid.parm

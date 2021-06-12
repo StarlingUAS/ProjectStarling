@@ -16,7 +16,10 @@ WORKDIR /src/ardupilot
 RUN ./waf configure && ./waf ${VEHICLE}
 
 WORKDIR /home/root
-COPY entrypoint.sh offset_location.py /home/root/
+COPY entrypoint.sh \
+     offset_location.py \
+     lookup_parameter_files.py \
+    /home/root/
 
 # The VEHICLE environment variable should not be overridden as
 #  the build will not exist for it
@@ -24,7 +27,7 @@ ENV AP_VEHICLE ${VEHICLE}
 ENV AP_SYSID 1
 ENV AP_SYSID_BASE 1
 ENV AP_PARAM_PATH ""
-ENV AP_PARAM_FILE ""
+ENV AP_PARAM_FILES ""
 ENV AP_HOME 51.4235413,-2.6708488,50,250
 ENV AP_OFFSET_X 0
 ENV AP_OFFSET_Y 0

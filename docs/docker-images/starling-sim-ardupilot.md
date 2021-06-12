@@ -52,20 +52,14 @@ For `plane` images, this is set to `plane`.
 ### `AP_PARAM_PATH`
 
 The path to the folder containing the parameter file. If left blank, the in-source folder will be used:
-`Tools/autotest/default_params`. This can be changed to allow for supplying a custom parameter file through a volume
-mount.
+`Tools/autotest/default_params`. This can be changed to allow for supplying a custom set of parameter files through a
+volume mount. The final folder on the path should be `default_params`.
 
-At present, the system ID is set by appending it to the parameter file. If a custom parameter file is supplied, it
-should not contain the `SYSID_THISMAV` parameter.
+### `AP_PARAM_FILES`
 
-### `AP_PARAM_FILE`
-
-The name of the parameter file to use. For `copter` images, this is set to `copter.parm`. For `plane` images, this is
-set to `plane.parm`. This can be changed to use either one of the in-source default parameter files, or to use a custom
-parameter file.
-
-At present, the system ID is set by appending it to the parameter file. If a custom parameter file is supplied, it
-should not contain the `SYSID_THISMAV` parameter.
+Comma separated list of alternate set of parameter file paths to use. If set this overrides the default parameter files
+used. `AP_PARAM_PATH` is ignored if this is set so the absolute paths to files are needed. An additional file will be
+appended to set the system ID.
 
 ### `AP_HOME`, `AP_OFFSET_X` & `AP_OFFSET_Y`
 
