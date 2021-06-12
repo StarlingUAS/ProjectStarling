@@ -26,6 +26,7 @@ fi
 echo "AP_SYSID is set to $AP_SYSID"
 
 # Create .parm file to set the SYSID
+# This is appended onto the list of files used by the SITL
 echo SYSID_THISMAV $AP_SYSID >> set_sysid.parm
 
 if [ "${AP_VEHICLE}" = copter ]; then
@@ -38,12 +39,6 @@ fi
 
 AP_PARAM_PATH=${AP_PARAM_PATH:-/src/ardupilot/Tools/autotest/default_params}
 
-#if [ -z "$STARTPOSE" ]
-#then
-#  echo "Taking STARTPOSE from starts.txt file"
-#  STARTPOSE=$(tail -n +$SYSID /home/pilot/app/starts.txt | head -n 1)
-#fi
-#echo "LAUNCH.SH: Start location will be $STARTPOSE"
 
 exec /src/ardupilot/build/sitl/bin/ardu${AP_VEHICLE} \
     --model=${AP_MODEL} \
