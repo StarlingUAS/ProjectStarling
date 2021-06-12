@@ -1,6 +1,3 @@
-ARG VERSION=latest
-ARG REGISTRY
-
 # Perform multistage build to avoid a pile of ardupilot deps
 FROM ardupilot/ardupilot-dev-chibios as ardupilot_builder
 
@@ -20,8 +17,9 @@ COPY entrypoint.sh /home/root/
 
 # The VEHICLE environment variable should not be overridden as
 #  the build will not exist for it
-ENV VEHICLE=${VEHICLE}
-ENV AP_SYSID_BASE 0
-ENV AP_SYSID=0
+ENV VEHICLE ${VEHICLE}
+ENV AP_SYSID 1
+ENV AP_SYSID_BASE 1
+ENV PARAM_PATH ""
 
 ENTRYPOINT [ "/home/root/entrypoint.sh" ]
