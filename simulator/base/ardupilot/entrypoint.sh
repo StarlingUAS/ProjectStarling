@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ $# -ne 0 ]; then
+    exec "$@"
+fi
+
 # If AP_SYSID is "ordinal", then set AP_SYSID id to take AP_SYSID_BASE + ORDINAL from StatefulSet hostname
 # Hostname is of the form '<stateful set name>-<ordinal>'
 if [ "$AP_SYSID" == "ordinal" ]; then
@@ -21,18 +25,18 @@ else
 fi
 echo "AP_SYSID is set to $AP_SYSID"
 
-if [ "$VEHICLE" = copter ]; then
-    MODEL=${MODEL:-quad}
-    PARAM_FILE=copter.parm
+# Create .parm file to set the SYSID
+echo SYSID_THISMAV $AP_SYSID >> set_sysid.parm
+
+if [ "${AP_VEHICLE}" = copter ]; then
+    AP_MODEL=${AP_MODEL:-quad}
+    AP_PARAM_FILE=${AP_PARAM_FILE:-copter.parm}
 else
-    MODEL=${MODEL:-plane}
-    PARAM_FILE=plane.parm
+    AP_MODEL=${AP_MODEL:-plane}
+    AP_PARAM_FILE=${AP_PARAM_FILE:-plane.parm}
 fi
 
-PARAM_PATH=${PARAM_PATH:-/src/ardupilot/Tools/autotest/default_params}
-
-# Insert the SYSID into the param file
-echo SYSID_THISMAV $AP_SYSID >> ${PARAM_PATH}/${PARAM_FILE}
+AP_PARAM_PATH=${AP_PARAM_PATH:-/src/ardupilot/Tools/autotest/default_params}
 
 #if [ -z "$STARTPOSE" ]
 #then
@@ -41,6 +45,7 @@ echo SYSID_THISMAV $AP_SYSID >> ${PARAM_PATH}/${PARAM_FILE}
 #fi
 #echo "LAUNCH.SH: Start location will be $STARTPOSE"
 
-exec /src/ardupilot/build/sitl/bin/ardu${VEHICLE} \
-    --model=$MODEL \
-    --defaults=/src/ardupilot/Tools/autotest/default_params/${PARAM_FILE}.parm
+exec /src/ardupilot/build/sitl/bin/ardu${AP_VEHICLE} \
+    --model=${AP_MODEL} \
+    --home=$(/home/root/offset_location.py ${AP_HOME} ${AP_OFFSET_X} ${AP_OFFSET_Y}) \
+    --defaults=${AP_PARAM_PATH}/${AP_PARAM_FILE},$(pwd)/set_sysid.parm
