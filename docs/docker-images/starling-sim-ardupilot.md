@@ -10,7 +10,7 @@ is made to this port. Currently, the SITL's built-in simulator is used for both 
 
 Name                  | Default Value                | Description
 ----------------------|------------------------------|------------
-`AP_SYSID`            | 1                            | MAVLink system ID to be used by the SITL. Can also be set to `"ordinal"`
+`AP_SYSID`            | 1                            | MAVLink system ID to be used by the SITL. Can also be set to `"ordinal"` or `"ip"`
 `AP_SYSID_BASE`       | 1                            | Base system ID for ordinal-based generation
 `AP_VEHICLE`          | {from build arg}             | Which vehicle is being used. Either `"copter"` or `"plane"`
 `AP_MODEL`            | {null}                       | Alternate model argument. Set to __override__ default model
@@ -19,15 +19,19 @@ Name                  | Default Value                | Description
 `AP_HOME`             | 51.4235413,-2.6708488,50,250 | Start location for SITL
 `AP_OFFSET_X`         | 0                            | Start location x offset for SITL
 `AP_OFFSET_Y`         | 0                            | Start location y offset for SITL
+`AP_DISTRIBUTE`       | {null}                       | If set, automatically generate `AP_OFFSET_X` and `AP_OFFSET_Y`
 
 ### `AP_SYSID`
 
 Sets the MAVLink system ID to be used by the SITL. This must either be a value between 1 and 255 inclusive or set to
-`"ordinal"`. Other values will cause the container to exit.
+`"ordinal"` or `"ip"`. Other values will cause the container to exit.
 
 When set to `"ordinal`, the entrypoint script will attempt to retrieve a 0-indexed ordinal from the end of the
 container's hostname. The hostnames should be of the form `${HOSTNAME}-${ORDINAL}`, *e.g.* `sitl-0`, `sitl-1`, `sitl-3`.
 This behaviour supports deployment of this image as part of a Kubernetes StatefulSet.
+
+When set to `"ip"`, the entrypoint script retrieves the last octet of the container's IP address and uses that as the
+system ID. *e.g.* `172.18.0.4` will result in a system ID of `4`.
 
 At present, the system ID is set by appending it to the parameter file. If a custom parameter file is supplied, it
 should not contain the `SYSID_THISMAV` parameter.
@@ -67,6 +71,14 @@ appended to set the system ID.
 
 `AP_OFFSET_X` and `AP_OFFSET_Y` are body frame offsets in metres from `AP_HOME` for this vehicle. This allows a grid
 of vehicles to be created using a single `AP_HOME` while varying the offsets.
+
+### `AP_DISTRIBUTE`
+
+When set, `AP_DISTRIBUTE` directs the entrypoint script to automatically generate offsets. It does this based on the
+final value of the `AP_SYSID` environment variable, *i.e.* after it has been resolved into a number. This number then
+dictates the position of the vehicle within a 16 by 16 grid, with the position of `AP_HOME` at the (0,0) position. The
+grid lines are laid out at 1m separations. As a SYSID of 0 is invalid, no vehicle will be placed directly on the
+`AP_HOME` position.
 
 ## Dockerfile Build Arguments
 
