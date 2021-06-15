@@ -45,7 +45,7 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["starling-ui", "starling-controller-base", "starling-mavros"]
+    targets = ["starling-ui", "starling-controller-base", "starling-mavros", "mavp2p"]
 }
 
 target "starling-ui" {
@@ -81,6 +81,16 @@ target "starling-mavros" {
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
+target "mavp2p" {
+    context = "system/mavp2p"
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_CACHEFROM_NAME}" : "" ]
+}
 
 /* 
  * Simulator targets
