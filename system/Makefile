@@ -15,6 +15,6 @@ ui:
 	docker build -t starling-ui $(MAKEFILE_DIR)/ui
 
 mavp2p:
-	docker build -t mavp2p $(MAKEFILE_DIR)/mavp2p
+	docker build -t mavp2p $(MAKEFILE_DIR)/mavp2p --build-arg TARGETARCH=amd64
 
 .PHONY: mavros mavros_all_arch controller-base ui mavp2p all
