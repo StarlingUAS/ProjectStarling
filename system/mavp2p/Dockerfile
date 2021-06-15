@@ -9,6 +9,6 @@ ADD ${MAVP2P_REPO}/releases/download/${MAVP2P_RELEASE}/mavp2p_${MAVP2P_RELEASE}_
 
 RUN tar -xzf /usr/src/mavp2p_${MAVP2P_RELEASE}_linux_${TARGETARCH}.tar.gz -C /usr/bin
 
-COPY entrypoint.sh /usr/bin
+COPY entrypoint.sh get_sitls.sh /usr/bin/
 
 ENTRYPOINT [ "entrypoint.sh" ]
