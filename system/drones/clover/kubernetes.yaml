@@ -30,7 +30,7 @@ spec:
       
       containers:
       - name: starling-clover
-        image: mickeyli789/starling-clover
+        image: uobflightlabstarling/starling-clover
         imagePullPolicy: Always
         securityContext:
           privileged: true
