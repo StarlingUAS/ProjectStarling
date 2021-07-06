@@ -16,6 +16,15 @@ BUILDER_NAME=starlingmp_builder
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ORIGINAL_DIR="$(pwd)"
 
+if [ -v "${REGISTRY_ADDR}" ]; then
+    REGISTRY_ADDR=localhost:5000
+fi
+
+read -r -d '' CONFIG <<EOF
+[registry."${REGISTRY_ADDR}"]
+  http = true
+EOF
+
 function cleanup {
     cd $ORIGINAL_DIR
     echo "A builder ($BUILDER_NAME) and a registry ($REGISTRY_NAME) have been left running to speed up future runs"
@@ -27,6 +36,7 @@ function cleanup {
 }
 trap cleanup EXIT
 
+# Try to ping the configured REGISTRY_ADDR
 LOCAL_REGISTRY_STATUS="$(docker container inspect $REGISTRY_NAME 2> /dev/null)"
 if [ "$LOCAL_REGISTRY_STATUS" = "[]" ]; then
     # Need to start the registry
@@ -41,7 +51,7 @@ if [ $RESULT -eq 1 ]; then
     # Need to create a builder
     echo "Creating new builder instance"
     set -e
-    docker buildx create --driver-opt network=host --name $BUILDER_NAME
+    docker buildx create --driver-opt network=host --config <(echo "$CONFIG") --name $BUILDER_NAME
     set +e
 fi
 
