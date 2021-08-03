@@ -1,0 +1,8 @@
+<launch>
+
+    <node name="vicon_adapter" pkg="vicon_udp" exec="vicon_object_pose" namespace="$(env VEHICLE_NAMESPACE)">
+        <param name="target_object" value="$(env VEHICLE_NAME)"/>
+        <remap from="~/pose" to="mavros/vision_pose/pose"/>
+    </node>
+
+</launch>
