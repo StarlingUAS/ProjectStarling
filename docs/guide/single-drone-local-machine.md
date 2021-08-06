@@ -13,7 +13,7 @@ Follow these instructions for quick and easy testing of controllers on a single 
 
 ## Starting the Drone and Simulator 
 
-First check that you have installed the single prerequisit of `docker`, see [Getting Started](/guide/getting-started)
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started)
 
 In the root directory, execute `make run` (or `docker-compose up`) in a terminal. This will start the following:
 
@@ -84,7 +84,7 @@ Inside you can `source install/setup.bash` and run ROS2 commands like normal.
 
 Of course you can create your own controller from scratch. Inside your controller repository, the following is required
 1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
-2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](controllers/example_controller_python/Dockerfile) as a template. 
+2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/Dockerfile) as a template. 
 
 Your Dockerfile can be built by running the following in the directory with the Dockerfile.
 ```
