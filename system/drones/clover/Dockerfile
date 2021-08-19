@@ -7,6 +7,7 @@ RUN apt-get update \
         libboost-system-dev \
         git \
         python3-pip \
+        ros-foxy-mavros
     && rm -rf /var/lib/apt/lists/*
 
 ## Install Raspberry Pi GPIO drivers
@@ -19,6 +20,11 @@ RUN git clone --recursive https://github.com/UoBFlightLab/clover_ros2_pkgs.git \
 
 WORKDIR /ros_ws
 
+RUN rm -rf src/mavros \
+    && . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && ros2 run mavros install_geographiclib_dataset.sh \
+    && ln -s /usr/share/cmake/geographiclib/FindGeographicLib.cmake /usr/share/cmake-3.16/Modules
+
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
     && cd /ros_ws \
@@ -26,6 +32,7 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
         # mavros_msgs \
         led_msgs \
         ws281x \
+        vl53l1x \
         clover_ros2 \
     && rm -r build
 
