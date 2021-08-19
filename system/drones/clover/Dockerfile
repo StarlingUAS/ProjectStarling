@@ -7,7 +7,7 @@ RUN apt-get update \
         libboost-system-dev \
         git \
         python3-pip \
-        ros-foxy-mavros
+        ros-foxy-mavros \
     && rm -rf /var/lib/apt/lists/*
 
 ## Install Raspberry Pi GPIO drivers
