@@ -9,7 +9,7 @@ RUN apt-get update \
         python3-pip \
         geographiclib-tools\
         libgeographic-dev\
-        libgeographic19
+        libgeographic19\
     && rm -rf /var/lib/apt/lists/*
 
 ## Install Raspberry Pi GPIO drivers
