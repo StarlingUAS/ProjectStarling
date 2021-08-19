@@ -14,7 +14,7 @@ RUN pip3 install RPi.GPIO
 
 ARG START_HERE=blah
 ## My own files for clover core libraries
-RUN git clone https://github.com/UoBFlightLab/clover_ros2_pkgs.git \
+RUN git clone --recursive https://github.com/UoBFlightLab/clover_ros2_pkgs.git \
         /ros_ws/src/clover_ros2_pkgs
 
 WORKDIR /ros_ws
