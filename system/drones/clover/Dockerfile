@@ -24,7 +24,7 @@ WORKDIR /ros_ws
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && . install/setup.sh \
-    && bash src/mavros/scripts/install_geographiclib_dataset.sh \
+    && bash src/mavros/mavros/scripts/install_geographiclib_dataset.sh \
     && ln -s /usr/share/cmake/geographiclib/FindGeographicLib.cmake /usr/share/cmake-3.16/Modules
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
