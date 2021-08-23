@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="resources/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- ROS JS -->
+    <script src="resources/eventemitter2.min.js"></script>
+    <script src="resources/roslib.js"></script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="resources/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="resources/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="resources/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script defer src="ros_buttons.js"></script>
+
+    <title>Project Starling</title>
+  </head>
+  <body class="margins">
+
+    <div class="container">
+        <div class="row">
+            <h1>Project Starling Dashboard</h1>
+        </div>
+
+        <div class="row">
+            <div id="statusIndicator">
+                <p id="connecting">
+                    Connecting to rosbridge...
+                </p>
+                <p id="connected" style="color:#00D600; display:none">
+                Connected to rosbridge
+                </p>
+                <p id="error" style="color:#FF0000; display:none">
+                Error in the backend!
+                </p>
+                <p id="closed" style="display:none">
+                Connection closed.
+                </p>
+            </div>
+        </div>
+
+        <div class="row padding">
+            <div class="col-6">
+                <div class = "row">
+                    <div class="col-6">
+                        <p>This will publish to topic /mission_start</p>
+                    </div>
+                    <div class="col">
+                        <p style="display:none; color:#FF0000" id="missionStartSentMessage">SENT</p>
+                    </div>
+                </div>
+                <img id="missionStartButton" alt="Mission Start Button" src="images/go-button.png"> 
+            </div>
+            <div class="col-6">
+                <div class = "row">
+                    <div class="col-6">
+                        <p>This will publish to topic /emergency_stop</p>
+                    </div>
+                    <div class="col">
+                        <p style="display:none; color:#FF0000" id="eStopSentMessage">SENT</p>
+                    </div>
+                </div>
+                <img id="eStopButton" alt="Emergency Stop Button" src="images/stop-button.jpg">
+            </div>
+        </div>
+
+    </div>
+    
+  </body>
+</html>
