@@ -17,7 +17,7 @@ Follow these instructions for quick and easy testing of controllers on multiple 
 
 ## Drone and Simulator on a local cluster
 
-First check that you have installed the single prerequisit of `docker`, see [Getting Started](/guide/getting-started)
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started)
 ### Starting the cluster
 
 In the root directory run one of the following in a terminal
@@ -70,7 +70,7 @@ If you wish to remove the cluster and all associated software from the machine, 
 
 ### Accessing logs on the dashboard
 
-Please see the [instructions here](/details/kubernetes-dashboard)
+Please see the [instructions here](../details/kubernetes-dashboard)
 
 ### Scaling the number of drones
 
@@ -78,7 +78,7 @@ Please see the [instructions here](/details/kubernetes-dashboard)
 
 The simplest way to scale the number of drones is via the dashboard as shown below:
 
-![starling-scale](/img/starling-scale-drones.gif)
+![starling-scale](../img/starling-scale-drones.gif)
 
 The steps are as follows:
 
