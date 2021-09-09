@@ -17,20 +17,15 @@ declare -a CTRS=(
     "uobflightlabstarling/starling-controller-base"
     "uobflightlabstarling/starling-ardupilot-sitl"
 )
+cmd='docker images --format {{.Repository}}:{{.Tag}}'
+IFS=$'\n' read -r -d '' -a CTRS < <(  $cmd && printf '\0' )
+
+echo "Updating Local Images"
 
 for i in "${CTRS[@]}"
 do
-    for j in "${TAGS[@]}"
-    do
-        name="$i:$j"
-        echo ">>>>>>  Checking $name"
-        if [[ "$(docker images -q $name 2> /dev/null)" == "" ]]; then
-        # do something
-            echo "Image Exists Locally, attempting to pull"
-            docker pull $name
-        else
-            echo "Image Doesn't Exist Locally, skipping"
-        fi
-    done
+    echo ">>>>>>  Checking $i"
+    ! docker pull $i
 done
+
 echo "Completed Update"
