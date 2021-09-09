@@ -16,7 +16,7 @@ Follow these instructions for quick and easy testing of controllers on a single 
 
 ## Drone and Simulator on a local cluster
 
-First check that you have installed the single prerequisit of `docker`, see [Getting Started](/guide/getting-started)
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started)
 ### Starting the cluster
 
 In the root directory run one of the following in a terminal
@@ -68,7 +68,7 @@ If you wish to remove the cluster and all associated software from the machine, 
 
 ### Accessing logs on the dashboard
 
-Please see the [instructions here](/details/kubernetes-dashboard)
+Please see the [instructions here](../details/kubernetes-dashboard)
 
 ## Controlling the Drones
 ### Offboard Control

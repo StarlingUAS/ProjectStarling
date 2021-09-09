@@ -12,6 +12,8 @@ This systems provides a number of key features.
 - Built in simulation stack based on Gazebo
 - Quick transition from simulation to flying controllers on real drones.
 
+![Simple Architecture](../img/ArchSimple.jpg)
+
 ## Documentation
 
 Please refer to the documentation at [uobflightlab.github.io/ProjectStarling](https://uobflightlab.github.io/ProjectStarling) for detailed instructions and explanations of how to use this system.

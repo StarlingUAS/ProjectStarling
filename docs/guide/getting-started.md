@@ -75,15 +75,15 @@ A key idea is the fact that the controller you develop, whether onboard or offbo
 For *single drone* applications, there are 3 steps to the development of a controller running onboard (on the 'drone' itself) or offboard (on a separate machine):
 
 1. **Step 1:** *Single Drone testing on local machine using Docker only*
-    - Follow the following [user guide](/guide/single-drone-local-machine)
+    - Follow the following [user guide](../guide/single-drone-local-machine)
     - Simplest deployment method and the quickest way to get a simulation (gazebo) and drone (px4, mavros) instance running. 
     - Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.
 2. **Step 2:** *Single Drone testing on local cluster*
-    - Follow the following [user guide](/guide/kube-single-drone-local-machine)
+    - Follow the following [user guide](../guide/kube-single-drone-local-machine)
     - Once you have your controller mostly working and debugged, the next step is to test it within the network and system architecture used when flying real drones.
     - This will require learning a little bit about the cluster architecture and how Starling works under the hood.
 3. **Step 3:** *Single Drone flying at the Robotics Laboratory*
-    - Follow the following [user guide](/guide/single-drone-drones)
+    - Follow the following [user guide](../guide/single-drone-drones)
     - Detailing how to run your controller on real drones at the Bristol Robotics Laboratory
 
 ### Multiple Drone Applications
@@ -91,16 +91,16 @@ For *single drone* applications, there are 3 steps to the development of a contr
 For *multiple drone* applications, there are also 3 steps to the development of a centralised or decentralised, onboard or offboard controller.
 
 1. **Step 1:** *Single Drone testing on local machine using Docker only*
-    - Follow the following [user guide](/guide/single-drone-local-machine)
+    - Follow the following [user guide](../guide/single-drone-local-machine)
     - Simplest deployment method and the quickest way to get a single simulation (gazebo) and drone (px4, mavros) instance running. 
     - Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.
     - Can be used to quickly protype controllers before testing with multiple vehicles. 
 2. **Step 2:** *Multiple Drone testing on local cluster*
-    - Follow the following [user guide](/guide/multiple-drone-local-machine.md)
+    - Follow the following [user guide](../guide/multiple-drone-local-machine.md)
     - The cluster facilitates the multi-agent capability of starling.
     - The guide takes you through the basic concepts required for running multi-agent applications
 3. **Step 3:** *Multiple Drones flying at the Robotics Laboratory*
-    - Follow the following [user guide](/guide/multiple-drone-drones)
+    - Follow the following [user guide](../controllers/example_controller_python/Dockerfileguide/multiple-drone-drones)
     - Detailing how to run your controller on real drones at the Bristol Robotics Laboratory
 
 
