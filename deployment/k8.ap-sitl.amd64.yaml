@@ -6,7 +6,7 @@ metadata:
     app: starling
     platform: sitl
 spec:
-  selector: 
+  selector:
     matchLabels:
       app: starling-ap-sitl
   template:
@@ -19,7 +19,7 @@ spec:
       containers:
       - name: starling-ardupilot-sitl
         image: uobflightlabstarling/starling-ardupilot-sitl
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: SYSID
           valueFrom:
@@ -33,7 +33,7 @@ spec:
         - containerPort: 5763
       - name: starling-mavros
         image: uobflightlabstarling/starling-mavros:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: MAVROS_FCU_URL
           value: tcp://127.0.0.1:5762

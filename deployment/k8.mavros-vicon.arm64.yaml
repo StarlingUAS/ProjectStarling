@@ -7,13 +7,13 @@ metadata:
     platform: pixhawk
 
 spec:
-  selector: 
+  selector:
     matchLabels:
       app: starling
   template:
     metadata:
       name: starling-drone-vicon
-      labels: 
+      labels:
         app: starling
         platform: pixhawk
 
@@ -30,7 +30,7 @@ spec:
 
         - name: starling-mavros
           image: uobflightlabstarling/starling-mavros:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           securityContext:
             privileged: true
           env:
@@ -51,7 +51,7 @@ spec:
 
         - name: starling-vicon
           image: uobflightlabstarling/starling-vicon:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
           - containerPort: 51001
             protocol: UDP
