@@ -3,7 +3,7 @@
 Builds a container that serves a web-based UI for the system. Uses
 RobotWebTools' `ros2-web-bridge` and `rclnodejs` internally.
 
-![starling-ui](/img/starling-ui.png)
+![starling-ui](../img/starling-ui.png)
 
 ## Contents
 [TOC]
