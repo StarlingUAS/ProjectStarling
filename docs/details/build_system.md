@@ -1,4 +1,20 @@
-# The Build System
+# Project Starling Development and Build System
+
+[TOC]
+
+## Development Workflow
+
+As this project gets larger and releases get pushed out, the standard single master branch is not longer viable. Therefore we start using a more scalable (and safer) method of project management (read [this article](https://nvie.com/posts/a-successful-git-branching-model/) for more info).
+
+* **master** branch is reserved solely for core releases and should always remain stable. Master should only be updated and modified via pull requests, and each pull request should correspond to a new tagged release. A release will then trigger the continuous integration github action (see below) to update all of the docker images.
+* **dev** branch is for general development and should always remain ahead of the **master** branch. All feature branches should merge into **dev** when verified. When enough features have been added, **dev** can raise a PR to merge into master. For testing **dev** releases can be created to trigger dev builds on ":nightly" tags.
+
+![development method](../img/git-modelx.png)
+
+
+## Building
+
+### Building locally and for ARM using buildx bake
 
 At present the build system is based on Docker's `buildx bake`, using a `bake.hcl` file to configure the build. The
 `docker-bake.hcl` file contains definitions for each image to be built and which platforms they are to be built for.
@@ -43,13 +59,18 @@ Finally, there are some further options to control caching. The main options are
 and pushed to a local registry or to allow local builds to be used to populate the online caches. When they are blank,
 no caches will be used. This allows for one-directional caching, _e.g._ refreshing the online caches from local builds.
 Two further caching options are available: `BAKE_CACHETO_REGISTRY` and `BAKE_CACHEFROM_REGISTRY`. These control the
-destination and source registries for the cache images. By default, they will be blank, equivalent to using Docker Hub. 
+destination and source registries for the cache images. By default, they will be blank, equivalent to using Docker Hub.
 
-## The GitHub Actions Workflows
+
+### The GitHub Actions Workflows
+
+#### Releases
 
 When a tag of the form `vX.Y.Z` is pushed to the repo, a workflow will be started. This workflow builds all the images
-from the `bake.hcl` script, tags them with both the version tag and `:latest`, and pushes them to Docker Hub. A similar
-workflow exists for development images. A tag of the form `vX.Y.Z-dev` will cause the images to be built and tagged with
+from the `bake.hcl` script, tags them with both the version tag and `:latest`, and pushes them to Docker Hub.
+
+#### Development Releases
+A similar workflow exists for development images.  A tag of the form `vX.Y.Z-dev` will cause the images to be built and tagged with
 both the tag name and `:nightly`, before being pushed to DockerHub. These additional tags are controlled by setting the
 `BAKE_RELEASENAME` environment variable.
 

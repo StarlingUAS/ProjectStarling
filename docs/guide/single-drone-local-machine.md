@@ -13,9 +13,12 @@ Follow these instructions for quick and easy testing of controllers on a single 
 
 ## Starting the Drone and Simulator
 
-First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started)
+First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
 
-In the root directory, execute `make run` (or `docker-compose up`) in a terminal. This will start the following:
+In the root directory:
+
+* First download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated)
+* Then execute `make run` (or `docker-compose up`) in a terminal. This will start the following:
 
 1. Gazebo simulation enviornment running 1 Iris quadcopter model
 2. A SITL (Software In The Loop) instance running the PX4 autopilot.
@@ -23,6 +26,8 @@ In the root directory, execute `make run` (or `docker-compose up`) in a terminal
 4. A simple UI with a go and estop button.
 
 > **Note:** this might take a while on first run as downloads are required.
+
+> **Note:** Use ctrl+c to stop the process when you have finished.
 
 The User Interfaces are available in the following locations:
 
@@ -84,7 +89,7 @@ Inside you can `source install/setup.bash` and run ROS2 commands like normal.
 
 Of course you can create your own controller from scratch. Inside your controller repository, the following is required
 1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
-2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/Dockerfile) as a template. 
+2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/Dockerfile) as a template.
 
 
 Your Dockerfile can be built by running the following in the directory with the Dockerfile.

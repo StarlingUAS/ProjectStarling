@@ -27,7 +27,7 @@ spec:
         resources:
           requests:
             cpu: "100m"
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         args: [ "ros2", "launch", "launch/iris.launch.xml" , sim_only:=true]
         ports:
         - containerPort: 8080
@@ -62,4 +62,3 @@ spec:
           protocol: UDP
         - containerPort: 10317
           protocol: UDP
- 

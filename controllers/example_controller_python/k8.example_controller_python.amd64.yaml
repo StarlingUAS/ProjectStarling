@@ -5,7 +5,7 @@
 # metadata:
 #   name: s-example-controller-python # Unique name of deployment
 #   labels: # labels to attach to this specific deployment
-#     app: starling 
+#     app: starling
 #     function: controller
 # spec:
 #   selector: # specifies the labels of the pods which this deployment manages
@@ -48,7 +48,7 @@ spec:
   containers: # Add your containers here ot the pod
   - name: s-example-controller-python # Name of container, must be unique.
     image: uobflightlabstarling/example_controller_python # Name of the docker image of your container
-    imagePullPolicy: IfNotPresent # Required for local containers
+    imagePullPolicy: Always # Use Always to ensure it is always pulling the most recent version of a repository container
     # env:
     # - name: TARGET_NAME
     #   value: 'starling_px4_sitl_0'
