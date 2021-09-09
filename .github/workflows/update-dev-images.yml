@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -29,9 +29,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -64,6 +64,34 @@ jobs:
           BAKE_CACHETO_NAME: cache-dev
           BAKE_CACHEFROM_NAME: cache-dev
 
+      - name: Build and push (starling-simple-offboard)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-simple-offboard
+          push: true
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHETO_NAME: cache
+          BAKE_CACHEFROM_NAME: cache
+
+      - name: Build and push (starling-allocator)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-allocator
+          push: true
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHETO_NAME: cache
+          BAKE_CACHEFROM_NAME: cache
+
   #
   # Call bake for each simulator image in sequence
   #
@@ -72,7 +100,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -80,9 +108,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -137,7 +165,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -145,9 +173,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -174,7 +202,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -187,9 +215,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -216,7 +244,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -229,9 +257,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -258,7 +286,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -271,9 +299,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
