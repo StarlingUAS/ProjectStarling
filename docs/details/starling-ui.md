@@ -28,11 +28,11 @@ NB: Port 3000 is exposed for the webserver, while port 9090 is exposed for the
 websocket.
 
 Once the container is running, navigate to:
-[`http://127.0.0.1:3000/html/main.html`](http://127.0.0.1:3000/html/main.html)
+[`http://127.0.0.1:3000`](http://127.0.0.1:3000)
 
 In a connected ros2 instance, the command below can be run to see the output.
 Note, if the topic has not yet been published to, the command will exit
-immediately complaining that it could not determine the type. 
+immediately complaining that it could not determine the type.
 fixes: either press the E-STOP button to publish an initial message or supply
 the type: `std_msgs/String` as a further argument.
 
@@ -42,7 +42,7 @@ ros2 topic echo /emergency_stop
 ```
 
 > **NOTE**:
-> Note that when running locally using docker, port 9090 is required for ros web bridge traffic. 
+> Note that when running locally using docker, port 9090 is required for ros web bridge traffic.
 
 ### Development
 
@@ -50,7 +50,7 @@ To start the image with development folder bound into the container, in this fol
 ```
 docker run -it --rm --network projectstarling_default -v "$(pwd)"/html:/ros_ws/src/ros2-web-bridge/examples/html/ -p 3000:3000 -p 9090:9090 starling-ui
 ```
-This will bind mount the html folder into the wanted directory. 
+This will bind mount the html folder into the wanted directory.
 
 This will allow local changes made to the web files to be reflected by refreshing the page brings.
 
@@ -61,7 +61,7 @@ The UI can also be run within the kubernetes deployment and network. To start as
 sudo k3s kubectl apply -f kubernetes.yaml
 ```
 
-This will both start the `uobflightlabstarling/starling-ui` image, and a kubernetes service which exposes the website to outside of the cluster. The web page is then located at [https://localhost:3000/html/main.html](https://localhost:3000/html/main.html). 
+This will both start the `uobflightlabstarling/starling-ui` image, and a kubernetes service which exposes the website to outside of the cluster. The web page is then located at [https://localhost:3000](https://localhost:3000).
 
 > **NOTE**:
 > Localhost port 9090 is also used for `ros_bridge` traffic
