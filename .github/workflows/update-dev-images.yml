@@ -66,34 +66,6 @@ jobs:
           BAKE_CACHETO_NAME: cache-dev
           BAKE_CACHEFROM_NAME: cache-dev
 
-      - name: Build and push (starling-simple-offboard)
-        uses: docker/bake-action@master
-        with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-simple-offboard
-          push: true
-        env:
-          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHETO_NAME: cache
-          BAKE_CACHEFROM_NAME: cache
-
-      - name: Build and push (starling-allocator)
-        uses: docker/bake-action@master
-        with:
-          files: |
-            ./buildtools/docker-bake.hcl
-          targets: |
-            starling-allocator
-          push: true
-        env:
-          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
-          BAKE_RELEASENAME: latest
-          BAKE_CACHETO_NAME: cache
-          BAKE_CACHEFROM_NAME: cache
-
   #
   # Call bake for each simulator image in sequence
   #
