@@ -11,21 +11,64 @@ Follow these instructions for quick and easy testing of controllers on a single 
 ## Contents
 [TOC]
 
-## Starting the Drone and Simulator
+## Starting the Drone and Simulator (Simple Version)
+
+There are two basic example starting confgurations, this 'Simple' version starts the bare minimum with the expectation of it being used through mavlink. There is also a 'Full' version with instructions below this section which starts a system capable of flying higher level paths and trajectories submitted through a GUI or ROS.
 
 First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
 
-In the root directory:
+In the root directory first download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated). Then in a terminal, execute:
 
-* First download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated)
-* Then execute `make run` (or `docker-compose up`) in a terminal. This will start the following:
+```
+docker-compose -f docker-compose-simple.yml up
+```
+
+> **Note**: If on Windows using with a native windows GCS such as Mission Planner, you may need to use `docker-compose -f docker-compose-simple.tcp.yml up`
+
+This will start the following:
 
 1. Gazebo simulation enviornment running 1 Iris quadcopter model
 2. A SITL (Software In The Loop) instance running the PX4 autopilot.
 3. A Mavros node connected to the SITL instance
 4. A simple UI with a go and estop button.
 
-> **Note:** this might take a while on first run as downloads are required.
+> **Note:** this might take a while (can be up to 30 min or an hour depending on internet) on first run as downloads are required.
+
+> **Note:** Use ctrl+c to stop the process when you have finished.
+
+The User Interfaces are available in the following locations:
+
+- Go to [`http://localhost:8080`](http://localhost:8080) in a browser to (hopefully) see the gazebo simulator.
+- Go to [`http://localhost:3000`](http://localhost:3000) in a browser to see the starling user interface containing go/stop buttons.
+
+> **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address.
+
+> **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.
+
+## Starting the Drone and Simulator (Full Version)
+
+This confugration starts a slightly more complex system which is capable of automatic higher level navigation and trajectory following. Ensure that the 'simple' version has been stopped before using this one.
+
+Again, first check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
+
+In the root directory first download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated). Then in a terminal, execute:
+
+```
+docker-compose up
+```
+
+> **Note**: If on Windows using with a native windows GCS such as Mission Planner, you may need to use `docker-compose -f docker-compose.tcp.yml up`
+
+This will start the following:
+
+1. Gazebo simulation enviornment running 1 Iris quadcopter model
+2. A SITL (Software In The Loop) instance running the PX4 autopilot.
+3. A Mavros node connected to the SITL instance
+4. A Simple Offboard PX4 controller which provides higher level navigation actions
+5. A UI with a go, abort and estop button, as well as a trajectory uploading utility
+6. A Allocation handler which distibutes uploaded trajectories to detected vehicles
+
+> **Note:** this might take a while (can be up to 30 min or an hour depending on internet) on first run as downloads are required.
 
 > **Note:** Use ctrl+c to stop the process when you have finished.
 
@@ -39,10 +82,12 @@ The User Interfaces are available in the following locations:
 > **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.
 
 ## Offboard Control
-There are two supported methods for offboard control of either the SITL or real drones.
+There are four supported methods for offboard control of either the SITL or real drones.
 
 1. Control drone directly via Mavlink, by Ground Control Station (GCS) or other Mavlink compatible method (e.g. Dronekit).
-2. Control drone via ROS2 node
+2. Control drone via Custom ROS2 node
+3. Control drone via Simple Offboard ROS2 node
+4. Uploading a trajectory via the GUI on [`http://localhost:3000`](http://localhost:3000)
 
 ### 1. Connecting a Ground Control Station via Mavlink
 
@@ -59,13 +104,30 @@ This is a quick an easy way to control the SITL instance via Mavlink.
 An example offboard ROS2 controller can then be conncted to SITL by running the following in a separate terminal:
 
 ```bash
+docker pull uobflightlabstarling/example_controller_python # Download the latest container
 docker run -it --rm --network projectstarling_default uobflightlabstarling/example_controller_python
 ```
-This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `make run` or `docker-compose`. The default network name is `<foldername>_default`.
+This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `docker-compose`. The default network name is `<foldername>_default`.
 
 > **Note:** The controller may complain that it cannot find the drone. Double check that the name of the root folder matches the one passed to `--network`.
 
 When run, the example will confirm in the terminal that it has connected and that it is waiting for mission start. To start the mission, press the green go button in the [starling user interface](http://localhost:3000) which will send a message over `/mission_start` topic. A confirmation message should appear in the terminal, and the drone will arm (drone propellors spinning up) and takeoff. It will fly in circles for 10 seconds before landing and disarming.
+
+### 3. Using ROS2 Simple Offboard Controller Node
+
+If running the 'Full' version instructions above, this node will already be running. If not runing, the container can be run by running the following in a separate terminal:
+
+```bash
+docker pull uobflightlabstarling/starling_simple_offboard # Download the latest container
+docker run -it --rm --network projectstarling_default -e VEHICLE_MAVLINK_SYSID=1 uobflightlabstarling/starling_simple_offboard
+```
+
+This will download and run the simple offboard controller node. This node provides a number of [ROS2 Services](https://docs.ros.org/en/foxy/Tutorials/Services/Understanding-ROS2-Services.html) which can be called to interact with the connected drone. The easiest way to interact with this controller is by uploading a trajectory for the integrated trajectory follower to handle (see next point). See the [repository](https://github.com/mhl787156/starling_simple_offboard) for further details.
+
+### 4. Uploading a Trajectory
+
+If running the 'Full' version instructions above, the GUI should be available on [`http://localhost:3000`](http://localhost:3000). Navigating to  [`http://localhost:3000/load_trajectories`](http://localhost:3000/load_trajectories) will give you a page where you can upload trajectories in csv or excel format. The trajectories can be position, velocity, attitude or attitude rates. Click on the 'Help' button for more information on trajectory format.
+
 ## Onboard Control
 {% include 'snippets/onboard-control.md' %}
 
