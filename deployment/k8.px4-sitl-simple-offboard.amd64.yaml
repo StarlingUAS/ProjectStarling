@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: starling-px4-sitl
+  labels:
+    app: starling
+    platform: sitl
+spec:
+  serviceName: starling-px4-sitl-srv
+  selector:
+    matchLabels:
+      app: starling
+      firmware: px4
+      platform: sitl
+  template:
+    metadata:
+      labels:
+        app: starling
+        firmware: px4
+        platform: sitl
+    spec:
+      hostNetwork: true
+      terminationGracePeriodSeconds: 10
+      shareProcessNamespace: true
+      initContainers:
+      - name: gazebo-spawn-iris
+        image: uobflightlabstarling/starling-sim-iris:latest
+        imagePullPolicy: IfNotPresent
+        args: [ "./spawn_iris.sh" ]
+        env:
+        - name: PX4_INSTANCE
+          value: "ordinal"
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: IGNORE_FAILURE
+          value: "true"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      containers:
+      - name: starling-px4-sitl
+        image: uobflightlabstarling/starling-sim-px4-sitl:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PX4_SIM_HOST
+          value: "localhost"
+        - name: PX4_INSTANCE
+          value: "ordinal"
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      - name: starling-mavros
+        image: uobflightlabstarling/starling-mavros:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: VEHICLE_NAMESPACE # Optional but unique
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name # Pod name
+        - name: MAVROS_TGT_FIRMWARE
+          value: "px4"
+        - name: MAVROS_TGT_SYSTEM
+          value: "auto"
+        - name: PX4_INSTANCE_BASE
+          value: "200"
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      - name: starling-simple-offboard
+        image: uobflightlabstarling/starling-simple-offboard:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: VEHICLE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name # Pod name
+
+      nodeSelector:
+        kubernetes.io/arch: "amd64"

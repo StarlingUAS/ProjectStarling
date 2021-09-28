@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starling-ui
+spec:
+  selector:
+    matchLabels:
+      app: starling-ui
+  template:
+    metadata:
+      labels:
+        app: starling-ui
+    spec:
+      hostNetwork: true
+      shareProcessNamespace: true
+      containers:
+      - name: starling-ui
+        image: mickeyli789/starling-ui-dashly:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        - containerPort: 9090
