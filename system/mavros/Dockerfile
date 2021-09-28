@@ -5,6 +5,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-${ROS1_DISTRO}-mavros \
       ros-${ROS1_DISTRO}-mavros-extras \
+      ros-${ROS2_DISTRO}-mavros-msgs \
     && rm -rf /var/lib/apt/lists/
 
 # Part of MAVROS setup
@@ -13,25 +14,34 @@ RUN /opt/ros/${ROS1_DISTRO}/lib/mavros/install_geographiclib_datasets.sh
 # In order for the bridge to bridge all mavros topics, we need to build a
 #  ROS2 equivalent of mavros_msgs
 # Clone the repo
-RUN git clone -b mavros2 https://github.com/rob-clarke/mavros /ros_ws/src/mavros
-# Fetch dependencies
+# RUN git clone -b mavros2 https://github.com/rob-clarke/mavros /ros_ws/src/mavros
+# # Fetch dependencies
+# RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
+#     && apt-get update \
+#     && rosdep install --from-paths /ros_ws/src/mavros/mavros_msgs \
+#     && rm -rf /var/lib/apt/lists/
+# # Build the package
+# RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
+#     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+#     && cd /ros_ws \
+#     && colcon build --packages-select mavros_msgs \
+#     && rm -r build
+# # Build the package
 RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-    && apt-get update \
-    && rosdep install --from-paths /ros_ws/src/mavros/mavros_msgs \
-    && rm -rf /var/lib/apt/lists/
-# Build the package
-RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-    && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+    && mkdir /ros_ws \
     && cd /ros_ws \
-    && colcon build --packages-select mavros_msgs \
+    && colcon build \
     && rm -r build
 
 # We then need to build the bridge from source
 #  (So we probably don't need to use the ros1-bridge image...)
 # Remove the preinstalled version
 RUN apt-get remove -y ros-foxy-ros1-bridge
-# Get the source
-RUN git clone -b foxy https://github.com/ros2/ros1_bridge /bridge_ws/src/ros1_bridge
+# Get the source (use specific commit hash instead of foxy due to this issue when building mavros: https://github.com/ros2/ros1_bridge/issues/313)
+RUN git clone -b foxy https://github.com/ros2/ros1_bridge /bridge_ws/src/ros1_bridge \
+    && cd /bridge_ws/src/ros1_bridge \
+    && git checkout 82d1f4588761d6e54eeaca821398137be0e475f1
+
 # Build with ROS2 mavros_msgs on path
 RUN cd /bridge_ws \
     && . /opt/ros/${ROS1_DISTRO}/setup.sh \
@@ -53,7 +63,7 @@ COPY mavros_setup.sh .
 COPY mavros.launch /ros_ws/launch/mavros.launch
 
 
-# Add custom ROS DDS configuration (force UDP always) 
+# Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
