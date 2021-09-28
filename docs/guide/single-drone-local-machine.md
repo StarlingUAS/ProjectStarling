@@ -129,11 +129,20 @@ This will download and run the simple offboard controller node. This node provid
 If running the 'Full' version instructions above, the GUI should be available on [`http://localhost:3000`](http://localhost:3000). Navigating to  [`http://localhost:3000/load_trajectories`](http://localhost:3000/load_trajectories) will give you a page where you can upload trajectories in csv or excel format. The trajectories can be position, velocity, attitude or attitude rates. Click on the 'Help' button for more information on trajectory format.
 
 ## Onboard Control
-{% include 'snippets/onboard-control.md' %}
+In this instance there is only an abstract difference between onboard and offboard control since all controllers are running on the same machine as the simulated vehicle.
 
 ## Implementing a Controller
 ### Modifying the example controller
-In the [controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package can be built by running `make` in the controllers directory. This will use colcon build to build the node and output a local image named `example_controller_python`. This local image can be run as follows:
+In the [controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package must first be built:
+```bash
+cd controllers
+make example_controller_python
+```
+
+>**Note** Alternatively you can run the build manually through `docker build -t example_controller_python example_controller_python/` (i.e. point to the folder containing the example_controller_python dockerfile)
+
+This will use colcon build to build the node and output a local image named `example_controller_python`. This local image can be run as follows:
+
 ```bash
 docker run -it --name example_controller --rm --network projectstarling_default example_controller_python
 ```
@@ -155,10 +164,11 @@ Of course you can create your own controller from scratch. Inside your controlle
 
 
 Your Dockerfile can be built by running the following in the directory with the Dockerfile.
-```
-docker build -t <name of your controller> .
+```bash
+docker build -t <name of your controller> <folder containing the dockerfile>
+# e.g. docker build -t my_new_controller .
 ```
 
-Your container can then be run as above.
+Your container can then be run as above using `docker run.
 
 ## Troubleshooting/ FAQs
