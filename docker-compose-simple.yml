@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  simhost: # Must be called simhost
+  simhost:
     image: uobflightlabstarling/starling-sim-iris:latest
     ports:
       - "8080:8080"
@@ -20,19 +20,9 @@ services:
     environment:
       - "MAVROS_TGT_SYSTEM=1"
       - "MAVROS_FCU_IP=0.0.0.0"
-      - "MAVROS_GCS_URL=tcp-l://0.0.0.0:5760"
-    ports:
-      - "5760:5760"
 
   ui:
-    image: mickeyli789/starling-ui-dashly:latest
+    image: uobflightlabstarling/starling-ui:latest
     ports:
       - "3000:3000"
-
-  allocator:
-    image: uobflightlabstarling/starling-allocator:latest
-
-  simple_offboard:
-    image: uobflightlabstarling/starling-simple-offboard:latest
-    environment:
-      - "VEHICLE_MAVLINK_SYSID=1"
+      - "9090:9090"
