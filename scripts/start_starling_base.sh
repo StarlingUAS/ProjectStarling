@@ -43,17 +43,18 @@ fi
 
 SCRIPTSDIR="${BASH_SOURCE%/*}"
 SYSTEMDIR="$SCRIPTSDIR/../system"
+DEPLOYMENTDIR="$SCRIPTSDIR/../deployment"
 
 # Start dashboard
 ./$SCRIPTSDIR/start_dashboard.sh
 
 # Start starling UI
-kubectl apply -f "$SYSTEMDIR/ui/kubernetes.yaml"
+kubectl apply -f "$DEPLOYMENTDIR/k8.starling-ui-dashly.yaml"
 
 if [[ $OPENWEBPAGE ]]
 then
-    echo "Opening Starling UI to http://localhost:3000/html/main.html"
-    xdg-open http://localhost:3000/html/main.html
+    echo "Opening Starling UI to http://localhost:3000"
+    xdg-open http://localhost:3000
 
     echo "Opening Dashboard to https://localhost:31771"
     xdg-open https://localhost:31771
