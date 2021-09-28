@@ -11,18 +11,12 @@ RUN apt-get update \
     && apt-get install -y ros-${ROS_DISTRO}-mavros-msgs \
     && rm -rf /var/lib/apt/lists/*
 
-# Fetch dependencies
-# RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
-#     && apt-get update \
-#     && rosdep install --from-paths /ros_ws/src/mavros/mavros_msgs \
-#     && rm -rf /var/lib/apt/lists/
-
 # # Build the package
-# RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
-#     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
-#     && cd /ros_ws \
-#     && colcon build --packages-select mavros_msgs \
-#     && rm -r build
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && mkdir /ros_ws \
+    && cd /ros_ws \
+    && colcon build \
+    && rm -r build
 
 COPY base_env_setup.sh /ros.env.d/controller_base/setup.bash
 
