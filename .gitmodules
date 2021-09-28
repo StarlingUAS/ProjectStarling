@@ -1,0 +1,9 @@
+[submodule "system/vicon/vicon_udp"]
+	path = system/vicon/vicon_udp
+	url = ../vicon_udp.git
+[submodule "controllers/starling_simple_offboard"]
+	path = controllers/starling_simple_offboard
+	url = https://github.com/mhl787156/starling_simple_offboard
+[submodule "controllers/starling_allocator"]
+	path = controllers/starling_allocator
+	url = https://github.com/mhl787156/starling_allocator

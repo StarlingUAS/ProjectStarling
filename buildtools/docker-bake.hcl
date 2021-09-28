@@ -34,7 +34,7 @@ group "stage1" {
 }
 
 group "stage2" {
-    targets = ["simulator-px4", "example_python_controller"]    
+    targets = ["simulator-px4", "controllers"]
 }
 
 group "stage3" {
@@ -45,7 +45,7 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["starling-ui", "starling-controller-base", "starling-mavros"]
+    targets = ["starling-ui", "starling-controller-base", "starling-mavros", "starling-vicon"]
 }
 
 target "starling-ui" {
@@ -81,8 +81,19 @@ target "starling-mavros" {
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
+target "starling-vicon" {
+    context = "system/vicon"
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHEFROM_NAME}" : "" ]
+}
 
-/* 
+
+/*
  * Simulator targets
  */
 // Build this target before simulator-px4
@@ -113,7 +124,7 @@ group "simulator-px4" {
 // This target depends on starling-sim-base-core
 target "starling-sim-base-px4" {
     context = "simulator/base/px4"
-    args = { 
+    args = {
         "VERSION": "${BAKE_VERSION}",
         "REGISTRY": "${BAKE_REGISTRY}"
         }
@@ -141,10 +152,16 @@ target "starling-sim-px4-sitl" {
 /*
  * Controller targets
  */
+// Build this target before simulator-px4
+group "controllers" {
+    targets = [
+        "example_python_controller",
+        ]
+}
 // This target depends on starling-controller-base
 target "example_python_controller" {
     context = "controllers/example_controller_python"
-    args = { 
+    args = {
         "VERSION": "${BAKE_VERSION}",
         "REGISTRY": "${BAKE_REGISTRY}"
         }
@@ -163,7 +180,7 @@ target "example_python_controller" {
 // This target depends on starling-sim-base-px4
 target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
-    args = { 
+    args = {
         "VERSION": "${BAKE_VERSION}",
         "REGISTRY": "${BAKE_REGISTRY}"
         }

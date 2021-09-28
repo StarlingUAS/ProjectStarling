@@ -1,17 +1,23 @@
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+BAKE_SCRIPT:=$(MAKEFILE_DIR)/../buildtools/docker-bake.hcl
+BUILDX_HOST_PLATFORM:=$(shell docker buildx inspect default | sed -nE 's/^Platforms: ([^,]*),.*$$/\1/p')
+BAKE:=cd $(MAKEFILE_DIR)/.. && docker buildx bake --builder default --load --set *.platform=$(BUILDX_HOST_PLATFORM) -f $(BAKE_SCRIPT)
 
-all: mavros controller-base
+all: controller-base mavros ui vicon
 
 controller-base:
-	docker build -t starling-controller-base $(MAKEFILE_DIR)/controller-base
+	$(BAKE) starling-controller-base
 
 mavros:
-	docker build -t starling-mavros $(MAKEFILE_DIR)/mavros
+	$(BAKE) starling-mavros
 
 mavros_all_arch: 
-	docker buildx build --push --platform linux/arm64,linux/amd64 --tag uobflightlabstarling/starling-mavros:latest $(MAKEFILE_DIR)/mavros 
+	cd $(MAKEFILE_DIR)/.. && docker buildx bake --builder default --load -f $(BAKE_SCRIPT)
 
 ui:
-	docker build -t starling-ui $(MAKEFILE_DIR)/ui
+	$(BAKE) starling-ui
 
-.PHONY: mavros mavros_all_arch controller-base ui all
+vicon:
+	$(BAKE) starling-vicon
+
+.PHONY: mavros mavros_all_arch controller-base ui vicon all

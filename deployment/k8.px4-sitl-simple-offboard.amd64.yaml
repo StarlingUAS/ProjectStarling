@@ -25,7 +25,7 @@ spec:
       initContainers:
       - name: gazebo-spawn-iris
         image: uobflightlabstarling/starling-sim-iris:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: [ "./spawn_iris.sh" ]
         env:
         - name: PX4_INSTANCE
@@ -41,7 +41,7 @@ spec:
       containers:
       - name: starling-px4-sitl
         image: uobflightlabstarling/starling-sim-px4-sitl:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: PX4_SIM_HOST
           value: "localhost"
@@ -55,7 +55,7 @@ spec:
               fieldPath: metadata.name
       - name: starling-mavros
         image: uobflightlabstarling/starling-mavros:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: VEHICLE_NAMESPACE # Optional but unique
           valueFrom:
@@ -71,5 +71,14 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+      - name: starling-simple-offboard
+        image: uobflightlabstarling/starling-simple-offboard:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: VEHICLE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name # Pod name
+
       nodeSelector:
         kubernetes.io/arch: "amd64"
