@@ -75,6 +75,7 @@ A key idea is the fact that the controller you develop, whether onboard or offbo
 For *single drone* applications, there are 3 steps to the development of a controller running onboard (on the 'drone' itself) or offboard (on a separate machine):
 
 1. **Step 1:** *Single Drone testing on local machine using Docker only*
+
     - Follow the following [user guide](../single-drone-local-machine)
     - Simplest deployment method and the quickest way to get a simulation (gazebo) and drone (px4, mavros) instance running.
     - Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.
@@ -93,6 +94,7 @@ For *multiple drone* applications, there are also 3 steps to the development of 
 1. **Step 1:** *Single Drone testing on local machine using Docker only*
     - Follow the following [user guide](../single-drone-local-machine)
     - Simplest deployment method and the quickest way to get a single simulation (gazebo) and drone (px4, mavros) instance running.
+
     - Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.
     - Can be used to quickly protype controllers before testing with multiple vehicles.
 2. **Step 2:** *Multiple Drone testing on local cluster*

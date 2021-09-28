@@ -15,6 +15,7 @@ Follow these instructions for quick and easy testing of controllers on a single 
 
 There are two basic example starting confgurations, this 'Simple' version starts the bare minimum with the expectation of it being used through mavlink. There is also a 'Full' version with instructions below this section which starts a system capable of flying higher level paths and trajectories submitted through a GUI or ROS.
 
+
 First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
 
 In the root directory first download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated). Then in a terminal, execute:
@@ -161,7 +162,6 @@ Inside you can `source install/setup.bash` and run ROS2 commands like normal.
 Of course you can create your own controller from scratch. Inside your controller repository, the following is required
 1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
 2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/Dockerfile) as a template.
-
 
 Your Dockerfile can be built by running the following in the directory with the Dockerfile.
 ```bash

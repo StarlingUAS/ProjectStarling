@@ -36,6 +36,7 @@ nav:
   - "Physical Flight":
     - "BRL Flight Arena": "details/flight_arena.md"
     - "Adding A New Vehicle" : "details/adding_physical_drone.md"
+  - "Implementation":
     - "PX4 Details": "details/px4.md"
   - "Implementation":
     - "Example Python Controller": "guide/example-controller.md"
