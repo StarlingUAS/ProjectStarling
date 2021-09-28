@@ -6,7 +6,7 @@
     <arg name="gcs_url" default="$(env MAVROS_GCS_URL)" />
     <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM)" />
     <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM)" />
-    
+
     <!-- Launch the ROS1 stack -->
     <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch /ros_ws/launch/mavros.launch
             vehicle_namespace:=$(var vehicle_namespace)
@@ -18,7 +18,11 @@
         output="screen"
     />
 
-    <!-- Launch the bridge -->
-    <node pkg="ros1_bridge" exec="dynamic_bridge" args="--bridge-all-1to2-topics" />
+    <!-- Launch the bridge in the correct namespace to avoid collisions-->
+    <group>
+        <push-ros-namespace namespace="$(var vehicle_namespace)"/>
+        <node pkg="ros1_bridge" exec="dynamic_bridge" args="--bridge-all-1to2-topics" />
+    </group>
+
 
 </launch>
