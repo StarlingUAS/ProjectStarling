@@ -4,7 +4,7 @@ services:
   simhost:
     image: uobflightlabstarling/starling-sim-iris:latest
     ports:
-      - "8080:8080"
+      - "8090:8080"
 
   sitl:
     image: uobflightlabstarling/starling-sim-px4-sitl:latest
