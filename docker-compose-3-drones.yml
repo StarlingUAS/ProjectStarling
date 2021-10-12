@@ -1,0 +1,158 @@
+version: '3'
+
+services:
+
+  simhost: # Must be called simhost
+    image: uobflightlabstarling/starling-sim-iris:latest
+    command: [ "ros2", "launch", "launch/iris.launch.xml" , sim_only:=true]
+    ports:
+      - "8080:8080"
+    pid: "host" # Share Process ID Namespace
+
+  # ----------
+  # Spawn Vehicle 1
+  gazebo_spawn_1:
+    image: uobflightlabstarling/starling-sim-iris:latest
+    command: [ "./spawn_iris.sh" ]
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_INSTANCE=0"
+      - "IGNORE_FAILURE=true"
+    depends_on:
+      - simhost
+    pid: "host" # Share Process ID Namespace
+
+  sitl_1:
+    image: uobflightlabstarling/starling-sim-px4-sitl:latest
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros_1"
+      - "PX4_INSTANCE=0"
+    ports:
+      - "18570:18570/udp"
+    depends_on:
+      - gazebo_spawn_1
+    pid: "host" # Share Process ID Namespace
+
+  mavros_1:
+    image: uobflightlabstarling/starling-mavros:latest
+    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment:
+      - "MAVROS_TGT_SYSTEM=1"
+      - "MAVROS_FCU_IP=0.0.0.0"
+    depends_on:
+      - sitl_1
+    pid: "host" # Share Process ID Namespace
+
+  simple_offboard_1:
+    image: uobflightlabstarling/starling-simple-offboard:latest
+    environment:
+      - "VEHICLE_MAVLINK_SYSID=1"
+    depends_on:
+      - mavros_1
+    pid: "host" # Share Process ID Namespace
+  # End Spawn Vehicle 1
+  # ----------
+
+  # ----------
+  # Spawn Vehicle 2
+  gazebo_spawn_2:
+    image: uobflightlabstarling/starling-sim-iris:latest
+    command: [ "./spawn_iris.sh" ]
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_INSTANCE=1"
+      - "IGNORE_FAILURE=true"
+      - "PX4_SIM_INIT_LOC_X=2"
+    depends_on:
+      - simhost
+    pid: "host" # Share Process ID Namespace
+
+  sitl_2:
+    image: uobflightlabstarling/starling-sim-px4-sitl:latest
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros_2"
+      - "PX4_INSTANCE=1"
+    ports:
+      - "18571:18571/udp"
+    depends_on:
+      - gazebo_spawn_2
+    pid: "host" # Share Process ID Namespace
+
+  mavros_2:
+    image: uobflightlabstarling/starling-mavros:latest
+    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment:
+      - "MAVROS_TGT_SYSTEM=2"
+      - "MAVROS_FCU_IP=0.0.0.0"
+    depends_on:
+      - sitl_2
+    pid: "host" # Share Process ID Namespace
+
+  simple_offboard_2:
+    image: uobflightlabstarling/starling-simple-offboard:latest
+    environment:
+      - "VEHICLE_MAVLINK_SYSID=2"
+    depends_on:
+      - mavros_2
+    pid: "host" # Share Process ID Namespace
+  # End Spawn Vehicle 2
+  # ----------
+
+
+  # ----------
+  # Spawn Vehicle 3
+  gazebo_spawn_3:
+    image: uobflightlabstarling/starling-sim-iris:latest
+    command: [ "./spawn_iris.sh" ]
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_INSTANCE=2"
+      - "IGNORE_FAILURE=true"
+      - "PX4_SIM_INIT_LOC_X=4"
+    depends_on:
+      - simhost
+    pid: "host" # Share Process ID Namespace
+
+  sitl_4:
+    image: uobflightlabstarling/starling-sim-px4-sitl:latest
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros_3"
+      - "PX4_INSTANCE=2"
+    ports:
+      - "18572:18572/udp"
+    depends_on:
+      - gazebo_spawn_3
+    pid: "host" # Share Process ID Namespace
+
+  mavros_3:
+    image: uobflightlabstarling/starling-mavros:latest
+    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment:
+      - "MAVROS_TGT_SYSTEM=3"
+      - "MAVROS_FCU_IP=0.0.0.0"
+    depends_on:
+      - sitl_3
+    pid: "host" # Share Process ID Namespace
+
+  simple_offboard_2:
+    image: uobflightlabstarling/starling-simple-offboard:latest
+    environment:
+      - "VEHICLE_MAVLINK_SYSID=3"
+    depends_on:
+      - mavros_3
+    pid: "host" # Share Process ID Namespace
+  # End Spawn Vehicle 3
+  # ----------
+
+  ui:
+    image: mickeyli789/starling-ui-dashly:latest
+    ports:
+      - "3000:3000"
+    pid: "host" # Share Process ID Namespace
+
+  allocator:
+    image: uobflightlabstarling/starling-allocator:latest
+    pid: "host" # Share Process ID Namespace

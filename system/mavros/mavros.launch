@@ -8,10 +8,13 @@
     <arg name="system_id"/>
     <arg name="config_yaml" default="$(env MAVROS_MOD_CONFIG_PATH)"/>
     <arg name="pluginlists_yaml" default="$(env MAVROS_PLUGINLISTS_PATH)"/>
+    <arg name="bridge_yaml" default="$(env BRIDGE_MOD_CONFIG_PATH)"/>
    	<arg name="tgt_component" default="1" />
     <arg name="respawn_mavros" default="true"/>
     <arg name="log_output" default="screen" />
 	<arg name="fcu_protocol" default="v2.0" />
+
+    <rosparam command="load" file="$(arg bridge_yaml)" ns="$(arg vehicle_namespace)"/>
 
     <include file="$(find mavros)/launch/node.launch" ns="$(arg vehicle_namespace)">
         <arg name="fcu_url" value="$(arg fcu_url)?ids=$(arg system_id),240"/>

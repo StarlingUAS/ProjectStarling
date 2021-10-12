@@ -29,6 +29,11 @@ RUN git clone -b foxy https://github.com/ros2/ros1_bridge /bridge_ws/src/ros1_br
     && cd /bridge_ws/src/ros1_bridge \
     && git checkout 82d1f4588761d6e54eeaca821398137be0e475f1
 
+# Swap line 36 and 41 to fix this issue: https://github.com/ros2/ros1_bridge/issues/316
+# For use of parameter server.
+RUN sed -i "41d" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp \
+    && sed -i "36 i rclcpp::init(argc, argv);" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp
+
 # Build with ROS2 mavros_msgs on path
 RUN cd /bridge_ws \
     && . /opt/ros/${ROS1_DISTRO}/setup.sh \
@@ -50,10 +55,14 @@ COPY mavros_setup.sh .
 COPY mavros.launch /ros_ws/launch/mavros.launch
 COPY config/mavros_config.yaml /
 COPY config/mavros_pluginlists.yaml /
+COPY config/bridge_config.yaml /
 
 ENV MAVROS_MOD_CONFIG_PATH="/mavros_config_mod.yaml"
 ENV MAVROS_CONFIG_PATH="/mavros_config.yaml"
 ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists.yaml"
+
+ENV BRIDGE_MOD_CONFIG_PATH="/bridge_config_mod.yaml"
+ENV BRIDGE_CONFIG_PATH="/bridge_config.yaml"
 
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/

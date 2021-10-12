@@ -8,6 +8,7 @@
     <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM)" />
     <arg name="config_yaml" default="$(env MAVROS_MOD_CONFIG_PATH)"/>
     <arg name="pluginlists_yaml" default="$(env MAVROS_PLUGINLISTS_PATH)"/>
+    <arg name="bridge_yaml" default="$(env BRIDGE_MOD_CONFIG_PATH)"/>
 
     <!-- Launch the ROS1 stack -->
     <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch /ros_ws/launch/mavros.launch
@@ -18,15 +19,20 @@
             target_system:=$(var target_system)
             system_id:=$(var system_id)
             config_yaml:=$(var config_yaml)
-            pluginlists_yaml:=$(var pluginlists_yaml)"
+            pluginlists_yaml:=$(var pluginlists_yaml)
+            bridge_yaml:=$(var bridge_yaml)"
         output="screen"
     />
 
     <!-- Launch the bridge in the correct namespace to avoid collisions-->
-    <group>
-        <push-ros-namespace namespace="$(var vehicle_namespace)"/>
-        <node pkg="ros1_bridge" exec="dynamic_bridge" args="--bridge-all-topics" />
-    </group>
-
+    <!-- Note that args must be included to ensure the namespace is remapped -->
+    <!-- Delay is needed to ensure that roscore has been instantiated -->
+    <node pkg="ros1_bridge"
+          exec="parameter_bridge"
+          args="/$(var vehicle_namespace)/topics /$(var vehicle_namespace)/services_1to2 /$(var vehicle_namespace)/services_2to1"
+          namespace="$(var vehicle_namespace)"
+          respawn="true"
+          launch-prefix="bash -c 'sleep 2.0; $0 $@' ">
+    </node>
 
 </launch>
