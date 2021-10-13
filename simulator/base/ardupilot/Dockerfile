@@ -1,35 +1,21 @@
-# Perform multistage build to avoid a pile of ardupilot deps
-FROM ardupilot/ardupilot-dev-chibios as ardupilot_builder
+# Add the ArduPilot plugin to the Gazebo image
+# Produces an image based on the core gazebo image that includes the ArduPilot-specific plugins
 
-ARG VEHICLE=copter
-ARG BRANCH=ArduCopter-stable
+ARG VERSION=latest
+ARG REGISTRY
 
-# Install PyGeodesy
-RUN python -m pip install --no-cache-dir pymap3d
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}
 
-# Fetch ArduPilot
-RUN git clone --recurse-submodules --depth 1 --shallow-submodules -j4 \
-    -b ${BRANCH} https://github.com/ArduPilot/ardupilot /src/ardupilot
+# Clone and build the AP Gazebo plugins
+RUN git clone https://github.com/khancyr/ardupilot_gazebo \
+    && cd ardupilot_gazebo \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && make -j4 \
+    && make install
 
-# Build the SITL
-WORKDIR /src/ardupilot
-RUN ./waf configure && ./waf ${VEHICLE}
-
-WORKDIR /home/root
-COPY entrypoint.sh \
-     offset_location.py \
-     lookup_parameter_files.py \
-    /home/root/
-
-# The VEHICLE environment variable should not be overridden as
-#  the build will not exist for it
-ENV AP_VEHICLE ${VEHICLE}
-ENV AP_SYSID 1
-ENV AP_SYSID_BASE 1
-ENV AP_PARAM_PATH ""
-ENV AP_PARAM_FILES ""
-ENV AP_HOME 51.4235413,-2.6708488,50,250
-ENV AP_OFFSET_X 0
-ENV AP_OFFSET_Y 0
-
-ENTRYPOINT [ "/home/root/entrypoint.sh" ]
+# Setup a ros.env.d folder for AP to add to the resource paths for Gazebo
+RUN mkdir -p /ros.env.d/ardupilot \
+    && echo 'export GAZEBO_MODEL_PATH=/ardupilot_gazebo/models:${GAZEBO_MODEL_PATH}' >> /ros.env.d/ardupilot/setup.bash \
+    && echo 'export GAZEBO_RESOURCE_PATH=/ardupilot_gazebo/worlds:${GAZEBO_RESOURCE_PATH}' >> /ros.env.d/ardupilot/setup.bash

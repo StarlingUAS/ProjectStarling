@@ -39,6 +39,10 @@ else
     AP_MODEL=${AP_MODEL:-plane}
 fi
 
+if [ ! -z "$AP_USE_GAZEBO" ]; then
+    AP_MODEL="gazebo-iris"
+fi
+
 AP_PARAM_PATH=${AP_PARAM_PATH:-/src/ardupilot/Tools/autotest/default_params}
 
 if [ "${AP_PARAM_FILES}" == "" ]; then
