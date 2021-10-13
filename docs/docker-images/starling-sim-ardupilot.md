@@ -20,6 +20,7 @@ Name                  | Default Value                | Description
 `AP_OFFSET_X`         | 0                            | Start location x offset for SITL
 `AP_OFFSET_Y`         | 0                            | Start location y offset for SITL
 `AP_DISTRIBUTE`       | {null}                       | If set, automatically generate `AP_OFFSET_X` and `AP_OFFSET_Y`
+`AP_USE_GAZEBO`       | {null}                       | If set, use a Gazebo model as physics backend
 
 ### `AP_SYSID`
 
@@ -79,6 +80,11 @@ final value of the `AP_SYSID` environment variable, *i.e.* after it has been res
 dictates the position of the vehicle within a 16 by 16 grid, with the position of `AP_HOME` at the (0,0) position. The
 grid lines are laid out at 1m separations. As a SYSID of 0 is invalid, no vehicle will be placed directly on the
 `AP_HOME` position.
+
+### `AP_USE_GAZEBO`
+
+When set, `AP_USE_GAZEBO` will cause the SITL to connect to an instance of the ArduPilot plugin running as part of a
+Gazebo model. At present, this will use the default IP and port pair: 127.0.0.1:9002/9003
 
 ## Dockerfile Build Arguments
 
