@@ -115,7 +115,7 @@ group "simulator" {
 }
 
 target "starling-sim-base-core" {
-    context = "simulator/base/gazebo"
+    context = "simulator/base/core"
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_VERSION}",
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_RELEASENAME}": "",
