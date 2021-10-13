@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: starling-mavros-daemon
+  labels:
+    app: starling
+
+spec:
+  selector:
+    matchLabels:
+      name: starling-mavros-daemon
+
+  template:
+    metadata:
+      labels:
+        name: starling-mavros-daemon
+
+    spec:
+      nodeSelector:
+        starling.dev/type: vehicle
+
+      tolerations:
+        - key: starling.dev/type
+          operator: Equal
+          value: vehicle
+          effect: NoSchedule
+
+      hostNetwork: true
+      shareProcessNamespace: true
+
+      containers:
+        - name: starling-mavros
+          image: uobflightlabstarling/starling-mavros:latest
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          env:
+          - name: MAVROS_TGT_FIRMWARE
+            value: "px4"
+          - name: MAVROS_TGT_SYSTEM
+            value: "auto" # Look up on system /etc/drone.config
+          - name: ROS_HOSTNAME # Required for ROS1 bridge in hostNetwork mode
+            value: "localhost" # ROS1 will ping HOSTNAME, defaults to system hostname
+          - name: ROS_MASTER_URI
+            value: "http://localhost:11311"
+          volumeMounts:
+          - mountPath: /dev/px4fmu
+            name: ttypx4
+          - mountPath: /etc/starling/vehicle.config
+            name: vehicleconfig
+            readOnly: true
+
+      volumes:
+        - name: ttypx4
+          hostPath:
+            path: /dev/px4fmu
+        - name: vehicleconfig
+          hostPath:
+            path: /etc/starling/vehicle.config
+            type: File

@@ -16,7 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+        with:
+          submodules: 'recursive'
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -29,9 +31,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -72,7 +74,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -80,9 +82,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -137,7 +139,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -145,9 +147,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -174,7 +176,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -187,9 +189,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -216,7 +218,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get tag name
         id: tag_name
         run: |
@@ -229,9 +231,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -243,6 +245,48 @@ jobs:
             ./buildtools/docker-bake.hcl
           targets: |
             starling-mavros
+          push: true
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: nightly
+          BAKE_CACHETO_NAME: cache-dev
+          BAKE_CACHEFROM_NAME: cache-dev
+
+  #
+  # Call bake for vicon
+  #
+  bake_vicon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get tag name
+        id: tag_name
+        run: |
+          echo ::set-output name=GITHUB_TAG::${GITHUB_REF#refs/tags/}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push (mavros)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-vicon
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}

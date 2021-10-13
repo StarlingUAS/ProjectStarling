@@ -17,6 +17,7 @@ serve-docs:
 	mkdocs serve -a 0.0.0.0:8000
 
 run:
+	docker-compose pull
 	docker-compose up
 
-.PHONY: all simulator system controllers run docs 
+.PHONY: all simulator system controllers run docs

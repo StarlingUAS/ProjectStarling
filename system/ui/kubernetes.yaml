@@ -16,7 +16,7 @@ spec:
       containers:
       - name: starling-ui
         image: uobflightlabstarling/starling-ui:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         - containerPort: 9090
