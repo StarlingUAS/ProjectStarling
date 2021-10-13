@@ -1,7 +1,12 @@
 # syntax = edrevo/dockerfile-plus
+
+# Add the PX4 plugins to the Gazebo image
+# Produces an image based on the core gazebo image that includes the PX4-specific plugins
+
 ARG VERSION=latest
 ARG REGISTRY
 
+# Include the common Dockerfile to get the PX4 repo
 INCLUDE+ ./px4builder.Dockerfile
 
 # Build the gazebo link
