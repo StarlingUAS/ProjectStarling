@@ -13,22 +13,9 @@ RUN /opt/ros/${ROS1_DISTRO}/lib/mavros/install_geographiclib_datasets.sh
 
 # In order for the bridge to bridge all mavros topics, we need to build a
 #  ROS2 equivalent of mavros_msgs
-# Clone the repo
-# RUN git clone -b mavros2 https://github.com/rob-clarke/mavros /ros_ws/src/mavros
-# # Fetch dependencies
-# RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-#     && apt-get update \
-#     && rosdep install --from-paths /ros_ws/src/mavros/mavros_msgs \
-#     && rm -rf /var/lib/apt/lists/
-# # Build the package
-# RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-#     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
-#     && cd /ros_ws \
-#     && colcon build --packages-select mavros_msgs \
-#     && rm -r build
-# # Build the package
+# # Build the empty package
 RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-    && mkdir /ros_ws \
+    && mkdir -p /ros_ws/src \
     && cd /ros_ws \
     && colcon build \
     && rm -r build
@@ -41,6 +28,11 @@ RUN apt-get remove -y ros-foxy-ros1-bridge
 RUN git clone -b foxy https://github.com/ros2/ros1_bridge /bridge_ws/src/ros1_bridge \
     && cd /bridge_ws/src/ros1_bridge \
     && git checkout 82d1f4588761d6e54eeaca821398137be0e475f1
+
+# Swap line 36 and 41 to fix this issue: https://github.com/ros2/ros1_bridge/issues/316
+# For use of parameter server.
+RUN sed -i "41d" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp \
+    && sed -i "36 i rclcpp::init(argc, argv);" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp
 
 # Build with ROS2 mavros_msgs on path
 RUN cd /bridge_ws \
@@ -61,7 +53,16 @@ WORKDIR /ros_ws
 COPY mavros_setup.sh .
 
 COPY mavros.launch /ros_ws/launch/mavros.launch
+COPY config/mavros_config.yaml /
+COPY config/mavros_pluginlists.yaml /
+COPY config/bridge_config.yaml /
 
+ENV MAVROS_MOD_CONFIG_PATH="/mavros_config_mod.yaml"
+ENV MAVROS_CONFIG_PATH="/mavros_config.yaml"
+ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists.yaml"
+
+ENV BRIDGE_MOD_CONFIG_PATH="/bridge_config_mod.yaml"
+ENV BRIDGE_CONFIG_PATH="/bridge_config.yaml"
 
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/

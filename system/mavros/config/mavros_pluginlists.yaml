@@ -1,0 +1,34 @@
+plugin_blacklist: []
+# common
+# - safety_area
+# extras
+# - image_pub
+# - vibration
+# - distance_sensor
+# - rangefinder
+# - wheel_odometry
+
+
+plugin_whitelist:
+#- 'sys_*'
+- altitude
+- command
+- distance_sensor
+- ftp
+- global_position
+- imu
+- local_position
+- manual_control
+# - mocap_pose_estimate
+- param
+- px4flow
+- rc_io
+- setpoint_attitude
+- setpoint_position
+- setpoint_raw
+- setpoint_velocity
+- sys_status
+- sys_time
+- vision_pose_estimate
+# - vision_speed_estimate
+# - waypoint
