@@ -18,7 +18,7 @@ ui:
 	$(BAKE) starling-ui
 
 mavp2p:
-	docker build -t mavp2p $(MAKEFILE_DIR)/mavp2p --build-arg TARGETARCH=amd64
+	$(BAKE) mavp2p
 
 vicon:
 	$(BAKE) starling-vicon

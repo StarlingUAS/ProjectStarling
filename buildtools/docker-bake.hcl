@@ -110,42 +110,42 @@ target "starling-vicon" {
 // Build this target before simulator-px4
 group "simulator" {
     targets = [
-        "starling-sim-base-gazebo"
+        "starling-sim-base-core"
         ]
 }
 
-target "starling-sim-base-gazebo" {
+target "starling-sim-base-core" {
     context = "simulator/base/gazebo"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-gazebo:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-gazebo:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-base-gazebo:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-base-gazebo:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 group "simulator-px4" {
     targets = [
-        "starling-sim-px4-gazebo",
+        "starling-sim-base-px4",
         "starling-sim-px4-sitl"
         ]
 }
 
-// This target depends on starling-sim-base-gazebo
-target "starling-sim-px4-gazebo" {
+// This target depends on starling-sim-base-core
+target "starling-sim-base-px4" {
     context = "simulator/base/px4"
     args = {
         "VERSION": "${BAKE_VERSION}",
         "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-gazebo:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-gazebo:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-px4-gazebo:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-px4-gazebo:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-sim-px4-sitl" {
@@ -239,7 +239,7 @@ target "example_python_controller" {
 /*
  * Vehicle targets
  */
-// This target depends on starling-sim-px4-gazebo
+// This target depends on starling-sim-base-px4
 target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
     args = {
