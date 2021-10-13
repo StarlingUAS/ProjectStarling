@@ -34,11 +34,11 @@ group "stage1" {
 }
 
 group "stage2" {
-    targets = ["simulator-px4", "controllers"]
+    targets = ["simulator-px4", "simulator-ardupilot", "controllers"]
 }
 
 group "stage3" {
-    targets = ["starling-sim-iris"]
+    targets = ["starling-sim-iris", "starling-sim-iris-ap"]
 }
 
 /*
@@ -253,4 +253,20 @@ target "starling-sim-iris" {
     platforms = ["linux/amd64"]
     cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
+// This target depends on starling-sim-base-ardupilot
+target "starling-sim-iris-ap" {
+    context = "simulator/vehicles/iris-ap"
+    args = {
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
+        }
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_CACHEFROM_NAME}" : "" ]
 }
