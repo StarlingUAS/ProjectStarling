@@ -32,17 +32,20 @@ nav:
     - "Understanding Docker": 'details/docker.md'
     - "Understanding Kubernetes": "details/kubernetes.md"
     - "Kubernetes Dashboard Guide": 'details/kubernetes-dashboard.md'
-    - "Old Starling UI Guide": "details/starling-ui.md"
   - "Physical Flight":
     - "BRL Flight Arena": "details/flight_arena.md"
     - "Adding A New Vehicle" : "details/adding_physical_drone.md"
   - "Implementation":
-    - "PX4 Details": "details/px4.md"
-  - "Implementation":
     - "Example Python Controller": "guide/example-controller.md"
     - "Example Kubernetes Deployments": "details/kubernetes-deployment.md"
-    - "Mavros Container": "details/starling-mavros.md"
     - "Build System": "details/build_system.md"
+  - "Image Documentation":
+    - "starling-ui": "docker-images/ui.md"
+    - "starling-mavros": "docker-images/mavros.md"
+    - "starling-sim-base-core": "docker-images/sim-base-core.md"
+    - "starling-sim-ardupilot-copter/plane": "docker-images/sim-ardupilot-vehicle.md"
+    - "starling-sim-ardupilot-gazebo": "docker-images/sim-ardupilot-gazebo.md"
+    - "starling-sim-iris-ap": "docker-images/sim-iris-ap.md"
   - "Miscellaneous":
     - "Ideas": "other/ideas.md"
     - "MATLAB (unstable)": "other/MATLAB.md"

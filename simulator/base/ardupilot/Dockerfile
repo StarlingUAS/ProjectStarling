@@ -1,29 +1,21 @@
-# Perform multistage build to avoid a pile of ardupilot deps
-FROM ardupilot/ardupilot-dev-chibios as ardupilot_builder
+# Add the ArduPilot plugin to the Gazebo image
+# Produces an image based on the core gazebo image that includes the ArduPilot-specific plugins
 
-# Fetch ArduPilot
-RUN git clone --recurse-submodules --depth 1 --shallow-submodules -j4 \
-    -b Copter-4.0.5 https://github.com/ArduPilot/ardupilot /src/ardupilot
+ARG VERSION=latest
+ARG REGISTRY
 
-# Build the SITL
-WORKDIR /src/ardupilot
-RUN ./waf configure && ./waf copter
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}
 
-# Fetch the ArduPilot gazebo plugin
-RUN git clone --depth 1 https://github.com/khancyr/ardupilot_gazebo /src/ardupilot_gazebo
-
-FROM starling-sim-base-core
-
-# Copy ardupilot sources from builder stage
-COPY --from=ardupilot_builder /src /src/
-
-# Build & install the gazebo link
-RUN cd /src/ardupilot_gazebo \
+# Clone and build the AP Gazebo plugins
+RUN git clone https://github.com/khancyr/ardupilot_gazebo \
+    && cd ardupilot_gazebo \
     && mkdir build \
     && cd build \
     && cmake .. \
-    && make \
+    && make -j4 \
     && make install
 
-CMD [ "gzserver", "worlds/iris_arducopter_runway.world"]
-
+# Setup a ros.env.d folder for AP to add to the resource paths for Gazebo
+RUN mkdir -p /ros.env.d/ardupilot \
+    && echo 'export GAZEBO_MODEL_PATH=/ardupilot_gazebo/models:${GAZEBO_MODEL_PATH}' >> /ros.env.d/ardupilot/setup.bash \
+    && echo 'export GAZEBO_RESOURCE_PATH=/ardupilot_gazebo/worlds:${GAZEBO_RESOURCE_PATH}' >> /ros.env.d/ardupilot/setup.bash

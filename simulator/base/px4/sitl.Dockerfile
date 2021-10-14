@@ -1,5 +1,8 @@
 # syntax = edrevo/dockerfile-plus
 
+# Build *only* the PX4 SITL
+
+# Include the common Dockerfile to get the PX4 repo
 INCLUDE+ ./px4builder.Dockerfile
 
 # Add support for remote host in SITL & build it

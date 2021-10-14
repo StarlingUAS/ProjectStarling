@@ -1,17 +1,23 @@
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+BAKE_SCRIPT:=$(MAKEFILE_DIR)/../buildtools/docker-bake.hcl
+BUILDX_HOST_PLATFORM:=$(shell docker buildx inspect default | sed -nE 's/^Platforms: ([^,]*),.*$$/\1/p')
+BAKE:=cd .. && docker buildx bake --builder default --load --set *.platform=$(BUILDX_HOST_PLATFORM) -f $(BAKE_SCRIPT)
 
-all: clover2 ardupilot_ar iris
+all: clover2 iris iris-ap
 
-base:
-	$(MAKE) -C base
+px4:
+	$(MAKE) -C base px4
 
-ardupilot_ar:
-	$(MAKE) -C ardupilot_ar
+ardupilot:
+	$(MAKE) -C base ardupilot
 
-clover2: base
+clover2: px4
 	docker build -t starling-sim-clover2 $(MAKEFILE_DIR)/vehicles/clover2
 
-iris: base
-	docker build -t starling-sim-iris $(MAKEFILE_DIR)/vehicles/iris
+iris: px4
+	$(BAKE) starling-sim-iris
 
-.PHONY: all base ardupilot_ar clover2 iris
+iris-ap: ardupilot
+	$(BAKE) starling-sim-iris-ap
+
+.PHONY: all px4 ardupilot clover2 iris iris-ap

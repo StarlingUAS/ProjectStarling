@@ -3,7 +3,7 @@ BAKE_SCRIPT:=$(MAKEFILE_DIR)/../buildtools/docker-bake.hcl
 BUILDX_HOST_PLATFORM:=$(shell docker buildx inspect default | sed -nE 's/^Platforms: ([^,]*),.*$$/\1/p')
 BAKE:=cd $(MAKEFILE_DIR)/.. && docker buildx bake --builder default --load --set *.platform=$(BUILDX_HOST_PLATFORM) -f $(BAKE_SCRIPT)
 
-all: controller-base mavros ui vicon
+all: controller-base mavros ui vicon mavp2p
 
 controller-base:
 	$(BAKE) starling-controller-base
@@ -17,7 +17,10 @@ mavros_all_arch:
 ui:
 	$(BAKE) starling-ui
 
+mavp2p:
+	$(BAKE) mavp2p
+
 vicon:
 	$(BAKE) starling-vicon
 
-.PHONY: mavros mavros_all_arch controller-base ui vicon all
+.PHONY: mavros mavros_all_arch controller-base ui vicon mavp2p all
