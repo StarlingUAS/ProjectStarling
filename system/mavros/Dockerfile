@@ -11,15 +11,6 @@ RUN apt-get update \
 # Part of MAVROS setup
 RUN /opt/ros/${ROS1_DISTRO}/lib/mavros/install_geographiclib_datasets.sh
 
-# In order for the bridge to bridge all mavros topics, we need to build a
-#  ROS2 equivalent of mavros_msgs
-# # Build the empty package
-RUN . /opt/ros/${ROS2_DISTRO}/setup.sh \
-    && mkdir -p /ros_ws/src \
-    && cd /ros_ws \
-    && colcon build \
-    && rm -r build
-
 # We then need to build the bridge from source
 #  (So we probably don't need to use the ros1-bridge image...)
 # Remove the preinstalled version
@@ -38,10 +29,11 @@ RUN sed -i "41d" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp \
 RUN cd /bridge_ws \
     && . /opt/ros/${ROS1_DISTRO}/setup.sh \
     && . /opt/ros/${ROS2_DISTRO}/setup.sh \
-    && . /ros_ws/install/local_setup.sh \
     && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
     && colcon build --packages-select ros1_bridge --cmake-force-configure \
     && rm -r build
+
+RUN mkdir /ros_ws
 
 COPY mavros_bridge.launch.xml /ros_ws/launch/
 COPY run_ros1.sh /ros_ws/scripts/
@@ -53,13 +45,13 @@ WORKDIR /ros_ws
 COPY mavros_setup.sh .
 
 COPY mavros.launch /ros_ws/launch/mavros.launch
-COPY config/mavros_config.yaml /
-COPY config/mavros_pluginlists.yaml /
+COPY config/mavros_config_*.yaml /
+COPY config/mavros_pluginlists_*.yaml /
 COPY config/bridge_config.yaml /
 
 ENV MAVROS_MOD_CONFIG_PATH="/mavros_config_mod.yaml"
-ENV MAVROS_CONFIG_PATH="/mavros_config.yaml"
-ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists.yaml"
+ENV MAVROS_CONFIG_PATH="/mavros_config_px4.yaml"
+ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists_px4.yaml"
 
 ENV BRIDGE_MOD_CONFIG_PATH="/bridge_config_mod.yaml"
 ENV BRIDGE_CONFIG_PATH="/bridge_config.yaml"
