@@ -103,13 +103,14 @@ jobs:
           BAKE_CACHETO_NAME: cache
           BAKE_CACHEFROM_NAME: cache
 
-      - name: Build and push (sim-base-px4)
+      - name: Build and push (sim-{base-px4,ardupilot-gazebo})
         uses: docker/bake-action@master
         with:
           files: |
             ./buildtools/docker-bake.hcl
-          targets: |
-            starling-sim-base-px4
+          targets:
+            - starling-sim-base-px4
+            - starling-sim-ardupilot-gazebo
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
@@ -117,13 +118,14 @@ jobs:
           BAKE_CACHETO_NAME: cache
           BAKE_CACHEFROM_NAME: cache
 
-      - name: Build and push (sim-iris)
+      - name: Build and push (sim-iris{,-ap})
         uses: docker/bake-action@master
         with:
           files: |
             ./buildtools/docker-bake.hcl
-          targets: |
-            starling-sim-iris
+          targets:
+            - starling-sim-iris
+            - starling-sim-iris-ap
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
@@ -132,9 +134,9 @@ jobs:
           BAKE_CACHEFROM_NAME: cache
 
   #
-  # Call bake for the SITL
+  # Call bake for the PX4 SITL
   #
-  bake_sitl:
+  bake_px4_sitl:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -161,6 +163,43 @@ jobs:
             ./buildtools/docker-bake.hcl
           targets: |
             starling-sim-px4-sitl
+          push: true
+        env:
+          BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
+          BAKE_RELEASENAME: latest
+          BAKE_CACHETO_NAME: cache
+          BAKE_CACHEFROM_NAME: cache
+
+  #
+  # Bake the ArduPilot SITL
+  #
+  bake_ap_sitl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get tag name
+        id: tag_name
+        run: |
+          echo ::set-output name=GITHUB_TAG::${GITHUB_REF#refs/tags/}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push (sim-ardupilot-copter)
+        uses: docker/bake-action@master
+        with:
+          files: |
+            ./buildtools/docker-bake.hcl
+          targets: |
+            starling-sim-ardupilot-copter
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
