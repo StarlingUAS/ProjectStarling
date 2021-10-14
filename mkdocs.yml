@@ -43,7 +43,7 @@ nav:
     - "Example Kubernetes Deployments": "details/kubernetes-deployment.md"
     - "Mavros Container": "details/starling-mavros.md"
     - "Build System": "details/build_system.md"
-  - "Docker Images":
+  - "Image Documentation":
     - "starling-ui": "docker-images/starling-ui.md"
     - "starling-mavros": "docker-images/starling-mavros.md"
     - "starling-sim-ardu*": "docker-images/starling-sim-ardupilot.md"

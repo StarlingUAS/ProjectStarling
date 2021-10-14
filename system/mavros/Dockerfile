@@ -60,8 +60,11 @@ ENV BRIDGE_CONFIG_PATH="/bridge_config.yaml"
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
+# TODO: Rename to FCU_PROTOCOL
 ENV MAVROS_FCU_CONN="udp"
+# TODO: Rename to FCU_HOST
 ENV MAVROS_FCU_IP="127.0.0.1"
+# TODO: Rename to PORT_BASE
 ENV MAVROS_FCU_UDP_BASE="14830"
 ENV MAVROS_TGT_SYSTEM="auto"
 ENV PX4_INSTANCE_BASE=0
