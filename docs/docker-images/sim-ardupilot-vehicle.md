@@ -1,4 +1,4 @@
-# `starling-sim-ardu*`
+# `starling-sim-ardupilot-copter/plane`
 
 There are two images currently built: `starling-sim-arducopter` and `starling-sim-arduplane`. These are built against
 the relevant stable branch: `ArduCopter-stable` and `ArduPlane-stable` respectively.
