@@ -108,9 +108,9 @@ jobs:
         with:
           files: |
             ./buildtools/docker-bake.hcl
-          targets:
-            - starling-sim-base-px4
-            - starling-sim-ardupilot-gazebo
+          targets: |
+            starling-sim-base-px4
+            starling-sim-ardupilot-gazebo
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
@@ -123,9 +123,9 @@ jobs:
         with:
           files: |
             ./buildtools/docker-bake.hcl
-          targets:
-            - starling-sim-iris
-            - starling-sim-iris-ap
+          targets: |
+            starling-sim-iris
+            starling-sim-iris-ap
           push: true
         env:
           BAKE_VERSION: ${{ steps.tag_name.outputs.GITHUB_TAG }}
