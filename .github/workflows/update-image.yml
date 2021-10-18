@@ -92,9 +92,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: starling-sim-base-iris
+          - target: starling-sim-iris
             arm64: false
-          - target: starling-sim-base-iris-ap
+          - target: starling-sim-iris-ap
             arm64: false
     steps:
       - name: Build Image

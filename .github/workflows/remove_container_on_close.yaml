@@ -27,8 +27,8 @@ jobs:
           - starling-sim-ardupilot-gazebo
           - starling-sim-px4-sitl
           - example_python_controller
-          - starling-sim-base-iris
-          - starling-sim-base-iris-ap
+          - starling-sim-iris
+          - starling-sim-iris-ap
           - starling-sim-ardupilot-copter
     steps:
       - name: Delete Image
