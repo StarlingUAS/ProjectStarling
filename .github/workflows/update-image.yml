@@ -51,7 +51,7 @@ jobs:
       - name: Build Image
         uses: mhl787156/starling-bake-build-action@main
         with:
-          bakefile: docker-bake.hcl
+          bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -78,7 +78,7 @@ jobs:
       - name: Build Image
         uses: mhl787156/starling-bake-build-action@main
         with:
-          bakefile: docker-bake.hcl
+          bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -100,7 +100,7 @@ jobs:
       - name: Build Image
         uses: mhl787156/starling-bake-build-action@main
         with:
-          bakefile: docker-bake.hcl
+          bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
