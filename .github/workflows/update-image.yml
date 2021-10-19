@@ -1,0 +1,124 @@
+name: 'Update images'
+
+on: [push]
+
+jobs:
+
+  bump_version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{steps.tag_version.outputs.new_tag}}
+      is_release: ${{steps.tag_version.outputs.is_release}}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '1'
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mhl787156/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          RELEASE_BRANCHES: master,main
+          DEFAULT_BUMP: patch
+          DEFAULT_PRERELEASE_BUMP: none
+          DRY_RUN: true # Dont push new tag here, only push on successful build
+          PRERELEASE_SUFFIX: ${{ steps.extract_branch.outputs.branch }}
+      
+  bake_images_stage_1:
+    runs-on: ubuntu-latest
+    needs: bump_version
+    strategy:
+      matrix:
+        include: 
+          - target: starling-ui
+            arm64: false
+          - target: starling-controller-base
+            arm64: true
+          - target: starling-mavros
+            arm64: true
+          - target: starling-vicon
+            arm64: true
+          - target: starling-sim-base-core
+            arm64: false
+          - target: mavp2p
+            arm64: false
+    steps:
+      - name: Build Image
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{matrix.arm64}}
+
+  bake_images_stage_2:
+    runs-on: ubuntu-latest
+    needs: [bump_version, bake_images_stage_1]
+    strategy:
+      matrix:
+        include: 
+          - target: starling-sim-base-px4
+            arm64: false
+          - target: starling-sim-px4-sitl
+            arm64: false
+          - target: starling-sim-ardupilot-gazebo
+            arm64: false
+          - target: starling-sim-ardupilot-copter
+            arm64: false
+          - target: example_python_controller
+            arm64: true
+    steps:
+      - name: Build Image
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{matrix.arm64}}
+
+    
+  bake_images_stage_3:
+    runs-on: ubuntu-latest
+    needs: [bump_version, bake_images_stage_2]
+    strategy:
+      matrix:
+        include:
+          - target: starling-sim-iris
+            arm64: false
+          - target: starling-sim-iris-ap
+            arm64: false
+    steps:
+      - name: Build Image
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{ matrix.arm64 }}
+
+  release_version:
+    needs: [bump_version, bake_images_stage_3]
+    runs-on: ubuntu-latest
+    steps:  
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        if: |
+          !failure() && !cancelled() && success() &&
+          needs.bump_version.outputs.is_release == 'true'
+        with:
+          tag: ${{ needs.bump_version.outputs.tag }}
+          name: Release ${{ needs.bump_version.outputs.tag }}
+          allowUpdates: true
+
+          

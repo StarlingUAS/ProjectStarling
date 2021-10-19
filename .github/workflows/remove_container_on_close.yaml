@@ -1,0 +1,43 @@
+name: Close Pull Request and Delete Testing Image
+
+# only trigger on pull request closed events except for master and dev
+on:
+  pull_request:
+    types: [ closed ]
+    branches-ignore:
+      - master
+      - dev
+  delete:
+    branches-ignore:
+      - master
+      - dev
+
+jobs:
+  remove_images:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - starling-ui
+          - starling-controller-base
+          - starling-mavros
+          - starling-vicon
+          - starling-sim-base-core
+          - starling-sim-base-px4
+          - starling-sim-ardupilot-gazebo
+          - starling-sim-px4-sitl
+          - example_python_controller
+          - starling-sim-iris
+          - starling-sim-iris-ap
+          - starling-sim-ardupilot-copter
+    steps:
+      - name: Delete Image
+        uses: mhl787156/dockerhub-delete-tag-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          organisation: uobflightlabstarling
+          image: ${{matrix.image}}
+          tag: ${{github.event.pull_request.head.ref}}
+
+
