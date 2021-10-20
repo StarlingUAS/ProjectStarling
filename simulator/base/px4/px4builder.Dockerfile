@@ -1,3 +1,6 @@
+# Download the PX4 repo with a specific version tag
+# Here to DRY out the main Dockerfile and sitl.Dockerfile
+
 # Perform multistage build to avoid the pile of PX4 deps
 FROM px4io/px4-dev-simulation-focal as px4builder
 

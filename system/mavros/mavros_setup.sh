@@ -11,6 +11,8 @@ if [ -f "/etc/starling/vehicle.config" ]; then
     source /etc/starling/vehicle.config
 fi
 
+#TODO: VEHICLE_FIRMWARE should affect choice of default parameter file
+
 function get_instance {
     # Attempt to get ordinal
     ORDINAL="${HOSTNAME##*-}"
@@ -37,6 +39,7 @@ if [ "$MAVROS_TGT_SYSTEM" = "auto" ]; then
     if [ $HAS_VEHICLE_CONFIG = true ]; then
         echo "MAVROS_TGT_SYSTEM set to VEHICLE_MAVLINK_SYSID ($VEHICLE_MAVLINK_SYSID) from /etc/starling/vehicle.config"
         MAVROS_TGT_SYSTEM=$VEHICLE_MAVLINK_SYSID
+        # TODO: Add validity check for SYSID
     else
         set +e
         INSTANCE=$(get_instance)
@@ -53,6 +56,7 @@ elif (($MAVROS_TGT_SYSTEM >= 1 && $MAVROS_TGT_SYSTEM <= 255 )); then
     echo "MAVROS_TGT_SYSTEM setting as specified: $MAVROS_TGT_SYSTEM"
     TGT_SYSTEM_SET=true
 else
+    # TODO: Fail early here
     echo "MAVROS_TGT_SYSTEM (set to $MAVROS_TGT_SYSTEM) is invalid, setting to 1. Must either be set to 'auto' where it will either look  or number between 1 and 256"
     MAVROS_TGT_SYSTEM=1
     TGT_SYSTEM_SET=true
