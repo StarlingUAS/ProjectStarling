@@ -49,7 +49,7 @@ group "system" {
 }
 
 target "ros-web-bridge" {
-    context = "system/web-bridge"
+    context = "system/ros-web-bridge"
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_VERSION}",
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_RELEASENAME}": "",
