@@ -45,18 +45,18 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["starling-ui", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p"]
+    targets = ["ros-web-bridge", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p"]
 }
 
-target "starling-ui" {
-    context = "system/ui"
+target "ros-web-bridge" {
+    context = "system/web-bridge"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-ui:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-controller-base" {
