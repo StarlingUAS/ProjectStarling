@@ -27,10 +27,6 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && source /root/.nvm/nvm.sh && npm 
 COPY ui.launch.xml /ros_ws/launch/ui.launch.xml
 COPY node_entrypoint.sh /node_entrypoint.sh
 
-# Add all html file example
-# COPY html/ /ros_ws/src/ros2-web-bridge/examples/html/
-COPY html/ /ros_ws/src/ros2-web-bridge/examples/
-
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
@@ -38,10 +34,11 @@ ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 # Change the working directory
 WORKDIR /ros_ws
 
-# Expose html server
-EXPOSE 3000
+
+ENV ROSBRIDGE_PORT 9090
+
 # Expose websocket server
-EXPOSE 9090
+EXPOSE ${ROSBRIDGE_PORT}
 
 # Set initial command
 CMD [ "ros2", "launch", "launch/ui.launch.xml" ]
