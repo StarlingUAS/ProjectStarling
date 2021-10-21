@@ -4,8 +4,8 @@ services:
   simhost:
     network_mode: host
     image: uobflightlabstarling/starling-sim-iris-ap:latest
-    ports:
-      - "8080:8080"
+    # ports:
+      # - "8080:8080"
 
   sitl:
     network_mode: host

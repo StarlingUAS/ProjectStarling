@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - starling-ui
+          - ros-web-bridge
           - starling-controller-base
           - starling-mavros
           - starling-vicon
