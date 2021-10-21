@@ -68,9 +68,9 @@ topics:
   - queue_size: 1
     topic: mavros/setpoint_position/global
     type: geographic_msgs/msg/GeoPoseStamped
-  - queue_size: 1
-    topic: mavros/setpoint_position/local
-    type: geometry_msgs/msg/PoseStamped
+#   - queue_size: 1 TODO set up custom message to use nav_msgs/Odom
+#     topic: mavros/setpoint_position/local
+#     type: geometry_msgs/msg/PoseStamped
   - queue_size: 1
     topic: mavros/setpoint_position/global_to_local
     type: geographic_msgs/msg/GeoPoseStamped
