@@ -38,10 +38,11 @@ EXPOSE 11345
 # Add gazebo environemnt setup to /ros.env
 RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
 
-# Install gazebo_ros and xacro
+# Install gazebo_ros, gazebo ros extra packages (e.g. plugins) and xacro
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-foxy-gazebo-ros \
+      ros-foxy-gazebo-ros-pkgs \ 
       ros-foxy-xacro \
     && rm -rf /var/lib/apt/lists/*
 
@@ -96,6 +97,8 @@ COPY tools /ros_ws/tools
 # Add custom ROS DDS configuration (force UDP always) 
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
+COPY setup_display.sh /
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]

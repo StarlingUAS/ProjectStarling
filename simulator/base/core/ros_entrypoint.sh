@@ -4,6 +4,9 @@ set -e
 # setup ros2 environment
 source "/opt/ros/$ROS_DISTRO/setup.bash"
 
+# setup display environment
+source /setup_display.sh
+
 # Setup additional environment (e.g. gazebo paths)
 source /ros.env
 
