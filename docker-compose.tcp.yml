@@ -36,3 +36,8 @@ services:
     image: uobflightlabstarling/starling-simple-offboard:latest
     environment:
       - "VEHICLE_MAVLINK_SYSID=1"
+
+  ros-web-bridge:
+    image: uobflightlabstarling/ros-web-bridge:latest
+    ports:
+      - "9090:9090"
