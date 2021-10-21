@@ -20,7 +20,7 @@ px4-sitl:
 # Pseudotarget for ArduPilot group
 ardupilot: ardupilot-gazebo arducopter arduplane
 
-ardupilot-gazebo:
+ardupilot-gazebo: core
 	$(BAKE) starling-sim-ardupilot-gazebo
 
 arducopter:
