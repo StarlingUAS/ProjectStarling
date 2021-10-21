@@ -3,16 +3,18 @@ version: '3'
 services:
   simhost: # Must be called simhost
     image: uobflightlabstarling/starling-sim-iris:latest
-    ports:
-      - "8080:8080"
+    environment:
+      - "PX4_SIM_HOST=localhost"
+    network_mode: host
 
   sitl:
     image: uobflightlabstarling/starling-sim-px4-sitl:latest
     environment:
-      - "PX4_SIM_HOST=simhost"
-      - "PX4_OFFBOARD_HOST=mavros"
-    ports:
-      - "18570:18570/udp"
+      - "PX4_SIM_HOST=localhost"
+      - "PX4_OFFBOARD_HOST=localhost"
+    network_mode: host
+    depends_on: 
+      - simhost
 
   mavros:
     image: uobflightlabstarling/starling-mavros:latest
@@ -20,16 +22,27 @@ services:
     environment:
       - "MAVROS_TGT_SYSTEM=1"
       - "MAVROS_FCU_IP=0.0.0.0"
+    network_mode: host
+    depends_on:
+      - sitl
 
-  ui:
-    image: mickeyli789/starling-ui-dashly:latest
-    ports:
-      - "3000:3000"
-
-  allocator:
-    image: uobflightlabstarling/starling-allocator:latest
 
   simple_offboard:
     image: uobflightlabstarling/starling-simple-offboard:latest
+    network_mode: host
     environment:
       - "VEHICLE_MAVLINK_SYSID=1"
+    depends_on:
+      - mavros
+
+  ui:
+    image: mickeyli789/starling-ui-dashly:latest
+    network_mode: host
+
+  allocator:
+    image: uobflightlabstarling/starling-allocator:latest
+    network_mode: host
+
+  ros-web-bridge:
+    image: uobflightlabstarling/ros-web-bridge:latest
+    network_mode: host
