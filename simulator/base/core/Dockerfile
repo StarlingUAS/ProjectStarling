@@ -73,7 +73,7 @@ ENV GZWEB_WS /root/gzweb
 # Patched version
 #RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/eurogroep/gzweb.git ${GZWEB_WS}
 # Additionally patched version
-RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
+RUN git clone --depth 1 -b gzweb_1.4.2 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
 
 # Build gzweb (default model generation)
 RUN source /ros.env \
