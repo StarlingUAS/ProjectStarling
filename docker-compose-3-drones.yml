@@ -5,8 +5,8 @@ services:
   simhost: # Must be called simhost
     image: uobflightlabstarling/starling-sim-iris:latest
     command: [ "ros2", "launch", "launch/iris.launch.xml" , sim_only:=true]
-    ports:
-      - "8080:8080"
+    # ports:
+      # - "8080:8080"
     pid: "host" # Share Process ID Namespace
     network_mode: host
 
@@ -30,8 +30,8 @@ services:
       - "PX4_SIM_HOST=localhost"
       - "PX4_OFFBOARD_HOST=localhost"
       - "PX4_INSTANCE=0"
-    ports:
-      - "18570:18570/udp"
+    # ports:
+      # - "18570:18570/udp"
     depends_on:
       - gazebo_spawn_1
     pid: "host" # Share Process ID Namespace
@@ -80,8 +80,8 @@ services:
       - "PX4_SIM_HOST=localhost"
       - "PX4_OFFBOARD_HOST=localhost"
       - "PX4_INSTANCE=1"
-    ports:
-      - "18571:18571/udp"
+    # ports:
+      # - "18571:18571/udp"
     depends_on:
       - gazebo_spawn_2
     pid: "host" # Share Process ID Namespace
@@ -132,8 +132,8 @@ services:
       - "PX4_OFFBOARD_HOST=localhost"
       - "PX4_INSTANCE=2"
     network_mode: host
-    ports:
-      - "18572:18572/udp"
+    # ports:
+      # - "18572:18572/udp"
     depends_on:
       - gazebo_spawn_3
     pid: "host" # Share Process ID Namespace
@@ -163,8 +163,8 @@ services:
   ui:
     image: mickeyli789/starling-ui-dashly:latest
     network_mode: host
-    ports:
-      - "3000:3000"
+    # ports:
+      # - "3000:3000"
     pid: "host" # Share Process ID Namespace
 
   allocator:
@@ -175,5 +175,5 @@ services:
   ros-web-bridge:
     image: uobflightlabstarling/ros-web-bridge:latest
     network_mode: host
-    ports:
-      - "9090:9090"
+    # ports:
+      # - "9090:9090"
