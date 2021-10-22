@@ -7,8 +7,6 @@ COPY iris.launch.xml /ros_ws/launch/
 COPY spawn_iris.sh /ros_ws/
 COPY models /ardupilot_gazebo/models/
 
-# RUN echo 'export PX4_SITL_PORT=$((PX4_SITL_PORT + PX4_INSTANCE))' >> /ros.env
-
 WORKDIR /ros_ws
 
 # Launch gazebo and spawn model
