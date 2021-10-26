@@ -45,18 +45,18 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["ros-web-bridge", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p"]
+    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p"]
 }
 
-target "ros-web-bridge" {
-    context = "system/ros-web-bridge"
+target "rosbridge-suite" {
+    context = "system/rosbridge-suite"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/ros-web-bridge:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-controller-base" {
