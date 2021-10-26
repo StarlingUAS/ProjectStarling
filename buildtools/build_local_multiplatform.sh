@@ -54,4 +54,4 @@ BAKE_REGISTRY="localhost:5000/" docker buildx bake --builder $BUILDER_NAME --pus
 
 echo "Registry at localhost:5000 has your images"
 echo "Pull the images by appending localhost:5000. e.g.:"
-echo "  $ docker pull localhost:5000/uobflightlabstarling/starling-ui"
+echo "  $ docker pull localhost:5000/uobflightlabstarling/rosbridge-suite"

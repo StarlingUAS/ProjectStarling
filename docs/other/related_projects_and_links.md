@@ -14,7 +14,7 @@ link - [https://github.com/UoBFlightLab/ProjectStarling](https://github.com/UoBF
 This repository contains the core elements of the system. It contains the source for the following docker containers:
 
 * [uobflightlabstarling/starling-mavros](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-mavros) - Core mavros container
-* [uobflightlabstarling/starling-ui](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-ui) - Basic UI (somewhat deprecated)
+* [uobflightlabstarling/rosbridge-suite](https://hub.docker.com/repository/docker/uobflightlabstarling/rosbridge-suite) - Ros websocket bridge (rosbridge-suite) Container
 * [uobflightlabstarling/starling-controller-base](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-controller-base) - Controller Base Container
 * [uobflightlabstarling/starling-vicon](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-vicon) - Container for vicon
 
@@ -45,13 +45,23 @@ This repository contains a trajectory allocator project allocating trajectories 
 
 * [uobflightlabstarling/starling-allocator](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-allocator)
 
-### Starling Dash UI
+### Starling UI/ GUI/ User Interfaces
 
+#### Starling Ui Dashly
 link - [https://github.com/mhl787156/starling_ui_dashly](https://github.com/mhl787156/starling_ui_dashly)
 
 This respository contains a more extensible replacement GUI for thie basic starling ui. It can be used to upload trajectories for use with the allocator and simple offboard.
 
 * [uobflightlabstarling/starling-ui-dashly](https://hub.docker.com/repository/docker/mickeyli789/starling-ui-dashly)
+
+#### Starling UI Example
+link - [https://github.com/StarlingUAS/starling_ui_example](https://github.com/StarlingUAS/starling_ui_example)
+
+This repository contains an example UI application which uses the ros web-bridge/rosbridge-suite
+* [uobflightlabstarling/starling-example-ui](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-example-ui)
+
+#### Deprecated Starling UI
+* [uobflightlabstarling/starling-ui](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-ui) - Basic UI (deprecated)
 
 ## Specific and Applied Projects
 
@@ -62,3 +72,9 @@ link - [https://github.com/UoBFlightLab/clover_ros2_pkgs](https://github.com/UoB
 This repository contains libraries and dockerfile for building the software layer which controls hardware on the Clover drone
 
 * [uobflightlabstarling/starling-clover](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-clover)
+
+### Fenswood Farm 
+
+link - [https://github.com/StarlingUAS/FenswoodScenario](https://github.com/StarlingUAS/FenswoodScenario)
+
+This repository contains the model and docker-compose file for the Fenswood Farm scenario for the University of Bristol Aerial MSc Group Project.
