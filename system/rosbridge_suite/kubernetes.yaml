@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rosbridge-suite
+spec:
+  selector:
+    matchLabels:
+      app: rosbridge-suite
+  template:
+    metadata:
+      labels:
+        app: rosbridge-suite
+    spec:
+      hostNetwork: true
+      shareProcessNamespace: true
+      containers:
+      - name: rosbridge-suite
+        image: uobflightlabstarling/rosbridge-suite:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
