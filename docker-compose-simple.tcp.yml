@@ -24,8 +24,8 @@ services:
       - "MAVROS_GCS_URL=tcp-l://0.0.0.0:5760"
 
 
-  ros-web-bridge:
-    image: uobflightlabstarling/ros-web-bridge:latest
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
     network_mode: host
 
   ui-example:
