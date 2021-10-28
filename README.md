@@ -16,7 +16,7 @@ This systems provides a number of key features.
 
 ## Documentation
 
-Please refer to the documentation at [uobflightlab.github.io/ProjectStarling](https://uobflightlab.github.io/ProjectStarling) for detailed instructions and explanations of how to use this system.
+Please refer to the documentation at [https://docs.starlinguas.dev/](https://docs.starlinguas.dev/) for detailed instructions and explanations of how to use this system.
 
 The documentation is built using [MKDocs](https://www.mkdocs.org/) and can be served locally.
 

@@ -40,16 +40,3 @@ An example ui application is given in [StarlingUAS/starling_ui_example](https://
 A more complex system would be the dashboard created by [foxglove studios](https://foxglove.dev/): https://studio.foxglove.dev/?
 
 > Note: Starling doesn't quite support foxglove just yet, there is a known bug here: https://github.com/foxglove/studio/issues/2035. If this is fixed it will be compatible. 
-
-### Kubernetes Deployment
-
-The UI can also be run within the kubernetes deployment and network. To start as a kubernetes Deployment simply apply the `kubernetes.yaml` file in this directory.
-```bash
-sudo k3s kubectl apply -f kubernetes.yaml
-```
-
-## Notes
-
-This dockerfile installs mavros-foxy and gazebo-foxy messages. 
-
-If other messages are required then either this container needs to be rebuilt with the new messages included (e.g. a build step) or they need to be injected in using the `ros.env.d` pipeline.
