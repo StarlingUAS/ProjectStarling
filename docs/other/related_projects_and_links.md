@@ -21,13 +21,24 @@ This repository contains the core elements of the system. It contains the source
 In addition it also contains the source for the following containers for simulation
 
 * [uobflightlabstarling/starling-sim-base-core](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-base-core) - Base Gazebo simulator
-* [uobflightlabstarling/starling-sim-base-px4](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-base-px4) - Base continaer with px4
+
+* [uobflightlabstarling/starling-sim-base-px4](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-base-px4) - Base container with px4
 * [uobflightlabstarling/starling-sim-px4-sitl](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-px4-sitl) - Gazebo container with px4 sitl installed
 * [uobflightlabstarling/starling-sim-iris](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-iris) - Base gazebo container with px4 sitl installed and spwawns the iris quadcopter model
+
+* [uobflightlabstarling/starling-sim-ardupilot-copter](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-ardupilot-copter) - Base Container with ArduCopter
+* [uobflightlabstarling/starling-sim-ardupilot-gazebo](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-ardupilot-gazebo) - Gazebo Simulator for use with Ardupilot
+* [uobflightlabstarling/starling-sim-iris-ap](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-iris-ap) - Base gazebo container with ardupulot sitl installed and spawns the iris quadcopter model with camera. 
 
 It also contains some example usage:
 
 * [uobflightlabstarling/example_controller_python](https://hub.docker.com/repository/docker/uobflightlabstarling/example_controller_python)
+
+### Murmuration
+
+link - [https://github.com/StarlingUAS/Murmuration](https://github.com/StarlingUAS/Murmuration)
+
+This repository contains all of the docker-compose and kubernetes deployment files. These deployment files rely on a number of the containers in this file.
 
 ### Starling Simple Offboard
 

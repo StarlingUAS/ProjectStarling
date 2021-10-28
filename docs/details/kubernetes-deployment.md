@@ -126,9 +126,9 @@ If you want to stop kubernetes completely, the internet install script comes wit
 [See the k3s docs for info on how to run](https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/)
 
 Are started automatically in the `./run_k3s.sh` script.
-## Running the test cases
+<!-- ## Running the test cases -->
 
-Go to [testing directory for more info](testing/README.md)
+<!-- Go to [testing directory for more info](testing/README.md) -->
 
 
 

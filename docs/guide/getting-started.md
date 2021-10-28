@@ -54,6 +54,8 @@ That is Docker on Linux installed. See [the original page](https://docs.docker.c
 
 For Windows systems, please see [the windows installation instructions for full details](https://docs.docker.com/docker-for-windows/install/). You will need to install Docker Desktop for Windows.
 
+Follow the instructions and tutorial below, but refer to our [Windows Support page](windows-support.md) if you have issues. 
+
 Starling has not been fully tested on Windows, but single-agent non-cluster (docker-only) applications should be compatible.
 
 ### Mac OS
@@ -94,11 +96,10 @@ For *multiple drone* applications, there are also 3 steps to the development of 
 1. **Step 1:** *Single Drone testing on local machine using Docker only*
     - Follow the following [user guide](../single-drone-local-machine)
     - Simplest deployment method and the quickest way to get a single simulation (gazebo) and drone (px4, mavros) instance running.
-
     - Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.
     - Can be used to quickly protype controllers before testing with multiple vehicles.
 2. **Step 2:** *Multiple Drone testing on local cluster*
-    - Follow the following [user guide](../multiple-drone-local-machine.md)
+    - Follow the following [user guide](multiple-drone-local-machine.md)
     - The cluster facilitates the multi-agent capability of starling.
     - The guide takes you through the basic concepts required for running multi-agent applications
 3. **Step 3:** *Multiple Drones flying at the Robotics Laboratory*

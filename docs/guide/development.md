@@ -1,6 +1,6 @@
 # Developing your own containers
 
-This guide shows recommended methods for developing your own controllers and using Starling to develop your exeperiments.
+This guide shows recommended methods for developing your own controllers and using Starling to develop your experiments.
 
 ## Contents
 
@@ -41,3 +41,14 @@ There are actually a number of methods of developing an application within a con
     * Iteration is very quick and your local environment need not be modified in any way.
     * Be aware that you may need to repeat some of these steps after restarting the container if the container environment (e.g. ports/networking) needs to be changed.
     * Recommended method if quick changes need to be tested, but not for full development in case the environment needs to be changed.
+
+
+## VSCode / ROS2 Template Project
+
+There is a template repository within the StarlingUAS organisation called [`vscode_ros2_workspace`](https://github.com/StarlingUAS/vscode_ros2_workspace). This was developed by an active VSCode/ROS2 developer working in industry. 
+
+This template most likely has many features that you are possibly unlikely to use, but will give you a flavour of what developing systems in ROS2 is like out there. 
+
+Feel free to try and use this template, I would recommend thoroughly reading through the repository README for the full instructions. 
+
+Also if you are on windows you may need to change [line 11 of `.devcontainer/devcontainer.json`](https://github.com/StarlingUAS/vscode_ros2_workspace/blob/4392bd0873a5d4c32a804fcaaa9f7fbe1b1057af/.devcontainer/devcontainer.json#L11) to the name of the current docker network (if using docker-compose - see the tutorial example single drone local).

@@ -14,6 +14,13 @@ This systems provides a number of key features.
 
 ![Simple Architecture](/img/ArchSimple.jpg)
 
+## Setup
+
+For local development and testing, clone the repository recursively so that all submodules are included 
+
+```
+git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
+```
 ## Documentation
 
 Please refer to the documentation at [uobflightlab.github.io/ProjectStarling](https://uobflightlab.github.io/ProjectStarling) for detailed instructions and explanations of how to use this system.
