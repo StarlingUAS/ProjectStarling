@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: starling-ui
+  name: rosbridge-suite
 spec:
   selector:
     matchLabels:
-      app: starling-ui
+      app: rosbridge-suite
   template:
     metadata:
       labels:
-        app: starling-ui
+        app: rosbridge-suite
     spec:
       hostNetwork: true
       shareProcessNamespace: true
       containers:
-      - name: starling-ui
-        image: uobflightlabstarling/starling-ui:latest
+      - name: rosbridge-suite
+        image: uobflightlabstarling/rosbridge-suite:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
         - containerPort: 9090

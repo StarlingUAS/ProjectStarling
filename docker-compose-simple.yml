@@ -22,8 +22,8 @@ services:
       - "MAVROS_TGT_SYSTEM=1"
       - "MAVROS_FCU_IP=0.0.0.0"
 
-  ros-web-bridge:
-    image: uobflightlabstarling/ros-web-bridge:latest
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
     network_mode: host
 
   ui-example:

@@ -44,8 +44,8 @@ services:
     image: uobflightlabstarling/starling-allocator:latest
     network_mode: host
 
-  ros-web-bridge:
-    image: uobflightlabstarling/ros-web-bridge:latest
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
     network_mode: host
 
 

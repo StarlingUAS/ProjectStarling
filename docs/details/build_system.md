@@ -77,3 +77,12 @@ both the tag name and `:nightly`, before being pushed to DockerHub. These additi
 The actions workflows attempt to make use of `buildx`'s cache to repository. The `:cache` and `:cache-dev` tags are used
 for each image for the caches. This is done by setting the `BAKE_CACHENAME` variable. There's likely the opportunity to
 streamline the two workflows into one, which should reduce maintainence.
+
+#### Images on DockerHub
+
+The set of images are automatically updated on DockerHub. Each image will have a set of tags:
+
+ - `:latest` tracking the most recent push to `master` branch
+ - `:nightly` tracking the most recent push to the `dev` branch
+ - `:vX.Y.Z` fixed release tags
+ - `:${BRANCH}` tracking most recent push to PR branches while active
