@@ -99,6 +99,7 @@ COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
 COPY setup_display.sh /
+ENV ENABLE_VIRTUAL_FRAMEBUFFER true
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]
