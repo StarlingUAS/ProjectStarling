@@ -7,6 +7,18 @@ COPY iris.launch.xml /ros_ws/launch/
 COPY spawn_iris.sh /ros_ws/
 COPY models /ardupilot_gazebo/models/
 
+COPY gimbal_plugin /ros_ws/src/gimbal_plugin
+
+# Build with ROS2 on path
+RUN cd /ros_ws \
+    && . /opt/ros/foxy/setup.sh \
+    && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+    && colcon build --cmake-force-configure \
+    && rm -r build
+
+# Add plugins to path manually
+RUN echo 'export GAZEBO_PLUGIN_PATH=/ros_ws/install/gimbal_plugin/lib:${GAZEBO_PLUGIN_PATH}' >> /ros.env.d/ardupilot/setup.bash
+
 WORKDIR /ros_ws
 
 # Launch gazebo and spawn model

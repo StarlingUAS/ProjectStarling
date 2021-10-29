@@ -161,7 +161,7 @@
             <!-- <argument>image_raw:=custom</argument> -->
             <!-- <argument>camera_info:=custom_info</argument> -->
           </ros>
-          <camera_name>camera1</camera_name>
+          <camera_name>camera</camera_name>
           <frame_name>camera_link</frame_name>
           <hack_baseline>0.07</hack_baseline>
         </plugin>
@@ -195,7 +195,10 @@
       <pose>0 0 0.02 0 0 0</pose>
     </joint>
 
-    <plugin name="gimbal_small_2d" filename="libGimbalSmall2dPlugin.so">
+    <plugin name="gimbal_small_2d" filename="libGimbal2dPlugin.so">
+      <ros>
+        <namespace>vehicle_1</namespace>
+      </ros>
       <joint>tilt_joint</joint>
     </plugin>
   </model>
