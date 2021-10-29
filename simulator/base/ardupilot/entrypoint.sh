@@ -56,7 +56,10 @@ if [ ! -z "$AP_DISTRIBUTE" ]; then
     AP_OFFSET_Y=$(( AP_SYSID % 16 ))
 fi
 
+AP_SIM_ADDRESS=${AP_SIM_ADDRESS:-127.0.0.1}
+
 exec /src/ardupilot/build/sitl/bin/ardu${AP_VEHICLE} \
     --model=${AP_MODEL} \
     --home=$(/home/root/offset_location.py ${AP_HOME} ${AP_OFFSET_X} ${AP_OFFSET_Y}) \
-    --defaults=${AP_PARAM_FILES},$(pwd)/set_sysid.parm
+    --defaults=${AP_PARAM_FILES},$(pwd)/set_sysid.parm \
+    --sim-address=${AP_SIM_ADDRESS}

@@ -21,6 +21,7 @@ Name                  | Default Value                | Description
 `AP_OFFSET_Y`         | 0                            | Start location y offset for SITL
 `AP_DISTRIBUTE`       | {null}                       | If set, automatically generate `AP_OFFSET_X` and `AP_OFFSET_Y`
 `AP_USE_GAZEBO`       | {null}                       | If set, use a Gazebo model as physics backend
+`AP_SIM_ADDRESS`      | 127.0.0.1                    | IP address to use for talking to Gazebo instance
 
 ### `AP_SYSID`
 
