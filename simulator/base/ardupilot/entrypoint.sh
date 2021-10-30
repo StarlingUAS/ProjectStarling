@@ -62,7 +62,7 @@ if [ ! -z "${AP_SIM_HOST}" ]; then
     if [ -z "${AP_SIM_ADDRESS}" ]; then
         # Address lookup failed
         echo "Error: Failed to lookup IP address for host '${AP_SIM_HOST}'"
-        exit(1)
+        exit 1
     fi
 fi
 
