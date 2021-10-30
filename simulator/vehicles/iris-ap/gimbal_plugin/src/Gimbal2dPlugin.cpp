@@ -85,7 +85,7 @@ void GimbalPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
 
   // The model pointer gives you direct access to the physics object,
   // for example:
-  RCLCPP_INFO(impl_->ros_node_->get_logger(), model->GetName().c_str());
+  // RCLCPP_INFO(impl_->ros_node_->get_logger(), model->GetName().c_str());
 
   // Create a connection so the OnUpdate function is called at every simulation
   // iteration. Remove this call, the connection and the callback if not needed.
@@ -111,6 +111,12 @@ void GimbalPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
   if (!impl_->tiltJoint)
   {
     RCLCPP_ERROR(impl_->ros_node_->get_logger(), "Gimbal2dPlugin::Load ERROR! Can't get joint %s", jointName.c_str());
+  }
+
+  // Get initial angle details
+  if (sdf->HasElement("initial_angle"))
+  {
+    impl_->command = sdf->Get<double>("initial_angle");
   }
 
   // Initialise time

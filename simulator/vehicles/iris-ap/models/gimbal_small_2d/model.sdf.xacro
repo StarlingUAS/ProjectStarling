@@ -1,6 +1,12 @@
 <?xml version='1.0'?>
-<sdf version='1.6'>
-  <model name='gimbal_small_2d'>
+
+<sdf version='1.6' xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="ros_namespace" value="$(arg ros_namespace)" />
+  <xacro:property name="camera_name" value="$(arg camera_name)" />
+  <xacro:property name="camera_width" value="$(arg camera_width)" />
+  <xacro:property name="camera_height" value="$(arg camera_height)" />
+  <xacro:property name="gimbal_initial_angle" value="$(arg gimbal_initial_angle)" />
+    <model name='gimbal_small_2d'>
     <pose>0 0 0.18 0 0 0</pose>
 
     <link name='base_link'>
@@ -137,8 +143,8 @@
         <camera name="head">
           <horizontal_fov>2.0</horizontal_fov>
           <image>
-            <width>640</width>
-            <height>480</height>
+            <width>${camera_width}</width>
+            <height>${camera_height}</height>
           </image>
           <clip>
             <near>0.05</near>
@@ -157,11 +163,11 @@
         <visualize>1</visualize>
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <ros>
-            <namespace>vehicle_1</namespace>
+            <namespace>${ros_namespace}</namespace>
             <!-- <argument>image_raw:=custom</argument> -->
             <!-- <argument>camera_info:=custom_info</argument> -->
           </ros>
-          <camera_name>camera</camera_name>
+          <camera_name>${camera_name}</camera_name>
           <frame_name>camera_link</frame_name>
           <hack_baseline>0.07</hack_baseline>
         </plugin>
@@ -197,9 +203,10 @@
 
     <plugin name="gimbal_small_2d" filename="libGimbal2dPlugin.so">
       <ros>
-        <namespace>vehicle_1</namespace>
+        <namespace>${ros_namespace}</namespace>
       </ros>
       <joint>tilt_joint</joint>
+      <initial_angle>${gimbal_initial_angle}</initial_angle>
     </plugin>
   </model>
 </sdf>
