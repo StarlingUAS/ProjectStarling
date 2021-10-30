@@ -56,7 +56,20 @@ if [ ! -z "$AP_DISTRIBUTE" ]; then
     AP_OFFSET_Y=$(( AP_SYSID % 16 ))
 fi
 
+if [ ! -z "${AP_SIM_HOST}" ]; then
+    # AP_SIM_HOST has been set, use it to set AP_SIM_ADDRESS
+    AP_SIM_ADDRESS="$(getent hosts ${AP_SIM_HOST} | cut -d ' ' -f1)"
+    if [ -z "${AP_SIM_ADDRESS}" ]; then
+        # Address lookup failed
+        echo "Error: Failed to lookup IP address for host '${AP_SIM_HOST}'"
+        exit 1
+    fi
+fi
+
+AP_SIM_ADDRESS=${AP_SIM_ADDRESS:-127.0.0.1}
+
 exec /src/ardupilot/build/sitl/bin/ardu${AP_VEHICLE} \
     --model=${AP_MODEL} \
     --home=$(/home/root/offset_location.py ${AP_HOME} ${AP_OFFSET_X} ${AP_OFFSET_Y}) \
-    --defaults=${AP_PARAM_FILES},$(pwd)/set_sysid.parm
+    --defaults=${AP_PARAM_FILES},$(pwd)/set_sysid.parm \
+    --sim-address=${AP_SIM_ADDRESS}
