@@ -19,3 +19,7 @@ RUN git clone https://github.com/khancyr/ardupilot_gazebo \
 RUN mkdir -p /ros.env.d/ardupilot \
     && echo 'export GAZEBO_MODEL_PATH=/ardupilot_gazebo/models:${GAZEBO_MODEL_PATH}' >> /ros.env.d/ardupilot/setup.bash \
     && echo 'export GAZEBO_RESOURCE_PATH=/ardupilot_gazebo/worlds:${GAZEBO_RESOURCE_PATH}' >> /ros.env.d/ardupilot/setup.bash
+
+COPY sim_setup.sh /ros.env.d/setup/setup.bash
+
+ENV AP_SYSID 1
