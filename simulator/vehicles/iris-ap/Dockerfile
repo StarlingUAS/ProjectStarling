@@ -12,7 +12,7 @@ ENV AP_SITL_ADDRESS 127.0.0.1
 # Copy in the xacro & bash file to setup the model with a specific address
 RUN mkdir /ros.env.d/iris_ap
 COPY model.sdf.xacro /ros.env.d/iris_ap/model.sdf.xacro
-COPY iris_setup.sh /ros.env.d/iris_ap/setup.sh
+COPY iris_setup.sh /ros.env.d/iris_ap/setup.bash
 
 WORKDIR /ros_ws
 
