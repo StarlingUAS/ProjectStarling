@@ -1,6 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.6" xmlns:xacro='http://ros.org/wiki/xacro'>
   <xacro:arg name="fdm_addr" default="127.0.0.1"/>
+  <xacro:arg name="listen_addr" default="127.0.0.1"/>
   <model name="iris_demo">
     <include>
       <uri>model://iris_with_standoffs</uri>
@@ -515,6 +516,7 @@
     </plugin>
     <plugin name="arducopter_plugin" filename="libArduPilotPlugin.so">
       <fdm_addr>$(arg fdm_addr)</fdm_addr>
+      <listen_addr>$(arg listen_addr)</listen_addr>
       <fdm_port_in>9002</fdm_port_in>
       <fdm_port_out>9003</fdm_port_out>
       <!--

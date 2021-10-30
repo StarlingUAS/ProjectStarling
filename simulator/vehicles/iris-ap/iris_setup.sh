@@ -13,4 +13,4 @@ fi
 XACRO_PATH=/ros.env.d/iris_ap/model.sdf.xacro
 MODEL_PATH=/ardupilot_gazebo/models/iris_with_ardupilot/model.sdf
 
-xacro ${XACRO_PATH} fdm_addr:=${AP_SITL_ADDRESS} > ${MODEL_PATH}
+xacro ${XACRO_PATH} fdm_addr:=${AP_SITL_ADDRESS} listen_addr:=0.0.0.0 > ${MODEL_PATH}
