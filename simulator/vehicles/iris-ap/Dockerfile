@@ -7,12 +7,12 @@ COPY iris.launch.xml /ros_ws/launch/
 COPY spawn_iris.sh /ros_ws/
 
 ENV AP_SITL_ADDRESS 127.0.0.1
+# AP_SITL_HOST
 
-# Copy in the xacro file to setup the model with a specific address
-COPY model.sdf.xacro /ardupilot_gazebo/models/iris_with_ardupilot/
-RUN echo 'xacro /ardupilot_gazebo/models/iris_with_ardupilot/model.sdf.xacro fdm_addr:=${AP_SITL_ADDRESS} > /ardupilot_gazebo/models/iris_with_ardupilot/model.sdf' \
-    >> /ros.env.d/ardupilot/setup.bash
-
+# Copy in the xacro & bash file to setup the model with a specific address
+RUN mkdir /ros.env.d/iris_ap
+COPY model.sdf.xacro /ros.env.d/iris_ap/model.sdf.xacro
+COPY iris_setup.sh /ros.env.d/iris_ap/setup.sh
 
 WORKDIR /ros_ws
 

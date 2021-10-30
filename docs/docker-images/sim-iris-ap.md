@@ -11,3 +11,4 @@ This image adds the launch files required to launch an Iris model with the ArduP
 Name                  | Default Value                | Description
 ----------------------|------------------------------|------------
 `AP_SITL_ADDRESS`     | 127.0.0.1                    | IP address for Gazebo plugin to use to talk to ArduPilot instance
+`AP_SITL_HOST`        | {null}                       | Hostname for Gazebo plugin to use to talk to ArduPilot instance. Set to __override__ IP address.
