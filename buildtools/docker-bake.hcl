@@ -202,6 +202,10 @@ target "starling-sim-ardupilot-plane" {
 
 target "starling-sim-ardupilot-gazebo" {
     context = "simulator/base/ardupilot"
+    args = {
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
+    }
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_VERSION}",
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_RELEASENAME}": "",
