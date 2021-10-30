@@ -10,10 +10,10 @@
     <executable unless="$(var sim_only)" 
         cmd="xacro model.sdf.xacro
               ros_namespace:=$(env VEHICLE_NAMESPACE)
-              camera_name:=camera
-              camera_height:=480
-              camera_width:=640
-              gimbal_initial_angle:=0.785
+              camera_name:=$(env CAMERA_NAME camera)
+              camera_height:=$(env CAMERA_HEIGHT 480)
+              camera_width:=$(env CAMERA_WIDTH 640)
+              gimbal_initial_angle:=$(env GIMBAL_INITIAL_ANGLE 0.785)
               -o model.sdf
               "
         cwd="/ardupilot_gazebo/models/gimbal_small_2d/"
