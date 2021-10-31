@@ -23,6 +23,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include <geometry_msgs/msg/pose2_d.hpp>
+#include <std_msgs/msg/float32.hpp>
 
 #include <memory>
 
@@ -41,10 +42,10 @@ public:
   gazebo_ros::Node::SharedPtr ros_node_;
 
   /// Publisher to the gimbal status topic
-  rclcpp::Publisher<geometry_msgs::msg::Pose2D>::SharedPtr pub;
+  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr pub;
 
   /// Subscriber to the gimbal command topic
-  rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr sub;
+  rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr sub;
 
   /// Parent model of this plugin
   gazebo::physics::ModelPtr model;
@@ -123,20 +124,20 @@ void GimbalPlugin::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
   impl_->lastUpdateTime = model->GetWorld()->SimTime();
 
   // Gimbal state publisher
-  impl_->pub = impl_->ros_node_->create_publisher<geometry_msgs::msg::Pose2D>(
+  impl_->pub = impl_->ros_node_->create_publisher<std_msgs::msg::Float32>(
     "gimbal_tilt_status", qos.get_publisher_qos("grasping", rclcpp::QoS(1)));
   RCLCPP_INFO(
     impl_->ros_node_->get_logger(),
     "Advertise gimbal status on [%s]", impl_->pub->get_topic_name());
 
   // Gimbal subscription, callback simply sets the command
-  impl_->sub = impl_->ros_node_->create_subscription<geometry_msgs::msg::Pose2D>(
+  impl_->sub = impl_->ros_node_->create_subscription<std_msgs::msg::Float32>(
     "gimbal_tilt_cmd", 10,
-    [this](const geometry_msgs::msg::Pose2D::SharedPtr msg){
+    [this](const std_msgs::msg::Float32::SharedPtr msg){
       if(msg) {
-        this->impl_->command = msg->theta;
+        this->impl_->command = msg->data;
       } else {
-        RCLCPP_WARN(this->impl_->ros_node_->get_logger(), "Received Gimbal Plugin Pose 2D not valid");
+        RCLCPP_WARN(this->impl_->ros_node_->get_logger(), "Received Gimbal Plugin Angle not valid");
       }
     }
   );
@@ -170,10 +171,8 @@ void GimbalPlugin::OnUpdate()
     impl_->lastUpdateTime = time;
   }
 
-  auto msg = geometry_msgs::msg::Pose2D();
-  msg.x = 0.0;
-  msg.y = 0.0;
-  msg.theta = angle;
+  auto msg = std_msgs::msg::Float32();
+  msg.data = angle;
   impl_->pub->publish(msg);
 
 }
