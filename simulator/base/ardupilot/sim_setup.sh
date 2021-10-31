@@ -25,6 +25,16 @@ else
 fi
 echo "AP_SYSID is set to $AP_SYSID"
 
+if [ ! -z "${AP_SITL_HOST}" ]; then
+    # AP_SITL_HOST has been set, use it to set AP_SITL_ADDRESS
+    AP_SITL_ADDRESS="$(getent hosts ${AP_SITL_HOST} | cut -d ' ' -f1)"
+    if [ -z "${AP_SITL_ADDRESS}" ]; then
+        # Address lookup failed
+        echo "Error: Failed to lookup IP address for host '${AP_SITL_HOST}'"
+        exit 1
+    fi
+fi
+
 if [ ! -v $VEHICLE_NAMESPACE ]; then
     # If set Ensure VEHICLE_NAMESPACE is a valid topic name
     # Replace all '-' with '_'
