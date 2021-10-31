@@ -98,6 +98,7 @@ COPY tools /ros_ws/tools
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
+# Setup any display components for virtual cameras
 COPY setup_display.sh /
 ENV ENABLE_VIRTUAL_FRAMEBUFFER true
 
