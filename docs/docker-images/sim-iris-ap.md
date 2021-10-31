@@ -1,6 +1,7 @@
 # `starling-sim-iris-ap`
 
 Based on [`staring-sim-ardupilot-gazebo`](../sim-ardupilot-gazebo)
+See for additional environment variables.
 
 ## Overview
 
@@ -13,5 +14,16 @@ The original gimbal in the gazebo model library is out of date, therefore an upd
 
 Name                  | Default Value                | Description
 ----------------------|------------------------------|------------
-`AP_SITL_ADDRESS`     | 127.0.0.1                    | IP address for Gazebo plugin to use to talk to ArduPilot instance
-`AP_SITL_HOST`        | {null}                       | Hostname for Gazebo plugin to use to talk to ArduPilot instance. Set to __override__ IP address.
+`CAMERA_NAME`         | camera                       | ROS2 Name of the camera, camera topic is `$VEHICLE_NAMESPACE/$CAMERA_NAME/image_raw`. 
+`CAMERA_HEIGHT`       | 480                          | Height resolution of camera image
+`CAMERA_WIDTH`        | 640                          | Width resolution of camera image
+`GIMBAL_INITIAL_ANGLE`| 0.785                        | Initial angle (radians) of the gimbal. 0.0 Angle is forwards, pi/2 is down. 
+
+## Exposed Topics
+
+Name                  | Topic                | Description
+----------------------|------------------------------|------------
+`$VEHICLE_NAMESPACE/$CAMERA_NAME/image_raw` | `sensor_msgs/msg/Image` | Image topic from the camera attached to the gimbal
+`$VEHICLE_NAMESPACE/$CAMERA_NAME/camera_info` | `sensor_msgs/msg/CameraInfo` | Camera Info topic from the camera attached to the gimbal
+`$VEHICLE_NAMESPACE/gimbal_tilt_cmd` | `std_msgs/msg/Float32` | The target angle (radians) of the gimbal camera tilt [0.0, 3.14]. 
+`$VEHICLE_NAMESPACE/gimbal_tilt_status` | `std_msgs/msg/Float32` | The current angle (radians) of the gimbal camera tilt [0.0, 3.14]. 
