@@ -6,6 +6,7 @@
   <xacro:property name="camera_width" value="$(arg camera_width)" />
   <xacro:property name="camera_height" value="$(arg camera_height)" />
   <xacro:property name="gimbal_initial_angle" value="$(arg gimbal_initial_angle)" />
+  <xacro:property name="gimbal_meshes_directory" value="$(arg gimbal_meshes_directory)" />
     <model name='gimbal_small_2d'>
     <pose>0 0 0.18 0 0 0</pose>
 
@@ -26,7 +27,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://gimbal_small_2d/meshes/base_main.dae</uri>
+           <uri>model:/${gimbal_meshes_directory}/base_main.dae</uri>
          </mesh>
         </geometry>
         <material>
@@ -41,7 +42,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://gimbal_small_2d/meshes/base_arm.dae</uri>
+           <uri>model://${gimbal_meshes_directory}/base_arm.dae</uri>
          </mesh>
         </geometry>
         <material>
@@ -90,7 +91,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://gimbal_small_2d/meshes/tilt.dae</uri>
+           <uri>model://${gimbal_meshes_directory}/tilt.dae</uri>
          </mesh>
         </geometry>
         <material>
@@ -106,7 +107,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://gimbal_small_2d/meshes/tilt.dae</uri>
+           <uri>model://${gimbal_meshes_directory}/tilt.dae</uri>
          </mesh>
         </geometry>
       </collision>

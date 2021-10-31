@@ -6,20 +6,6 @@
 
     <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" />
 
-    <!-- Xacro launch the gimball small 2d for the iris_with_ardupilot model -->
-    <executable unless="$(var sim_only)" 
-        cmd="xacro model.sdf.xacro
-              ros_namespace:=$(env VEHICLE_NAMESPACE)
-              camera_name:=$(env CAMERA_NAME camera)
-              camera_height:=$(env CAMERA_HEIGHT 480)
-              camera_width:=$(env CAMERA_WIDTH 640)
-              gimbal_initial_angle:=$(env GIMBAL_INITIAL_ANGLE 0.785)
-              -o model.sdf
-              "
-        cwd="/ardupilot_gazebo/models/gimbal_small_2d/"
-        output="screen"
-    /> 
-
     <!-- Launch spawn entity after deplay to ensure sdf has been generated -->
     <node unless="$(var sim_only)" 
         pkg="gazebo_ros" 
@@ -28,7 +14,6 @@
               -file /ardupilot_gazebo/models/iris_with_ardupilot/model.sdf
               -spawn_service_timeout 30.0
               "
-        launch-prefix="bash -c 'sleep 2.0; $0 $@' "
     />
 
 </launch>
