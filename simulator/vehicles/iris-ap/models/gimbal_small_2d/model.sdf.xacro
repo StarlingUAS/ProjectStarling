@@ -42,7 +42,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://${gimbal_meshes_directory}/base_arm.dae</uri>
+           <uri>model:/${gimbal_meshes_directory}/base_arm.dae</uri>
          </mesh>
         </geometry>
         <material>
@@ -91,7 +91,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://${gimbal_meshes_directory}/tilt.dae</uri>
+           <uri>model:/${gimbal_meshes_directory}/tilt.dae</uri>
          </mesh>
         </geometry>
         <material>
@@ -107,7 +107,7 @@
         <geometry>
          <mesh>
            <scale>0.001 0.001 0.001</scale>
-           <uri>model://${gimbal_meshes_directory}/tilt.dae</uri>
+           <uri>model:/${gimbal_meshes_directory}/tilt.dae</uri>
          </mesh>
         </geometry>
       </collision>

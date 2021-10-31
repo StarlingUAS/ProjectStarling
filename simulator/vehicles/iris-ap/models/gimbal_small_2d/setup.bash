@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 XACRO_PATH=${SCRIPT_DIR}/model.sdf.xacro
 MODEL_PATH=${SCRIPT_DIR}/models/gimbal_small_2d/model.sdf
-MESHES_PATH=${SCRIPT_DIR}/models/gimbal_small_2d/meshes
+MESHES_PATH=/gimbal_small_2d/meshes
 
 xacro ${XACRO_PATH} \
     ros_namespace:=${VEHICLE_NAMESPACE} \
