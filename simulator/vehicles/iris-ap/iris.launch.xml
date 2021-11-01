@@ -6,7 +6,7 @@
 
     <include unless="$(var spawn_only)" file="/ros_ws/launch/gzweb.launch.xml" />
 
-    <!-- Launch spawn entity after deplay to ensure sdf has been generated -->
+    <!-- Launch spawn entity -->
     <node unless="$(var sim_only)" 
         pkg="gazebo_ros" 
         exec="spawn_entity.py" 
