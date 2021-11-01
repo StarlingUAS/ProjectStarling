@@ -44,6 +44,7 @@ RUN apt-get update \
       ros-foxy-gazebo-ros \
       ros-foxy-gazebo-ros-pkgs \ 
       ros-foxy-xacro \
+      ros-foxy-image-transport-plugins \
     && rm -rf /var/lib/apt/lists/*
 
 # Install gzweb dependencies
