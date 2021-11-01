@@ -3,26 +3,29 @@ version: '3'
 services:
   simhost:
     image: uobflightlabstarling/starling-sim-iris:latest
-    ports:
-      - "8080:8080"
+    environment:
+      - "PX4_SIM_HOST=localhost" # Required for spawning the vehicle on localhost
+    network_mode: host
 
   sitl:
     image: uobflightlabstarling/starling-sim-px4-sitl:latest
     environment:
-      - "PX4_SIM_HOST=simhost"
-      - "PX4_OFFBOARD_HOST=mavros"
-    ports:
-      - "18570:18570/udp"
+      - "PX4_SIM_HOST=localhost"
+      - "PX4_OFFBOARD_HOST=localhost"
+    network_mode: host
 
   mavros:
     image: uobflightlabstarling/starling-mavros:latest
     command: ros2 launch launch/mavros_bridge.launch.xml
+    network_mode: host
     environment:
       - "MAVROS_TGT_SYSTEM=1"
       - "MAVROS_FCU_IP=0.0.0.0"
 
-  ui:
-    image: uobflightlabstarling/starling-ui:latest
-    ports:
-      - "3000:3000"
-      - "9090:9090"
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
+    network_mode: host
+
+  ui-example:
+    image: uobflightlabstarling/starling-ui-example
+    network_mode: host

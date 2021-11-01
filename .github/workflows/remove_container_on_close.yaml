@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - starling-ui
+          - rosbridge-suite
           - starling-controller-base
           - starling-mavros
           - starling-vicon
@@ -38,6 +38,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           organisation: uobflightlabstarling
           image: ${{matrix.image}}
-          tag: ${{github.event.pull_request.head.ref}}
+          tag: ${{github.event.pull_request.head.ref || github.event.ref }}
 
 

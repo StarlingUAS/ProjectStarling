@@ -21,6 +21,8 @@ Name                  | Default Value                | Description
 `AP_OFFSET_Y`         | 0                            | Start location y offset for SITL
 `AP_DISTRIBUTE`       | {null}                       | If set, automatically generate `AP_OFFSET_X` and `AP_OFFSET_Y`
 `AP_USE_GAZEBO`       | {null}                       | If set, use a Gazebo model as physics backend
+`AP_SIM_ADDRESS`      | 127.0.0.1                    | IP address to use for talking to Gazebo instance
+`AP_SIM_HOST`         | {null}                       | Hostname to use for talking to Gazebo instance. Will __override__ `AP_SIM_ADDRESS`
 
 ### `AP_SYSID`
 
@@ -85,6 +87,17 @@ grid lines are laid out at 1m separations. As a SYSID of 0 is invalid, no vehicl
 
 When set, `AP_USE_GAZEBO` will cause the SITL to connect to an instance of the ArduPilot plugin running as part of a
 Gazebo model. At present, this will use the default IP and port pair: 127.0.0.1:9002/9003
+
+### `AP_SIM_ADDRESS`
+
+Use this to adjust the IP address that the SITL uses to connect to the simulator backend. At present, this is only
+relevant when `AP_USE_GAZEBO` is set.
+
+### `AP_SIM_HOST`
+
+When set, the container will resolve the hostname stored in this variable using `getent hosts`. The value from the
+lookup will be used in preference to any address set in `AP_SIM_ADDRESS`. If the hostname lookup fails, the container
+will exit early.
 
 ## Dockerfile Build Arguments
 

@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         include: 
-          - target: starling-ui
+          - target: rosbridge-suite
             arm64: false
           - target: starling-controller-base
             arm64: true

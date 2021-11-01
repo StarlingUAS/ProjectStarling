@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: safety-button
+spec:
+  selector:
+    matchLabels:
+      app: safety-button
+  template:
+    metadata:
+      labels:
+        app: safety-button
+    spec:
+      hostNetwork: true
+      shareProcessNamespace: true
+      containers:
+      - name: safety-button
+        image: microros/micro-ros-agent:foxy
+        imagePullPolicy: Always
+        args: ["serial", "--dev", "/dev/ttyACM0"]
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /dev
+            name: dev
+
+      nodeSelector:
+        kubernetes.io/arch: "amd64"
+
+      volumes:
+        - name: dev
+          hostPath:
+            path: /dev

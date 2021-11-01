@@ -15,6 +15,6 @@ sed -i 's/](\//](\/docs\//g' $ROOTDIR/README.md
 cp $DOCSDIR/details/kubernetes-dashboard.md $DEPLOYMENTDIR/README.md
 cp $DOCSDIR/guide/example-controller.md $CONTROLLERSDIR/README.md
 cp $DOCSDIR/details/starling-mavros.md $SYSTEMDIR/mavros/README.md
-cp $DOCSDIR/details/starling-ui.md $SYSTEMDIR/ui/README.md
+cp $DOCSDIR/details/starling-ui.md $SYSTEMDIR/rosbridge-suite/README.md
 
 mkdocs build -f $ROOTDIR/mkdocs.yml
