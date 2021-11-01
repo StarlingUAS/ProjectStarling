@@ -11,3 +11,9 @@ To ease the expansion of this image, a mechanism has been built to enable expans
 entrypoint, the image will look for any folders in `/ros.env.d` that contain a `setup.bash` file. Any such file will be
 sourced as part of the entrypoint. This allows for arbitrary expansion of the entrypoint by adding additional volume
 mounts.
+
+## Environment Variables
+
+Name                  | Default Value                | Description
+----------------------|------------------------------|------------
+`ENABLE_VIRTUAL_FRAMEBUFFER` | true | Enables the `setup_display.sh` script and starts a virtual X server. Use for simulated vehicles which have cameras on them. 
