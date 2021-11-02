@@ -20,7 +20,7 @@ topics:
     topic: mavlink/from
     type: mavros_msgs/msg/Mavlink
   # 6.6 Global position
-  #- queue_size: 1
+  #- queue_size: 1 # TODO set up custom message to use nav_msgs/Odom
   #  topic: mavros/global_position/local
   #  type: geometry_msgs/msg/PoseWithCovarianceStamped
   - queue_size: 1
@@ -68,7 +68,7 @@ topics:
   - queue_size: 1
     topic: mavros/setpoint_position/global
     type: geographic_msgs/msg/GeoPoseStamped
-  - queue_size: 1 # TODO set up custom message to use nav_msgs/Odom
+  - queue_size: 1
     topic: mavros/setpoint_position/local
     type: geometry_msgs/msg/PoseStamped
   - queue_size: 1
