@@ -33,6 +33,9 @@ echo "AP_SYSID is set to $AP_SYSID"
 # This is appended onto the list of files used by the SITL
 echo SYSID_THISMAV $AP_SYSID >> set_sysid.parm
 
+# Disable the built-in rangefinder to get Gazebo to work properly
+echo RNGFND1_TYPE 0 >> set_sysid.parm
+
 if [ "${AP_VEHICLE}" = copter ]; then
     AP_MODEL=${AP_MODEL:-quad}
 else
