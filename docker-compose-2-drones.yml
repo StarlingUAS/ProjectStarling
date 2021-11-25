@@ -20,6 +20,7 @@ services:
       - "PX4_SIM_HOST=localhost"
       - "PX4_INSTANCE=0"
       - "IGNORE_FAILURE=true"
+      - "ENABLE_VIRTUAL_FRAMEBUFFER=false"
     depends_on:
       - simhost
     pid: "host" # Share Process ID Namespace
@@ -70,6 +71,7 @@ services:
       - "PX4_INSTANCE=1"
       - "IGNORE_FAILURE=true"
       - "PX4_SIM_INIT_LOC_X=2"
+      - "ENABLE_VIRTUAL_FRAMEBUFFER=false"
     depends_on:
       - simhost
     pid: "host" # Share Process ID Namespace

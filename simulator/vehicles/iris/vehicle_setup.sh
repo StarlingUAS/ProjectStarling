@@ -3,17 +3,15 @@ echo "---- xacro_launch.sh START ------------"
 src_path="/src/PX4-Autopilot"
 
 echo "Generating ${PX4_SIM_MODEL} instance ${PX4_INSTANCE} sysid ${PX4_SYSID}"
-python3 ${src_path}/Tools/sitl_gazebo/scripts/jinja_gen.py ${src_path}/Tools/sitl_gazebo/models/${PX4_SIM_MODEL}/${PX4_SIM_MODEL}.sdf.jinja ${src_path}/Tools/sitl_gazebo \
-    --mavlink_tcp_port $((4560+${PX4_SYSID})) --mavlink_udp_port $((14560+${PX4_SYSID})) --mavlink_id $((1+${PX4_SYSID})) \
-    --gst_udp_port $((5600+${PX4_SYSID})) --video_uri $((5600+${PX4_SYSID})) --mavlink_cam_udp_port $((14530+${PX4_SYSID})) \
+python3 ${src_path}/Tools/sitl_gazebo/scripts/jinja_gen.py \
+    ${src_path}/Tools/sitl_gazebo/models/${PX4_SIM_MODEL}/${PX4_SIM_MODEL}.sdf.jinja ${src_path}/Tools/sitl_gazebo \
+    --mavlink_tcp_port ${PX4_SITL_PORT} \
+    --mavlink_udp_port $((${PX4_OFFBOARD_PORT_BASE}+${PX4_INSTANCE})) \
+    --mavlink_id ${PX4_SYSID} \
+    # --gst_udp_port $((5600+${PX4_INSTANCE}))  \
+    # --video_uri $((5600+${PX4_INSTANCE}))  \
+    # --mavlink_cam_udp_port $((14530+${PX4_INSTANCE})) \
     --output-file /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf
-
-# python3 ${src_path}/Tools/sitl_gazebo/scripts/xacro.py ${src_path}/Tools/sitl_gazebo/models/rotors_description/urdf/${PX4_SIM_MODEL}_base.xacro \
-#     rotors_description_dir:=${src_path}/Tools/sitl_gazebo/models/rotors_description \
-#     mavlink_tcp_port:=${PX4_SITL_PORT}  \
-#     -o /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.urdf
-
-# gz sdf -p  /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.urdf > /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf
 
 echo "Model TCP Port set to: ${PX4_SITL_PORT}"
 echo "Specific SDF saved to /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf"
