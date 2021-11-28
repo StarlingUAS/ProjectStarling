@@ -18,7 +18,8 @@ services:
 
   mavros:
     image: uobflightlabstarling/starling-mavros:latest
-    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment:
+      - "MAVROS_FCU_IP=0.0.0.0"
     depends_on:
       - sitl
 
