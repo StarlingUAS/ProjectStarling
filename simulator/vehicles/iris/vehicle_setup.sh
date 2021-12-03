@@ -8,9 +8,6 @@ python3 ${src_path}/Tools/sitl_gazebo/scripts/jinja_gen.py \
     --mavlink_tcp_port ${PX4_SITL_PORT} \
     --mavlink_udp_port $((${PX4_OFFBOARD_PORT_BASE}+${PX4_INSTANCE})) \
     --mavlink_id ${PX4_SYSID} \
-    # --gst_udp_port $((5600+${PX4_INSTANCE}))  \
-    # --video_uri $((5600+${PX4_INSTANCE}))  \
-    # --mavlink_cam_udp_port $((14530+${PX4_INSTANCE})) \
     --output-file /tmp/${PX4_SIM_MODEL}_${PX4_SYSID}.sdf
 
 echo "Model TCP Port set to: ${PX4_SITL_PORT}"
