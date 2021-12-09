@@ -6,8 +6,6 @@
 INCLUDE+ ./px4builder.Dockerfile
 
 # Add support for remote host in SITL & build it
-# RUN git fetch --recurse-submodules=no origin fe7908feb0de5ee8a4465619098f09b987ab011d \
-#     && git cherry-pick --no-commit fe7908feb0de5ee8a4465619098f09b987ab011d
 RUN make px4_sitl
 
 FROM ros:foxy-ros-base-focal
