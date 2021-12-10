@@ -13,7 +13,7 @@ mavros:
       - imu
       - local_position
       - manual_control
-      - param
+      # - param
       - px4flow
       # - rc_io
       - setpoint_accel

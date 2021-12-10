@@ -4,6 +4,8 @@ FROM ros:foxy-ros-base-focal
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-${ROS_DISTRO}-mavros \
+      ros-${ROS_DISTRO}-mavros-extras \
+      ros-${ROS_DISTRO}-mavros-msgs \
     && rm -rf /var/lib/apt/lists/
 
 # Part of MAVROS setup

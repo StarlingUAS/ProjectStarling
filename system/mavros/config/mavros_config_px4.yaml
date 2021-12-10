@@ -62,9 +62,23 @@ mavros/setpoint_velocity:
     mav_frame: LOCAL_NED
     use_sim_time: false
 
-/mavros/setpoint_accel:
+mavros/setpoint_accel:
   ros__parameters:
     send_force: false
     use_sim_time: false
+
+mavros/distance_sensor:
+  ros__parameters:
+    base_frame_id: base_link
+    config: "{rangefinder: {
+                subscriber: true, 
+                id: 0, 
+                frame_id: rangefinder, 
+                orientation: PITCH_270, 
+                horizontal_fov_ratio: 0.5, 
+                vertical_fov_ratio: 0.5}
+              }"
+    use_sim_time: false
+
 
 
