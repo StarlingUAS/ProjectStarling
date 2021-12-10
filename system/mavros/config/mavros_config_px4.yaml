@@ -81,4 +81,15 @@ mavros/distance_sensor:
     use_sim_time: false
 
 
+mavros/vision_pose:
+  ros__parameters:
+    tf/child_frame_id: vision_estimate
+    tf/frame_id: map
+    tf/listen: false
+    tf/rate_limit: 10.0
+    use_sim_time: false
 
+mavros/vibration:
+  ros__parameters:
+    frame_id: base_link
+    use_sim_time: false

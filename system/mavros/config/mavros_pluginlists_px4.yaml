@@ -24,4 +24,6 @@ mavros:
       - sys_status
       - sys_time
       - vision_pose
+      - onboard_computer_status
+      - vibration
     

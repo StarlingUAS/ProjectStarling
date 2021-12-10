@@ -111,8 +111,6 @@ if [ ! -f "$MAVROS_MOD_CONFIG_PATH" ]; then
     # This then saves the output into $PX4_MOD_CONFIG_PATH
     sed -E "/\"map\"|\"earth\"/! s/(frame_id: )\"(.+)\"/\1\"$VEHICLE_NAMESPACE\/\2\"/g" $MAVROS_CONFIG_PATH > $MAVROS_MOD_CONFIG_PATH
 
-    # Also fix outliers such as the odometry id_des parameter
-    sed -i -E "/\"map\"|\"earth\"/! s/(id_des: )\"(.+)\"/\1\"$VEHICLE_NAMESPACE\/\2\"/g" $MAVROS_MOD_CONFIG_PATH
 else
     echo "Modified Mavros Config for $VEHICLE_NAMESPACE already exists at $MAVROS_MOD_CONFIG_PATH. Using for launch"
 fi
