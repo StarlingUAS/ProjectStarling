@@ -4,7 +4,7 @@ mavros:
     plugin_denylist:
       - "*"
     plugin_allowlist: 
-      #- 'sys_*'
+      - 'sys_*'
       - altitude
       - command
       - distance_sensor
@@ -16,6 +16,7 @@ mavros:
       - param
       - px4flow
       # - rc_io
+      - setpoint_accel
       - setpoint_attitude
       - setpoint_position
       - setpoint_raw

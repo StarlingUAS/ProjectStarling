@@ -21,7 +21,7 @@
         <param name="tgt_system" value="$(var target_system)"/>
         <param name="tgt_component" value="$(var tgt_component)" />
 
-        <!-- <param from="$(var config_yaml)"/> -->
+        <param from="$(var config_yaml)"/>
         <param from="$(var pluginlists_yaml)"/>
     </node>
 
