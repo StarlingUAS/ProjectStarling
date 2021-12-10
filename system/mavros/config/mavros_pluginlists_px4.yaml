@@ -23,7 +23,5 @@ mavros:
       - setpoint_velocity
       - sys_status
       - sys_time
-      - vision_pose_estimate
-      # - vision_speed_estimate
-      # - waypoint
+      - vision_pose
     
