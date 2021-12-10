@@ -118,18 +118,18 @@ else
 fi
 
 # Modify ros 1bridge for topic/service paths
-BRIDGE_MOD_CONFIG_PATH=${BRIDGE_MOD_CONFIG_PATH:-"/bridge_config_mod.yaml"}
-BRIDGE_CONFIG_PATH=${BRIDGE_CONFIG_PATH:-"/bridge_config.yaml"}
-if [ ! -f "$BRIDGE_MOD_CONFIG_PATH" ]; then
-    echo "Modified Bridge Config for $VEHICLE_NAMESPACE does not exist at $BRIDGE_MOD_CONFIG_PATH. Generating specialised configuration for launch."
-    # This line:
-    # -E allow groupings defined by parenthesis to be used in replace by \1 \2
-    # /\"map\"/! selects lines which do not contain "map" or "earth" (Global frame)
-    # The rest then adds $VEHICLE_NAMESPACE in as a prefix to whatever the frame_id was
-    # This captures both frame_id: and child_frame_id
-    # This then saves the output into $PX4_MOD_CONFIG_PATH
-    sed -E "s/(topic: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_CONFIG_PATH > $BRIDGE_MOD_CONFIG_PATH
-    sed -E -i "s/(service: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_MOD_CONFIG_PATH
-else
-    echo "Modified Bridge Config for $VEHICLE_NAMESPACE already exists at $BRIDGE_MOD_CONFIG_PATH. Using for launch"
-fi
+# BRIDGE_MOD_CONFIG_PATH=${BRIDGE_MOD_CONFIG_PATH:-"/bridge_config_mod.yaml"}
+# BRIDGE_CONFIG_PATH=${BRIDGE_CONFIG_PATH:-"/bridge_config.yaml"}
+# if [ ! -f "$BRIDGE_MOD_CONFIG_PATH" ]; then
+#     echo "Modified Bridge Config for $VEHICLE_NAMESPACE does not exist at $BRIDGE_MOD_CONFIG_PATH. Generating specialised configuration for launch."
+#     # This line:
+#     # -E allow groupings defined by parenthesis to be used in replace by \1 \2
+#     # /\"map\"/! selects lines which do not contain "map" or "earth" (Global frame)
+#     # The rest then adds $VEHICLE_NAMESPACE in as a prefix to whatever the frame_id was
+#     # This captures both frame_id: and child_frame_id
+#     # This then saves the output into $PX4_MOD_CONFIG_PATH
+#     sed -E "s/(topic: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_CONFIG_PATH > $BRIDGE_MOD_CONFIG_PATH
+#     sed -E -i "s/(service: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_MOD_CONFIG_PATH
+# else
+#     echo "Modified Bridge Config for $VEHICLE_NAMESPACE already exists at $BRIDGE_MOD_CONFIG_PATH. Using for launch"
+# fi
