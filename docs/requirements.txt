@@ -1,2 +1,4 @@
 mkdocs
 mkdocs-macros-plugin
+pymdown-extensions
+mkdocs-enumerate-headings-plugin
