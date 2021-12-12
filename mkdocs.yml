@@ -16,6 +16,7 @@ plugins:
   - macros
   - enumerate-headings:
       toc_depth: 3
+  - mermaid2
 
 nav:
   - "Home":
