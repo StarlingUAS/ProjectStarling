@@ -284,6 +284,7 @@ Pulling simhost         ...
 Pulling sitl            ...
 Pulling mavros          ...
 Pulling rosbridge-suite ...
+Pulling ui
 ```
 
 Breaking down this command,
@@ -312,6 +313,7 @@ This will start 4 containers:
 2. **sitl**: The software in the loop representing the onboard autopilot software.
 3. **mavros**: This is the bridge between Mavlink and ROS. It also serves to send mavlink messages to a ground station.
 4. **rosbridge-suite**: This is a ros-web interface that is placed there for future use.
+4. **ui**: This is the example ui.
 
 
 Wait a minute or so for all of the containers to initialise. Once started, the simulator should be available to see in the browser.
@@ -329,6 +331,10 @@ The web interface is known as Gazebo Web. You can fly your camera through the en
 - Scrolling the Middle Mouse button will zoom you in and out.
 
 ![Fenswood Scrolling Gif](imgs/fenswoodgif.gif)
+
+The full process as a gif:
+
+![Fenswood Scenario GIF](imgs/starling-fenswood-demo-1.gif)
 
 ## A Brief Introduction to ROS
 
@@ -469,9 +475,27 @@ Then, open up a second terminal and navigate to the example_python_controller fo
 ```console
 myuser@my-machine:~/Documents/example_python_controller$ docker-compose -f docker-compose.fenswood.ap.yaml up
 ```
+With this command, the controller will start off and attempt to find a drone on the network. 
 
-Then you should hopefully see the drone takeoff and attempt to follow a preset trajectory towards the target location.
+> If a drone has not been found, try restarting the both the Fenswood Scenario and the controller. 
 
+Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.
+
+Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [https://localhost:3000](https://localhost:3000) in the browser, and a UI will start up:
+
+![Starling UI](imgs/ui.png)
+
+If it says `connected to rosbridge` in green, then you are ready to send a mission start command. Press the Green GO Button. 
+
+If you go to the terminal it should start sending waypoints. In the UI the camera image should start to change as the vehicle takes off, and you should see the vehicle takeoff in gazebo web as well.
+
+Then you should hopefully see its attempt to follow a preset trajectory towards the target location.
+
+This full process can be seen in the following gif:
+![Fenswood Example Controller demo a](imgs/starling-fenswood-demo-2a.gif)
+
+The landing:
+![Fenswood Example Controller demo a](imgs/starling-fenswood-demo-2b.gif)
 ### What is the Example Controller
 
 So what exactly is the example controller doing?
