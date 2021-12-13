@@ -7,15 +7,15 @@
     <arg name="target_system" default="$(env MAVROS_TGT_SYSTEM)" />
     <arg name="system_id" default="$(env MAVROS_TGT_SYSTEM)" />
     <arg name="config_yaml" default="$(env MAVROS_MOD_CONFIG_PATH)"/>
-    <arg name="pluginlists_yaml" default="$(env MAVROS_PLUGINLISTS_PATH)"/>
+    <arg name="pluginlists_yaml" default="$(env MAVROS_MOD_PLUGINLISTS_PATH)"/>
    	<arg name="tgt_component" default="1" />
     <arg name="respawn_mavros" default="true"/>
     <arg name="log_output" default="screen" />
 	<arg name="fcu_protocol" default="v2.0" />
     
     <node pkg="mavros" 
-          exec="mavros_node">
-          <!-- namespace="$(var vehicle_namespace)"> -->
+          exec="mavros_node"
+          namespace="$(var vehicle_namespace)">
         <param name="fcu_url" value="$(var fcu_url)?ids=$(var system_id),240"/>
         <param name="gcs_url" value="$(var gcs_url)"/>
         <param name="tgt_system" value="$(var target_system)"/>
@@ -23,6 +23,10 @@
 
         <param from="$(var config_yaml)"/>
         <param from="$(var pluginlists_yaml)"/>
+
+        <remap from="set_mode" to="mavros/set_mode"/>    
+        <remap from="set_stream_rate" to="mavros/set_stream_rate"/>    
+        <remap from="set_message_interval" to="mavros/set_message_interval"/>    
     </node>
 
 </launch>

@@ -23,6 +23,7 @@ COPY config/mavros_pluginlists_*.yaml /
 
 ENV MAVROS_MOD_CONFIG_PATH="/mavros_config_mod.yaml"
 ENV MAVROS_CONFIG_PATH="/mavros_config_px4.yaml"
+ENV MAVROS_MOD_PLUGINLISTS_PATH="/mavros_pluginlists_mod.yaml"
 ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists_px4.yaml"
 
 # Add custom ROS DDS configuration (force UDP always)

@@ -110,24 +110,19 @@ if [ ! -f "$MAVROS_MOD_CONFIG_PATH" ]; then
     # This captures both frame_id: and child_frame_id
     # This then saves the output into $PX4_MOD_CONFIG_PATH
     sed -E "/\"map\"|\"earth\"/! s/(frame_id: )\"(.+)\"/\1\"$VEHICLE_NAMESPACE\/\2\"/g" $MAVROS_CONFIG_PATH > $MAVROS_MOD_CONFIG_PATH
-
+    sed -i "s#mavros#/$VEHICLE_NAMESPACE/mavros#g" $MAVROS_MOD_CONFIG_PATH
 else
     echo "Modified Mavros Config for $VEHICLE_NAMESPACE already exists at $MAVROS_MOD_CONFIG_PATH. Using for launch"
 fi
 
-# Modify ros 1bridge for topic/service paths
-# BRIDGE_MOD_CONFIG_PATH=${BRIDGE_MOD_CONFIG_PATH:-"/bridge_config_mod.yaml"}
-# BRIDGE_CONFIG_PATH=${BRIDGE_CONFIG_PATH:-"/bridge_config.yaml"}
-# if [ ! -f "$BRIDGE_MOD_CONFIG_PATH" ]; then
-#     echo "Modified Bridge Config for $VEHICLE_NAMESPACE does not exist at $BRIDGE_MOD_CONFIG_PATH. Generating specialised configuration for launch."
-#     # This line:
-#     # -E allow groupings defined by parenthesis to be used in replace by \1 \2
-#     # /\"map\"/! selects lines which do not contain "map" or "earth" (Global frame)
-#     # The rest then adds $VEHICLE_NAMESPACE in as a prefix to whatever the frame_id was
-#     # This captures both frame_id: and child_frame_id
-#     # This then saves the output into $PX4_MOD_CONFIG_PATH
-#     sed -E "s/(topic: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_CONFIG_PATH > $BRIDGE_MOD_CONFIG_PATH
-#     sed -E -i "s/(service: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_MOD_CONFIG_PATH
-# else
-#     echo "Modified Bridge Config for $VEHICLE_NAMESPACE already exists at $BRIDGE_MOD_CONFIG_PATH. Using for launch"
-# fi
+# Modify mavros PX4 config for frame ids
+MAVROS_MOD_PLUGINLISTS_PATH=${MAVROS_MOD_PLUGINLISTS_PATH:-"/mavros_pluginlists_mod.yaml"}
+MAVROS_PLUGINLISTS_PATH=${MAVROS_PLUGINLISTS_PATH:-"/mavros_pluginlists_px4.yaml"}
+if [ ! -f "$MAVROS_MOD_PLUGINLISTS_PATH" ]; then
+    echo "Modified Mavros Pluginlist for $VEHICLE_NAMESPACE does not exist at $MAVROS_PLUGINLISTS_PATH. Generating specialised configuration for launch."
+    sed -E "s#mavros#/$VEHICLE_NAMESPACE/mavros#g" $MAVROS_PLUGINLISTS_PATH > $MAVROS_MOD_PLUGINLISTS_PATH
+else
+    echo "Modified Mavros Pluginlist for $VEHICLE_NAMESPACE already exists at $MAVROS_MOD_PLUGINLISTS_PATH. Using for launch"
+fi
+
+
