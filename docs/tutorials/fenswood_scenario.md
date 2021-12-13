@@ -405,20 +405,164 @@ style node1 fill:#f9f,stroke:#333,stroke-width:4px
 style node2 fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
+Finally, the data that is sent is not just anything. The data or **message** is a specifically templated packet of data containing things specified for that paricular use case. In our example for `/drone/slam_position` topic, the message might be of type [`geometry_msgs/msg/Point.msg`](https://github.com/ros2/common_interfaces/blob/master/geometry_msgs/msg/Point.msg) which is defined like so:
+```
+# This contains the position of a point in free space
+float64 x
+float64 y
+float64 z
+```
+In other words the message that the `/drone/slam_position` topic publishes must have a `msg.x`, `msg.y` and `msg.z` field, and the subscriber will only receivea message with those fields. There are a number of messages in the standard ROS library, but many libraries also define their own - as have we in some parts of Starling.
+
 This can be summarised in this diagram from the [ROS tutorials](https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html) demonstrates it very nicely:
 
 ![ros2 node diagram](imgs/ros2node_topic_and_service.gif)
 
 The bottom half of this shows how topics get sent from a publisher to a subscriber.
 
-Interestingly, if you put two topics together, you get some notion of two way communication. This is the basis of a **service** which can be seen in the top of the diagram. A **service** is made of a Request topic and a Response topic, but functions as a single communication type to the user. A service request will often wait until a response is received before continuing.
+Interestingly, if you put two topics together, you get some notion of two way communication. This is the basis of a **service** which can be seen in the top of the diagram. A **service** is made of a Request topic and a Response topic, but functions as a single communication type to the user. Similar to messages, a service has a defined request and response types (e.g. see [`std_srvs/srv/SetBool.srv`](https://github.com/ros2/common_interfaces/blob/master/std_srvs/srv/SetBool.srv)).  A service request will often wait until a response is received before continuing.
 
 Note that everything happens asyncronously and in parallel, when a node subscribes or sends a requests, it doesn't know when the response will arrive. It only knows it will (hopefully) arrive at some point. When a packet is received the subscriber can then run a method - this method is usually known as a **callback**, but that will be covered in a later tutorial.
 
+So in summary, the key conepts and terminology are:
+
+- **Nodes**
+- **Topics**
+- **Publishers and Subscribers**
+- **Messages**
+- **Services**
+
 ### ROS2 for Starling
+There are 2 versions of ROS - ROS1 and ROS2. ROS1, initially created in 2007 by Willow Garage, has become huge among the open source robotics community. However over the years they realised that there are a number of important features which are missing - and adding all of these would simply break ROS1. Also the most recent ROS1 distribution (ROS Noetic) is soon to reach the end of its supported life (EOL 2025) with no more ROS1 there after! (See [this article](https://roboticsbackend.com/ros1-vs-ros2-practical-overview/#Why_ROS2_and_not_keep_ROS1) for more details!)
 
+Therefore, to future proof the system, and to ensure all users get a well rounded experience that will hopefully translate to industry experience, Starling has been implemented in ROS2. Specifically, Starling uses the **Foxy Fitzroy** Long Term Support (LTS) distribution throughout.
 
+There are some interesting changes between ROS1 and ROS2, but the core elements described above remain identical. A future tutorial will go into a few more details, but this is probably all the context you will need for now!
+
+> **Note:** Main thing to be aware of is if you are debugging and searching for ROS questions on the internet, be aware that there are many existing questions for ROS1 which will no longer apply for ROS2.
 
 ## Running the Example UAV Controller
 
+The next step in getting the Fenswood Scenario up and running is to actually get the UAV to do something. The previous steps simply started the simulator up, but now we have to instruct and control the UAV. For now we have provided an example controller to all students (to be turned into a tutorial at a later date)
+
+**The example controller repository is here: [https://github.com/StarlingUAS/example_python_controller](https://github.com/StarlingUAS/example_python_controller)**
+
+This section will take you through step by step as to how to download and run the example, a bit of information about what the example contains. This information is also available in the example repository readme.
+
+### Getting the Example Controller
+
+Similar to the simulator, the example controller is packaged up as a github repository. This repository contains a number of example controllers for use in different scenarios and simulators. There is one particular controller which has been developed for the fenswood scenario.
+
+Again, in order to run the example scenario, you will first need to 'clone' the repository locally. Therefore navigate to a location in the file system where you want to store the repository (e.g. `cd ~/Documents`) and run the following:
+```bash
+git clone https://github.com/StarlingUAS/example_python_controller.git
+cd example_python_controller # Navigate into the folder
+```
+
+Now unlike the simulator, you will not need to download the example from the internet. This example is set up so that it will build itself locally when it is run.
+
+### Running the Example Controller
+
+First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [https://localhost:8080](https://localhost:8080)
+
+Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:
+```console
+myuser@my-machine:~/Documents/example_python_controller$ docker-compose -f docker-compose.fenswood.ap.yaml up
+```
+
+Then you should hopefully see the drone takeoff and attempt to follow a preset trajectory towards the target location.
+
+### What is the Example Controller
+
+So what exactly is the example controller doing?
+
+Lets first start with what it is communicating with. On a real drone, the thing that controls the lower level operations of the drone is the **Autopilot** or **Flight controller**. The autopilot contains software which allows for different flight modes and translates hight level commands to motor voltages to fly the drone. As you might have come across, the primary with of controlling the autopilot is through sending Mavlink messages.
+
+Now the autopilot software itself can be swapped out and changed. For this scenario, we use the [**Ardupilot Arducopter**](https://ardupilot.org/copter/docs/introduction.html) firmware for the flight controller. It is important to know the specific type of software as different flight controller firmware requires the use of different flight mode and instructions.
+
+The Fenswood Scenario simulator utilises the Ardupilot Software In The Loop (SITL) simulator. This program is identical to the firmware that would be running onboard the flight controller. Then, within the example controller repository, there are two example controllers - one for Ardupilot (sufficed with `ap`), and one for the PX4 firmware (suffixed with `px4`). You can use the former to communicate with the Ardupilot SITL.
+
+The example controller talks in ROS2 to the SITL via the Mavros translation node mentioned earlier. It sends commands for things like 'takeoff', 'go there' and 'land' via topics which the Mavros node advertises. The Mavros node takes subscribes to these topics and re-publishes them to the Flight Controller using Mavlink in a way Ardupilot understands.
+
+More details will be given in the next tutorial about how this controller works under the hood, and how to develop your own.
+
 ## Inspecting and Debugging Starling with Docker and ROS
+
+Now we have the full example Fenswood Scenario running, we can start to inspect what's going on a bit more! This will be more useful when developing your own controller, but this will give you an idea of whether your systems are working or not.
+
+### Inspecting Docker
+
+As you will hopefully be aware now, there's a fair amount going on under the hood! Because of all of these pieces which need to fit together, occasionally things fail, and therefore you will need to be able to inspect whats going on.
+
+As most of Starling relys on using **Docker** we can use some of the docker commands to inspect what is going on!
+
+It is useful to know what docker containers exist locally on your system and whether they are the most recent release. The following command will list your local docker containers images and when they were last released
+```
+docker images
+```
+
+To see what containers are running, you can use the following. When running Fenswood you should see 5 containers running.
+```
+docker ps
+```
+
+When running docker ps, it shows some useful information. You can use this information to inspect the inside of a container. Now what do we mean by the 'inside of a container'. Essentially the container allows us to run a pre-set set of instructions inside a blank mini version of linux. When we are debugging, it is sometimes really useful to have a look at what is going on inside this mini version of linux!
+
+The `exec` command allows us to go inside one of these containers to make changes directly. Note that when we are inside, we are no longer in your own version of the desktop, and that changes made are persistent inside the container! When inside the container, you can run some of the ROS2 comamnds in the next section.
+```
+docker exec -it <container id> bash
+```
+
+If a particular docker container is not working properly, you can also kill a container:
+```
+docker kill <container id>
+```
+
+### Inspecting ROS2
+
+As mentioned before, everything in starling is running ROS2. Therefore all of the ROS2 nodes, topics and services can be inspected and observed. We can do this inspection using the following few commands.
+
+First ensure that you have `docker exec` into any of the containers. For example using the container id of the container labelled `starling-mavros`.
+
+Once you are inside, you first need to run the following to enable ROS2 commands. (++tab++ autocompleting is available)
+```
+source /opt/ros/foxy/setup.bash
+```
+
+The first thing you can do is list all of the ROS2 nodes in the network `node` command:
+
+```
+ros2 node list
+```
+
+This will show a list of all the nodes that ROS2 can find. You should see all of the nodes from the simulator and the example controller.
+
+Then, we can inspect the list of available topics using the `topic` command.
+
+```
+ros2 topic list
+```
+
+If there is a particular topic you want to inspect, you can use the `echo` command of `topic`, for example if we wanted to inspect the topic `/vehicle_1/mavros/state` we can run:
+
+```
+ros2 topic echo /vehicle_1/mavros/state
+```
+
+This should (assuming the connection to all of the other elements is working) start printing out the current state of the drone. Including whether it is armed or not, and which mode it is currently in.
+
+Finally, you can also inspect the services on the network using the `service` command like the following:
+
+```
+ros2 service list
+```
+
+## Summary and Conclusion
+
+Congratulations! You have gotten to the end of this tutorial!
+
+Especially if this is your first time touching linux and using this stuff, a lot of the content here can be daunting - but feel free to read it over again and hopefullly you will slowly come to understand what is going on.
+
+In this introductory tutorial, we have only really scratched the surface of a lot of the technologies that we've been using. If you wish to have a deeper understanding, I would recommend having a read through the official documentation of all of them. The [docker](https://www.docker.com/101-tutorial) and [ROS2 tutorials](https://docs.ros.org/en/foxy/Tutorials.html) are really good. But I wish to emphasise that you will hopefully not need an extremely deep understanding to use Starling.
+
+The next step after this tutorial is then to cover how you might actually build your own controller. This will go into more detail about Mavlink, ROS2 and Docker - including how to build your own projects and run them against the Fenswood Scenario Simulator!
