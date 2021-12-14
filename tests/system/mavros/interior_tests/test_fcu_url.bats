@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
 
 MAVROS_IMAGE=uobflightlabstarling/starling-mavros
+EXAMPLE_CONFIG_PATH=$BATS_TEST_DIRNAME/resources/example_vehicle.config
 
 @test "explicit MAVROS_FCU_URL" {
     docker run --rm -e MAVROS_FCU_URL="serial:///dev/test/" $MAVROS_IMAGE bash -c '[ "$MAVROS_FCU_URL" == "serial:///dev/test/" ]'
@@ -20,5 +21,5 @@ MAVROS_IMAGE=uobflightlabstarling/starling-mavros
 }
 
 @test "MAVROS_FCU_URL from vehicle config" {
-    docker run --rm -v $(pwd)/resources/example_vehicle.config:/etc/starling/vehicle.config $MAVROS_IMAGE bash -c '[ "$MAVROS_FCU_URL" == "serial:///dev/px4fmu:115200" ]'
+    docker run --rm -v $EXAMPLE_CONFIG_PATH:/etc/starling/vehicle.config $MAVROS_IMAGE bash -c '[ "$MAVROS_FCU_URL" == "serial:///dev/px4fmu:115200" ]'
 }
