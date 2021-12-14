@@ -59,6 +59,7 @@ RUN apt-get update \
       libjansson-dev \
       libtinyxml-dev \
       xvfb \
+      python3-jinja2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install nvm
