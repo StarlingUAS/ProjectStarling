@@ -48,7 +48,7 @@ jobs:
           - target: mavp2p
             arm64: false
     steps:
-      - name: Build Image
+      - name: Build Image (no push)
         uses: mhl787156/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
@@ -57,6 +57,29 @@ jobs:
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           build_arm64: ${{matrix.arm64}}
+          push: false
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          if [ -d ${{ matrix.target }} ] then;
+            bats -r tests/${{ matrix.target }}
+          else
+            echo "No tests for ${{ matrix.target}} can be fuond"
+          fi
+      - name: Build Image (load and push)
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{matrix.arm64}}
+          load: true
+          push: false
 
   bake_images_stage_2:
     runs-on: ubuntu-latest
