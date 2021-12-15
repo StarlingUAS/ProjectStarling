@@ -64,10 +64,10 @@ jobs:
           bats-version: 1.5.0
       - name: Run Tests
         run: |
-          if [ -d ${{ matrix.target }} ] then;
+          if [ -d ${{ matrix.target }} ]; then;
             bats -r tests/${{ matrix.target }}
           else
-            echo "No tests for ${{ matrix.target}} can be fuond"
+            echo "No tests for ${{ matrix.target}} can be found"
           fi
       - name: Build Image (load and push)
         uses: mhl787156/starling-bake-build-action@main
