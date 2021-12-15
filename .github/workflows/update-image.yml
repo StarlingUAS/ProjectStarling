@@ -68,8 +68,7 @@ jobs:
           if [ ! -z "$TESTS" ]; then
             bats $TESTS
           else
-            echo "No bats tests for $${{ matrix.target }} found in folder tests"
-            exit 1
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
       - name: Build Image (load and push)
         uses: mhl787156/starling-bake-build-action@main
