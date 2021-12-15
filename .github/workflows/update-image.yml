@@ -74,7 +74,7 @@ jobs:
             echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
         env:
-          TEST_IMAGE_TAG: ${{ build_image.outputs.version }}
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
       - name: Build Image (load and push)
         uses: mhl787156/starling-bake-build-action@main
         with:
