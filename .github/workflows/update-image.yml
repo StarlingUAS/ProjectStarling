@@ -64,7 +64,7 @@ jobs:
           bats-version: 1.5.0
       - name: Run Tests
         run: |
-          TESTDIR=tests/${{ matrix.target }}
+          TESTDIR=tests/system/${{ matrix.target }}
           if [ -d "$TESTDIR" ]; then
             bats -r $TESTDIR
           else
