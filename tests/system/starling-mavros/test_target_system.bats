@@ -11,11 +11,11 @@ MAVROS_IMAGE=$(get_tagged_image uobflightlabstarling/starling-mavros)
 }
 
 @test "[$TEST_TAG] explicit MAVROS_TGT_SYSTEM too low" {
-    docker run --rm -e MAVROS_TGT_SYSTEM=0 $MAVROS_IMAGE bash -c 'MAVROS_TGT_SYSTEM=0 [ "$MAVROS_TGT_SYSTEM" -eq 123 ]'
+    docker run --rm -e MAVROS_TGT_SYSTEM=0 $MAVROS_IMAGE bash -c '[ "$MAVROS_TGT_SYSTEM" -eq 1 ]'
 }
 
 @test "[$TEST_TAG] explicit MAVROS_TGT_SYSTEM too high" {
-    docker run --rm -e MAVROS_TGT_SYSTEM=300 $MAVROS_IMAGE bash -c 'MAVROS_TGT_SYSTEM=0 [ "$MAVROS_TGT_SYSTEM" -eq 123 ]'
+    docker run --rm -e MAVROS_TGT_SYSTEM=256 $MAVROS_IMAGE bash -c '[ "$MAVROS_TGT_SYSTEM" -eq 1 ]'
 }
 
 @test "[$TEST_TAG] MAVROS_TGT_SYSTEM with sysid from vehicle config" {
