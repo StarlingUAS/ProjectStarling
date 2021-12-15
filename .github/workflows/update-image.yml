@@ -69,7 +69,7 @@ jobs:
         run: |
           TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
           if [ ! -z "$TESTS" ]; then
-            bats $TESTS --jobs $(nproc) --timing
+            bats --pretty --jobs $(nproc) --timing $TESTS
           else
             echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
