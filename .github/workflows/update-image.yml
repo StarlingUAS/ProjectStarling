@@ -104,6 +104,7 @@ jobs:
             arm64: true
     steps:
       - name: Build Image
+        id: build_image
         uses: mhl787156/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
@@ -112,6 +113,33 @@ jobs:
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           build_arm64: ${{matrix.arm64}}
+          push: false
+          load: true
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
+          if [ ! -z "$TESTS" ]; then
+            bats --pretty --jobs $(nproc) --timing $TESTS
+          else
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
+          fi
+        env:
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+      - name: Build Image (load and push)
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{matrix.arm64}}
+          push: true
+
 
     
   bake_images_stage_3:
@@ -126,6 +154,7 @@ jobs:
             arm64: false
     steps:
       - name: Build Image
+        id: build_image
         uses: mhl787156/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
@@ -134,6 +163,32 @@ jobs:
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           build_arm64: ${{ matrix.arm64 }}
+          push: false
+          load: true
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
+          if [ ! -z "$TESTS" ]; then
+            bats --pretty --jobs $(nproc) --timing $TESTS
+          else
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
+          fi
+        env:
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+      - name: Build Image (load and push)
+        uses: mhl787156/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build_arm64: ${{matrix.arm64}}
+          push: true
 
   release_version:
     needs: [bump_version, bake_images_stage_3]
