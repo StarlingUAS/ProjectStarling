@@ -1,9 +1,8 @@
 #!/usr/bin/env bats
 
-MAVROS_IMAGE=uobflightlabstarling/starling-mavros
-
 load ../../utils.bash
 TEST_TAG=$(get_test_tag)
+MAVROS_IMAGE=$(get_tagged_image uobflightlabstarling/starling-mavros)
 
 # Test get_instance
 @test "[$TEST_TAG] get_instance in default state" {

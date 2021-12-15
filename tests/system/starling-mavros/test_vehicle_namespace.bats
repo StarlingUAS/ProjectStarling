@@ -1,9 +1,8 @@
 #!/usr/bin/env bats
 
-MAVROS_IMAGE=uobflightlabstarling/starling-mavros
-
 load ../../utils.bash
 TEST_TAG=$(get_test_tag)
+MAVROS_IMAGE=$(get_tagged_image uobflightlabstarling/starling-mavros)
 
 @test "[$TEST_TAG] default VEHICLE_NAMESPACE" {
     docker run --rm $MAVROS_IMAGE bash -c '[ "$VEHICLE_NAMESPACE" == "vehicle_1" ]'

@@ -8,3 +8,7 @@ function get_test_tag {
     TEST_TAG="$TEST_SUITE:$TEST_FILE"
     echo "$TEST_TAG"
 }
+
+function get_tagged_image {
+    echo "$1:${TEST_IMAGE_TAG-latest}"
+}
