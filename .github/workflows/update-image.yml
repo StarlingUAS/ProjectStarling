@@ -58,6 +58,7 @@ jobs:
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           build_arm64: ${{matrix.arm64}}
           push: false
+          load: true
       - name: Setup BATS
         uses: mig4/setup-bats@v1
         with:
@@ -79,8 +80,7 @@ jobs:
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
           build_arm64: ${{matrix.arm64}}
-          load: true
-          push: false
+          push: true
 
   bake_images_stage_2:
     runs-on: ubuntu-latest
