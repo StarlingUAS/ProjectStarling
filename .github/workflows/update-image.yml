@@ -69,7 +69,7 @@ jobs:
         run: |
           TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
           if [ ! -z "$TESTS" ]; then
-            bats --jobs $(nproc) --timing $TESTS
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
           else
             echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
@@ -123,7 +123,7 @@ jobs:
         run: |
           TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
           if [ ! -z "$TESTS" ]; then
-            bats --jobs $(nproc) --timing $TESTS
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
           else
             echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
@@ -173,7 +173,7 @@ jobs:
         run: |
           TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
           if [ ! -z "$TESTS" ]; then
-            bats --jobs $(nproc) --timing $TESTS
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
           else
             echo "No bats tests for ${{ matrix.target }} found in folder tests"
           fi
