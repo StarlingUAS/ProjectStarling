@@ -43,7 +43,7 @@ This will install Docker, accessible using `sudo` root privileges only. To use d
         sudo groupadd docker
         sudo usermod -aG docker $USER
 
-2. Log out and log in again to enforce changes
+2. Log out and log in again to enforce changes (may need to restart)
 3. Verify that it was successful:
 
         docker run hello-world
