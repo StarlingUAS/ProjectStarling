@@ -61,7 +61,9 @@ myuser@my-machine:~$ pwd
 To see a list of files and directories that exist in your current working directory, run the `ls` command:
 ```console
 myuser@my-machine:~$ ls
-Documents Desktop Pictures ...
+ Desktop                    Documents
+ Downloads                  Pictures
+ Public                     Wallpapers
 ```
 You can get more details if you run `ls -al` command:
 
@@ -69,7 +71,10 @@ You can get more details if you run `ls -al` command:
 myuser@my-machine:~$ ls -al
 drwxr-xr-x  2 myuser myuser   4096 Apr 30  2021  Desktop
 drwxrwxr-x  8 myuser myuser   4096 Oct 29 09:27  Documents
-...
+drwxrwxr-x  8 myuser myuser   4096 Dec 10 14:41  Downloads
+drwxrwxr-x  8 myuser myuser   4096 May 23 10:43  Pictures
+drwxrwxr-x  8 myuser myuser   4096 Jan 19  2017  Public
+drwxrwxr-x  8 myuser myuser   4096 Oct 15 09:43  Wallpapers
 ```
 
 You can create one or more new directories within your current working directory with the `mkdir` command, which stands for “make directory”. For example, to create two new directories named testdir1 and testdir2, you might run the first command. You can create nested directories by using the `-p` option:
@@ -108,9 +113,9 @@ If you decide to rename file.txt later on, you can do so with the mv command. mv
 mv file.txt newfile.txt
 ```
 
-It is also possible to copy a file to a new location with the cp command. If we want to bring back file.txt but keep newfile.txt, you can make a copy of newfile.txt named file.txt like this:
+It is also possible to copy a file to a new location with the cp command. If we want to copy newfile.txt, you can make a copy of newfile.txt named newfile_copy.txt like this:
 ```bash
-cp newfile.txt file.txt
+cp newfile.txt newfile_copy.txt
 ```
 
 However, files are not of much use if they don’t contain anything. To edit files, a file editor is necessary.
@@ -121,7 +126,7 @@ nano file.txt
 ```
 This will open a space where you can start typing to edit the file. In `nano` specifically you can save your written text by pressing ++ctrl+x++, ++y++, and then ++enter++. This returns you to the shell with a newly saved `file.txt`.
 
-Now that file.txt has some text within it, you can view it using cat or `less`.
+Now that file.txt has some text within it, you can view it using `cat` or `less`.
 
 The `cat` command prints the contents of a specified file to your system’s output. Try running `cat` and pass the `file.txt` file you just edited as an argument:
 ```bash
@@ -197,13 +202,19 @@ For Linux systems, see the following [install page](https://docs.docker.com/engi
 
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-3. Install Docker (and docker-compose!):
+3. Add Docker's repository:
+
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+4. Install Docker (and docker-compose!):
 
         sudo apt-get update
 
         sudo apt-get install docker-ce docker-ce-cli docker-compose containerd.io
 
-4. Test Docker installation:
+5. Test Docker installation:
 
         sudo docker run hello-world
 
@@ -319,7 +330,7 @@ This will start 4 containers:
 Wait a minute or so for all of the containers to initialise. Once started, the simulator should be available to see in the browser.
 
 1. Open up the firefox browser (click on firefox on the sidebar, or press ++win++ and search for firefox)
-2. Go to [https://localhost:8080](https://localhost:8080)
+2. Go to [localhost:8080](http://localhost:8080)
 3. You should see something like the following
 
 ![Fenswood Firefox Screenshot](imgs/fenswoodscreenshot1.png)
@@ -404,7 +415,7 @@ A[Camera] -->|out| node[drone/camera]
 node --in--> C[Vision]
 C -->|out| node1[drone/recognised_objects]
 node --in--> D[SLAM]
-D -->|out| node2[drone/recognised_objects]
+D -->|out| node2[drone/slam_position]
 
 style node fill:#f9f,stroke:#333,stroke-width:4px
 style node1 fill:#f9f,stroke:#333,stroke-width:4px
@@ -469,7 +480,7 @@ Now unlike the simulator, you will not need to download the example from the int
 
 ### Running the Example Controller
 
-First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [https://localhost:8080](https://localhost:8080)
+First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [localhost:8080](http://localhost:8080)
 
 Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:
 ```console
@@ -481,7 +492,7 @@ With this command, the controller will start off and attempt to find a drone on 
 
 Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.
 
-Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [https://localhost:3000](https://localhost:3000) in the browser, and a UI will start up:
+Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to [localhost:3000](http://localhost:3000) in the browser, and a UI will start up:
 
 ![Starling UI](imgs/ui.png)
 
@@ -504,7 +515,7 @@ Lets first start with what it is communicating with. On a real drone, the thing 
 
 Now the autopilot software itself can be swapped out and changed. For this scenario, we use the [**Ardupilot Arducopter**](https://ardupilot.org/copter/docs/introduction.html) firmware for the flight controller. It is important to know the specific type of software as different flight controller firmware requires the use of different flight mode and instructions.
 
-The Fenswood Scenario simulator utilises the Ardupilot Software In The Loop (SITL) simulator. This program is identical to the firmware that would be running onboard the flight controller. Then, within the example controller repository, there are two example controllers - one for Ardupilot (sufficed with `ap`), and one for the PX4 firmware (suffixed with `px4`). You can use the former to communicate with the Ardupilot SITL.
+The Fenswood Scenario simulator utilises the Ardupilot Software In The Loop (SITL) simulator. This program is identical to the firmware that would be running onboard the flight controller. Then, within the example controller repository, there are two example controllers - one for Ardupilot (suffixed with `ap`), and one for the PX4 firmware (suffixed with `px4`). You can use the former to communicate with the Ardupilot SITL.
 
 The example controller talks in ROS2 to the SITL via the Mavros translation node mentioned earlier. It sends commands for things like 'takeoff', 'go there' and 'land' via topics which the Mavros node advertises. The Mavros node takes subscribes to these topics and re-publishes them to the Flight Controller using Mavlink in a way Ardupilot understands.
 
