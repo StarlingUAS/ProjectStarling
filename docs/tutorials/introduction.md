@@ -259,11 +259,11 @@ Almost as importantly, because the installation and configuration is baked into 
 
 All of this means that it's less work for you as the user, as you don't need to go through the difficulties of set-up and installation of all the many individual components. And it's better for us as we can get down to the interesting stuff quicker making life better for everyone!
 
-## Running the Example Fenswood Scenario
+## Running the an Example Configuration
 
-This year, the group project revolves around the flight of a single UAV to a 'volcano' at Fenswood Farm. Therefore we have provided this fenswood scenario to all students.
+A separate respository has been created that provides a configuration to simulate flight at the Univeristy of Bristol's Fenswood Facility for Aerial Research Measurement (FARM). We will use this as an example.
 
-**The fenswood scenario repository is here: [https://github.com/StarlingUAS/FenswoodScenario](https://github.com/StarlingUAS/FenswoodScenario)**
+**The Fenswood scenario repository is here: [https://github.com/StarlingUAS/FenswoodScenario](https://github.com/StarlingUAS/FenswoodScenario)**
 
 This section takes you through step by step as to how to download and run the example, and a bit of information as to what the example contains. This information is also in the example repository README.
 
@@ -477,7 +477,7 @@ Now unlike the simulator, you will not need to download the example from the int
 
 ### Running the Example Controller
 
-First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [localhost:8080](http://localhost:8080)
+First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to [the section above](#running-the-example-scenario)). Double check it is open by going to Gazebo Web at [localhost:8080](http://localhost:8080)
 
 Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:
 ```console
@@ -738,7 +738,7 @@ root@my-machine:~$ ros2 service list
 
 Congratulations! You have gotten to the end of this tutorial!
 
-Especially if this is your first time touching linux and using this stuff, a lot of the content here can be daunting - but feel free to read it over again and hopefullly you will slowly come to understand what is going on.
+Especially if this is your first time touching linux and using this stuff, a lot of the content here can be daunting - but feel free to read it over again and hopefully you will slowly come to understand what is going on.
 
 In this introductory tutorial, we have only really scratched the surface of a lot of the technologies that we've been using. If you wish to have a deeper understanding, I would recommend having a read through the official documentation of all of them. The [docker](https://www.docker.com/101-tutorial) and [ROS2 tutorials](https://docs.ros.org/en/foxy/Tutorials.html) are really good. But I wish to emphasise that you will hopefully not need an extremely deep understanding to use Starling.
 
