@@ -153,9 +153,6 @@ rm -r directory # If the directory you are deleting is not empty
 
 > **NOTE**: If a command fails or is hanging or you just want to stop it, most of the time you can stop the running process by pressing ++ctrl+c++. This will send a Keyboard Interrupt message to the program and hopefully stop it.
 
-### Connecting the laptop to the Internet (Eduroam)
-
-For University of Bristol students connecting to Eduroam see theese [instructions](https://www.wireless.bris.ac.uk/eduroam/instructions/go-ubuntu/)
 
 ### Installing Dependencies and Useful Programs
 
