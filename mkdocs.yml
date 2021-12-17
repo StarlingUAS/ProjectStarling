@@ -18,6 +18,8 @@ plugins:
       toc_depth: 3
   - mermaid2
 
+extra_css: [ kbd.css ]
+
 nav:
   - "Home":
     - "Overview": 'README.md'
@@ -25,7 +27,7 @@ nav:
     - "Background": 'details/background.md'
     - "Ecosystem": 'other/related_projects_and_links.md'
   - "Tutorials":
-    - "Introduction to Starling with the Fenswood Scenario": 'tutorials/fenswood_scenario.md'
+    - "Introduction to Starling": 'tutorials/fenswood_scenario.md'
   - "Single Drone User Guides":
     - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
     - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
