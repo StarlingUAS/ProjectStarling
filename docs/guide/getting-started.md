@@ -3,7 +3,7 @@
 ## Contents
 [TOC]
 
-## Installation
+## Install Docker
 
 The only dependency of running and using Starling locally is the [Docker] containerisation software. Please visit [docker's installation page](https://docs.docker.com/get-docker/) for further details. We recommend using Starling on linux based systems, but it should work on Windows and possible Mac depending on the state of the Docker.
 
@@ -43,7 +43,7 @@ This will install Docker, accessible using `sudo` root privileges only. To use d
         sudo groupadd docker
         sudo usermod -aG docker $USER
 
-2. Log out and log in again to enforce changes
+2. Log out and log in again to enforce changes (may need to restart)
 3. Verify that it was successful:
 
         docker run hello-world
@@ -61,6 +61,12 @@ Starling has not been fully tested on Windows, but single-agent non-cluster (doc
 For Mav systems, please see [the Mac Os installation instructions](https://docs.docker.com/docker-for-mac/install/) for full details. You will need to install Docker Desktop for MAC OS.
 
 Starling has not be tested on MAC OS, so there is no guarantee that it is functional. However in theory the single-agent non-cluster (docker-only) application should be compatible.
+
+## Get Starling
+
+Clone the Starling repository:
+
+        git clone https://github.com/StarlingUAS/ProjectStarling.git
 
 ## Using Starling
 
