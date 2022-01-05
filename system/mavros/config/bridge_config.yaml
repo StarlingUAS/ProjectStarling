@@ -14,6 +14,9 @@ topics:
     topic: mavros/battery
     type: sensor_msgs/msg/BatteryState
   - queue_size: 1
+    topic: mavros/extended_state
+    type: mavros_msgs/msg/ExtendedState
+  - queue_size: 1
     topic: mavlink/to
     type: mavros_msgs/msg/Mavlink
   - queue_size: 1
@@ -32,7 +35,7 @@ topics:
     topic: mavros/local_position/pose
     type: geometry_msgs/msg/PoseStamped
   - queue_size: 5
-    topic: mavros/global_position/velocity
+    topic: mavros/local_position/velocity
     type: geometry_msgs/msg/TwistStamped
 
   # 6.9 Manual Control
