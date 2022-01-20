@@ -42,7 +42,7 @@ RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-foxy-gazebo-ros \
-      ros-foxy-gazebo-ros-pkgs \ 
+      ros-foxy-gazebo-ros-pkgs \
       ros-foxy-xacro \
       ros-foxy-image-transport-plugins \
     && rm -rf /var/lib/apt/lists/*
@@ -96,7 +96,7 @@ COPY gzweb_entrypoint.sh /
 # Add URDF conversion tools
 COPY tools /ros_ws/tools
 
-# Add custom ROS DDS configuration (force UDP always) 
+# Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
