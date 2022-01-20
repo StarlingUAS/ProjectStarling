@@ -6,7 +6,7 @@ RUN apt-get update \
         curl \
         ros-foxy-rosbridge-suite \
         ros-foxy-mavros-msgs \
-        ros-foxy-gazebo-msgs \ 
+        ros-foxy-gazebo-msgs \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -14,10 +14,12 @@ RUN apt-get update \
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
+COPY rosbridge_websocket_launch.xml /ros_ws/
+
 ENV ROSBRIDGE_PORT 9090
 
 # Expose websocket server
 EXPOSE ${ROSBRIDGE_PORT}
 
 # Set initial command
-CMD [ "sh", "-c", "ros2 launch rosbridge_server rosbridge_websocket_launch.xml port:=${ROSBRIDGE_PORT}" ]
+CMD ["sh", "-c", "ros2 launch /ros_ws/rosbridge_websocket_launch.xml port:=${ROSBRIDGE_PORT}"]
