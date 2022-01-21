@@ -15,11 +15,14 @@ COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
 COPY rosbridge_websocket_launch.xml /ros_ws/
+COPY ros_entrypoint.sh /
+COPY run.sh /
 
 ENV ROSBRIDGE_PORT 9090
+ENV MSGS_WS "/msgs_ws"
 
 # Expose websocket server
 EXPOSE ${ROSBRIDGE_PORT}
 
 # Set initial command
-CMD ["sh", "-c", "ros2 launch /ros_ws/rosbridge_websocket_launch.xml port:=${ROSBRIDGE_PORT}"]
+CMD ["./run.sh"]
