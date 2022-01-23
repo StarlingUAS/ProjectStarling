@@ -4,7 +4,7 @@ FROM ros:foxy-ros-base-focal
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
-        ros-foxy-rosbridge-suit \
+        ros-foxy-rosbridge-suite \
         ros-foxy-mavros-msgs \
         ros-foxy-gazebo-msgs \
     && rm -rf /var/lib/apt/lists/*
