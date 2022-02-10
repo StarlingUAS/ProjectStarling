@@ -11,7 +11,7 @@ else
     echo "External messages detected at ${MSGS_WS}, building..."
     colcon build --base-paths "${MSGS_WS}" --build-base "${MSGS_WS}/build" --install-base "${MSGS_WS}/install"
     rm -r "${MSGS_WS}/build"
-    echi "Sourcing ${MSGS_WS}/install/setup.bash"
+    echo "Sourcing ${MSGS_WS}/install/setup.bash"
     source "${MSGS_WS}/install/setup.bash"
 fi
 
