@@ -3,9 +3,6 @@
 
     <include file="$(find-pkg-share gazebo_ros)/launch/gzserver.launch.py">
         <arg name="verbose" value="true"/>
-        <!-- This remapping puts the gazebo clock onto its own topic. -->
-        <!-- This is so that it doesn't mess with the global ros clock -->
-        <arg name="extra_gazebo_args" value="/clock:=/gazebo_clock"/>
     </include>
 
     <executable cwd="/root/gzweb" cmd="/gzweb_entrypoint.sh" output="screen"/>

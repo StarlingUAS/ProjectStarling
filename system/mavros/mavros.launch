@@ -27,10 +27,6 @@
 
         <arg name="config_yaml" value="$(arg config_yaml)"/>
         <arg name="pluginlists_yaml" value="$(arg pluginlists_yaml)"/>
-
-        <!-- The gazebo simulated clock is now on /gazebo_clock -->
-        <!-- Must be remapped to clock for mavros -->
-        <remap from="/gazebo_clock" to="/clock"/>
     </include>
 
 </launch>
