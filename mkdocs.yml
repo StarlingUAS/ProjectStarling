@@ -37,6 +37,7 @@ nav:
     - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
     - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
   - "Additional Guides":
+    - "Developing a controller": 'guide/writing-a-controller.md'
     - "Development Guide": 'guide/development.md'
     - "Understanding Docker": 'details/docker.md'
     - "Understanding Kubernetes": "details/kubernetes.md"
