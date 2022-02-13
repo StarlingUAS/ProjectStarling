@@ -1,7 +1,7 @@
 FROM ros:foxy-ros-base-focal
 
-# Build v 1.1.2 rosbridge
-RUN git clone -b 1.1.2 https://github.com/RobotWebTools/rosbridge_suite.git /ros_ws/src/rosbridge_suite
+# Build v 1.0.7 rosbridge
+RUN git clone -b 1.0.7 https://github.com/RobotWebTools/rosbridge_suite.git /ros_ws/src/rosbridge_suite
 
 # Install rosbridge suite and associated messages
 RUN apt-get update \
