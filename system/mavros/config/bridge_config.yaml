@@ -14,15 +14,24 @@ topics:
     topic: mavros/battery
     type: sensor_msgs/msg/BatteryState
   - queue_size: 1
+    topic: mavros/altitude
+    type: sensor_msgs/msg/Altitude
+  - queue_size: 1
+    topic: mavros/extended_state
+    type: mavros_msgs/msg/ExtendedState
+  - queue_size: 1
+    topic: mavros/imu/data
+    type: sensor_msgs/msg/Imu
+  - queue_size: 1
     topic: mavlink/to
     type: mavros_msgs/msg/Mavlink
   - queue_size: 1
     topic: mavlink/from
     type: mavros_msgs/msg/Mavlink
   # 6.6 Global position
-  - queue_size: 1
-    topic: mavros/global_position/local
-    type: geometry_msgs/msg/PoseWithCovarianceStamped
+  #- queue_size: 1 # TODO set up custom message to use nav_msgs/Odom
+  #  topic: mavros/global_position/local
+  #  type: geometry_msgs/msg/PoseWithCovarianceStamped
   - queue_size: 1
     topic: mavros/global_position/global
     type: sensor_msgs/msg/NavSatFix
@@ -32,8 +41,23 @@ topics:
     topic: mavros/local_position/pose
     type: geometry_msgs/msg/PoseStamped
   - queue_size: 5
-    topic: mavros/global_position/velocity
+    topic: mavros/local_position/pose_cov
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_local
     type: geometry_msgs/msg/TwistStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_body
+    type: geometry_msgs/msg/TwistStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_body_cov
+    type: geometry_msgs/msg/TwistWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/accel
+    type: geometry_msgs/msg/AccelWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/odom
+    type: nav_msgs/msg/Odometry
 
   # 6.9 Manual Control
   - queue_size: 1
@@ -68,9 +92,9 @@ topics:
   - queue_size: 1
     topic: mavros/setpoint_position/global
     type: geographic_msgs/msg/GeoPoseStamped
-#   - queue_size: 1 TODO set up custom message to use nav_msgs/Odom
-#     topic: mavros/setpoint_position/local
-#     type: geometry_msgs/msg/PoseStamped
+  - queue_size: 1
+    topic: mavros/setpoint_position/local
+    type: geometry_msgs/msg/PoseStamped
   - queue_size: 1
     topic: mavros/setpoint_position/global_to_local
     type: geographic_msgs/msg/GeoPoseStamped

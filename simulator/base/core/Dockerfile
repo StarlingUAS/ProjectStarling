@@ -38,11 +38,13 @@ EXPOSE 11345
 # Add gazebo environemnt setup to /ros.env
 RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
 
-# Install gazebo_ros and xacro
+# Install gazebo_ros, gazebo ros extra packages (e.g. plugins) and xacro
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-foxy-gazebo-ros \
+      ros-foxy-gazebo-ros-pkgs \
       ros-foxy-xacro \
+      ros-foxy-image-transport-plugins \
     && rm -rf /var/lib/apt/lists/*
 
 # Install gzweb dependencies
@@ -57,6 +59,7 @@ RUN apt-get update \
       libjansson-dev \
       libtinyxml-dev \
       xvfb \
+      python3-jinja2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install nvm
@@ -93,9 +96,13 @@ COPY gzweb_entrypoint.sh /
 # Add URDF conversion tools
 COPY tools /ros_ws/tools
 
-# Add custom ROS DDS configuration (force UDP always) 
+# Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
+# Setup any display components for virtual cameras
+COPY setup_display.sh /
+ENV ENABLE_VIRTUAL_FRAMEBUFFER true
 
 # Need to wait until models are installed before running the deploy step
 CMD [ "gzweb_entrypoint.sh" ]

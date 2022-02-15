@@ -23,7 +23,7 @@ git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.gi
 ```
 ## Documentation
 
-Please refer to the documentation at [uobflightlab.github.io/ProjectStarling](https://uobflightlab.github.io/ProjectStarling) for detailed instructions and explanations of how to use this system.
+Please refer to the documentation at [https://docs.starlinguas.dev/](https://docs.starlinguas.dev/) for detailed instructions and explanations of how to use this system.
 
 The documentation is built using [MKDocs](https://www.mkdocs.org/) and can be served locally.
 
@@ -50,11 +50,11 @@ By virtue of the architecture, the system also includes failure recovery and det
 ## Contact
 The initial developers of this project are:
 
-- Mickey Li - [email](mailto:mickey.li@bristol.ac.uk) - [github](github.com/mhl787156)
-- Robert Clarke - [email](mailto:robert.clarke@bristol.ac.uk) - [github](github.com/rob-clarke)
+- Mickey Li - [email](mailto:mickey.li@bristol.ac.uk) - [github](https://github.com/mhl787156)
+- Robert Clarke - [email](mailto:robert.clarke@bristol.ac.uk) - [github](https://github.com/rob-clarke)
 
 ## FAQs
-Please see documentation, or raise an [Issue on the github repo](github.com/UoBFlightLab/ProjectStarling/issues)
+Please see documentation, or raise an [Issue on the github repo](https://github.com/StarlingUAS/ProjectStarling/issues)
 
 ## License
-This project is released under the MIT license. Please see the [License file](https://github.com/UoBFlightLab/ProjectStarling/blob/master/LICENSE) for more details.
+This project is released under the MIT license. Please see the [License file](https://github.com/StarlingUAS/ProjectStarling/blob/master/LICENSE) for more details.

@@ -129,7 +129,7 @@ if [ ! -f "$BRIDGE_MOD_CONFIG_PATH" ]; then
     # This captures both frame_id: and child_frame_id
     # This then saves the output into $PX4_MOD_CONFIG_PATH
     sed -E "s/(topic: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_CONFIG_PATH > $BRIDGE_MOD_CONFIG_PATH
-    sed -E "s/(service: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_CONFIG_PATH > $BRIDGE_MOD_CONFIG_PATH
+    sed -E -i "s/(service: )(.+)/\1\/$VEHICLE_NAMESPACE\/\2/g" $BRIDGE_MOD_CONFIG_PATH
 else
     echo "Modified Bridge Config for $VEHICLE_NAMESPACE already exists at $BRIDGE_MOD_CONFIG_PATH. Using for launch"
 fi

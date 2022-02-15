@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-    <arg name='port' default='$(env ROSBRIDGE_PORT 9090)'/>
-    
-    <executable cmd="/node_entrypoint.sh /ros_ws/src/ros2-web-bridge/bin/rosbridge.js" args="--port $(var port)" output="screen"/>
-
-</launch>

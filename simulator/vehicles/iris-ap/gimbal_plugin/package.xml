@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>gimbal_plugin</name>
+  <version>0.0.1</version>
+  <description>
+    Robot-independent Gazebo plugin for simple 2D gimbal
+  </description>
+
+  <maintainer email="mickey.li@bristol.ac.uk">Mickey Li</maintainer>
+
+  <license>BSD, Apache 2.0</license>
+
+  <!-- <url type="website">http://gazebosim.org/tutorials?cat=connect_ros</url>
+  <url type="bugtracker">https://github.com/ros-simulation/gazebo_ros_pkgs/issues</url>
+  <url type="repository">https://github.com/ros-simulation/gazebo_ros_pkgs</url> -->
+
+  <author>Mickey Li</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>trajectory_msgs</depend>
+
+  <build_depend>gazebo_dev</build_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>rclcpp</build_depend>
+
+  <exec_depend>gazebo_dev</exec_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>rclcpp</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <gazebo_ros gazebo_plugin_path="${prefix}/lib"/>
+  </export>
+</package>

@@ -8,10 +8,17 @@ copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
 markdown_extensions:
   - toc:
       permalink: True
+  - pymdownx.keys:
+      strict: True
 
 plugins:
   - search
   - macros
+  - enumerate-headings:
+      toc_depth: 3
+  - mermaid2
+
+extra_css: [ kbd.css ]
 
 nav:
   - "Home":
@@ -19,6 +26,8 @@ nav:
     - "Getting Started": 'guide/getting-started.md'
     - "Background": 'details/background.md'
     - "Ecosystem": 'other/related_projects_and_links.md'
+  - "Tutorials":
+    - "Introduction to Starling": 'tutorials/introduction.md'
   - "Single Drone User Guides":
     - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
     - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
@@ -28,6 +37,7 @@ nav:
     - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
     - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
   - "Additional Guides":
+    - "Developing a controller": 'guide/writing-a-controller.md'
     - "Development Guide": 'guide/development.md'
     - "Understanding Docker": 'details/docker.md'
     - "Understanding Kubernetes": "details/kubernetes.md"

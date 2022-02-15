@@ -86,3 +86,12 @@ The set of images are automatically updated on DockerHub. Each image will have a
  - `:nightly` tracking the most recent push to the `dev` branch
  - `:vX.Y.Z` fixed release tags
  - `:${BRANCH}` tracking most recent push to PR branches while active
+
+#### Updating the cache
+
+The builds can be run locally to update the cache if GitHub is timing out. `starling-mavros` is usually the culprit.
+The command below will update the nightly tag on Docker Hub, both caching from and to the dev caches.
+
+```bash
+BAKE_VERSION=nightly BAKE_CACHEFROM_NAME=cache-dev BAKE_CACHETO_NAME=cache-dev docker buildx bake -f buildtools/docker-bake.hcl --push starling-mavros
+```
