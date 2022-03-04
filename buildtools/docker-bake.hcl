@@ -82,7 +82,7 @@ target "starling-mavros" {
 }
 
 target "starling-mavros2" {
-    context = "system/mavros"
+    context = "system/mavros2"
     dockerfile = "core.Dockerfile"
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros2:${BAKE_VERSION}",
