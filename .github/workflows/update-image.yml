@@ -41,6 +41,8 @@ jobs:
             arm64: true
           - target: starling-mavros
             arm64: true
+          - target: starling-mavros2
+            arm64: true
           - target: starling-vicon
             arm64: true
           - target: starling-sim-base-core

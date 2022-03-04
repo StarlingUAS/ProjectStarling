@@ -21,6 +21,7 @@ jobs:
           - rosbridge-suite
           - starling-controller-base
           - starling-mavros
+          - starling-mavros2
           - starling-vicon
           - starling-sim-base-core
           - starling-sim-base-px4
