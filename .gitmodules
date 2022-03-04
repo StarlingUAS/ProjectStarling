@@ -1,7 +1,7 @@
 [submodule "system/vicon/vicon_udp"]
 	path = system/vicon/vicon_udp
 	url = https://github.com/UoBFlightLab/vicon_udp.git
-[submodule "system/mavros/mavros"]
-	path = system/mavros/mavros
+[submodule "system/mavros2/mavros"]
+	path = system/mavros2/mavros
 	url = ssh://github.com/mavlink/mavros
 	branch = ros2
