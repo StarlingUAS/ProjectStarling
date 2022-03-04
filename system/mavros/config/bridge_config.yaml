@@ -1,0 +1,205 @@
+# This Config details the list of topics we wish to forward from ros1 to ros2
+# Note that this file will be copied with topics specified for $VEHICLE_NAMESPACE
+# i.e. /$VEHICLE_NAMESPACE/<topic>
+# MAVROS: http://wiki.ros.org/mavros
+# MAVROS EXTRAS: http://wiki.ros.org/mavros_extras
+
+# These are bidrectional from ROS1 to ROS2
+# The Type must be a ROS2 type
+topics:
+  - queue_size: 1
+    topic: mavros/state
+    type: mavros_msgs/msg/State
+  - queue_size: 1
+    topic: mavros/battery
+    type: sensor_msgs/msg/BatteryState
+  - queue_size: 1
+    topic: mavros/altitude
+    type: sensor_msgs/msg/Altitude
+  - queue_size: 1
+    topic: mavros/extended_state
+    type: mavros_msgs/msg/ExtendedState
+  - queue_size: 1
+    topic: mavros/imu/data
+    type: sensor_msgs/msg/Imu
+  - queue_size: 1
+    topic: mavlink/to
+    type: mavros_msgs/msg/Mavlink
+  - queue_size: 1
+    topic: mavlink/from
+    type: mavros_msgs/msg/Mavlink
+  # 6.6 Global position
+  #- queue_size: 1 # TODO set up custom message to use nav_msgs/Odom
+  #  topic: mavros/global_position/local
+  #  type: geometry_msgs/msg/PoseWithCovarianceStamped
+  - queue_size: 1
+    topic: mavros/global_position/global
+    type: sensor_msgs/msg/NavSatFix
+
+  # 6.8 Local Position
+  - queue_size: 5
+    topic: mavros/local_position/pose
+    type: geometry_msgs/msg/PoseStamped
+  - queue_size: 5
+    topic: mavros/local_position/pose_cov
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_local
+    type: geometry_msgs/msg/TwistStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_body
+    type: geometry_msgs/msg/TwistStamped
+  - queue_size: 5
+    topic: mavros/local_position/velocity_body_cov
+    type: geometry_msgs/msg/TwistWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/accel
+    type: geometry_msgs/msg/AccelWithCovarianceStamped
+  - queue_size: 5
+    topic: mavros/local_position/odom
+    type: nav_msgs/msg/Odometry
+
+  # 6.9 Manual Control
+  - queue_size: 1
+    topic: mavros/manual_control/send
+    type: mavros_msgs/msg/ManualControl
+  - queue_size: 1
+    topic: mavros/manual_control/control
+    type: mavros_msgs/msg/ManualControl
+
+  # 6.12 Safety Area
+  - queue_size: 1
+    topic: mavros/safety_area
+    type: geometry_msgs/msg/PolygonStamped
+
+  # 6.13 Setpoint Accel
+  - queue_size: 1
+    topic: mavros/setpoint_accel/accel
+    type: geometry_msgs/msg/Vector3Stamped
+
+  # 6.14 Setpoint Attitude
+  - queue_size: 1
+    topic: mavros/setpoint_attitude/cmd_vel
+    type: geometry_msgs/msg/TwistStamped
+  - queue_size: 1
+    topic: mavros/setpoint_attitude/attitude
+    type: geometry_msgs/msg/PoseStamped
+  - queue_size: 1
+    topic: mavros/setpoint_attitude/thrust
+    type: mavros_msgs/msg/Thrust
+
+  # 6.15 Setpoint Position
+  - queue_size: 1
+    topic: mavros/setpoint_position/global
+    type: geographic_msgs/msg/GeoPoseStamped
+  - queue_size: 1
+    topic: mavros/setpoint_position/local
+    type: geometry_msgs/msg/PoseStamped
+  - queue_size: 1
+    topic: mavros/setpoint_position/global_to_local
+    type: geographic_msgs/msg/GeoPoseStamped
+
+  # 6.16 Setpoint Raw
+  - queue_size: 1
+    topic: mavros/setpoint_raw/local
+    type: mavros_msgs/msg/PositionTarget
+  - queue_size: 1
+    topic: mavros/setpoint_raw/global
+    type: mavros_msgs/msg/GlobalPositionTarget
+  - queue_size: 1
+    topic: mavros/setpoint_raw/attitude
+    type: mavros_msgs/msg/AttitudeTarget
+
+  # 6.17 Setpoint Velocity
+  - queue_size: 1
+    topic: mavros/setpoint_velocity/cmd_vel_unstamped
+    type: geometry_msgs/msg/Twist
+
+  # 6.21 Waypoints
+  - queue_size: 1
+    topic: mavros/mission/reached
+    type: mavros_msgs/msg/WaypointReached
+  - queue_size: 1
+    topic: mavros/mission/waypoints
+    type: mavros_msgs/msg/WaypointList
+
+  # Mavros extras 4.2 distance sensor (matches mavros_config.yaml)
+  - queue_size: 1
+    topic: mavros/distance_sensor/hrlv_ez4_sonar
+    type: sensor_msgs/msg/Range
+  - queue_size: 1
+    topic: mavros/distance_sensor/lidarlite_laser
+    type: sensor_msgs/msg/Range
+  - queue_size: 1
+    topic: mavros/distance_sensor/rangefinder
+    type: sensor_msgs/msg/Range
+
+  # Mavros extras image pub
+  - queue_size: 1
+    topic: mavros/image/camera_image
+    type: sensor_msgs/msg/Image
+
+  # Mavros extras 4.5 px4flow
+  - queue_size: 1
+    topic: mavros/px4flow/raw/optical_flow_rad
+    type: mavros_msgs/msg/OpticalFlowRad
+  - queue_size: 1
+    topic: mavros/px4flow/ground_distance
+    type: sensor_msgs/msg/Range
+  - queue_size: 1
+    topic: mavros/distance_sensor/temperature
+    type: sensor_msgs/msg/Temperature
+
+  # Mavros Extras 4.7 vision pose estimate
+  - queue_size: 1
+    topic: mavros/vision_pose/pose
+    type: geometry_msgs/msg/PoseStamped
+  - queue_size: 1
+    topic: mavros/vision_pose/pose_cov
+    type: geometry_msgs/msg/PoseWithCovarianceStamped
+
+  # Mavros Extras 4.8 vision speed estimate
+  - queue_size: 1
+    topic: mavros/vision_speed/speed_vector
+    type: geometry_msgs/msg/Vector3Stamped
+  - queue_size: 1
+    topic: mavros/vision_speed/speed_twist
+    type: geometry_msgs/msg/TwistStamped
+
+# service requests going from 2 to 1
+# server on ROS1 side, client on ROS2 side
+# Types must be *ROS1* Types
+services_2to1:
+  # 6.4 Command
+  - service: mavros/cmd/command
+    type: mavros_msgs/CommandLong
+  - service: mavros/cmd/command_int
+    type: mavros_msgs/CommandInt
+  - service: mavros/cmd/arming
+    type: mavros_msgs/CommandBool
+  - service: mavros/cmd/set_home
+    type: mavros_msgs/CommandHome
+  - service: mavros/cmd/takeoff
+    type: mavros_msgs/CommandTOL
+  - service: mavros/cmd/land
+    type: mavros_msgs/CommandTOL
+  - service: mavros/cmd/trigger_control
+    type: mavros_msgs/CommandTriggerControl
+
+  # 6.18 Sys Status
+  - service: mavros/set_stream_rate
+    type: mavros_msgs/StreamRate
+  - service: mavros/set_mode
+    type: mavros_msgs/SetMode
+
+  # 6.21 Waypoints
+  - service: mavros/mission/pull
+    type: mavros_msgs/WaypointPull
+  - service: mavros/mission/push
+    type: mavros_msgs/WaypointPush
+  - service: mavros/mission/clear
+    type: mavros_msgs/WaypointClear
+  - service: mavros/mission/set_current
+    type: mavros_msgs/WaypointSetCurrent
+
+services_1to2: []
