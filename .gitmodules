@@ -3,5 +3,4 @@
 	url = https://github.com/UoBFlightLab/vicon_udp.git
 [submodule "system/mavros2/mavros"]
 	path = system/mavros2/mavros
-	url = ssh://github.com/mavlink/mavros
-	branch = ros2
+	url = ssh://github.com/rob-clarke/mavros
