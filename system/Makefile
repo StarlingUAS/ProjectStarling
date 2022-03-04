@@ -26,4 +26,4 @@ mavp2p:
 vicon:
 	$(BAKE) starling-vicon
 
-.PHONY: mavros mavros_all_arch controller-base rosbridge-suite vicon mavp2p all
+.PHONY: mavros mavros2 mavros_all_arch controller-base rosbridge-suite vicon mavp2p all
