@@ -29,6 +29,15 @@
     </joint>
 
     <link name="hokuyo_link">
+      <pose>-0.5 0 -1 0 -1.57075 0</pose>
+      <!-- <visual name="my_visual">
+          <pose>0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.0 0.1 0.1</size>
+            </box>
+          </geometry>
+      </visual> -->
       <!-- Visuals / Collisions omitted for this example -->
       <sensor type="gpu_ray" name="head_hokuyo_sensor">
         <ray>
@@ -74,10 +83,10 @@
       </sensor>
     </link>
 
-    <joint name="iris_hokuyo_mount" type="revolute">
+    <joint name="iris_hokuyo_mount" type="fixed">
       <parent>iris::base_link</parent>
       <child>hokuyo_link</child>
-      <axis>
+      <!-- <axis>
         <limit>
           <lower>0</lower>
           <upper>0</upper>
@@ -85,7 +94,7 @@
         <xyz>-1 0 1</xyz>
         <rpy>0 0.0 0</rpy>
         <use_parent_model_frame>true</use_parent_model_frame>
-      </axis>
+      </axis> -->
     </joint>
 
     <!-- plugins -->
