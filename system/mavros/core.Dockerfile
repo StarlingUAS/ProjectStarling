@@ -18,8 +18,10 @@ COPY mavros /ros_ws/src/mavros
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && colcon build
 
+RUN /ros_ws/install/mavros/lib/mavros/install_geographiclib_datasets.sh
+
 # Start the main image build
-FROM ros:foxy-ros-base-focal AS image
+FROM ros:foxy-ros-core-focal AS image
 
 WORKDIR /ros_ws
 
@@ -28,13 +30,18 @@ COPY --from=builder /ros_ws/install /ros_ws/install
 
 # Install exec dependencies
 RUN rm install/COLCON_IGNORE \
-    && . /opt/ros/${ROS_DISTRO}/setup.sh \
     && apt-get update \
-    && rosdep install -t exec -y --from-paths install \
+    && apt-get install -y --no-install-recommends python3-rosdep \
+    && rosdep init \
+    && rosdep update --rosdistro $ROS_DISTRO \
+    && . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && rosdep install -t exec -y --from-paths install --ignore-src \
+    && apt-get remove -y python3-rosdep \
+    && SUDO_FORCE_REMOVE=yes apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Part of MAVROS setup
-RUN /ros_ws/install/mavros/lib/mavros/install_geographiclib_datasets.sh
+COPY --from=builder /usr/share/GeographicLib /usr/share/GeographicLib
 
 COPY ros_entrypoint.sh /ros_entrypoint.sh
 
