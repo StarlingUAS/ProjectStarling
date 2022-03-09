@@ -43,7 +43,7 @@
         </inertia>
       </inertial>
       <!-- Visuals / Collisions omitted for this example -->
-      <sensor type="gpu_ray" name="head_hokuyo_sensor">
+      <sensor type="ray" name="head_hokuyo_sensor">
         <ray>
           <scan>
             <horizontal>
