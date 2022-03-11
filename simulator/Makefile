@@ -17,6 +17,9 @@ clover2: px4
 iris: px4
 	$(BAKE) starling-sim-iris
 
+rover: px4
+	$(BAKE) starling-sim-rover
+
 iris-ap: ardupilot
 	$(BAKE) starling-sim-iris-ap
 

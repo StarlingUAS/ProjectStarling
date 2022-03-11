@@ -259,6 +259,23 @@ target "starling-sim-iris" {
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
+// This target depends on starling-sim-base-px4
+target "starling-sim-rover" {
+    context = "simulator/vehicles/rover"
+    args = {
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
+        }
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-rover:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-rover:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-rover:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-rover:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
+
 // This target depends on starling-sim-base-ardupilot
 target "starling-sim-iris-ap" {
     context = "simulator/vehicles/iris-ap"
