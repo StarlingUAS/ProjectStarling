@@ -9,6 +9,20 @@ The only dependency of running and using Starling locally is the [Docker] contai
 
 ### Linux/ Ubuntu
 
+#### Install Script
+For linux, we have provided a helpful install script. First you will need to clone the Murmuration github repository:
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+```
+
+Then run:
+```
+sudo ./starling install
+```
+
+Once that completes you should be all good to go for the next step.
+
+#### Manual Installation
 For Linux systems, see the following [install page](https://docs.docker.com/engine/install/ubuntu/). There are multiple ways of installation docker, but we recommend installing using the repository method:
 
 1. Update the `apt` repository and install requirements
@@ -54,9 +68,9 @@ That is Docker on Linux installed. See [the original page](https://docs.docker.c
 
 For Windows systems, please see [the windows installation instructions for full details](https://docs.docker.com/docker-for-windows/install/). You will need to install Docker Desktop for Windows.
 
-Follow the instructions and tutorial below, but refer to our [Windows Support page](windows-support.md) if you have issues. 
+Follow the instructions and tutorial below, but refer to our [Windows Support page](windows-support.md) if you have issues.
 
-Starling has not been fully tested on Windows, but single-agent non-cluster (docker-only) applications should be compatible.
+Starling has been fully tested on Windows, and both single and multi-agent cluster testing is available through the use of the Starling CLI. However it is recommended that you use WSL rather than powershell.
 
 ### Mac OS
 
@@ -66,9 +80,16 @@ Starling has not be tested on MAC OS, so there is no guarantee that it is functi
 
 ## Get Starling
 
-Clone the Starling repository:
+For simple usage, or for usage as a simulator, you can use the Murmuration repository which gives a number of starling examples and a command line interface.
 
-        git clone https://github.com/StarlingUAS/ProjectStarling.git
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+```
+
+For more advanced usage, or to see examples of the core elements, clone the Starling repository:
+```
+git clone https://github.com/StarlingUAS/ProjectStarling.git
+```
 
 ## Using Starling
 

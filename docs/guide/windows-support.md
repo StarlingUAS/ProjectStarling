@@ -18,6 +18,10 @@ versioning and is used for distributing the core Starling files. It can be downl
 [git-scm.com/download/win](https://git-scm.com/download/win). You could also install GitHub Desktop
 (other vendors are available).
 
+## Installing WSL
+
+Windows Subsystem for Linux allows a windows machine to run a linux environment without needing a Virtual Machine or having to restart the computer. While it is not strictly necessary (most things can be run with Powershell), it is **hightly** recommended as it reduces most issues caused by windows itself. To install, you should follow the instructions from [https://docs.microsoft.com/en-us/windows/wsl/install](https://docs.microsoft.com/en-us/windows/wsl/install).
+
 ## Getting Starling
 
 For simple usage of the system, clone the `Mumuration` repo to a working folder on your computer. If you are doing slightly more complex work, clone the `ProjectStarling` repo to a working folder on your computer. You probably want to avoid
@@ -34,6 +38,8 @@ git clone --recurse-subdmoules https://github.com/StarlingUAS/ProjectStarling
 ```
 
 ## Running
+
+Using the [Starling CLI](../guide/cli.md) should reduce many of the problems.
 
 With Docker installed and the repo downloaded, navigate into the project folder in a terminal.
 Once there you should see a file called `docker-compose.tcp.yml`. This contains instructions for a
@@ -63,5 +69,4 @@ routed to the right place.
 
 ## Things to be aware of
 
-Docker works slightly differently in Windows compared to Linux which can cause problems, especially with regards to networking. If you're webpages for gazebo or others are not connecting on local ports, it may be because you have run the linux docker-compose file by accident! 
-
+Docker works slightly differently in Windows compared to Linux which can cause problems, especially with regards to networking. If you're webpages for gazebo or others are not connecting on local ports, it may be because you have run the linux docker-compose file by accident!

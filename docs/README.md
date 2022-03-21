@@ -12,15 +12,8 @@ This systems provides a number of key features.
 - Built in simulation stack based on Gazebo
 - Quick transition from simulation to flying controllers on real drones.
 
-![Simple Architecture](img/ArchSimple.jpg)
+![Simple Architecture](../img/ArchSimple.jpg)
 
-## Setup
-
-For local development and testing, clone the repository recursively so that all submodules are included 
-
-```
-git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
-```
 ## Documentation
 
 Please refer to the documentation at [https://docs.starlinguas.dev/](https://docs.starlinguas.dev/) for detailed instructions and explanations of how to use this system.
@@ -29,6 +22,18 @@ The documentation is built using [MKDocs](https://www.mkdocs.org/) and can be se
 
 1. Install requirements `pip install -r docs/requirements.txt`
 2. In the project root, run `make docs` or `make serve-docs` if you want live viewing (serving to `localhost:8000`)
+
+## Setup
+
+For the simplest usage, a simple Command Line Interface and examples are available in the [Murmuration repository](https://github.com/StarlingUAS/Murmuration). Refer to the documentation for furhter details.
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+```
+
+For inspecting and developing core Starling clone the repository recursively so that all submodules are included.
+```
+git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
+```
 
 ## Features
 ### Drone Sandbox

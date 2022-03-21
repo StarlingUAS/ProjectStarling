@@ -1,9 +1,11 @@
-# Deployment with kubernetes (k8)
+# Deployment with kubernetes and K3S
+
+**NOTE** This is now a little out of date and is superceeded by using KIND and the [starling CLI](../guide/cli.md). Please see that for local testing while this is being updated.
 
 ## Contents
 [TOC]
 
-This system is intended to run as a cloud platform. We utilse [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/) as our kubernetes manager. 
+This system is intended to run as a cloud platform. We utilse [k3s](https://rancher.com/docs/k3s/latest/en/quick-start/) as our kubernetes manager.
 
 Key concepts are as follows:
 - **pods** are a k8 concept. A pod contains one or more containers and has its own ip address. Containers within a pod communicate over localhost
@@ -24,7 +26,7 @@ The .yaml files in this directory are all kubernetes configurations for various 
     - `starling-sim-px4-sitl` - emulating px4-sitl. Talks to GCS software on port 14550 with replies on 18570.
     - `starling-mavros` - contains a ROS2 mavros node connected via udp://localhost:14540 to sitl. Talks to GCS on udp broadcast port 14553.
 - **k8.ap-sitl.amd64.yaml** :-  [Needs updating]Currently runs a pod containing two containers
-    - `starling-ardupilot-sitl` - emulating ardupilot-sitl. Talks to GCS over 14553 as well. 
+    - `starling-ardupilot-sitl` - emulating ardupilot-sitl. Talks to GCS over 14553 as well.
     - `starling-mavros` - contains a ROS2 mavros node connected via tcp://localhost:5762 to sitl. Talks to GCS on udp broadcast port 14553.
 - **k8.mavros.arm64.yaml** :- A mavros node designed to run on the raspberry pi/ drone control computer. This pod contains a single `starling-mavros` container. It reads of a px4 pixhawk assumed to be talking over usb serial connection `/dev/px4fmu` (set up via udev symlinks). Currently assumes mavlink sysid is 1.
 - **k8.ros_monitor.amd64.yaml** :- runs `starling-mavros` and a network-tools container. Can be used for debugging ROS2 and networking issues
@@ -33,7 +35,7 @@ The .yaml files in this directory are all kubernetes configurations for various 
 Once k3s has been installed (see below, or run `./run_k3s.sh` in the home directory), these configurations can be used in the cluster as follows:
 ```bash
 # Applying/ Creating them
-sudo k3s kubectl apply -f <filename.yaml> 
+sudo k3s kubectl apply -f <filename.yaml>
 # Deleting the deployment
 sudo k3s kubectl delete -f <filename.yaml> -f <filename.yaml>
 ```
@@ -72,7 +74,7 @@ This script will download the latest version of k3s run the master kubernetes se
 '```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -``` '
 (will run in background as systemd - check `systemctl status k3s`)
 
-This will open up a server with entrypoint on `0.0.0.0:6443` which corresponds to `<host local ip address>:6443` 
+This will open up a server with entrypoint on `0.0.0.0:6443` which corresponds to `<host local ip address>:6443`
 
 ### Pi / Drone / Agent
 First ensure that the pi has been correctly set up with an airgapped installation of k3s, [see here for installation instructions](https://rancher.com/docs/k3s/latest/en/installation/airgap/). Follow the Manually Deploy Images Method. The script below assumes that the the images file and the k3s executable are in the user home directory.
@@ -114,7 +116,7 @@ sudo k3s agent -t ${K3S_TOKEN} -s ${K3S_SERVER} --node-name ${K3S_NODE_NAME}
 ```
 The Pi should now be setup
 
-Consider running the above using screen or somehow in the background just in case your ssh connection is unstable or you want to close it. 
+Consider running the above using screen or somehow in the background just in case your ssh connection is unstable or you want to close it.
 
 ### Post actions
 
@@ -129,6 +131,3 @@ Are started automatically in the `./run_k3s.sh` script.
 <!-- ## Running the test cases -->
 
 <!-- Go to [testing directory for more info](testing/README.md) -->
-
-
-

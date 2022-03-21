@@ -16,8 +16,12 @@ This systems provides a number of key features.
 
 ## Setup
 
-For local development and testing, clone the repository recursively so that all submodules are included 
+For the simplest usage, a simple Command Line Interface and examples are available in the [Murmuration repository](https://github.com/StarlingUAS/Murmuration)
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+```
 
+For inspecting and developing core Starling clone the repository recursively so that all submodules are included.
 ```
 git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
 ```

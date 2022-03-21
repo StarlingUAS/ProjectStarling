@@ -28,7 +28,7 @@ In addition it also contains the source for the following containers for simulat
 
 * [uobflightlabstarling/starling-sim-ardupilot-copter](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-ardupilot-copter) - Base Container with ArduCopter
 * [uobflightlabstarling/starling-sim-ardupilot-gazebo](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-ardupilot-gazebo) - Gazebo Simulator for use with Ardupilot
-* [uobflightlabstarling/starling-sim-iris-ap](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-iris-ap) - Base gazebo container with ardupulot sitl installed and spawns the iris quadcopter model with camera. 
+* [uobflightlabstarling/starling-sim-iris-ap](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-sim-iris-ap) - Base gazebo container with ardupulot sitl installed and spawns the iris quadcopter model with camera.
 
 It also contains some example usage:
 
@@ -38,7 +38,7 @@ It also contains some example usage:
 
 link - [https://github.com/StarlingUAS/Murmuration](https://github.com/StarlingUAS/Murmuration)
 
-This repository contains all of the docker-compose and kubernetes deployment files. These deployment files rely on a number of the containers in this file.
+This repository contains the main Command Line Interface and all of the docker-compose and kubernetes deployment files. These deployment files rely on a number of the containers in this file.
 
 ### Starling Simple Offboard
 
@@ -84,7 +84,7 @@ This repository contains libraries and dockerfile for building the software laye
 
 * [uobflightlabstarling/starling-clover](https://hub.docker.com/repository/docker/uobflightlabstarling/starling-clover)
 
-### Fenswood Farm 
+### Fenswood Farm
 
 link - [https://github.com/StarlingUAS/FenswoodScenario](https://github.com/StarlingUAS/FenswoodScenario)
 
