@@ -43,6 +43,7 @@ Name                      | Default Value                  | Description
 `MAVROS_MOD_CONFIG_PATH`  | "/mavros_config_mod.yaml"      | Path for modified MAVROS config to be written to
 `BRIDGE_CONFIG_PATH`      | "/bridge_config.yaml"          | Path for initial bridge config file
 `BRIDGE_MOD_CONFIG_PATH`  | "/bridge_config_mod.yaml"      | Path for modified bridge config to be written to
+`BRIDGE_LAUNCH_DELAY`     | 2.0                            | Time delay in seconds between starting ROS1 mavros and the ROS1-2 bridge. Increasing this value reduces the chance of a race condition causing mavros failure due to the bridge being unable to read ros1 parameters. See [this issue](https://github.com/StarlingUAS/ProjectStarling/issues/124) for more details. Recommendation is to increase the value to 10 seconds if this occurs. 
 
 
 ### Configuring the Connection
