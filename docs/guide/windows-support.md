@@ -18,29 +18,38 @@ versioning and is used for distributing the core Starling files. It can be downl
 [git-scm.com/download/win](https://git-scm.com/download/win). You could also install GitHub Desktop
 (other vendors are available).
 
+## Installing WSL
+
+Windows Subsystem for Linux allows a windows machine to run a linux environment without needing a Virtual Machine or having to restart the computer. While it is not strictly necessary (most things can be run with Powershell), it is **hightly** recommended as it reduces most issues caused by windows itself. To install, you should follow the instructions from [https://docs.microsoft.com/en-us/windows/wsl/install](https://docs.microsoft.com/en-us/windows/wsl/install).
+
 ## Getting Starling
 
-Clone the `ProjectStarling` repo to a working folder on your computer. You probably want to avoid
+For simple usage of the system, clone the `Mumuration` repo to a working folder on your computer. If you are doing slightly more complex work, clone the `ProjectStarling` repo to a working folder on your computer. You probably want to avoid
 any cloud-backed folders as these tend to interfere with Git.
 
 With Git installed as above, you can open PowerShell, navigate to the folder where you want to
 clone the project (using `cd`) and run:
 
 ```
-git clone https://github.com/UoBFlightLab/ProjectStarling
+# Mumurations
+git clone https://github.com/StarlingUAS/Mumuration
+# ProjectStarling
+git clone --recurse-subdmoules https://github.com/StarlingUAS/ProjectStarling
 ```
 
 ## Running
+
+Using the [Starling CLI](../guide/cli.md) should reduce many of the problems.
 
 With Docker installed and the repo downloaded, navigate into the project folder in a terminal.
 Once there you should see a file called `docker-compose.tcp.yml`. This contains instructions for a
 tool called Docker Compose to setup a set of containers for you. Note that this version has been
 modified slightly to use TCP ports which makes things easier on Windows/WSL.
 
-To launch the containers, open PowerShell, make sure you're in the root of the ProjectStarling repo
-and run:
+To launch the containers, open PowerShell, make sure you're in the root of the Mumuration repo (if using ProjectStarling it will be 'ProjectStarling/Mumuration')
+and run the windows version of any launch:
 ```ps
-docker compose -f docker-compose.tcp.yml up
+docker-compose -f docker-compose/px4/docker-compose.simple-offboard.windows.yml up
 ```
 
 You should see the tool begin to "pull" (download) the files needed to run the project. These have
@@ -57,3 +66,7 @@ With everything running, and docker allowed to access the network, open a web br
 You can also launch Mission Planner (other GCS software is available) and connect to TCP port 5760.
 Using the IP address of `127.0.0.1` should work as docker will ensure that the connection gets
 routed to the right place.
+
+## Things to be aware of
+
+Docker works slightly differently in Windows compared to Linux which can cause problems, especially with regards to networking. If you're webpages for gazebo or others are not connecting on local ports, it may be because you have run the linux docker-compose file by accident!
