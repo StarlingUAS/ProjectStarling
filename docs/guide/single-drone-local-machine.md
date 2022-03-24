@@ -11,54 +11,78 @@ Follow these instructions for quick and easy testing of controllers on a single 
 ## Contents
 [TOC]
 
-## Starting the Drone and Simulator (Simple Version)
+## Pre-Setup
 
 There are two basic example starting confgurations, this 'Simple' version starts the bare minimum with the expectation of it being used through mavlink. There is also a 'Full' version with instructions below this section which starts a system capable of flying higher level paths and trajectories submitted through a GUI or ROS.
 
-
 First check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
 
-In the root directory first download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated). Then in a terminal, execute:
+Secondly you will need to clone the examples repository. If you are only running examples, clone the *Murmuration* repository:
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+cd Murmuration
+```
+If you are preparing to run multi-drone systems or require more complex setup, recursively clone the *ProjectStarling* repository:
+```
+git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
+cd ProjectStarling/Mumurations # Go into Murmuration directory
+```
+
+> **Note** if ProjectStarling is already cloned, the submodules can be accessed by running `git submodule init && git submodule update`
+## Starting the Drone and Simulator (Core for use with GCS)
+
+In the Mumuration root directory first download the most up-to-date versions of the system, then start *up* the system:
 
 ```
-docker-compose -f docker-compose-simple.yml up
-```
+# First Pull the relevant docker containers
+docker-compose -f docker-compose/px4/docker-compose.core.linux.yml pull
+# or for windows
+# docker-compose -f docker-compose/px4/docker-compose.core.windows.yml pull
 
-> **Note**: If on Windows using with a native windows GCS such as Mission Planner, you may need to use `docker-compose -f docker-compose-simple.tcp.yml up`
+# Run the docker-containers
+docker-compose -f docker-compose/px4/docker-compose.core.linux.yml up
+# or for windows
+# docker-compose -f docker-compose/px4/docker-compose.core.windows.yml up
+```
 
 This will start the following:
 
 1. Gazebo simulation enviornment running 1 Iris quadcopter model
 2. A SITL (Software In The Loop) instance running the PX4 autopilot.
 3. A Mavros node connected to the SITL instance
-4. A simple UI with a go and estop button.
+4. A ros-web-bridge allowing for ros connections through the web (this is used later)
 
-> **Note:** this might take a while (can be up to 30 min or an hour depending on internet) on first run as downloads are required.
+> **Note:** the downloads might take a while (can be up to 30 min or an hour depending on internet) on first run as downloads are required.
 
 > **Note:** Use ctrl+c to stop the process when you have finished.
 
 The User Interfaces are available in the following locations:
 
 - Go to [`http://localhost:8080`](http://localhost:8080) in a browser to (hopefully) see the gazebo simulator.
-- Go to [`http://localhost:3000`](http://localhost:3000) in a browser to see the starling user interface containing go/stop buttons.
 
 > **Note:** All specified sites can be accessed from other machines by replacing `localhost` with your computer's IP address.
 
 > **Note:** Sometimes it might take a bit of time for the UIs to become available, give it a minute and refresh the page. With Gazebo you may accidentally be too zoomed in, or the grid may not show up. Use the mouse wheel to zoom in and out. The grid can be toggled on the left hand pane.
 
-## Starting the Drone and Simulator (Full Version)
+Separately, a Ground Control Station such as [*QGroundControl*](http://qgroundcontrol.com/) for Linux or [*Mission Planner*](https://ardupilot.org/planner/) can be downloaded and started. The simulated drone should automatically connect through the default ports. See [below](https://docs.starlinguas.dev/guide/single-drone-local-machine/#1-connecting-a-ground-control-station-via-mavlink)
 
-This confugration starts a slightly more complex system which is capable of automatic higher level navigation and trajectory following. Ensure that the 'simple' version has been stopped before using this one.
+## Starting the Drone and Simulator (Simple-Offboard through ROS2)
 
-Again, first check that you have installed the single prerequisit of `docker`, see [Getting Started](../guide/getting-started). You may also need to install `docker-compose` via `sudo apt-get install docker-compose`.
+This confugration starts a slightly more complex system which is capable of automatic higher level navigation and trajectory following. Ensure that the 'simple' version has been stopped (Ctrl+C) before using this one.
 
-In the root directory first download the most up-to-date versions of the system using `docker-compose pull`. (Periodically run this to ensure you are updated). Then in a terminal, execute:
+In the Mumuration root directory first download the most up-to-date versions of the system, then start *up* the system:
 
 ```
-docker-compose up
-```
+# First Pull the relevant docker containers
+docker-compose -f docker-compose/px4/docker-compose.simple-offboard.linux.yml pull
+# or for windows
+# docker-compose -f docker-compose/px4/docker-compose.simple-offboard.windows.yml pull
 
-> **Note**: If on Windows using with a native windows GCS such as Mission Planner, you may need to use `docker-compose -f docker-compose.tcp.yml up`
+# Run the docker-containers
+docker-compose -f docker-compose/px4/docker-compose.simple-offboard.linux.yml up
+# or for windows
+# docker-compose -f docker-compose/px4/docker-compose.simple-offboard.windows.yml up
+```
 
 This will start the following:
 
@@ -106,9 +130,9 @@ An example offboard ROS2 controller can then be conncted to SITL by running the 
 
 ```bash
 docker pull uobflightlabstarling/example_controller_python # Download the latest container
-docker run -it --rm --network projectstarling_default uobflightlabstarling/example_controller_python
+docker run -it --rm --network px4_default uobflightlabstarling/example_controller_python
 ```
-This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `docker-compose`. The default network name is `<foldername>_default`.
+This will download and run the `example_controller_python` image from `uobflightlabstarling` on docker hub. `-it` opens an interactive terminal. `--rm` removes the container when completed. `--network` attaches the container to the default network created by `docker-compose`. The default network name is "`<folder-containing-docker-compose-file>_default`".
 
 > **Note:** The controller may complain that it cannot find the drone. Double check that the name of the root folder matches the one passed to `--network`.
 
@@ -134,7 +158,7 @@ In this instance there is only an abstract difference between onboard and offboa
 
 ## Implementing a Controller
 ### Modifying the example controller
-In the [controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package must first be built:
+In the [ProjectStarling controllers](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers) folder there is an example_controller_python which you should have seen in action in the example above. The ROS2 package is in [example_controller_python](https://github.com/UoBFlightLab/ProjectStarling/tree/master/controllers/example_controller_python/example_controller_python). Any edits made to the ROS2 package must first be built:
 ```bash
 cd controllers
 make example_controller_python
@@ -159,6 +183,8 @@ Inside you can `source install/setup.bash` and run ROS2 commands like normal.
 
 ### Creating your own from scratch
 
+> See the [development docs](development.md) for more detailed information on container development.
+
 Of course you can create your own controller from scratch. Inside your controller repository, the following is required
 1. Your ROS2 package folder (what would usually go inside the `dev_ws/src` directory)
 2. A Dockerfile (named `Dockerfile`) which is dervied `FROM uobflightlabstarling/starling-controller-base`, use the [example Dockerfile](https://github.com/UoBFlightLab/ProjectStarling/blob/master/controllers/example_controller_python/Dockerfile) as a template.
@@ -169,6 +195,6 @@ docker build -t <name of your controller> <folder containing the dockerfile>
 # e.g. docker build -t my_new_controller .
 ```
 
-Your container can then be run as above using `docker run.
+Your container can then be run as above using `docker run.  
 
 ## Troubleshooting/ FAQs
