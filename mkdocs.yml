@@ -33,10 +33,11 @@ nav:
     - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
     - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
     - "Single Drone on Hardware": "guide/single-drone-drones.md"
-
   - "Multiple Drone User Guides":
     - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
     - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+  - "Simulation and SITL":
+    - "Spawning Different Vehicles and Objects": "guide/different_vehicles.md"
   - "Additional Guides":
     - "Windows Support and FAQ": "guide/windows-support.md"
     - "Developing a controller": 'guide/writing-a-controller.md'
