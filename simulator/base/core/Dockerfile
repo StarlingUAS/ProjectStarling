@@ -39,13 +39,19 @@ EXPOSE 11345
 RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
 
 # Install gazebo_ros, gazebo ros extra packages (e.g. plugins) and xacro
+# RUN apt-get update \
+#     && apt-get install --no-install-recommends -y \
+#       ros-foxy-gazebo-ros \
+#       && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-      ros-foxy-gazebo-ros \
       ros-foxy-gazebo-ros-pkgs \
+      && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
       ros-foxy-xacro \
       ros-foxy-image-transport-plugins \
-    && rm -rf /var/lib/apt/lists/*
+      && rm -rf /var/lib/apt/lists/*
 
 # Install gzweb dependencies
 RUN apt-get update \
@@ -77,11 +83,12 @@ ENV GZWEB_WS /root/gzweb
 #RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/eurogroep/gzweb.git ${GZWEB_WS}
 # Additionally patched version
 RUN git clone --depth 1 -b gzweb_1.4.2 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
+RUN sed -i "s$\"node-gyp\": \"\"$\"node-gyp\": \"8.4.1\"$" ${GZWEB_WS}/package.json
 
-# Build gzweb (default model generation)
+# Build gzweb (no model generation)
 RUN source /ros.env \
     && source /root/.nvm/nvm.sh \
-    && cd ${GZWEB_WS} && npm run deploy --- -m
+    && cd ${GZWEB_WS} && npm run deploy --- -m local
 
 # Setup ports
 # Main webserver port
