@@ -38,11 +38,6 @@ EXPOSE 11345
 # Add gazebo environemnt setup to /ros.env
 RUN echo "source /usr/share/gazebo/setup.sh" >> /ros.env
 
-# Install gazebo_ros, gazebo ros extra packages (e.g. plugins) and xacro
-# RUN apt-get update \
-#     && apt-get install --no-install-recommends -y \
-#       ros-foxy-gazebo-ros \
-#       && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
       ros-foxy-gazebo-ros-pkgs \
