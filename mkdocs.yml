@@ -55,6 +55,7 @@ nav:
   - "Image Documentation":
     - "starling-ui": "docker-images/ui.md"
     - "starling-mavros": "docker-images/mavros.md"
+    - "starling-controller-base": "docker-images/controller-base.md"
     - "starling-sim-base-core": "docker-images/sim-base-core.md"
     - "starling-sim-ardupilot-copter/plane": "docker-images/sim-ardupilot-vehicle.md"
     - "starling-sim-ardupilot-gazebo": "docker-images/sim-ardupilot-gazebo.md"
