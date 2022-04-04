@@ -293,7 +293,7 @@ simhost:
       - "8080:8080"
 ```
 
-Where the syntax is `<local file>:<container file>`. Also note that inside `ros.env.d` we name the folders `XX_<name>` where `XX` is a two digit number describing the order of script loading from 0 being first to 99 being last. This is useful for dependencies.
+Where the syntax is `<local file>:<container file>`. Also note that inside `ros.env.d` we name the folders `XX_<name>` where `XX` is a two digit number describing the order of script loading from 00 being first to 99 being last. 00 to 02 are already used in setup, it is recommended you use numbers > 03. This is useful for dependencies.
 
 #### DockerFile
 
