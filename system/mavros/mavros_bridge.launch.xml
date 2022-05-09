@@ -36,4 +36,7 @@
           launch-prefix="bash -c 'sleep $(var bridge_launch_delay); $0 $@' ">
     </node>
 
+    <!-- Launch Estop Node -->
+    <node name="estop" pkg="starling_mavros_extras" exec="estop" output="screen" respawn="true" namespace="$(var vehicle_namespace)"/>
+
 </launch>
