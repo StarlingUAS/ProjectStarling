@@ -1,1 +1,0 @@
-# PX4 Implementation Details
