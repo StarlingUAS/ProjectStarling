@@ -77,13 +77,12 @@ ENV GZWEB_WS /root/gzweb
 # Patched version
 #RUN git clone -b gzweb_1.4.0-gazebo11 https://github.com/eurogroep/gzweb.git ${GZWEB_WS}
 # Additionally patched version
-RUN git clone --depth 1 -b gzweb_1.4.2 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
-RUN sed -i "s$\"node-gyp\": \"\"$\"node-gyp\": \"8.4.1\"$" ${GZWEB_WS}/package.json
+RUN git clone --depth 1 -b gzweb_1.4.5 https://github.com/rob-clarke/gzweb.git ${GZWEB_WS}
 
 # Build gzweb (no model generation)
 RUN source /ros.env \
     && source /root/.nvm/nvm.sh \
-    && cd ${GZWEB_WS} && npm run deploy --- -m local
+    && cd ${GZWEB_WS} && npm run deploy -- -m local
 
 # Setup ports
 # Main webserver port
