@@ -15,11 +15,14 @@ EstopHandler::EstopHandler() :
 {
     this->mavros_command_srv = this->create_client<mavros_msgs::srv::CommandLong>("mavros/cmd/command", rmw_qos_profile_services_default);
     this->estop_sub = this->create_subscription<std_msgs::msg::Empty>(
-        "/emergency_stop", 1, [this](const std_msgs::msg::Empty::SharedPtr s){(void)s;
-        this->emergency_stop();
-    });
+        "/emergency_stop", 1, 
+        [this](const std_msgs::msg::Empty::SharedPtr s){
+            (void)s;
+            this->emergency_stop();
+        }
+    );
 
-    RCLCPP_INFO(this->get_logger(), "Estop Initialised");
+    RCLCPP_INFO(this->get_logger(), "ESTOP Initialised");
 }
 
 void EstopHandler::emergency_stop() {
