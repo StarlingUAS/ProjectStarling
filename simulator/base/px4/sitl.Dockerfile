@@ -11,7 +11,8 @@ RUN make px4_sitl
 FROM ros:foxy-ros-base-focal
 
 # Copy built PX4 repo into this image
-COPY --from=px4builder /src /src
+COPY --from=px4builder /src/PX4-Autopilot/build/px4_sitl_default/bin /src/PX4-Autopilot/build/px4_sitl_default/bin
+COPY --from=px4builder /src/PX4-Autopilot/ROMFS /src/PX4-Autopilot/ROMFS
 
 ENV PX4_INSTANCE 0
 ENV PX4_INSTANCE_BASE 0
@@ -47,7 +48,8 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 VOLUME ${SIM_WD}
 
 # Relies on remote host option for simulator
+# Relative to px4_sitl_default
 CMD /src/PX4-Autopilot/build/px4_sitl_default/bin/px4 \
-      -d -i ${PX4_INSTANCE} -s etc/init.d-posix/rcS \
-      -w /sim_wd \
+      -d -i ${PX4_INSTANCE} -s /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS \
+      -w ${SIM_WD} \
       /src/PX4-Autopilot/ROMFS/px4fmu_common

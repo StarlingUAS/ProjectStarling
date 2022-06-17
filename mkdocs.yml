@@ -57,6 +57,7 @@ nav:
     - "starling-mavros": "docker-images/mavros.md"
     - "starling-controller-base": "docker-images/controller-base.md"
     - "starling-sim-base-core": "docker-images/sim-base-core.md"
+    - "starling-sim-base-px4": "docker-images/sim-base-px4.md"
     - "starling-sim-ardupilot-copter/plane": "docker-images/sim-ardupilot-vehicle.md"
     - "starling-sim-ardupilot-gazebo": "docker-images/sim-ardupilot-gazebo.md"
     - "starling-sim-iris-ap": "docker-images/sim-iris-ap.md"
