@@ -1,3 +1,6 @@
 [submodule "system/vicon/vicon_udp"]
 	path = system/vicon/vicon_udp
 	url = https://github.com/UoBFlightLab/vicon_udp.git
+[submodule "Murmuration"]
+	path = Murmuration
+	url = https://github.com/StarlingUAS/Murmuration.git

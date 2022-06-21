@@ -21,6 +21,10 @@ The image has been setup to automatically configure itself in some scenarios:
  - Running on a vehicle
  - Running in Kubernetes
 
+There are also some additional general nodes running in the background. In particular:
+
+  - Emergency Stop listener on the `/emergency_stop` topic of type `std_msgs/msg/Empty`. It is hard-wired to forcefully disarm the vehicle (stop motors) for both PX4 and Ardupilot in simulation and reality.
+
 ## Configuration Options
 
 There are many configuration options available for this image to allow it to be used flexibly across different
@@ -43,6 +47,7 @@ Name                      | Default Value                  | Description
 `MAVROS_MOD_CONFIG_PATH`  | "/mavros_config_mod.yaml"      | Path for modified MAVROS config to be written to
 `BRIDGE_CONFIG_PATH`      | "/bridge_config.yaml"          | Path for initial bridge config file
 `BRIDGE_MOD_CONFIG_PATH`  | "/bridge_config_mod.yaml"      | Path for modified bridge config to be written to
+`BRIDGE_LAUNCH_DELAY`     | 2.0                            | Time delay in seconds between starting ROS1 mavros and the ROS1-2 bridge. Increasing this value reduces the chance of a race condition causing mavros failure due to the bridge being unable to read ros1 parameters. See [this issue](https://github.com/StarlingUAS/ProjectStarling/issues/124) for more details. Recommendation is to increase the value to 10 seconds if this occurs.
 
 
 ### Configuring the Connection
@@ -160,7 +165,7 @@ The first part of this is checking for the existance of the `/stc/starling/vehic
 is assumed that the container is running on a real vehicle. In this case, the file is sourced and values for the MAVLink
 system ID, vehicle name, FCU URL, and firmware type are obtained.
 
-The next phase is determining the appropriate target system ID. This is configured by the 
+The next phase is determining the appropriate target system ID. This is configured by the
 
 
 Once the setup script has run, the default behaviour is to launch the `mavros_bridge.launch.xml` file. This behaviour

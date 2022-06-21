@@ -11,7 +11,8 @@ RUN make px4_sitl
 FROM ros:foxy-ros-base-focal
 
 # Copy built PX4 repo into this image
-COPY --from=px4builder /src /src
+COPY --from=px4builder /src/PX4-Autopilot/build/px4_sitl_default/bin /src/PX4-Autopilot/build/px4_sitl_default/bin
+COPY --from=px4builder /src/PX4-Autopilot/ROMFS /src/PX4-Autopilot/ROMFS
 
 ENV PX4_INSTANCE 0
 ENV PX4_INSTANCE_BASE 0
@@ -28,7 +29,9 @@ ENV SIM_WD /sim_wd
 RUN sed -i 's/simulator start -c $simulator_tcp_port/simulator start -t $PX4_SIM_IP $simulator_tcp_port/' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.simulator
 
 # Modify startup script to add partner IP for offboard script
-RUN sed -i 's/\(mavlink start -x -u $udp_offboard_port_local -r 4000000 -m onboard -o $udp_offboard_port_remote\)/\1 -t $PX4_OFFBOARD_IP -p/' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.mavlink
+RUN sed -i 's/\(mavlink start -x -u $udp_offboard_port_local -r 4000000 -f -m onboard -o $udp_offboard_port_remote\)/\1 -t $PX4_OFFBOARD_IP -p/' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.mavlink
+RUN sed -i '/udp_onboard_payload_port_local/d' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.mavlink
+RUN sed -i '/udp_onboard_gimbal_port_local/d' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/px4-rc.mavlink
 
 # Modify startup script to enable mavlink broadcasting
 RUN sed -i '/param set IMU_INTEG_RATE 250/a param set MAV_${px4_instance}_BROADCAST 1' /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS
@@ -45,7 +48,8 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 VOLUME ${SIM_WD}
 
 # Relies on remote host option for simulator
+# Relative to px4_sitl_default
 CMD /src/PX4-Autopilot/build/px4_sitl_default/bin/px4 \
-      -d -i ${PX4_INSTANCE} -s etc/init.d-posix/rcS \
-      -w /sim_wd \
+      -d -i ${PX4_INSTANCE} -s /src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS \
+      -w ${SIM_WD} \
       /src/PX4-Autopilot/ROMFS/px4fmu_common
