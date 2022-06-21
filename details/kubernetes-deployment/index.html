@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Example Kubernetes Deployments - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Example Kubernetes Deployments";
+        var mkdocs_page_input_path = "details/kubernetes-deployment.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Example Kubernetes Deployments</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">25.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-reference-to-files">25.2 Quick Reference to files:</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#files">25.2.1 Files</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-files">25.2.2 Using files</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-instructions">25.3 Installation instructions</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-instructions">25.4 Running instructions</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#laptop">25.4.1 Laptop</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pi-drone-agent">25.4.2 Pi / Drone / Agent</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-script-via-ssh">Setup script via ssh</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#manual-old-setup-method">Manual, old setup method.</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#post-actions">25.4.3 Post actions</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dashboard">Dashboard</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Implementation »</li><li>Example Kubernetes Deployments</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/details/kubernetes-deployment.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="deployment-with-kubernetes-and-k3s"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.</span> Deployment with kubernetes and K3S<a class="headerlink" href="#deployment-with-kubernetes-and-k3s" title="Permanent link">¶</a></h1>
+<p><strong>NOTE</strong> This is now a little out of date and is superceeded by using KIND and the <a href="../../guide/cli/">starling CLI</a>. Please see that for local testing while this is being updated.</p>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#deployment-with-kubernetes-and-k3s">25. Deployment with kubernetes and K3S</a><ul>
+<li><a href="#contents">25.1 Contents</a></li>
+<li><a href="#quick-reference-to-files">25.2 Quick Reference to files:</a><ul>
+<li><a href="#files">25.2.1 Files</a></li>
+<li><a href="#using-files">25.2.2 Using files</a></li>
+</ul>
+</li>
+<li><a href="#installation-instructions">25.3 Installation instructions</a></li>
+<li><a href="#running-instructions">25.4 Running instructions</a><ul>
+<li><a href="#laptop">25.4.1 Laptop</a></li>
+<li><a href="#pi-drone-agent">25.4.2 Pi / Drone / Agent</a><ul>
+<li><a href="#setup-script-via-ssh">Setup script via ssh</a></li>
+<li><a href="#manual-old-setup-method">Manual, old setup method.</a></li>
+</ul>
+</li>
+<li><a href="#post-actions">25.4.3 Post actions</a><ul>
+<li><a href="#dashboard">Dashboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>This system is intended to run as a cloud platform. We utilse <a href="https://rancher.com/docs/k3s/latest/en/quick-start/">k3s</a> as our kubernetes manager.</p>
+<p>Key concepts are as follows:
+- <strong>pods</strong> are a k8 concept. A pod contains one or more containers and has its own ip address. Containers within a pod communicate over localhost
+- <strong>node</strong> is the machine (physical e.g. pi or virtual machine) upon which pods are run. (Separate from 'ros2 nodes' or 'ros nodes')
+- <strong>kubectl</strong> is the command line program required to interface with kubernetes.
+- <strong>cni</strong> container networking interface (default is flannel for k3s) is the underlying networking for all containers
+- <strong>dds/ fast-rtps</strong> Is the default communications middleware for ros2 comms.</p>
+<p>Refer to the kubernetes notes with the onenote notebook for more usage information.</p>
+<h2 id="quick-reference-to-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.2</span> Quick Reference to files:<a class="headerlink" href="#quick-reference-to-files" title="Permanent link">¶</a></h2>
+<p>The .yaml files in this directory are all kubernetes configurations for various combinations of systems. The cpu architecture refers to where the containers have been specified to run - amd64 specifies for running on master machine, and arm64 specifies for running on the raspberry pi node over the network (see below for setup). All of these config files pull their images from the <a href="https://hub.docker.com/orgs/uobflightlabstarling/repositories">uobflightlabstarling docker hub</a>.</p>
+<h3 id="files"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.2.1</span> Files<a class="headerlink" href="#files" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>k8.gazebo-iris.amd64.yaml</strong> :- Currently runs the <code>starling-sim-iris</code> image and a Service which exposes the gzweb statically on <code>localhost:8080</code>. This service has a cluster internal hostname of <code>sim-gazebo.gazebo-srv</code></li>
+<li><strong>k8.px4-sitl.amd64.yaml</strong> :- Currently runs a pod containing two containers<ul>
+<li><code>starling-sim-px4-sitl</code> - emulating px4-sitl. Talks to GCS software on port 14550 with replies on 18570.</li>
+<li><code>starling-mavros</code> - contains a ROS2 mavros node connected via udp://localhost:14540 to sitl. Talks to GCS on udp broadcast port 14553.</li>
+</ul>
+</li>
+<li><strong>k8.ap-sitl.amd64.yaml</strong> :-  [Needs updating]Currently runs a pod containing two containers<ul>
+<li><code>starling-ardupilot-sitl</code> - emulating ardupilot-sitl. Talks to GCS over 14553 as well.</li>
+<li><code>starling-mavros</code> - contains a ROS2 mavros node connected via tcp://localhost:5762 to sitl. Talks to GCS on udp broadcast port 14553.</li>
+</ul>
+</li>
+<li><strong>k8.mavros.arm64.yaml</strong> :- A mavros node designed to run on the raspberry pi/ drone control computer. This pod contains a single <code>starling-mavros</code> container. It reads of a px4 pixhawk assumed to be talking over usb serial connection <code>/dev/px4fmu</code> (set up via udev symlinks). Currently assumes mavlink sysid is 1.</li>
+<li><strong>k8.ros_monitor.amd64.yaml</strong> :- runs <code>starling-mavros</code> and a network-tools container. Can be used for debugging ROS2 and networking issues</li>
+</ul>
+<h3 id="using-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.2.2</span> Using files<a class="headerlink" href="#using-files" title="Permanent link">¶</a></h3>
+<p>Once k3s has been installed (see below, or run <code>./run_k3s.sh</code> in the home directory), these configurations can be used in the cluster as follows:</p>
+<pre><code class="language-bash"># Applying/ Creating them
+sudo k3s kubectl apply -f &lt;filename.yaml&gt;
+# Deleting the deployment
+sudo k3s kubectl delete -f &lt;filename.yaml&gt; -f &lt;filename.yaml&gt;
+</code></pre>
+<p>This can also be done in the gui dashboard application.</p>
+<blockquote>
+<p><strong>Note:</strong>
+Local images can be used if <code>imagePullPolicy</code> is set to <code>ifNotPresent</code> instead of <code>Always</code>. In that case it will attempt to find a local image with the given image name.</p>
+<p>arm64 images must be cross compiled using docker buildx (make multi-arch or make cross-compile or similar in the relevant docker files) and always pulled from docker hub.</p>
+</blockquote>
+<h2 id="installation-instructions"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.3</span> Installation instructions<a class="headerlink" href="#installation-instructions" title="Permanent link">¶</a></h2>
+<p><strong>It is recommended that you use the <code>./run_k3s.sh</code> script in the root of the repository. This script can be re-run at any time after install. If k3s is already installed and the relevant pods are running it will not do anything</strong></p>
+<p>Install k3s using the install script, this will fetch k3s and run the kubernetes master node immediately in the background:</p>
+<pre><code>curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -
+</code></pre>
+<p>For the raspberry pi, ensure docker is installed, and then these instructions are the same on the raspberry pi (64 bit os).</p>
+<p>For testing purposes (inside testing dir), the containers have already been built for both amd64 and arm64 and uploaded onto hub.docker: <a href="https://hub.docker.com/r/mickeyli789/ros_demo">mickeyli789/ros_demo</a>.</p>
+<p>Also recommended you alias kubectl (kubernetes cli) in your bashrc</p>
+<pre><code>alias kubectl='sudo k3s kubectl
+</code></pre>
+<h2 id="running-instructions"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4</span> Running instructions<a class="headerlink" href="#running-instructions" title="Permanent link">¶</a></h2>
+<h3 id="laptop"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.1</span> Laptop<a class="headerlink" href="#laptop" title="Permanent link">¶</a></h3>
+<p><strong>It is recommended that you use the <code>./run_k3s.sh</code> script in the root of the repository.</strong></p>
+<p>This script will download the latest version of k3s run the master kubernetes server using docker (instead of containerd if you need access to local images)
+'<code>curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" sh -</code> '
+(will run in background as systemd - check <code>systemctl status k3s</code>)</p>
+<p>This will open up a server with entrypoint on <code>0.0.0.0:6443</code> which corresponds to <code>&lt;host local ip address&gt;:6443</code></p>
+<h3 id="pi-drone-agent"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.2</span> Pi / Drone / Agent<a class="headerlink" href="#pi-drone-agent" title="Permanent link">¶</a></h3>
+<p>First ensure that the pi has been correctly set up with an airgapped installation of k3s, <a href="https://rancher.com/docs/k3s/latest/en/installation/airgap/">see here for installation instructions</a>. Follow the Manually Deploy Images Method. The script below assumes that the the images file and the k3s executable are in the user home directory.</p>
+<h4 id="setup-script-via-ssh"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.2.1</span> Setup script via ssh<a class="headerlink" href="#setup-script-via-ssh" title="Permanent link">¶</a></h4>
+<p>Identify the ip address of the pi, the root enabled (possibly password disabled) username. Then from this directory run</p>
+<pre><code class="language-bash">./start_k3s_agent.sh &lt;remote username&gt; &lt;remote ip address&gt; &lt;node name&gt;
+</code></pre>
+<p>e.g.</p>
+<pre><code class="language-bash">./start_k8_agent.sh ubuntu 192.168.0.110 clover1
+</code></pre>
+<p>You can specify the k3s server address by setting the environment variable before calling:</p>
+<pre><code class="language-bash">K3S_SERVER=https://192.168.0.63:6443 k3s_agent ubuntu 192.168.0.96 raspi1
+</code></pre>
+<h4 id="manual-old-setup-method"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.2.2</span> Manual, old setup method.<a class="headerlink" href="#manual-old-setup-method" title="Permanent link">¶</a></h4>
+<p>First SSH onto the pi</p>
+<p>First ensure you run <code>k3s-killall.sh</code> to make sure there is no master server running as you only want <code>k3s agent</code> to run.</p>
+<p>The K3S_TOKEN is the contents of the file <code>/var/lib/rancher/k3s/server/node-token</code></p>
+<pre><code class="language-bash">K3S_TOKEN=&lt;contents of the file /var/lib/rancher/k3s/server/node-token&gt;
+#e.g. K3S_TOKEN=K103b62838822f40f3e41j51f10cb127236f2c3014c120ede19263da9f33fbfc859::server:2dcbb32a4cad16e20d714d88dbce4af8
+K3S_SERVER=https://&lt;Your main machine ip address&gt;:6443
+K3S_NODE_NAME=clover1
+
+echo "Killing all k3s services and instances first"
+k3s-killall.sh
+
+echo "Starting k3s agent only"
+sudo k3s agent -t ${K3S_TOKEN} -s ${K3S_SERVER} --node-name ${K3S_NODE_NAME}
+</code></pre>
+<p>The Pi should now be setup</p>
+<p>Consider running the above using screen or somehow in the background just in case your ssh connection is unstable or you want to close it.</p>
+<h3 id="post-actions"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.3</span> Post actions<a class="headerlink" href="#post-actions" title="Permanent link">¶</a></h3>
+<p>If you want to stop kubernetes completely, the internet install script comes with two options which are on the PATH and can be run in the terminal.
+1. <code>k3s-killall.sh</code> will stop all k3s nodes and the systemd
+2. <code>k3s-uninstall.sh</code> will delete everything k3s and remove the systemd</p>
+<h4 id="dashboard"><span class="enumerate-headings-plugin enumerate-heading-plugin">25.4.3.1</span> Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">¶</a></h4>
+<p><a href="https://rancher.com/docs/k3s/latest/en/installation/kube-dashboard/">See the k3s docs for info on how to run</a></p>
+<p>Are started automatically in the <code>./run_k3s.sh</code> script.</p>
+<!-- ## Running the test cases -->
+<!-- Go to [testing directory for more info](testing/README.md) -->
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../guide/example-controller/" title="Example Python Controller"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../build_system/" title="Build System">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../guide/example-controller/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../build_system/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

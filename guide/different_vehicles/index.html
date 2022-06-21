@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Spawning Different Vehicles and Objects - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Spawning Different Vehicles and Objects";
+        var mkdocs_page_input_path = "guide/different_vehicles.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Spawning Different Vehicles and Objects</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#using-existing-models">15.1 Using Existing Models</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-rover">15.1.1 Example: Rover</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-existing-models-which-are-not-included-in-the-container">15.1.2 Using existing models which are not included in the container</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-your-own-models-into-the-container">15.2 Adding your own Models into the container</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#background-and-rosenvd">15.2.1 Background and /ros.env.d</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-project">15.2.2 Setting up the project</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-model">15.2.3 Custom Model</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-the-model">Specifying the model</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-model-setupbash">Building the model (setup.bash)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-world">15.2.4 Custom World</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-the-world">Specifying the world</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-model-setupbash_1">Building the model (setup.bash)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#building-and-running-the-models">15.2.5 Building and Running the models</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-compose">Docker-Compose</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#dockerfile">DockerFile</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Simulation and SITL »</li><li>Spawning Different Vehicles and Objects</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/different_vehicles.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="different-vehicles-in-simulation"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.</span> Different Vehicles in Simulation<a class="headerlink" href="#different-vehicles-in-simulation" title="Permanent link">¶</a></h1>
+<p>With the way the system is setup, it can be quite simple to run another vehicle in simulation, this page shows two different methods of achieving this effect.</p>
+<div class="toc">
+<ul>
+<li><a href="#different-vehicles-in-simulation">15. Different Vehicles in Simulation</a><ul>
+<li><a href="#using-existing-models">15.1 Using Existing Models</a><ul>
+<li><a href="#example-rover">15.1.1 Example: Rover</a></li>
+<li><a href="#using-existing-models-which-are-not-included-in-the-container">15.1.2 Using existing models which are not included in the container</a></li>
+</ul>
+</li>
+<li><a href="#adding-your-own-models-into-the-container">15.2 Adding your own Models into the container</a><ul>
+<li><a href="#background-and-rosenvd">15.2.1 Background and /ros.env.d</a></li>
+<li><a href="#setting-up-the-project">15.2.2 Setting up the project</a></li>
+<li><a href="#custom-model">15.2.3 Custom Model</a><ul>
+<li><a href="#specifying-the-model">Specifying the model</a></li>
+<li><a href="#building-the-model-setupbash">Building the model (setup.bash)</a></li>
+</ul>
+</li>
+<li><a href="#custom-world">15.2.4 Custom World</a><ul>
+<li><a href="#specifying-the-world">Specifying the world</a></li>
+<li><a href="#building-the-model-setupbash_1">Building the model (setup.bash)</a></li>
+</ul>
+</li>
+<li><a href="#building-and-running-the-models">15.2.5 Building and Running the models</a><ul>
+<li><a href="#docker-compose">Docker-Compose</a></li>
+<li><a href="#dockerfile">DockerFile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="using-existing-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.1</span> Using Existing Models<a class="headerlink" href="#using-existing-models" title="Permanent link">¶</a></h2>
+<p>To reduce the size of the containers, they only contain the minimal number of vehicle models</p>
+<ul>
+<li>For PX4 SITL container, there are only two models (1) iris (2) r1_rover. </li>
+<li>For Ardupilot SITL container, not many exist ... see the next section for how to add your own.</li>
+</ul>
+<p>For those which already exist it is simply a case of setting the <code>PX4_SIM_MODEL</code> envrionment variable when you run</p>
+<ul>
+<li><code>uobflightlabstarling/starling-sim-iris</code> in order to specify the model which will be rendered. By default this is <code>iris</code></li>
+<li><code>uobflightlabstarling/starling-sim-px4-sitl:latest</code> in order to ensure that the correct SITL parameters have been loaded. By default this is also <code>iris</code></li>
+</ul>
+<h3 id="example-rover"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.1.1</span> Example: Rover<a class="headerlink" href="#example-rover" title="Permanent link">¶</a></h3>
+<p>Example docker-compose to run the <a href="https://docs.px4.io/master/en/simulation/gazebo_vehicles.html#differential-ugv"><code>r1-rover</code></a></p>
+<pre><code class="language-yaml">version: '3'
+services:
+    simhost: 
+        image: uobflightlabstarling/starling-sim-iris
+        environment:
+        - "PX4_SIM_MODEL=r1-rover" #new!
+        ports:
+        - "8080:8080"
+    sitl:
+        image: uobflightlabstarling/starling-sim-px4-sitl:latest
+        environment:
+        - "PX4_SIM_HOST=simhost"
+        - "PX4_OFFBOARD_HOST=mavros"
+        - "PX4_SIM_MODEL=r1-rover" # new! 
+        ports:
+        - "18570:18570/udp"
+    mavros:
+        image: uobflightlabstarling/starling-mavros:latest
+        command: ros2 launch launch/mavros_bridge.launch.xml
+        environment:
+        - "MAVROS_TGT_SYSTEM=1"
+        - "MAVROS_FCU_IP=0.0.0.0"
+        - "MAVROS_GCS_URL=tcp-l://0.0.0.0:5760"
+        ports:
+        - "5760:5760"
+</code></pre>
+<h3 id="using-existing-models-which-are-not-included-in-the-container"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.1.2</span> Using existing models which are not included in the container<a class="headerlink" href="#using-existing-models-which-are-not-included-in-the-container" title="Permanent link">¶</a></h3>
+<p>As mentioned above, there are a number of models which should be included, but have been deleted by default to reduce the size of the container. </p>
+<p>For example for the PX4 SITL container, the following models should all exist: <a href="https://github.com/PX4/PX4-SITL_gazebo/tree/822050a7ab6fd87972e59f16312f451bce217a56/models">github link</a> and <a href="https://docs.px4.io/master/en/simulation/gazebo_vehicles.html">here</a>, but almost all of them are deleted. </p>
+<p>You can specify other vehicles to keep by rebuilding <code>starling-sim-base-core</code> with the build arg <code>KEEP_PX4_VEHICLES</code> set to the vehicles you wish to keep. To rebuild you will need to clone the <code>ProjectStarling</code> repository, navigate to simulation and locally rebuild the correct controller:</p>
+<pre><code>docker build --build-args KEEP_PX4_VEHICLES="! -o -path iris_with_standoffs"
+</code></pre>
+<h2 id="adding-your-own-models-into-the-container"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2</span> Adding your own Models into the container<a class="headerlink" href="#adding-your-own-models-into-the-container" title="Permanent link">¶</a></h2>
+<p>There will be many cases in which you will want to add extra models into your simulations. This might be to create an environment, or to add your own custom vehicles. For some exaples of projects which utilise custom models or worlds, please see the following:</p>
+<ul>
+<li><a href="https://github.com/StarlingUAS/FenswoodScenario">FenswoodScenario</a> where a number of custom models (downloaded from the gazebo repository) and a custom world is defined.</li>
+<li><a href="https://github.com/StarlingUAS/BRLFlightArenaGazebo">BRLFlightArenaGazebo</a> which is comprised of a custom world and a custom gimbal-tripod model built from scratch. </li>
+</ul>
+<h3 id="background-and-rosenvd"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.1</span> Background and <code>/ros.env.d</code><a class="headerlink" href="#background-and-rosenvd" title="Permanent link">¶</a></h3>
+<p>Both the <a href="../../docker-images/sim-base-core/">base simulation container</a>, and the <a href="../../docker-images/controller-base/">base controller container</a> both use a <code>/ros.env.d</code> mechanism. </p>
+<ol>
+<li>Both containers are set-up with a special folder in the root directory called <code>/ros.env.d</code>. </li>
+<li>When the container is started up, there is a special script that runs (called the <em>entrypoint</em> script) which looks at all of the folders within <code>/ros.env.d</code> and whether they have their own <code>setup.bash</code> script. </li>
+<li>If a <code>setup.bash</code> script exists, it will be <a href="https://superuser.com/questions/176783/what-is-the-difference-between-executing-a-bash-script-vs-sourcing-it"><code>source</code>'d</a>, i.e. script is run with any environment variables defined being exported to be used in later processes. </li>
+</ol>
+<p>By mounting external folders into the Dockerfile into <code>/ros.env.d</code>, we can add external and extra resources into a given controller or simulation container. </p>
+<h3 id="setting-up-the-project"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.2</span> Setting up the project<a class="headerlink" href="#setting-up-the-project" title="Permanent link">¶</a></h3>
+<p>The general format for a starling project with extra assets is the following: </p>
+<pre><code>project/
+├─ custom_models/
+│  ├─ model_1/
+│  │  ├─ setup.bash
+│  │  ├─ models/
+│  │  │  ├─ model_1/
+│  │  │  |  ├─ meshes/ # optionally populated
+│  │  │  │  ├─ model.config
+│  │  ├─ model.sdf.xacro
+│  ├─ model_2/
+│  │  ├─ setup.bash
+│  │  ├─ models/
+│  │  │  ├─ model_2/
+│  │  │  │  ├─ model.config
+│  │  ├─ model.sdf.xacro
+├─ custom_world/
+│  ├─ world/
+│  │  ├─ my_custom_world.world
+│  ├─ models/
+│  │  ├─ some_downloaded_model_asset/
+│  ├─ setup.bash
+├─ docker-compose.yaml
+├─ system.launch.xml
+├─ Makefile
+├─ Dockerfile
+</code></pre>
+<p>This project seperates custom models and the custom worlds into two seperate folders. The <code>system.launch.xml</code> defines the roslaunch file being run by the container. The Dockerfile will then copy all of these elements into the container at build time.</p>
+<h3 id="custom-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.3</span> Custom Model<a class="headerlink" href="#custom-model" title="Permanent link">¶</a></h3>
+<h4 id="specifying-the-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.3.1</span> Specifying the model<a class="headerlink" href="#specifying-the-model" title="Permanent link">¶</a></h4>
+<p>As above, it is recommended that you have 3 items within the custom model folder. </p>
+<ol>
+<li><code>setup.bash</code> which we will populate later</li>
+<li><code>model.sdf.xacro</code> defines the model as an sdf file with xacro argument replacement, I will explain what this means next</li>
+<li><code>models/</code> folder which creates a template of the file structure required by gazebo for any model.</li>
+</ol>
+<p>Xacro is handy tool for specifying arguments to an sdf file in order to generate custom sdf files. This is needed as the sdf file which describes a model is usually hard coded to a particular vehicle instance. Xacro allows us to dynamically generate these files. </p>
+<p>An example model which uses the <code>model.sdf.xacro</code> is given here:</p>
+<pre><code class="language-xml">&lt;?xml version='1.0'?&gt;
+&lt;sdf version="1.6" xmlns:xacro='http://ros.org/wiki/xacro'&gt;
+  &lt;xacro:property name="ros_namespace" value="$(arg ros_namespace)"/&gt;
+  &lt;model name="iris_demo"&gt;
+    &lt;link name="tripod"&gt;
+      &lt;collision name="geom_1"&gt;
+        &lt;geometry&gt;
+          &lt;box&gt;&lt;size&gt;0.5 0.5 1.5 0 0 0&lt;/size&gt;&lt;/box&gt;
+        &lt;/geometry&gt;
+      &lt;/collision&gt;
+
+      &lt;!-- Keep collision box, but dont show it --&gt;
+      &lt;visual name="tripod"&gt;
+        &lt;geometry&gt;
+          &lt;box&gt;&lt;size&gt;0.5 0.5 1.5 0 0 0&lt;/size&gt;&lt;/box&gt;
+        &lt;/geometry&gt;
+        &lt;material&gt;
+        &lt;uri&gt;file://media/materials/scripts/gazebo.material&lt;/uri&gt;
+        &lt;script&gt;Gazebo/Grey&lt;/script&gt;
+        &lt;/material&gt;
+      &lt;/visual&gt;
+    &lt;/link&gt;
+
+    &lt;include&gt;
+      &lt;uri&gt;model://gimbal_small_2d&lt;/uri&gt;
+      &lt;pose&gt;0 0 1.0 1.57 0 1.57&lt;/pose&gt;
+    &lt;/include&gt;
+
+    &lt;joint name="${ros_namespace}_gimbal_mount" type="revolute"&gt;
+      &lt;parent&gt;tripod&lt;/parent&gt;
+      &lt;child&gt;gimbal_small_2d::base_link&lt;/child&gt;
+      &lt;axis&gt;
+        &lt;limit&gt;
+          &lt;lower&gt;0&lt;/lower&gt;
+          &lt;upper&gt;0&lt;/upper&gt;
+        &lt;/limit&gt;
+        &lt;xyz&gt;0 0 1&lt;/xyz&gt;
+        &lt;use_parent_model_frame&gt;true&lt;/use_parent_model_frame&gt;
+      &lt;/axis&gt;
+    &lt;/joint&gt;
+
+  &lt;/model&gt;
+&lt;/sdf&gt;
+</code></pre>
+<p>This example describes the sdf file for a gimbal mounted on a simple tripod block. The xacro elements specify a 'property' of <code>ros_namespace</code>. When compiling with the xacro.py tool, it can generate a new sdf file with that property set to a value you want. </p>
+<p>You must then setup a model directory looking like the following (with optional meshes if using a model from the internet)</p>
+<pre><code>│  │  ├─ models/
+│  │  │  ├─ model_1/
+│  │  │  |  ├─ meshes/ # optionally populated
+│  │  │  │  ├─ model.config
+</code></pre>
+<p>The exact contents of the model file follow gazebo guidelines. There is an overview <a href="http://gazebosim.org/tutorials?tut=build_model">here</a>. There are a number online as well. </p>
+<blockquote>
+<p>Note that Xacro does not change the sdf or gazebo model syntax. It can be thought of as doing a copy paste to your existing file.</p>
+</blockquote>
+<h4 id="building-the-model-setupbash"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.3.2</span> Building the model (<code>setup.bash</code>)<a class="headerlink" href="#building-the-model-setupbash" title="Permanent link">¶</a></h4>
+<p>Now we have the model defined, we now want to ensure that the model can now be built/configured/compiled during the container runtime. This involves writing the <code>setup.bash</code> file. Usually there are 3 steps:</p>
+<ol>
+<li>Making sure the script is being run from the correct directory, and that the relevant paths are set. </li>
+<li>Apply xacro with environment variables (given by the user or the container itself) and saving it in the model folder path (next to <code>model.config</code>)</li>
+<li>Adding the model to the gazebo model path</li>
+</ol>
+<p>Here is an example <code>setup.bash</code> for the gimbal example.</p>
+<pre><code class="language-bash">#!/bin/bash
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &amp;&gt; /dev/null &amp;&amp; pwd )"
+
+XACRO_PATH=${SCRIPT_DIR}/model.sdf.xacro
+MODEL_PATH=${SCRIPT_DIR}/models/gimbal_tripod/model.sdf
+
+xacro ${XACRO_PATH} \
+    ros_namespace:=${GIMBAL_NAMESPACE} \
+    -o ${MODEL_PATH}
+
+echo "Written Gimbal model to ${MODEL_PATH}"
+
+export GAZEBO_MODEL_PATH="${SCRIPT_DIR}/models:${GAZEBO_MODEL_PATH}"
+</code></pre>
+<p>In particular the <code>xacro</code> command takes the <code>sdf.xacro</code> we created previously and creates a new version with the parameters realised - here <code>ros_namespace</code> is set to the environment variable <code>GIMBAL_NAMESPACE</code>. Environment variables are often defined in the Dockerfile or by the user. </p>
+<h3 id="custom-world"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.4</span> Custom World<a class="headerlink" href="#custom-world" title="Permanent link">¶</a></h3>
+<h4 id="specifying-the-world"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.4.1</span> Specifying the world<a class="headerlink" href="#specifying-the-world" title="Permanent link">¶</a></h4>
+<p>A world can be defined by the worlds folder. Inside the worlds folder, there is the world file which describes the base world gazebo will generate. The world file itself is an sdf file with the <code>world</code> tag. Since the world is fixed, there is also no need for xacro (although you could use it if you wanted to).</p>
+<pre><code class="language-xml">&lt;?xml version="1.0" ?&gt;
+&lt;sdf version="1.4"&gt;
+  &lt;world name="flightarena"&gt;
+
+    &lt;spherical_coordinates&gt;
+      &lt;surface_model&gt;EARTH_WGS84&lt;/surface_model&gt;
+      &lt;latitude_deg&gt;51.4233628&lt;/latitude_deg&gt;
+      &lt;longitude_deg&gt;-2.671671&lt;/longitude_deg&gt;
+      &lt;elevation&gt;100.0&lt;/elevation&gt;
+    &lt;/spherical_coordinates&gt;
+
+    &lt;include&gt;
+      &lt;uri&gt;model://sun&lt;/uri&gt;
+    &lt;/include&gt;
+
+    ... All the contents of the world ...
+
+  &lt;/world&gt;
+&lt;/sdf&gt;
+</code></pre>
+<p>An example can be found in these repositories <a href="https://github.com/StarlingUAS/FenswoodScenario/blob/master/fenswood/worlds/fenswood.world">FenswoodScenario</a>, <a href="https://github.com/StarlingUAS/BRLFlightArenaGazebo/blob/master/flightarena/worlds/flightarena.world">BRLFlightArenaGazebo</a>. </p>
+<p>The contents of the world file uses the same syntax as your normal model files. See the examples for adding primitive objects. For models, you will need to include the models inside this directory (and add that folder onto your path in the next step).</p>
+<h4 id="building-the-model-setupbash_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.4.2</span> Building the model (<code>setup.bash</code>)<a class="headerlink" href="#building-the-model-setupbash_1" title="Permanent link">¶</a></h4>
+<p>Similar to setup for the custom model, we need to define a setup for the custom world. For worlds, this usually just involves ensuring that the world and asscoiated models are on the gazebo paths:</p>
+<pre><code class="language-bash">SRC_PATH="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &amp;&gt; /dev/null &amp;&amp; pwd )"
+
+# Add flightarena.world to the Gazebo resource path
+export GAZEBO_RESOURCE_PATH=$SRC_PATH/worlds:${GAZEBO_RESOURCE_PATH}
+echo "RESOURCE_PATH: $GAZEBO_RESOURCE_PATH"
+
+# Add the 'grass_box' model to the Gazebo model path
+export GAZEBO_MODEL_PATH=$SRC_PATH/models:${GAZEBO_MODEL_PATH}
+echo "GAZEBO_MODEL_PATH: $GAZEBO_MODEL_PATH"
+
+# Make the default media files work
+cp -r /usr/share/gazebo-11/media $GZWEB_WS/http/client/assets/
+(cd /root/gzweb/http/client/assets/media/materials/textures \
+    &amp;&amp; for f in *jpg; do convert $f ${f%.*}.png; done)
+</code></pre>
+<p>The final line is to ensure that all of the textures are compatible with the Gazebo web interface. </p>
+<h3 id="building-and-running-the-models"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.5</span> Building and Running the models<a class="headerlink" href="#building-and-running-the-models" title="Permanent link">¶</a></h3>
+<p>Now that all of the models and worlds have been created, we then need to either bundle it up, or inject it into the container so it can be included. </p>
+<p>There are two methods. Both of which are applicable depending on eventual usecase. </p>
+<ol>
+<li>Docker-Compose: The models/worlds can be mounted into the simulation container at runtime</li>
+<li>Building a new Docker Container: If you know that you want to build upon the models or worlds into multiple differing applications, it's probably best to package it up and use as a dependency for the child projects. </li>
+</ol>
+<h4 id="docker-compose"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.5.1</span> Docker-Compose<a class="headerlink" href="#docker-compose" title="Permanent link">¶</a></h4>
+<p>As mentioned earlier, as long as the folders have a <code>setup.bash</code> script inside, it is compatible with automation within <code>/ros.env.d</code>. Therefore you can mount your folders into the container as volumes within the docker-compose file:</p>
+<pre><code class="language-yaml">simhost:
+    image: uobflightlabstarling/starling-sim-iris:${STARLING_RELEASE:-latest}
+    volumes:
+      - ./flightarena:/ros.env.d/02_flightarena
+      - ./systems/models/gimbal_small_2d:/ros.env.d/03_gimbal_small_2d
+      - ./systems/models/gimbal_tripod:/ros.env.d/04_gimbal_tripod
+      - ./system.launch.xml:launch/system.launch.xml
+    env:
+      - GIMBAL_NAMESPACE=gimbal_1 
+    command: ["ros2", "launch", "launch/system.launch.xml"]
+    ports:
+      - "8080:8080"
+</code></pre>
+<p>Where the syntax is <code>&lt;local file&gt;:&lt;container file&gt;</code>. Also note that inside <code>ros.env.d</code> we name the folders <code>XX_&lt;name&gt;</code> where <code>XX</code> is a two digit number describing the order of script loading from 00 being first to 99 being last. 00 to 02 are already used in setup, it is recommended you use numbers &gt; 03. This is useful for dependencies.</p>
+<h4 id="dockerfile"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.2.5.2</span> DockerFile<a class="headerlink" href="#dockerfile" title="Permanent link">¶</a></h4>
+<p>The dockerfile is an alternative way where we explicitly copy the files into the newly built container. The following dockerfile does exactly this. </p>
+<pre><code class="language-dockerfile">ARG VERSION=latest
+ARG REGISTRY
+FROM ${REGISTRY}uobflightlabstarling/starling-sim-iris:latest
+
+# Copy in the xacro &amp; bash file to setup the model
+# Using ros.env.d automatic sourcing on entrypoint (see /simulator/base/core/Dockerfile)
+COPY flightarena /ros.env.d/02_flightarena
+COPY systems/models/gimbal_small_2d /ros.env.d/03_gimbal_small_2d
+COPY systems/models/gimbal_tripod /ros.env.d/04_gimbal_tripod
+
+# Build gimbal plugin with ROS2 on path and add plugin to path
+COPY systems/gimbal_plugin /ros_ws/src/gimbal_plugin
+RUN cd /ros_ws \
+    &amp;&amp; . /opt/ros/foxy/setup.sh \
+    &amp;&amp; export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+    &amp;&amp; colcon build --cmake-force-configure \
+    &amp;&amp; rm -r build \
+    &amp;&amp; echo 'export GAZEBO_PLUGIN_PATH=/ros_ws/install/gimbal_plugin/lib:${GAZEBO_PLUGIN_PATH}' &gt;&gt; /ros.env.d/03_gimbal_small_2d/setup.bash
+
+# Copy in the vehicle launch file
+COPY system.launch.xml /ros_ws/launch/
+
+WORKDIR /ros_ws
+
+ENV GIMBAL_NAMESPACE gimbal_1
+
+# Launch gazebo and spawn model
+CMD [ "ros2", "launch", "launch/system.launch.xml" ]
+</code></pre>
+<p>Often you want to also setup the build process. See the examples for details! </p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../multiple-drone-drones/" title="Multiple Drones on Hardware"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../windows-support/" title="Windows Support and FAQ">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../multiple-drone-drones/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../windows-support/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

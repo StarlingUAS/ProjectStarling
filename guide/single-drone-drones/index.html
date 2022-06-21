@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Single Drone on Hardware - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Single Drone on Hardware";
+        var mkdocs_page_input_path = "guide/single-drone-drones.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Single Drone on Hardware</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">11.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-steps">11.2 Setup Steps</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#controller-development">11.2.1 Controller development</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#offboard-controllers">11.2.2 Offboard Controllers</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#onboard-controllers">11.2.3 Onboard Controllers</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#execution">11.3 Execution</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting-faqs">11.4 Troubleshooting/ FAQs</a>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Single Drone User Guides »</li><li>Single Drone on Hardware</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/single-drone-drones.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="single-drone-deployment-onto-real-drones-in-the-flight-arena"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.</span> Single Drone Deployment onto Real Drones in the Flight Arena<a class="headerlink" href="#single-drone-deployment-onto-real-drones-in-the-flight-arena" title="Permanent link">¶</a></h1>
+<p>Follow these instructions to deploy developed controllers on a single drone in the flight arena.</p>
+<p><strong>This is considered to be setp 3 for the Starling development process.</strong></p>
+<blockquote>
+<p><strong>Note:</strong> Reading the <a href="../../details/flight_arena/">flight arena setup</a> may be useful but should not be necessary.</p>
+</blockquote>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#single-drone-deployment-onto-real-drones-in-the-flight-arena">11. Single Drone Deployment onto Real Drones in the Flight Arena</a><ul>
+<li><a href="#contents">11.1 Contents</a></li>
+<li><a href="#setup-steps">11.2 Setup Steps</a><ul>
+<li><a href="#controller-development">11.2.1 Controller development</a></li>
+<li><a href="#offboard-controllers">11.2.2 Offboard Controllers</a></li>
+<li><a href="#onboard-controllers">11.2.3 Onboard Controllers</a></li>
+</ul>
+</li>
+<li><a href="#execution">11.3 Execution</a></li>
+<li><a href="#troubleshooting-faqs">11.4 Troubleshooting/ FAQs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="setup-steps"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2</span> Setup Steps<a class="headerlink" href="#setup-steps" title="Permanent link">¶</a></h2>
+<h3 id="controller-development"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2.1</span> Controller development<a class="headerlink" href="#controller-development" title="Permanent link">¶</a></h3>
+<p>It has been assumed that you have tested your controller with the docker-compose set up and with the previous local cluster setup. When running on real drones, there are a number of points to be aware of depending on if you are running offboard or onboard.</p>
+<h3 id="offboard-controllers"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2.2</span> Offboard Controllers<a class="headerlink" href="#offboard-controllers" title="Permanent link">¶</a></h3>
+<h3 id="onboard-controllers"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2.3</span> Onboard Controllers<a class="headerlink" href="#onboard-controllers" title="Permanent link">¶</a></h3>
+<h2 id="execution"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.3</span> Execution<a class="headerlink" href="#execution" title="Permanent link">¶</a></h2>
+<h2 id="troubleshooting-faqs"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.4</span> Troubleshooting/ FAQs<a class="headerlink" href="#troubleshooting-faqs" title="Permanent link">¶</a></h2>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../kube-single-drone-local-machine/" title="Single Drone Simulation on Local Cluster"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../multiple-drone-local-machine/" title="Multiple Drones Simulation on Local Cluster">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../kube-single-drone-local-machine/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../multiple-drone-local-machine/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

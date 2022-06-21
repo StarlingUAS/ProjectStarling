@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>BRL Flight Arena - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "BRL Flight Arena";
+        var mkdocs_page_input_path = "details/flight_arena.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">BRL Flight Arena</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#architecture">22.1 Architecture</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#flight-arena-networking">22.1.1 Flight Arena Networking</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#starling">22.1.2 Starling</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#mavlink-broadcast">Mavlink Broadcast</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#ros2-dds-broadcast">ROS2 DDS Broadcast</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#kubernetes-control-layer">Kubernetes Control Layer</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#flight-arena-details">22.2 Flight Arena Details</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-kubectl-from-remote-machines">22.2.1 Using kubectl from Remote Machines</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-container-deployment-via-daemonsets">22.2.2 Automatic Container Deployment via DaemonSets</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#time-synchronisation">22.2.3 Time Synchronisation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#config">Config</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#restart">Restart</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-local-registry-as-a-pass-through-cache">22.2.4 Docker Local Registry as a Pass Through Cache</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#vehicle-side_1">Vehicle Side</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#ground-side_1">Ground Side</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Physical Flight »</li><li>BRL Flight Arena</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/details/flight_arena.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="flight-arena-architecture-and-set-up"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.</span> Flight Arena Architecture and Set Up<a class="headerlink" href="#flight-arena-architecture-and-set-up" title="Permanent link">¶</a></h1>
+<div class="toc">
+<ul>
+<li><a href="#flight-arena-architecture-and-set-up">22. Flight Arena Architecture and Set Up</a><ul>
+<li><a href="#architecture">22.1 Architecture</a><ul>
+<li><a href="#flight-arena-networking">22.1.1 Flight Arena Networking</a></li>
+<li><a href="#starling">22.1.2 Starling</a><ul>
+<li><a href="#mavlink-broadcast">Mavlink Broadcast</a></li>
+<li><a href="#ros2-dds-broadcast">ROS2 DDS Broadcast</a></li>
+<li><a href="#kubernetes-control-layer">Kubernetes Control Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#flight-arena-details">22.2 Flight Arena Details</a><ul>
+<li><a href="#using-kubectl-from-remote-machines">22.2.1 Using kubectl from Remote Machines</a></li>
+<li><a href="#automatic-container-deployment-via-daemonsets">22.2.2 Automatic Container Deployment via DaemonSets</a></li>
+<li><a href="#time-synchronisation">22.2.3 Time Synchronisation</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#config">Config</a><ul>
+<li><a href="#vehicle-side">Vehicle side</a></li>
+<li><a href="#ground-side">Ground side</a></li>
+</ul>
+</li>
+<li><a href="#restart">Restart</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li><a href="#docker-local-registry-as-a-pass-through-cache">22.2.4 Docker Local Registry as a Pass Through Cache</a><ul>
+<li><a href="#vehicle-side_1">Vehicle Side</a></li>
+<li><a href="#ground-side_1">Ground Side</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="architecture"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1</span> Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<p>A side effect of using kubernetes and docker is that the system is mostly network agnostic. As long as all elements of the system are on the same physical network, all elements should be able to communicate.</p>
+<p><img alt="arch2" src="../../img/ArchitectureNetworking2.png"/></p>
+<h3 id="flight-arena-networking"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.1</span> Flight Arena Networking<a class="headerlink" href="#flight-arena-networking" title="Permanent link">¶</a></h3>
+<p>The flight arena (FA) runs on its own airgapped local network.  The FA network exists on the CIDR subnet <code>192.168.10.0/24</code>. There is a external dhcp server sitting on <code>192.168.10.252</code> which (as of writing) is configured to serve addresses to new devices from <code>192.168.10.105 - 192.168.10.199</code>. Addresses below <code>105</code> are reserved for the flight arena machines, server and the VICON motion tracking system.</p>
+<p>The flight arena machines then all have 2 network cards, one connecting to the flight arena network (grey cables), and one connecting to the internet via the UWE network (blue cables). These machines run from <code>192.168.10.83 - 192.168.10.85</code>. The flight arena server has been set up on <code>192.168.10.80</code> (this can also be accessed via <code>flyingserver.local</code>) and is host centralised aspects of the system.</p>
+<h3 id="starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.2</span> Starling<a class="headerlink" href="#starling" title="Permanent link">¶</a></h3>
+<p>The kubernetes master node is set to run on the flight arena server on <code>192.168.10.80</code> or <code>flyingserver.local</code>. Any worker nodes (drones) must have the master node registered. Any machines/ work laptops that want to submit deployments to the cluster must have the cluster server set to the address of the arena server within their <code>k3s.yaml</code> config file (<code>~/.kube/config/k3s.yaml</code>).</p>
+<blockquote>
+<p>Note: Security and proper cluster authentication should be set up in the future</p>
+</blockquote>
+<p>As all pods should be running <code>net=host</code> all traffic moves over the <code>192.168.10.0/24</code> subnet.</p>
+<p><img alt="flight arena architecture" src="../../img/Arch3.jpg"/></p>
+<p>The figure above shows an example application in action. There are essentially three independent communication channels:</p>
+<ol>
+<li>Mavlink broadcast over the network on port 14550 UDP.</li>
+<li>ROS2 DDS broadcast over the network.</li>
+<li>Kuberenetes control layer networks (<code>10.42.0.0/24</code>)</li>
+</ol>
+<h4 id="mavlink-broadcast"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.2.1</span> Mavlink Broadcast<a class="headerlink" href="#mavlink-broadcast" title="Permanent link">¶</a></h4>
+<p>When a drone (simulated or physical) is connected as a node and the <code>starling-mavros</code> container is run on it, <code>mavros</code> will begin broadcasting to port 14550. This broadcast is conducted over the flight arena network and any machine on the network can pick up these broadcasts. Any drone can be flown directly through mavlink if desired.</p>
+<h4 id="ros2-dds-broadcast"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.2.2</span> ROS2 DDS Broadcast<a class="headerlink" href="#ros2-dds-broadcast" title="Permanent link">¶</a></h4>
+<p>It is envisioned that the majority of user facing communication is conducted through ROS2. For instance communication between controllers, or controlling external hardware on the drones such as LED lights. In ROS2, communication is conducted through the <a href="https://en.wikipedia.org/wiki/Data_Distribution_Service">DDS middleware protocol</a>. DDS is a standard for machine-to-machine high-performance, real-time, scalable communication which uses a publish-subscribe pattern over UDP. Each ROS2 node will broadcast its list of available publishers to the whole network. Another node can subscribe and data transfer between the two will commence.</p>
+<p>This means that any machine or laptop connected to the flight arena network and has ROS2 foxy running on the operating system will have access to the list of topics. <em>These external machines do not have to be part of the cluster</em>. This gives a user-friendly way of developing and interacting with the cluster.</p>
+<h4 id="kubernetes-control-layer"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.2.3</span> Kubernetes Control Layer<a class="headerlink" href="#kubernetes-control-layer" title="Permanent link">¶</a></h4>
+<p>Kubernetes generates its own network layer between its nodes on <code>10.42.0.0/24</code>. These are primarily extra deployments, daemonsets and services which facilitate pod failure recovery, automatic deployment and web based user interface port forwarding.</p>
+<h2 id="flight-arena-details"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2</span> Flight Arena Details<a class="headerlink" href="#flight-arena-details" title="Permanent link">¶</a></h2>
+<h3 id="using-kubectl-from-remote-machines"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.1</span> Using <code>kubectl</code> from Remote Machines<a class="headerlink" href="#using-kubectl-from-remote-machines" title="Permanent link">¶</a></h3>
+<p>To use <code>kubectl</code> from a remote machine, a copy of the <code>k3s.yaml</code> from the master machine is needed.</p>
+<p>On the machine you want to use <code>kubectl</code> from, run:</p>
+<p><code>export KUBECONFIG=/path/to/k3s.yaml</code></p>
+<p>This adds the <code>KUBECONFIG</code> variable to the environment. To make it permanent, it needs to be added to the <code>.bashrc</code>.</p>
+<p>Once this is done, <code>kubectl</code> can be used as normal and will connect to the master. To test, run:</p>
+<p><code>kubectl cluster-info</code></p>
+<p>You should see <code>Kubernetes control plane is running at...</code> reflecting your Kubernetes master.</p>
+<h3 id="automatic-container-deployment-via-daemonsets"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.2</span> Automatic Container Deployment via DaemonSets<a class="headerlink" href="#automatic-container-deployment-via-daemonsets" title="Permanent link">¶</a></h3>
+<p>There are 3 daemonsets configured to perform automatic deployment of containers on any node which satisfies the daemonsets constraints on tags. This should be updated as more are added or they are taken away.</p>
+<ol>
+<li>Deployment of <code>starling-mavros</code> on any node with tag <code>starling.dev/vehicle-class:rotary</code></li>
+<li>Deployment of <code>starling-vicon</code> on any node with tag <code>starling.dev/type: vehicle</code></li>
+<li>Deployment of <code>starling-clover</code> on any node with tag <code>starling.dev/vehicle-type: clover</code></li>
+</ol>
+<h3 id="time-synchronisation"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3</span> Time Synchronisation<a class="headerlink" href="#time-synchronisation" title="Permanent link">¶</a></h3>
+<p>When running the Vicon node on a separate PC, the clock of the onboard PC needs to be closely synched to allow the position estimates to be used by PX4. You can do this with <code>chrony</code>.</p>
+<h4 id="installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.1</span> Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h4>
+<p>One liner if package is available:</p>
+<pre><code class="language-sh">sudo apt install chrony
+</code></pre>
+<h4 id="config"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.2</span> Config<a class="headerlink" href="#config" title="Permanent link">¶</a></h4>
+<p><code>chrony</code>'s configuration is in <code>/etc/chrony/chrony.conf</code>. The configuration needed depends on which side of the system is being configured.</p>
+<h5 id="vehicle-side"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.2.1</span> Vehicle side<a class="headerlink" href="#vehicle-side" title="Permanent link">¶</a></h5>
+<p>On the vehicle, <code>chrony</code> needs to be configured to add a time server on the local network. This can be done by adding the below to the config file:</p>
+<pre><code># Use local time source
+server ${GROUND_PC_IP} iburst prefer
+</code></pre>
+<h5 id="ground-side"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.2.2</span> Ground side<a class="headerlink" href="#ground-side" title="Permanent link">¶</a></h5>
+<p>On the ground, <code>chrony</code> is configured to accept connections from clients on the local network:</p>
+<pre><code># Allow clients to connect to this computer
+allow ${LOCAL_SUBNET_PREFIX} # e.g. 192.168.10
+bindaddress ${GROUND_PC_IP}
+local stratum 10
+</code></pre>
+<h4 id="restart"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.3</span> Restart<a class="headerlink" href="#restart" title="Permanent link">¶</a></h4>
+<p>Once the edits to the config file have been made, restart <code>chrony</code> through <code>systemd</code>:</p>
+<pre><code class="language-sh">sudo systemctl restart chrony
+</code></pre>
+<h4 id="troubleshooting"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.3.4</span> Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h4>
+<p><code>chronyc sources</code> will show the current status of the computer's time sync.</p>
+<p><code>chronyc makestep</code> should force the computer to synchronise with the server.</p>
+<h3 id="docker-local-registry-as-a-pass-through-cache"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.4</span> Docker Local Registry as a Pass Through Cache<a class="headerlink" href="#docker-local-registry-as-a-pass-through-cache" title="Permanent link">¶</a></h3>
+<p>In order for the drones on the flight arena network to pull docker images from docker hub, the flight arena server has a docker registry running as a pull through cache. The drones must know to attempt to pull images from the local flight server first.</p>
+<h4 id="vehicle-side_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.4.1</span> Vehicle Side<a class="headerlink" href="#vehicle-side_1" title="Permanent link">¶</a></h4>
+<p>On the vehicle, the docker daemon needs to be updated to use the flight arena server as a registry mirror. Add the following into <code>/etc/docker/daemon.json</code>:</p>
+<pre><code class="language-json">{
+    "registry_mirrors": ["192.168.10.80:5000"]
+}
+</code></pre>
+<h4 id="ground-side_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.2.4.2</span> Ground Side<a class="headerlink" href="#ground-side_1" title="Permanent link">¶</a></h4>
+<p>The flight arena server has a registry docker image running that is configured using the following guide in <a href="https://docs.docker.com/registry/recipes/mirror/">docker docs</a></p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../kubernetes-dashboard/" title="Kubernetes Dashboard Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../adding_physical_drone/" title="Adding A New Vehicle">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../kubernetes-dashboard/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../adding_physical_drone/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

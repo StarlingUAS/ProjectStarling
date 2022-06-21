@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Example Python Controller - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Example Python Controller";
+        var mkdocs_page_input_path = "guide/example-controller.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Example Python Controller</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">24.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">24.2 Usage</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#docker">24.2.1 Docker</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#kubernetes">24.2.2 Kubernetes</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#details">24.3 Details</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#controller-phases">24.3.1 Controller Phases</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#initialisation">Initialisation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#mode-switching">Mode switching</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#arming">Arming</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#takeoff">Takeoff</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#flight">Flight</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-drones">24.3.2 Multiple Drones</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#coordinate-systems">24.3.3 Coordinate Systems</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ardupilot-compataility">24.3.4 ArduPilot Compataility</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-specifics">24.4 ROS Specifics</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Implementation »</li><li>Example Python Controller</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/example-controller.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="example-python-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.</span> Example Python Controller<a class="headerlink" href="#example-python-controller" title="Permanent link">¶</a></h1>
+<p><strong>NEEDS UPDATING</strong> For now see the <a href="https://github.com/StarlingUAS/example_python_controller">example_python_controller</a> repository for exact commands. The theoretical content is still useful though.</p>
+<p>This is a very basic "controller" written in Python, using ROS2 and MAVROS to control a PX4-based vehicle. It commands all current vehicles to fly in a 1m radius circle at a height of 2.5m.</p>
+<p>It begins sending offboard setpoints, sets the mode to <code>OFFBOARD</code>, arms the vehicle, and finally begins moving the setpoint around the sky.</p>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#example-python-controller">24. Example Python Controller</a><ul>
+<li><a href="#contents">24.1 Contents</a></li>
+<li><a href="#usage">24.2 Usage</a><ul>
+<li><a href="#docker">24.2.1 Docker</a></li>
+<li><a href="#kubernetes">24.2.2 Kubernetes</a></li>
+</ul>
+</li>
+<li><a href="#details">24.3 Details</a><ul>
+<li><a href="#controller-phases">24.3.1 Controller Phases</a><ul>
+<li><a href="#initialisation">Initialisation</a></li>
+<li><a href="#mode-switching">Mode switching</a></li>
+<li><a href="#arming">Arming</a></li>
+<li><a href="#takeoff">Takeoff</a></li>
+<li><a href="#flight">Flight</a></li>
+</ul>
+</li>
+<li><a href="#multiple-drones">24.3.2 Multiple Drones</a></li>
+<li><a href="#coordinate-systems">24.3.3 Coordinate Systems</a></li>
+<li><a href="#ardupilot-compataility">24.3.4 ArduPilot Compataility</a></li>
+</ul>
+</li>
+<li><a href="#ros-specifics">24.4 ROS Specifics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="usage"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.2</span> Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<h3 id="docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.2.1</span> Docker<a class="headerlink" href="#docker" title="Permanent link">¶</a></h3>
+<p>To run the controller, it needs to be connected to the network that the other ROS nodes exist in.</p>
+<p>For example:</p>
+<pre><code class="language-bash">docker run -it --network projectstarling_default example_controller_python
+</code></pre>
+<p>where <code>projectstarling_default</code> is the name of the default network created by the example <code>docker-compose.yaml</code> in the root directory.</p>
+<p>Replace <code>example_controller_python</code> with <code>uobflightlabstarling/example_controller_python</code> if you have not locally built the controller.</p>
+<blockquote>
+<p><strong>Note:</strong> Due to the way rclpy works, this container can not be killed gracefully unless
+using the <code>-it</code> flags for docker run. See <a href="https://github.com/ros2/rclpy/issues/527">this issue</a>.</p>
+</blockquote>
+<h3 id="kubernetes"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.2.2</span> Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h3>
+<p>To run the controller in kubernetes, k3s must be up and running, then simply apply the k8 deployment script</p>
+<pre><code class="language-bash">kubectl apply -f example_controller_python/k8.example_controller_python.amd64.yaml
+</code></pre>
+<p>This will firstly run the local <code>uobflightlabstarling/example_controller_python</code> if one exists, otherwise it will pull from docker hub.</p>
+<h2 id="details"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3</span> Details<a class="headerlink" href="#details" title="Permanent link">¶</a></h2>
+<h3 id="controller-phases"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1</span> Controller Phases<a class="headerlink" href="#controller-phases" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<h4 id="initialisation"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1.1</span> Initialisation<a class="headerlink" href="#initialisation" title="Permanent link">¶</a></h4>
+<p>In the initialisation phase, the controller sends a stream of setpoints to
+the vehicle while it waits for a valid position. This is needed as PX4 will
+not switch into <code>OFFBOARD</code> mode without a valid setpoint stream. In this
+phase, the controller also initialises the initial position of the vehicle.</p>
+</li>
+<li>
+<h4 id="mode-switching"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1.2</span> Mode switching<a class="headerlink" href="#mode-switching" title="Permanent link">¶</a></h4>
+<p>PX4 follows various types of setpoints when in <code>OFFBOARD</code> mode. The
+controller uses a ROS service to command the vehicle to switch into this
+mode. It will retry the mode switch once per second until it succeeds.
+Once this is complete it will wait for a ros message from <code>/mission_start</code> before continuing on to ARM.</p>
+</li>
+<li>
+<h4 id="arming"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1.3</span> Arming<a class="headerlink" href="#arming" title="Permanent link">¶</a></h4>
+<p>With the vehicle in the correct mode, the controller uses another ROS
+service to command the vehicle to arm. Once the vehicle is armed, the
+rotors begin to spin and the vehicle will begin trying to reach the
+setpoints it is provided with. Again the controller attempts this once
+per second until success.</p>
+</li>
+<li>
+<h4 id="takeoff"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1.4</span> Takeoff<a class="headerlink" href="#takeoff" title="Permanent link">¶</a></h4>
+<p>Once the vehicle is armed and in <code>OFFBOARD</code> mode, the flight can begin. The
+controller uses the initial position it recorded earlier and begins to
+generate a setpoint that rises above this. Once the setpoint is at the
+desired takeoff altitude, the controller waits for the actual vehicle
+position to reach some predetermined value before it considers the takeoff
+to be complete.</p>
+</li>
+<li>
+<h4 id="flight"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.1.5</span> Flight<a class="headerlink" href="#flight" title="Permanent link">¶</a></h4>
+<p>With takeoff complete, the controller begins sending setpoints for the
+vehicle. In this case, these follow a circle around the local coordinate
+system origin.</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> If a message is sent on the <code>/emergency_stop</code> topic this controller will send the PX4 e-STOP command. This stops the motors of the drones.</p>
+</blockquote>
+<h3 id="multiple-drones"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.2</span> Multiple Drones<a class="headerlink" href="#multiple-drones" title="Permanent link">¶</a></h3>
+<p>If this controller is run with multiple SITL or real drone instances, each broadcasting their topics in the form <code>&lt;drone_name&gt;/mavros/...</code>, then one controller is deployed for each drone instance.</p>
+<p>By default, <code>launch/example_fly_all.launch.py</code> is the launch file which produces this behaviour. It provides an example for how to write an offboard multi-drone controller.</p>
+<h3 id="coordinate-systems"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.3</span> Coordinate Systems<a class="headerlink" href="#coordinate-systems" title="Permanent link">¶</a></h3>
+<p>ROS and MAVROS use Front-Left-Up (FLU) coordinate systems while PX4 uses a
+Front-Right-Down (FRD) coordinate system. Coordinates and vectors transferred
+between the two systems are automatically transformed to the appropriate
+convention by MAVROS. You should provide MAVROS with setpoints in FLU and
+expect position data from it in FLU.</p>
+<p>Another aspect to be aware of is PX4's treatment of the local coordinate
+system. Generally, this coordinate system will be centred where the vehicle
+was powered up. However, internal estimates are often poor during ground
+handling, so there may be a signficant offset from your expectation.
+Coordinating the local coordinate systems of multiple vehicles can become
+complex.</p>
+<p>If external local positioning information is provided, for example from Vicon,
+PX4's coordinate system will share the same origin. This makes dealing with
+multiple vehicles muc easier.</p>
+<p>PX4's global coordinate system as exposed by MAVROS comes in two forms.
+The first is a PoseStamped message, which is relative to either a provided map
+origin, the home position, or the first GNSS fix received. The other is a full
+geographic coordinate formed of latitude, longitude and altitude as part of a
+NavSatFix message.</p>
+<h3 id="ardupilot-compataility"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.3.4</span> ArduPilot Compataility<a class="headerlink" href="#ardupilot-compataility" title="Permanent link">¶</a></h3>
+<p>The controller should be mostly compatible with ArduPilot. The main difference
+is the name that ArduPilot gives to the mode needed to obey setpoints. The
+closest equivalent is ArduPilot's "GUIDED" mode. The controller has not been
+tested with ArduPilot yet.</p>
+<h2 id="ros-specifics"><span class="enumerate-headings-plugin enumerate-heading-plugin">24.4</span> ROS Specifics<a class="headerlink" href="#ros-specifics" title="Permanent link">¶</a></h2>
+<p>There are a few ROS specifics that may look a little strange to the
+uninitiated. The first is the blank file under <code>resource/</code>. This file is in
+fact quite critical. It is used by the ROS index to let it know that this
+package has been installed. The empty <code>__init__.py</code> file is there for similar
+mysterious reasons. The second oddity is the <code>setup.cfg</code> file. This is again
+a ROS specific configuration ensuring that things get installed into the
+correct places.</p>
+<p><code>package.xml</code> provides ROS with information about the package. You should list
+any dependencies your controller has here. For almost all of the controllers,
+you will want to list <code>mavros_msgs</code> as a dependency. However, note that this
+package is not yet available from the package managers for ROS2. Luckily
+we prepared an image for you earlier with it already installed. A lot of
+information from here then has to be duplicated into the <code>setup.py</code> script. If
+only there was a way to automate the building of build scripts...</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../details/adding_physical_drone/" title="Adding A New Vehicle"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../details/kubernetes-deployment/" title="Example Kubernetes Deployments">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../details/adding_physical_drone/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../details/kubernetes-deployment/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

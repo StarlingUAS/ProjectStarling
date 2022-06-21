@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Understanding Kubernetes - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Understanding Kubernetes";
+        var mkdocs_page_input_path = "details/kubernetes.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Understanding Kubernetes</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#kubernetes-in-starling">20.1 Kubernetes in Starling</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#kubernetes-deployment-types">20.2 Kubernetes Deployment Types</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#local-testing-using-kubernetes-in-docker-kind">20.3 Local Testing using Kubernetes In Docker (KIND)</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#flight-arena-k3s-practical-details">20.4 Flight Arena K3S Practical Details</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#rootnon-root-access">20.4.1 Root/Non-root access</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#access-across-machines">20.4.2 Access Across Machines</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-files">20.5 Configuration Files</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Additional Guides »</li><li>Understanding Kubernetes</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/details/kubernetes.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="kubernetes"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.</span> Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h1>
+<div class="toc">
+<ul>
+<li><a href="#kubernetes">20. Kubernetes</a><ul>
+<li><a href="#kubernetes-in-starling">20.1 Kubernetes in Starling</a></li>
+<li><a href="#kubernetes-deployment-types">20.2 Kubernetes Deployment Types</a></li>
+<li><a href="#local-testing-using-kubernetes-in-docker-kind">20.3 Local Testing using Kubernetes In Docker (KIND)</a></li>
+<li><a href="#flight-arena-k3s-practical-details">20.4 Flight Arena K3S Practical Details</a><ul>
+<li><a href="#rootnon-root-access">20.4.1 Root/Non-root access</a></li>
+<li><a href="#access-across-machines">20.4.2 Access Across Machines</a></li>
+</ul>
+</li>
+<li><a href="#configuration-files">20.5 Configuration Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="kubernetes-in-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.1</span> Kubernetes in Starling<a class="headerlink" href="#kubernetes-in-starling" title="Permanent link">¶</a></h2>
+<p>Containers allow the developer to abstract away from the specific
+hardware that the software will be running on. This is great for local
+development where a user can simply spin up the docker containers
+required, but what about in ’production’? Where do we actually run these
+containers.</p>
+<p>The deployment of containers to a computation cluster - such as the
+cloud, a network of servers or a group of flying UAVs is not a trivial
+task. Such a task must include managing available resources, creating
+and managing the network connection within the cluster, service
+scalability, and services such as failure recovery (self healing) and
+logging. Thankfully this is handled by a class of applications known as
+<em>container orchestration</em> platforms. This project uses Kubernetes as its
+container orchestration platform which is an industry standard for
+container deployments within a server farm.</p>
+<p>In Kubernetes in particular, each physical piece of server hardware
+capable of running a container is referred to as a <em>Node</em>. The
+kubernetes control plane containers then take in user created
+configurations to decide where to run a particular container. This yaml
+file is known as a <em>KubeConfig</em> file and specifies:</p>
+<ul>
+<li>
+<p>Defines which container images and which versions make up the
+    application, and where they are located (in what registry)</p>
+</li>
+<li>
+<p>Provisions required storage and hardware capabilities using mounted
+    volumes and labels along with the concept of <em>taints</em> and
+    <em>tolerations</em></p>
+</li>
+<li>
+<p>Defines and secures network configurations</p>
+</li>
+</ul>
+<h2 id="kubernetes-deployment-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.2</span> Kubernetes Deployment Types<a class="headerlink" href="#kubernetes-deployment-types" title="Permanent link">¶</a></h2>
+<p>There are also a number of different types of deployment which are used
+throughout Starling, all of which are specified by Kubernetes
+Configuration.</p>
+<ul>
+<li>
+<p><em>Pod</em> - A single deployment of a set of containers to a particular
+    node.</p>
+</li>
+<li>
+<p><em>Deployment</em> - A single self-healing pod deployment which can be
+    scaled.</p>
+</li>
+<li>
+<p><em>StatefulSet</em> - A deployment with which the hostnames follow ordinal
+    enumeration upon scaling.</p>
+</li>
+<li>
+<p><em>DaemonSet</em> - A pod is deployed to every node which satisfies the
+    taints and tolerations.</p>
+</li>
+<li>
+<p><em>Service</em> - A special pod which manages networking and service
+    access.</p>
+</li>
+</ul>
+<p>There are a number of different versions of kubernetes. Due to the
+low-power, low-compute nature of UAV companion computers we have chosen
+to use <em>k3s</em>[^1], a lightweight variant of kubernetes often used in edge
+and iot computing applications. In addition, to streamline the
+transitory development process from container to kubernetes, we also
+make use of <em>kind</em>[^2] which allows the running of kubernetes inside a
+docker container. The <em>kubectl</em>[^3] command line tool is primarily used
+to interact with a kubernetes cluster.</p>
+<h2 id="local-testing-using-kubernetes-in-docker-kind"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.3</span> Local Testing using Kubernetes In Docker (KIND)<a class="headerlink" href="#local-testing-using-kubernetes-in-docker-kind" title="Permanent link">¶</a></h2>
+<p>In order to test kubernetes locally, we have decided to use Kubernetes In Docker (Kind). Kind is a useful tool which runs Kubernetes between multiple docker containers, just as if the containers themselves were kubernetes physical nodes. This allows us to test deployments locally on a system which resembles the actual flight arena.</p>
+<p>The Starling CLI takes care of many of the details of how kind is setup in such a way as to mirror the real vehicles. This includes ensuring that vehicles have access to virtual <code>vehicle.config</code> files and other measures.</p>
+<p>It also means that any deployed daemonsets can be tested to ensure that they deploy correctly to the real vehicles.</p>
+<p>See the <a href="../../guide/cli/">CLI Documentation</a> for further information.</p>
+<h2 id="flight-arena-k3s-practical-details"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.4</span> Flight Arena K3S Practical Details<a class="headerlink" href="#flight-arena-k3s-practical-details" title="Permanent link">¶</a></h2>
+<h3 id="rootnon-root-access"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.4.1</span> Root/Non-root access<a class="headerlink" href="#rootnon-root-access" title="Permanent link">¶</a></h3>
+<p>By default the k3s installation creates a configuration file <code>k3s.yaml</code> which stores access tokens, the IP address of the master servers and various other information. By default this is stored in <code>/etc/rancher/k3s/k3s.yaml</code>. Any time <code>k3s</code> is invoked, i.e. any time you call <code>k3s kubectl ...</code>, this configuration file is accessed and read. However because the configuration file is stored in the system directory <code>/etc/</code>, by default any call to <code>k3s</code> would need <code>sudo</code>, i.e. <code>sudo k3s kubectl ...</code>.</p>
+<p>This can be avoided by moving the <code>k3s.yaml</code> file to your local user directory. The recommended location is <code>~/.kube/config/k3s.yaml</code>, but it can be put anyway. The only requirement is that the <code>KUBECONFIG</code> environment variable should be set to the location of the configuration file. This can be achieved by adding the following line somewhere into your <code>~/.bashrc</code> (or <code>~/.zshrc</code> if using zsh):</p>
+<pre><code class="language-bash">export KUBECONFIG=~/.kube/config/k3s.yaml
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> Do not forget to source your bashrc after making the change to see the change in your terminal <code>source ~/.bashrc</code></p>
+</blockquote>
+<p>Once this is set, any call of <code>k3s ...</code> will not require <code>sudo</code>.</p>
+<h3 id="access-across-machines"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.4.2</span> Access Across Machines<a class="headerlink" href="#access-across-machines" title="Permanent link">¶</a></h3>
+<p>If you are in the BRL Flight Arena, or you are running a multiple machine cluster, you may want to be able to run and test containers on a different physical machine to the machine running the cluster master node. As detailed in the above section on <a href="#rootnot-rootaccess">non-root access</a>, k3s generates the <code>k3s.yaml</code> configruation file. Importantly this file tells k3s what the ip of the master node is as shown in this example snippet of a k3s file:</p>
+<pre><code class="language-yaml">apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: &lt;long data string&gt;
+    server: https://127.0.0.1:6443 ### &lt;---- This line!
+  name: default
+contexts:
+- context:
+    cluster: default
+    user: default
+  name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+- name: default
+  user:
+    client-certificate-data: &lt;another long data string&gt;
+    client-key-data: &lt; secret client key!&gt;
+</code></pre>
+<p>To therefore access the master node (and the dashboard and kubectl etc) on another machine, you must.</p>
+<ol>
+<li>Copy the <code>k3s.yaml</code> file off of the server onto your own machine. (For the BRL, see below)</li>
+<li>In the <code>k3s.yaml</code> change the server ip from <code>127.0.0.1</code> to the ip address of the master machine.</li>
+<li>Ensure that either KUBECONFIG is set, or you have replaced the filee at <code>~/.kube/config/k3s.yaml</code> with your own modified one (may need sudo)</li>
+</ol>
+<p>Once that is set up verify that you can get the dashboard access token and log in.</p>
+<pre><code class="language-bash">k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep ^token
+</code></pre>
+<p>Also then verify that you can run any of the kubernetes deployments, and that they will be deployed to the master cluster (and not your own).</p>
+<blockquote>
+<p><strong>Note:</strong> Even if the cluster is not running on your local machine, you will still need to install the k3s binaries. The command run by <code>run_k3s.sh</code> or <code>./scripts/start_k3s.sh</code> both download and then automatically start k3s in the background of your machine. To stop it from starting, pass the <code>--do-not-start</code> option to either command. If you have already have k3s running, run <code>k3s-killall.sh</code> which will stop all k3s processes without uninstalling it entirely (so you still get access to the k3s command line tools).</p>
+</blockquote>
+<p>In the BRL, to get the k3s.yaml file, you should simply be able to scp (ssh copy) the file from the master machine <code>~/.kube/config/k3s.yaml</code> to your local machine, and change the IP address.</p>
+<h2 id="configuration-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.5</span> Configuration Files<a class="headerlink" href="#configuration-files" title="Permanent link">¶</a></h2>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../docker/" title="Understanding Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../kubernetes-dashboard/" title="Kubernetes Dashboard Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../docker/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../kubernetes-dashboard/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Getting Started - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Getting Started";
+        var mkdocs_page_input_path = "guide/getting-started.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Getting Started</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">2.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-docker">2.2 Install Docker</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux-ubuntu">2.2.1 Linux/ Ubuntu</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-script">Install Script</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#manual-installation">Manual Installation</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#windows">2.2.2 Windows</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mac-os">2.2.3 Mac OS</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#get-starling">2.3 Get Starling</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-starling">2.4 Using Starling</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#single-drone-applications">2.4.1 Single Drone Applications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-drone-applications">2.4.2 Multiple Drone Applications</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#faqs">2.5 FAQs</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Home »</li><li>Getting Started</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/getting-started.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="getting-started-with-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.</span> Getting Started with Starling<a class="headerlink" href="#getting-started-with-starling" title="Permanent link">¶</a></h1>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#getting-started-with-starling">2. Getting Started with Starling</a><ul>
+<li><a href="#contents">2.1 Contents</a></li>
+<li><a href="#install-docker">2.2 Install Docker</a><ul>
+<li><a href="#linux-ubuntu">2.2.1 Linux/ Ubuntu</a><ul>
+<li><a href="#install-script">Install Script</a></li>
+<li><a href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a href="#windows">2.2.2 Windows</a></li>
+<li><a href="#mac-os">2.2.3 Mac OS</a></li>
+</ul>
+</li>
+<li><a href="#get-starling">2.3 Get Starling</a></li>
+<li><a href="#using-starling">2.4 Using Starling</a><ul>
+<li><a href="#single-drone-applications">2.4.1 Single Drone Applications</a></li>
+<li><a href="#multiple-drone-applications">2.4.2 Multiple Drone Applications</a></li>
+</ul>
+</li>
+<li><a href="#faqs">2.5 FAQs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="install-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2</span> Install Docker<a class="headerlink" href="#install-docker" title="Permanent link">¶</a></h2>
+<p>The only dependency of running and using Starling locally is the [Docker] containerisation software. Please visit <a href="https://docs.docker.com/get-docker/">docker's installation page</a> for further details. We recommend using Starling on linux based systems, but it should work on Windows and possible Mac depending on the state of the Docker.</p>
+<h3 id="linux-ubuntu"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2.1</span> Linux/ Ubuntu<a class="headerlink" href="#linux-ubuntu" title="Permanent link">¶</a></h3>
+<h4 id="install-script"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2.1.1</span> Install Script<a class="headerlink" href="#install-script" title="Permanent link">¶</a></h4>
+<p>For linux, we have provided a helpful install script. First you will need to clone the Murmuration github repository:</p>
+<pre><code>git clone https://github.com/StarlingUAS/Murmuration.git
+</code></pre>
+<p>Then run:</p>
+<pre><code>sudo ./starling install
+</code></pre>
+<p>Once that completes you should be all good to go for the next step.</p>
+<h4 id="manual-installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2.1.2</span> Manual Installation<a class="headerlink" href="#manual-installation" title="Permanent link">¶</a></h4>
+<p>For Linux systems, see the following <a href="https://docs.docker.com/engine/install/ubuntu/">install page</a>. There are multiple ways of installation docker, but we recommend installing using the repository method:</p>
+<ol>
+<li>
+<p>Update the <code>apt</code> repository and install requirements</p>
+<pre><code>sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+</code></pre>
+</li>
+<li>
+<p>Add Docker's official GPG key:</p>
+<pre><code>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</code></pre>
+</li>
+<li>
+<p>Install Docker (and docker-compose!):</p>
+<pre><code>sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli docker-compose containerd.io
+</code></pre>
+</li>
+<li>
+<p>Test Docker installation:</p>
+<pre><code>sudo docker run hello-world
+</code></pre>
+</li>
+</ol>
+<p>This will install Docker, accessible using <code>sudo</code> root privileges only. To use docker without sudo, run the following (be aware of <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">issues with this</a>)</p>
+<ol>
+<li>
+<p>Run the following</p>
+<pre><code>sudo groupadd docker
+sudo usermod -aG docker $USER
+</code></pre>
+</li>
+<li>
+<p>Log out and log in again to enforce changes (may need to restart)</p>
+</li>
+<li>Verify that it was successful:<pre><code>docker run hello-world
+</code></pre>
+</li>
+</ol>
+<p>That is Docker on Linux installed. See <a href="https://docs.docker.com/engine/install/ubuntu/">the original page</a> for any further details.</p>
+<h3 id="windows"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2.2</span> Windows<a class="headerlink" href="#windows" title="Permanent link">¶</a></h3>
+<p>For Windows systems, please see <a href="https://docs.docker.com/docker-for-windows/install/">the windows installation instructions for full details</a>. You will need to install Docker Desktop for Windows.</p>
+<p>Follow the instructions and tutorial below, but refer to our <a href="../windows-support/">Windows Support page</a> if you have issues.</p>
+<p>Starling has been fully tested on Windows, and both single and multi-agent cluster testing is available through the use of the Starling CLI. However it is recommended that you use WSL rather than powershell.</p>
+<h3 id="mac-os"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.2.3</span> Mac OS<a class="headerlink" href="#mac-os" title="Permanent link">¶</a></h3>
+<p>For Mav systems, please see <a href="https://docs.docker.com/docker-for-mac/install/">the Mac Os installation instructions</a> for full details. You will need to install Docker Desktop for MAC OS.</p>
+<p>Starling has not be tested on MAC OS, so there is no guarantee that it is functional. However in theory the single-agent non-cluster (docker-only) application should be compatible.</p>
+<h2 id="get-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.3</span> Get Starling<a class="headerlink" href="#get-starling" title="Permanent link">¶</a></h2>
+<p>For simple usage, or for usage as a simulator, you can use the Murmuration repository which gives a number of starling examples and a command line interface.</p>
+<pre><code>git clone https://github.com/StarlingUAS/Murmuration.git
+</code></pre>
+<p>For more advanced usage, or to see examples of the core elements, clone the Starling repository:</p>
+<pre><code>git clone https://github.com/StarlingUAS/ProjectStarling.git
+</code></pre>
+<h2 id="using-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.4</span> Using Starling<a class="headerlink" href="#using-starling" title="Permanent link">¶</a></h2>
+<p>Starling provides a framework for users to implement almost any drone related experiment or application. However, we have identified that most applications fall into the following categories. Therefore we have provided detailed user guides for these use cases. It is recommended that the user follow these guides to run starling before starting your own implementation as these guides will also slowly introduce you to the concepts and details Starling uses.</p>
+<p>These user guides are all located on the side navigation bar for easy access.</p>
+<p>A key idea is the fact that the controller you develop, whether onboard or offboard, will be identical regardless of which step you are in. This therefore designs a workflow for the development of controllers.</p>
+<h3 id="single-drone-applications"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.4.1</span> Single Drone Applications<a class="headerlink" href="#single-drone-applications" title="Permanent link">¶</a></h3>
+<p>For <em>single drone</em> applications, there are 3 steps to the development of a controller running onboard (on the 'drone' itself) or offboard (on a separate machine):</p>
+<ol>
+<li>
+<p><strong>Step 1:</strong> <em>Single Drone testing on local machine using Docker only</em></p>
+<ul>
+<li>Follow the following <a href="../single-drone-local-machine">user guide</a></li>
+<li>Simplest deployment method and the quickest way to get a simulation (gazebo) and drone (px4, mavros) instance running.</li>
+<li>Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.</li>
+<li><strong>Step 2:</strong> <em>Single Drone testing on local cluster</em></li>
+<li>Follow the following <a href="../kube-single-drone-local-machine">user guide</a></li>
+<li>Once you have your controller mostly working and debugged, the next step is to test it within the network and system architecture used when flying real drones.</li>
+<li>This will require learning a little bit about the cluster architecture and how Starling works under the hood.</li>
+<li><strong>Step 3:</strong> <em>Single Drone flying at the Robotics Laboratory</em></li>
+<li>Follow the following <a href="../single-drone-drones">user guide</a></li>
+<li>Detailing how to run your controller on real drones at the Bristol Robotics Laboratory</li>
+</ul>
+</li>
+</ol>
+<h3 id="multiple-drone-applications"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.4.2</span> Multiple Drone Applications<a class="headerlink" href="#multiple-drone-applications" title="Permanent link">¶</a></h3>
+<p>For <em>multiple drone</em> applications, there are also 3 steps to the development of a centralised or decentralised, onboard or offboard controller.</p>
+<ol>
+<li><strong>Step 1:</strong> <em>Single Drone testing on local machine using Docker only</em><ul>
+<li>Follow the following <a href="../single-drone-local-machine">user guide</a></li>
+<li>Simplest deployment method and the quickest way to get a single simulation (gazebo) and drone (px4, mavros) instance running.</li>
+<li>Quick and easy way to test the basic functionality of your controller without worrying about too may other factors.</li>
+<li>Can be used to quickly protype controllers before testing with multiple vehicles.</li>
+</ul>
+</li>
+<li><strong>Step 2:</strong> <em>Multiple Drone testing on local cluster</em><ul>
+<li>Follow the following <a href="../multiple-drone-local-machine/">user guide</a></li>
+<li>The cluster facilitates the multi-agent capability of starling.</li>
+<li>The guide takes you through the basic concepts required for running multi-agent applications</li>
+</ul>
+</li>
+<li><strong>Step 3:</strong> <em>Multiple Drones flying at the Robotics Laboratory</em><ul>
+<li>Follow the following <a href="../controllers/example_controller_python/Dockerfileguide/multiple-drone-drones">user guide</a></li>
+<li>Detailing how to run your controller on real drones at the Bristol Robotics Laboratory</li>
+</ul>
+</li>
+</ol>
+<h2 id="faqs"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.5</span> FAQs<a class="headerlink" href="#faqs" title="Permanent link">¶</a></h2>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../.." title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../details/background/" title="Background">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../.." style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../details/background/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

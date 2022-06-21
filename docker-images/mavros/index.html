@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>starling-mavros - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "starling-mavros";
+        var mkdocs_page_input_path = "docker-images/mavros.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ui/">starling-ui</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">starling-mavros</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">28.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#overview">28.2 Overview</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-options">28.3 Configuration Options</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-connection">28.3.1 Configuring the Connection</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-target-system">28.3.2 Configuring the Target System</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-mavros-configuration">28.3.3 Configuring the MAVROS Configuration</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deployments">28.4 Deployments</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-on-a-vehicle">28.4.1 Running on a vehicle</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-under-kubernetes-statefulset">28.4.2 Running under Kubernetes StatefulSet</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-isolated">28.4.3 Running isolated</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-details">28.5 Implementation Details</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-process">28.5.1 Build Process</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#entrypoint">28.5.2 Entrypoint</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#names">28.5.3 Names</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-topics">28.6 Advanced Topics</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-additional-mavros-plugins">28.6.1 Adding additional MAVROS plugins</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Image Documentation »</li><li>starling-mavros</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/docker-images/mavros.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-mavros"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.</span> <code>starling-mavros</code><a class="headerlink" href="#starling-mavros" title="Permanent link">¶</a></h1>
+<p>This image acts to bridge MAVLink communications to ROS2 topics. At present this is achieved by a ROS1/2 bridge and the
+ROS1 version of <a href="https://github.com/mavlink/mavros">MAVROS</a>. The ROS2 port of MAVROS is currently under development and
+we anticipate switching over in the future, eliminating the need for the ROS1/2 bridge.</p>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#starling-mavros">28. starling-mavros</a><ul>
+<li><a href="#contents">28.1 Contents</a></li>
+<li><a href="#overview">28.2 Overview</a></li>
+<li><a href="#configuration-options">28.3 Configuration Options</a><ul>
+<li><a href="#configuring-the-connection">28.3.1 Configuring the Connection</a></li>
+<li><a href="#configuring-the-target-system">28.3.2 Configuring the Target System</a></li>
+<li><a href="#configuring-the-mavros-configuration">28.3.3 Configuring the MAVROS Configuration</a></li>
+</ul>
+</li>
+<li><a href="#deployments">28.4 Deployments</a><ul>
+<li><a href="#running-on-a-vehicle">28.4.1 Running on a vehicle</a></li>
+<li><a href="#running-under-kubernetes-statefulset">28.4.2 Running under Kubernetes StatefulSet</a></li>
+<li><a href="#running-isolated">28.4.3 Running isolated</a></li>
+</ul>
+</li>
+<li><a href="#implementation-details">28.5 Implementation Details</a><ul>
+<li><a href="#build-process">28.5.1 Build Process</a></li>
+<li><a href="#entrypoint">28.5.2 Entrypoint</a></li>
+<li><a href="#names">28.5.3 Names</a></li>
+</ul>
+</li>
+<li><a href="#advanced-topics">28.6 Advanced Topics</a><ul>
+<li><a href="#adding-additional-mavros-plugins">28.6.1 Adding additional MAVROS plugins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.2</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The image is a wrapper around MAVROS, as such, most of the documentation for MAVROS is of use when working with this
+image. The image has both <code>mavros</code> and <code>mavros-extras</code> installed so all plugins should be available.</p>
+<p>The published topics are namespaced to allow for running multiple vehicles on the same ROS network. By default, this
+namespace will be <code>/vehicle_N</code>, where <code>N</code> is the MAVLink system ID of the vehicle. MAVROS topics are published within
+this namespace, <em>e.g.</em> <code>/vehicle_1/mavros/state</code>.</p>
+<p>The image has been setup to automatically configure itself in some scenarios:</p>
+<ul>
+<li>Running on a vehicle</li>
+<li>Running in Kubernetes</li>
+</ul>
+<p>There are also some additional general nodes running in the background. In particular:</p>
+<ul>
+<li>Emergency Stop listener on the <code>/emergency_stop</code> topic of type <code>std_msgs/msg/Empty</code>. It is hard-wired to forcefully disarm the vehicle (stop motors) for both PX4 and Ardupilot in simulation and reality.</li>
+</ul>
+<h2 id="configuration-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.3</span> Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">¶</a></h2>
+<p>There are many configuration options available for this image to allow it to be used flexibly across different
+deployment scenarios. The most important of these are those relating to the vehicle and GCS connections, and MAVROS
+configuration. A full summary is given in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAVROS_FCU_CONN</code></td>
+<td>"udp"</td>
+<td>Protocol for autogenerated FCU URL</td>
+</tr>
+<tr>
+<td><code>MAVROS_FCU_IP</code></td>
+<td>"127.0.0.1"</td>
+<td>IP for autogenerated FCU_URL</td>
+</tr>
+<tr>
+<td><code>MAVROS_FCU_UDP_BASE</code></td>
+<td>"14830"</td>
+<td>Base port for autogenerated FCU_URL</td>
+</tr>
+<tr>
+<td><code>MAVROS_TGT_SYSTEM</code></td>
+<td>"auto"</td>
+<td>Target system ID, if set to a number, this will <strong>override</strong> the automatic behaviour</td>
+</tr>
+<tr>
+<td><code>PX4_INSTANCE_BASE</code></td>
+<td>0</td>
+<td>Base instance for autogenerated instance matching</td>
+</tr>
+<tr>
+<td><code>MAVROS_TGT_FIRMWARE</code></td>
+<td>"px4"</td>
+<td>Firmware profile used by MAVROS. Only other valid value currently is "apm"</td>
+</tr>
+<tr>
+<td><code>MAVROS_GCS_URL</code></td>
+<td>"udp-pb://@:14550"</td>
+<td>MAVROS URL for ground control station connection</td>
+</tr>
+<tr>
+<td><code>MAVROS_FCU_URL</code></td>
+<td>{unset}</td>
+<td>MAVROS URL for FCU connection. Set to <strong>override</strong> automatic behaviour</td>
+</tr>
+<tr>
+<td><code>VEHICLE_NAMESPACE</code></td>
+<td>{unset}</td>
+<td>Namespace for mavros topics. Set to <strong>override</strong> default value of <code>vehicle_${TGT_SYSTEM}</code></td>
+</tr>
+<tr>
+<td><code>MAVROS_PLUGINLISTS_PATH</code></td>
+<td>"/mavros_pluginlists_px4.yaml"</td>
+<td>Path for MAVROS pluginlists file</td>
+</tr>
+<tr>
+<td><code>MAVROS_CONFIG_PATH</code></td>
+<td>"/mavros_config_px4.yaml"</td>
+<td>Path for initial MAVROS configuration file</td>
+</tr>
+<tr>
+<td><code>MAVROS_MOD_CONFIG_PATH</code></td>
+<td>"/mavros_config_mod.yaml"</td>
+<td>Path for modified MAVROS config to be written to</td>
+</tr>
+<tr>
+<td><code>BRIDGE_CONFIG_PATH</code></td>
+<td>"/bridge_config.yaml"</td>
+<td>Path for initial bridge config file</td>
+</tr>
+<tr>
+<td><code>BRIDGE_MOD_CONFIG_PATH</code></td>
+<td>"/bridge_config_mod.yaml"</td>
+<td>Path for modified bridge config to be written to</td>
+</tr>
+<tr>
+<td><code>BRIDGE_LAUNCH_DELAY</code></td>
+<td>2.0</td>
+<td>Time delay in seconds between starting ROS1 mavros and the ROS1-2 bridge. Increasing this value reduces the chance of a race condition causing mavros failure due to the bridge being unable to read ros1 parameters. See <a href="https://github.com/StarlingUAS/ProjectStarling/issues/124">this issue</a> for more details. Recommendation is to increase the value to 10 seconds if this occurs.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuring-the-connection"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.3.1</span> Configuring the Connection<a class="headerlink" href="#configuring-the-connection" title="Permanent link">¶</a></h3>
+<p>MAVROS is told to connect to a MAVLink source with a URL. This URL can be configured in a number of ways. The most
+straightforward is to simply set the <code>MAVROS_FCU_URL</code> environment variable. This will override any other behaviour.</p>
+<pre><code class="language-sh">docker run -e MAVROS_FCU_URL=serial:///dev/ttyUSB0:115200 uobflightlabstarling/starling-mavros
+</code></pre>
+<p>When setting <code>MAVROS_FCU_URL</code> directly, note that a query string (<em>e.g.</em> <code>?ids=n,240</code>) will be added during launch.
+You need to ensure that your input for <code>MAVROS_FCU_URL</code> supports this syntax. Of particular note is the need for a
+trailing <code>/</code> in most formats, but not for the <code>serial://</code> format. Also note that the plain file format does not support
+this. See <a href="https://github.com/mavlink/mavros/blob/master/mavros/README.md#connection-url">the MAVROS docs</a> for more
+information on URL formats.</p>
+<p><code>MAVROS_FCU_URL</code> is can also be set automatically by the container depending on its environment. If there is a
+<code>vehicle.config</code> file mounted in the image, the value of <code>VEHICLE_FCU_URL</code> from that file will be used as the <code>fcu_url</code>.
+This is especially useful when deploying the container onto physical vehicles. The same warning about trailing slashes
+above goes for the value put in <code>vehicle.config</code>.</p>
+<p>If there is no <code>vehicle.config</code> file, the image will configure itself based on the values of <code>MAVROS_FCU_CONN</code>,
+<code>MAVROS_FCU_IP</code> and <code>MAVROS_FCU_UDP_BASE</code>. An additional parameter, <code>INSTANCE</code> is also used in the construction of the
+URL. This is generated based on the container hostname and is intended for use in Kubernetes deployments to distinguish
+multiple instances. <code>PX4_INSTANCE_BASE</code> can be used to offset the <code>fcu_url</code> will be constructed as below:</p>
+<blockquote>
+<p><code>$MAVROS_FCU_CONN://$MAVROS_FCU_IP:$((MAVROS_FCU_UDP_BASE + INSTANCE))@/</code></p>
+</blockquote>
+<p>With all values at default, this ends up as:</p>
+<blockquote>
+<p><code>udp://127.0.0.1:14830@/</code></p>
+</blockquote>
+<h3 id="configuring-the-target-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.3.2</span> Configuring the Target System<a class="headerlink" href="#configuring-the-target-system" title="Permanent link">¶</a></h3>
+<p>Another important configuration option is the target system ID. This controls the target system that MAVROS sends in
+some messages. As for the <code>fcu_url</code>, the value can be explicitly overridden, this time using the <code>MAVROS_TGT_SYSTEM</code>
+environment variable. Setting this will overrise all other values. If it is set to an invalid system ID, MAVROS will
+be set to use a target ID of <code>1</code>.</p>
+<p>If the environment variable is left at its default value of <code>auto</code>, a similar flow to the <code>fcu_url</code> occurs: if a
+<code>vehicle.config</code> file exists, the value of <code>VEHICLE_MAVLINK_SYSID</code> from that file will be used. Otherwise, the value is
+autogenerated based on the <code>INSTANCE</code> parameter derived from the container hostname. Note that the <code>INSTANCE</code> number is
+0-indexed, while MAVLink system IDs start at <code>1</code>. Therefore, the system ID is set to one more than the <code>INSTANCE</code>.</p>
+<h3 id="configuring-the-mavros-configuration"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.3.3</span> Configuring the MAVROS Configuration<a class="headerlink" href="#configuring-the-mavros-configuration" title="Permanent link">¶</a></h3>
+<p>Two sets of <code>config.yaml</code> and <code>pluginlists.yaml</code> files are installed in the root directory to provide alternatives for
+PX4 and ArduPilot autopilots. These are named: <code>/mavros_config_px4.yaml</code> and <code>/mavros_pluginlists_px4.yaml</code> for the PX4
+versions and <code>/mavros_config_ap.yaml</code> and <code>/mavros_pluginlists_ap.yaml</code> for the ArduPilot versions.</p>
+<p>The easiest way to choose between the two is to set the <code>MAVROS_CONFIG_PATH</code> and <code>MAVROS_PLUGINLISTS_PATH</code> environment
+variables. By default these point to the PX4 versions. To use the ArduPilot versions set both variables as below:</p>
+<pre><code class="language-sh">docker run -e MAVROS_CONFIG_PATH=/mavros_config_ap.yaml -e MAVROS_PLUGINLISTS_PATH=/mavros_pluginlists_ap.yaml ...
+</code></pre>
+<p>It is also possible to mount alternative configurations into the image and use the environment variables to configure
+MAVROS with them.</p>
+<p>TODO: Example of mounted configuration</p>
+<h2 id="deployments"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.4</span> Deployments<a class="headerlink" href="#deployments" title="Permanent link">¶</a></h2>
+<h3 id="running-on-a-vehicle"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.4.1</span> Running on a vehicle<a class="headerlink" href="#running-on-a-vehicle" title="Permanent link">¶</a></h3>
+<p>If the container is running on a drone, it expects to be able to find the <code>/etc/starling/vehicle.config</code> file. This file
+contains some information that MAVROS needs to be able to communicate with the flight controller. An example
+<code>vehicle.config</code> file is included below.</p>
+<p>Note that the extended form of the serial URL is required for MAVROS's target "query string" to work.</p>
+<pre><code class="language-bash">VEHICLE_FCU_URL=serial:///dev/px4fmu:115200
+VEHICLE_FIRMWARE=px4
+VEHICLE_MAVLINK_SYSID=23
+VEHICLE_NAME=clover23
+</code></pre>
+<h3 id="running-under-kubernetes-statefulset"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.4.2</span> Running under Kubernetes StatefulSet<a class="headerlink" href="#running-under-kubernetes-statefulset" title="Permanent link">¶</a></h3>
+<p>When running as part of a Kubernetes StatefulSet, each pod's hostname has a trailing ordinal, of the form: <code>HOSTNAME-N</code>.
+The setup script parses the ordinal of its containing pod from the hostname and uses this, in combination with the
+<code>PX4_INSTANCE_BASE</code> variable to determine the <code>INSTANCE</code> parameter. As outlined above, this is used to set up the ports
+and the system ID. By default, these are configured to match those generated by a PX4 SITL instance set up with the same
+ordinal. If the setup script fails to get the ordinal from the hostname, it will attempt to connect to a PX4 SITL with
+<code>PX4_INSTANCE=0</code>.</p>
+<p><code>INSTANCE</code> is computed as <code>$((PX4_INSTANCE_BASE + ORDINAL))</code></p>
+<p><code>MAVROS_TGT_SYSTEM</code> will end up as <code>$((INSTANCE + 1))</code></p>
+<h3 id="running-isolated"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.4.3</span> Running isolated<a class="headerlink" href="#running-isolated" title="Permanent link">¶</a></h3>
+<p>Default values will be used, equivalent to the Kubernetes case with <code>ORDINAL=0</code></p>
+<h2 id="implementation-details"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.5</span> Implementation Details<a class="headerlink" href="#implementation-details" title="Permanent link">¶</a></h2>
+<h3 id="build-process"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.5.1</span> Build Process<a class="headerlink" href="#build-process" title="Permanent link">¶</a></h3>
+<p>To ensure support for custom message types, <code>ros1_bridge</code> needs to be built from source with the messages types to be
+bridged available in both ROS1 and ROS2. The Dockerfile first installs MAVROS for ROS1 and the MAVROS messages for ROS2.
+There are some additional steps to complete the installation of MAVROS under ROS1. Following this, the bridge is built.
+This takes a long time (~20min) and gives little output, but have faith!</p>
+<h3 id="entrypoint"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.5.2</span> Entrypoint<a class="headerlink" href="#entrypoint" title="Permanent link">¶</a></h3>
+<p>The entrypoint to the container is the <code>ros_entrypoint.sh</code> script. This script sources the environment setup files for
+both the ROS1 and ROS2 environments. It then sources the environment setup file for the bridge, and finally the
+<code>mavros_setup.sh</code> file. This file contains the logic that sets up MAVROS in a specific way based on both environment
+variables and files potentially mounted in the image.</p>
+<p>The first part of this is checking for the existance of the <code>/stc/starling/vehicle.config</code> file. If this file exists, it
+is assumed that the container is running on a real vehicle. In this case, the file is sourced and values for the MAVLink
+system ID, vehicle name, FCU URL, and firmware type are obtained.</p>
+<p>The next phase is determining the appropriate target system ID. This is configured by the</p>
+<p>Once the setup script has run, the default behaviour is to launch the <code>mavros_bridge.launch.xml</code> file. This behaviour
+should be usable in almost all cases. This is a <strong>ROS2</strong> launch file. It instructs <code>ros2 launch</code> to run the
+<code>ros1_bridge</code> node and an instance of <strong>ROS1</strong>'s <code>roslaunch</code>. This in turn launches the <strong>ROS1</strong> <code>mavros.launch</code> file,
+which contains instructions to run the MAVROS node.</p>
+<p>The <strong>ROS2</strong> <code>mavros_bridge.launch.xml</code> script defines a set of arguments to enable configuration of the MAVROS node.
+These are ususally filled by the environment variables defined above. If the configurability provided here is
+insufficient, the image can be run with a different command.</p>
+<h3 id="names"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.5.3</span> Names<a class="headerlink" href="#names" title="Permanent link">¶</a></h3>
+<p>MAVROS has a set of frame names that are embedded in its config file. To enable the use of multiple vehicles,
+vehicle-specific frames need to be made unique. To that end a bunch of sedding happens at the end of <code>mavros_setup.sh</code>
+to modify the frame names before they are passed on to MAVROS.</p>
+<p>A similar scenario occurs with the topic names for the parameter bridge. This is hopefully a short-term problem while
+MAVROS finishes its port to ROS2.</p>
+<h2 id="advanced-topics"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.6</span> Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permanent link">¶</a></h2>
+<h3 id="adding-additional-mavros-plugins"><span class="enumerate-headings-plugin enumerate-heading-plugin">28.6.1</span> Adding additional MAVROS plugins<a class="headerlink" href="#adding-additional-mavros-plugins" title="Permanent link">¶</a></h3>
+<p>This should be possible by mounting a volume with your plugin into the container. Assuming ROS tools are able to find
+it, MAVROS should load the plugin (if directed by the pluginlists file).</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../ui/" title="starling-ui"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../controller-base/" title="starling-controller-base">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../ui/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../controller-base/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

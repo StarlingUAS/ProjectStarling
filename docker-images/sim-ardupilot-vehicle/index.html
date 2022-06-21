@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>starling-sim-ardupilot-copter/plane - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "starling-sim-ardupilot-copter/plane";
+        var mkdocs_page_input_path = "docker-images/sim-ardupilot-vehicle.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">starling-sim-ardupilot-copter/plane</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">32.1 Environment Variables</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ap_sysid">32.1.1 AP_SYSID</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_sysid_base">32.1.2 AP_SYSID_BASE</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_vehicle">32.1.3 AP_VEHICLE</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_model">32.1.4 AP_MODEL</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_param_path">32.1.5 AP_PARAM_PATH</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_param_files">32.1.6 AP_PARAM_FILES</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_home-ap_offset_x-ap_offset_y">32.1.7 AP_HOME, AP_OFFSET_X &amp; AP_OFFSET_Y</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_distribute">32.1.8 AP_DISTRIBUTE</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_use_gazebo">32.1.9 AP_USE_GAZEBO</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_sim_address">32.1.10 AP_SIM_ADDRESS</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ap_sim_host">32.1.11 AP_SIM_HOST</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dockerfile-build-arguments">32.2 Dockerfile Build Arguments</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#vehicle">32.2.1 VEHICLE</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#branch">32.2.2 BRANCH</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Image Documentation »</li><li>starling-sim-ardupilot-copter/plane</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/docker-images/sim-ardupilot-vehicle.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-sim-ardupilot-copterplane"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.</span> <code>starling-sim-ardupilot-copter/plane</code><a class="headerlink" href="#starling-sim-ardupilot-copterplane" title="Permanent link">¶</a></h1>
+<p>There are two images currently built: <code>starling-sim-arducopter</code> and <code>starling-sim-arduplane</code>. These are built against
+the relevant stable branch: <code>ArduCopter-stable</code> and <code>ArduPlane-stable</code> respectively.</p>
+<p>The SITL starts up with a TCP server listening on port 5760. It will not begin simulating the vehicle until a connection
+is made to this port. Currently, the SITL's built-in simulator is used for both <code>copter</code> and <code>plane</code> images.</p>
+<h2 id="environment-variables"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1</span> Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AP_SYSID</code></td>
+<td>1</td>
+<td>MAVLink system ID to be used by the SITL. Can also be set to <code>"ordinal"</code> or <code>"ip"</code></td>
+</tr>
+<tr>
+<td><code>AP_SYSID_BASE</code></td>
+<td>1</td>
+<td>Base system ID for ordinal-based generation</td>
+</tr>
+<tr>
+<td><code>AP_VEHICLE</code></td>
+<td>{from build arg}</td>
+<td>Which vehicle is being used. Either <code>"copter"</code> or <code>"plane"</code></td>
+</tr>
+<tr>
+<td><code>AP_MODEL</code></td>
+<td>{null}</td>
+<td>Alternate model argument. Set to <strong>override</strong> default model</td>
+</tr>
+<tr>
+<td><code>AP_PARAM_PATH</code></td>
+<td>{null}</td>
+<td>Alternate path to parameter file. Set to <strong>override</strong> default path</td>
+</tr>
+<tr>
+<td><code>AP_PARAM_FILE</code></td>
+<td>{null}</td>
+<td>Alternate parameter file name. Set to <strong>override</strong> default parameter file</td>
+</tr>
+<tr>
+<td><code>AP_HOME</code></td>
+<td>51.4235413,-2.6708488,50,250</td>
+<td>Start location for SITL</td>
+</tr>
+<tr>
+<td><code>AP_OFFSET_X</code></td>
+<td>0</td>
+<td>Start location x offset for SITL</td>
+</tr>
+<tr>
+<td><code>AP_OFFSET_Y</code></td>
+<td>0</td>
+<td>Start location y offset for SITL</td>
+</tr>
+<tr>
+<td><code>AP_DISTRIBUTE</code></td>
+<td>{null}</td>
+<td>If set, automatically generate <code>AP_OFFSET_X</code> and <code>AP_OFFSET_Y</code></td>
+</tr>
+<tr>
+<td><code>AP_USE_GAZEBO</code></td>
+<td>{null}</td>
+<td>If set, use a Gazebo model as physics backend</td>
+</tr>
+<tr>
+<td><code>AP_SIM_ADDRESS</code></td>
+<td>127.0.0.1</td>
+<td>IP address to use for talking to Gazebo instance</td>
+</tr>
+<tr>
+<td><code>AP_SIM_HOST</code></td>
+<td>{null}</td>
+<td>Hostname to use for talking to Gazebo instance. Will <strong>override</strong> <code>AP_SIM_ADDRESS</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ap_sysid"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.1</span> <code>AP_SYSID</code><a class="headerlink" href="#ap_sysid" title="Permanent link">¶</a></h3>
+<p>Sets the MAVLink system ID to be used by the SITL. This must either be a value between 1 and 255 inclusive or set to
+<code>"ordinal"</code> or <code>"ip"</code>. Other values will cause the container to exit.</p>
+<p>When set to <code>"ordinal</code>, the entrypoint script will attempt to retrieve a 0-indexed ordinal from the end of the
+container's hostname. The hostnames should be of the form <code>${HOSTNAME}-${ORDINAL}</code>, <em>e.g.</em> <code>sitl-0</code>, <code>sitl-1</code>, <code>sitl-3</code>.
+This behaviour supports deployment of this image as part of a Kubernetes StatefulSet.</p>
+<p>When set to <code>"ip"</code>, the entrypoint script retrieves the last octet of the container's IP address and uses that as the
+system ID. <em>e.g.</em> <code>172.18.0.4</code> will result in a system ID of <code>4</code>.</p>
+<p>At present, the system ID is set by appending it to the parameter file. If a custom parameter file is supplied, it
+should not contain the <code>SYSID_THISMAV</code> parameter.</p>
+<h3 id="ap_sysid_base"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.2</span> <code>AP_SYSID_BASE</code><a class="headerlink" href="#ap_sysid_base" title="Permanent link">¶</a></h3>
+<p>This variable only affects the container when using the ordinal-based generation outlined above. The value set here will
+be added to the ordinal from the hostname to derive the MAVLink system ID. If the resultant value is not a valid system
+ID, <em>i.e.</em> it is not between 1 and 255 inclusive, the container will exit.</p>
+<h3 id="ap_vehicle"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.3</span> <code>AP_VEHICLE</code><a class="headerlink" href="#ap_vehicle" title="Permanent link">¶</a></h3>
+<p>By default this will be either <code>"copter"</code> or <code>"plane"</code> and is derived from the image's arguments at build time. This
+argument is used to set which executable is used and should not be overriden. It is also used to set defaults for the
+<code>MODEL</code> and <code>PARAM_FILE</code> variables unless they are overridden.</p>
+<h3 id="ap_model"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.4</span> <code>AP_MODEL</code><a class="headerlink" href="#ap_model" title="Permanent link">¶</a></h3>
+<p>Used as the value of the <code>--model</code> argument to the ArduPilot SITL binary. For <code>copter</code> images, this is set to <code>quad</code>.
+For <code>plane</code> images, this is set to <code>plane</code>.</p>
+<h3 id="ap_param_path"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.5</span> <code>AP_PARAM_PATH</code><a class="headerlink" href="#ap_param_path" title="Permanent link">¶</a></h3>
+<p>The path to the folder containing the parameter file. If left blank, the in-source folder will be used:
+<code>Tools/autotest/default_params</code>. This can be changed to allow for supplying a custom set of parameter files through a
+volume mount. The final folder on the path should be <code>default_params</code>.</p>
+<h3 id="ap_param_files"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.6</span> <code>AP_PARAM_FILES</code><a class="headerlink" href="#ap_param_files" title="Permanent link">¶</a></h3>
+<p>Comma separated list of alternate set of parameter file paths to use. If set this overrides the default parameter files
+used. <code>AP_PARAM_PATH</code> is ignored if this is set so the absolute paths to files are needed. An additional file will be
+appended to set the system ID.</p>
+<h3 id="ap_home-ap_offset_x-ap_offset_y"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.7</span> <code>AP_HOME</code>, <code>AP_OFFSET_X</code> &amp; <code>AP_OFFSET_Y</code><a class="headerlink" href="#ap_home-ap_offset_x-ap_offset_y" title="Permanent link">¶</a></h3>
+<p><code>AP_HOME</code> sets the start location for the SITL. Format is <code>{Latitude},{Longitude},{Altitude},{Heading}</code></p>
+<p><code>AP_OFFSET_X</code> and <code>AP_OFFSET_Y</code> are body frame offsets in metres from <code>AP_HOME</code> for this vehicle. This allows a grid
+of vehicles to be created using a single <code>AP_HOME</code> while varying the offsets.</p>
+<h3 id="ap_distribute"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.8</span> <code>AP_DISTRIBUTE</code><a class="headerlink" href="#ap_distribute" title="Permanent link">¶</a></h3>
+<p>When set, <code>AP_DISTRIBUTE</code> directs the entrypoint script to automatically generate offsets. It does this based on the
+final value of the <code>AP_SYSID</code> environment variable, <em>i.e.</em> after it has been resolved into a number. This number then
+dictates the position of the vehicle within a 16 by 16 grid, with the position of <code>AP_HOME</code> at the (0,0) position. The
+grid lines are laid out at 1m separations. As a SYSID of 0 is invalid, no vehicle will be placed directly on the
+<code>AP_HOME</code> position.</p>
+<h3 id="ap_use_gazebo"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.9</span> <code>AP_USE_GAZEBO</code><a class="headerlink" href="#ap_use_gazebo" title="Permanent link">¶</a></h3>
+<p>When set, <code>AP_USE_GAZEBO</code> will cause the SITL to connect to an instance of the ArduPilot plugin running as part of a
+Gazebo model. At present, this will use the default IP and port pair: 127.0.0.1:9002/9003</p>
+<h3 id="ap_sim_address"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.10</span> <code>AP_SIM_ADDRESS</code><a class="headerlink" href="#ap_sim_address" title="Permanent link">¶</a></h3>
+<p>Use this to adjust the IP address that the SITL uses to connect to the simulator backend. At present, this is only
+relevant when <code>AP_USE_GAZEBO</code> is set.</p>
+<h3 id="ap_sim_host"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.1.11</span> <code>AP_SIM_HOST</code><a class="headerlink" href="#ap_sim_host" title="Permanent link">¶</a></h3>
+<p>When set, the container will resolve the hostname stored in this variable using <code>getent hosts</code>. The value from the
+lookup will be used in preference to any address set in <code>AP_SIM_ADDRESS</code>. If the hostname lookup fails, the container
+will exit early.</p>
+<h2 id="dockerfile-build-arguments"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.2</span> Dockerfile Build Arguments<a class="headerlink" href="#dockerfile-build-arguments" title="Permanent link">¶</a></h2>
+<h3 id="vehicle"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.2.1</span> <code>VEHICLE</code><a class="headerlink" href="#vehicle" title="Permanent link">¶</a></h3>
+<p>Controls which target is built. Passed as <code>./waf ${VEHICLE}</code> to build the SITL. Also set as the value of the
+<code>AP_VEHICLE</code> environment variable. By default this is set to <code>copter</code></p>
+<h3 id="branch"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.2.2</span> <code>BRANCH</code><a class="headerlink" href="#branch" title="Permanent link">¶</a></h3>
+<p>Set the branch of ArduPilot to checkout prior to build. By default this is set to <code>ArduCopter-stable</code></p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../sim-base-px4/" title="starling-sim-base-px4"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../sim-ardupilot-gazebo/" title="starling-sim-ardupilot-gazebo">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../sim-base-px4/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../sim-ardupilot-gazebo/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

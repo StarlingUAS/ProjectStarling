@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>starling-sim-iris-ap - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "starling-sim-iris-ap";
+        var mkdocs_page_input_path = "docker-images/sim-iris-ap.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">starling-sim-iris-ap</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#overview">34.1 Overview</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">34.2 Environment Variables</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exposed-topics">34.3 Exposed Topics</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Image Documentation »</li><li>starling-sim-iris-ap</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/docker-images/sim-iris-ap.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-sim-iris-ap"><span class="enumerate-headings-plugin enumerate-heading-plugin">34.</span> <code>starling-sim-iris-ap</code><a class="headerlink" href="#starling-sim-iris-ap" title="Permanent link">¶</a></h1>
+<p>Based on <a href="../sim-ardupilot-gazebo"><code>staring-sim-ardupilot-gazebo</code></a>
+See for additional environment variables.</p>
+<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">34.1</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>This image adds the launch files required to launch an Iris model with the ArduPilot plugin using Gazebo.</p>
+<p>The <a href="https://github.com/khancyr/ardupilot_gazebo/tree/master/models/iris_with_ardupilot">iris ardupilot model</a> depends on the iris with standoffs and a <em>gimbal_small_2d</em>. </p>
+<p>The original gimbal in the gazebo model library is out of date, therefore an updated one is included in this image. It also includes an updated plugin which allows control of the gimbal and streams the camera image. </p>
+<h2 id="environment-variables"><span class="enumerate-headings-plugin enumerate-heading-plugin">34.2</span> Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CAMERA_NAME</code></td>
+<td>camera</td>
+<td>ROS2 Name of the camera, camera topic is <code>$VEHICLE_NAMESPACE/$CAMERA_NAME/image_raw</code>.</td>
+</tr>
+<tr>
+<td><code>CAMERA_HEIGHT</code></td>
+<td>480</td>
+<td>Height resolution of camera image</td>
+</tr>
+<tr>
+<td><code>CAMERA_WIDTH</code></td>
+<td>640</td>
+<td>Width resolution of camera image</td>
+</tr>
+<tr>
+<td><code>GIMBAL_INITIAL_ANGLE</code></td>
+<td>0.785</td>
+<td>Initial angle (radians) of the gimbal. 0.0 Angle is forwards, pi/2 is down.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exposed-topics"><span class="enumerate-headings-plugin enumerate-heading-plugin">34.3</span> Exposed Topics<a class="headerlink" href="#exposed-topics" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$VEHICLE_NAMESPACE/$CAMERA_NAME/image_raw</code></td>
+<td><code>sensor_msgs/msg/Image</code></td>
+<td>Image topic from the camera attached to the gimbal</td>
+</tr>
+<tr>
+<td><code>$VEHICLE_NAMESPACE/$CAMERA_NAME/camera_info</code></td>
+<td><code>sensor_msgs/msg/CameraInfo</code></td>
+<td>Camera Info topic from the camera attached to the gimbal</td>
+</tr>
+<tr>
+<td><code>$VEHICLE_NAMESPACE/gimbal_tilt_cmd</code></td>
+<td><code>std_msgs/msg/Float32</code></td>
+<td>The target angle (radians) of the gimbal camera tilt [0.0, 3.14].</td>
+</tr>
+<tr>
+<td><code>$VEHICLE_NAMESPACE/gimbal_tilt_status</code></td>
+<td><code>std_msgs/msg/Float32</code></td>
+<td>The current angle (radians) of the gimbal camera tilt [0.0, 3.14].</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../sim-ardupilot-gazebo/" title="starling-sim-ardupilot-gazebo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../starling-vicon/" title="starling-vicon">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../sim-ardupilot-gazebo/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../starling-vicon/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

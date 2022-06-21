@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Background - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Background";
+        var mkdocs_page_input_path = "details/background.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Background</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#motivation">3.1 Motivation</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#system-overview">3.2 System Overview</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#technology-stack">3.3 Technology Stack</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Home »</li><li>Background</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/details/background.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="background"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.</span> Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h1>
+<h2 id="motivation"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1</span> Motivation<a class="headerlink" href="#motivation" title="Permanent link">¶</a></h2>
+<p>As robotic and autonomous systems proliferate into the wider world, there is a need to address the difficulties of system development and deployment at scale. There is evidence that industry is directly facing these challenges through the use of cloud computing, continuous integration and similar systems inspired from very successful and agile software development processes. This is made clear through offerings such as Amazon's <a href="https://aws.amazon.com/robomaker/">AWS Robomaker</a>, Google's cloud robotics <a href="\url{https://googlecloudrobotics.github.io/core/">platforms</a> and so on.</p>
+<p>However, there is a great lack of such systems in most academic settings. The result's oriented attitude of many labs often leads to each researcher building a bespoke solution in order to evaluate, validate or prove their goals. These bespoke solutions are often inflexible, not extensible, difficult to understand and, importantly, reuse, with any level of confidence. This becomes especially difficult when coupled with hardware, such as UAVs, where many operational details have been implicitly assumed or ignored for favour of getting the experiment running as quick as possible. In addition these solutions are often poorly structured and maintained  with little to no documentation meaning that it is difficult for researchers to build upon these systems. This is an exceptionally large hurdle to researchers who do not have strong software backgrounds, but wish to perform real world experiments which could improve the quality of research outputs.</p>
+<p>This is not to say that it is impossible for a research system to be developed into a reusable platform. There are many examples of research systems being ubiquitous within a group or being released outside the lab. For instance, the <a href="https://www.robotarium.gatech.edu/">Robotarium at Georgia Tech</a>, the Multi-Robot Systems Group at the Czech Technical University with their <a href="https://github.com/ctu-mrs/mrs_uav_system">experimental system</a>, and the PX4 autopilot which began it's life as a collaboration between a number of labs at ETH Zurich. But what we see is that it takes a concerted effort and many years of coincidental work which provide incremental improvements to the system each time.</p>
+<p>Inspired by the increasing adoption of paradigms from cloud and distributed computing, this work aims to provide a UAV experimentation system which:</p>
+<ol>
+<li>Supports single or multiple drones with low (control) or high level (path planning) experimentation.</li>
+<li>Supports the transition between simulation to indoor flight to outdoor flight.</li>
+<li>Provides a simple and easy to use interface for researchers to implement experimentation without knowledge of hardware specifics.</li>
+</ol>
+<h2 id="system-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> System Overview<a class="headerlink" href="#system-overview" title="Permanent link">¶</a></h2>
+<p>Starling makes use of containerisation (<a href="https://www.docker.com/">Docker</a>) and container orchestration technologies (Kubernetes) to enable consistent deployment environments regardless of underlying platform - whether simulated or real. Many previous systems also aim for a similar capability, but the use of containerisation in particular allows Starling to abstract away from hardware whilst minimising setup and configuration. This is key to increase the efficiency for the development and testing of UAV systems in our resource and time constrained research laboratory. Starling has been primarily been devised with the following two insights:</p>
+<p>Firstly, a key concept of Starling is to treat individual vehicles as if they are individual nodes in a compute cluster. A compute cluster is traditionally a physical set of servers within a data centre, where each node is one hardware server with its own resources. Starling therefore considers a group of UAVs as a mobile compute cluster where each UAV is a 'flying computer'. With this viewpoint, actions such as software deployment, scaling up and down, self-healing and others can start to have a physical meaning within a UAV application.</p>
+<p>Secondly, Starling embraces the modularity inherent in using both ROS and containerisation. ROS provides the framework for communication, and containers provide the portable foundation upon which it runs. In particular Starling provides a core set of containers which have been identified as being mandatory when running a vehicle. These include a pre-configured container which runs MAVROS, as well as defining environment variables and protocols to ensure that vehicles are unique and can communicate in a scalable manner with both its hardware and other vehicles without additional user configuration. With this modularity through containers, we can then exploit all of the recent advances in compute cluster deployment and control for use in a single and multi UAV testing environment.</p>
+<h2 id="technology-stack"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Technology Stack<a class="headerlink" href="#technology-stack" title="Permanent link">¶</a></h2>
+<p>This system has been tested on <strong>linux ubuntu 20.04</strong>. It should be compatible with any linux distribution compatible with Docker. It may work on windows and MacOS, however it is untested and there may be networking issues <a href="https://github.com/arthurrichards77/ardupilot_sitl_docker#mission-planner-on-windows">See Link</a>.</p>
+<p>This system also assumes the use of ROS2 Foxy for communication between nodes, MavLink for autopilot communication with Mavros used as the bridge. PX4 is currently the main tested firmware, although ardupilot is also on the list.</p>
+<p>The core container images (i.e. container executables) of this system are all hosted in the uobflightlabstarling docker hub repository: <a href="https://hub.docker.com/orgs/uobflightlabstarling/repositories">https://hub.docker.com/orgs/uobflightlabstarling/repositories</a></p>
+<p>In our system each Docker Container can contain one or more ROS2 nodes. For example the <code>uobflightlabstarling / starling-mavros</code> container contains Mavros and its dependencies and require no modification by most users. Each docker container can be run by using <code>Docker run...</code>. Multiple containers can be run simultaneously using the <code>docker-compose</code> tool and specifying a yaml configuration file.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../guide/getting-started/" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../other/related_projects_and_links/" title="Ecosystem">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../guide/getting-started/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../other/related_projects_and_links/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

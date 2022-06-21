@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Development Guide - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Development Guide";
+        var mkdocs_page_input_path = "guide/development.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Development Guide</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#contents">18.1 Contents</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development-environment">18.2 Development Environment</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#developing-a-container">18.3 Developing a container</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vscode-ros2-template-project">18.4 VSCode / ROS2 Template Project</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Additional Guides »</li><li>Development Guide</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/development.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="developing-your-own-containers"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.</span> Developing your own containers<a class="headerlink" href="#developing-your-own-containers" title="Permanent link">¶</a></h1>
+<p>This guide shows recommended methods for developing your own controllers and using Starling to develop your experiments.</p>
+<h2 id="contents"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.1</span> Contents<a class="headerlink" href="#contents" title="Permanent link">¶</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#developing-your-own-containers">18. Developing your own containers</a><ul>
+<li><a href="#contents">18.1 Contents</a></li>
+<li><a href="#development-environment">18.2 Development Environment</a></li>
+<li><a href="#developing-a-container">18.3 Developing a container</a></li>
+<li><a href="#vscode-ros2-template-project">18.4 VSCode / ROS2 Template Project</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="development-environment"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.2</span> Development Environment<a class="headerlink" href="#development-environment" title="Permanent link">¶</a></h2>
+<p>We recommend that the any user looking to do development uses <a href="https://code.visualstudio.com/">Visual Studio Code</a>.
+VScode is a free cross platform, general use text editor and development environment with a vast array of built in tools.
+In particular we recommend VScode for use with Starling as it has a number of easy to use extensions suited for <a href="https://code.visualstudio.com/docs/remote/remote-overview">remote development</a> which includes</p>
+<ul>
+<li>Development over SSH (i.e. developing onboard a drone)</li>
+<li>Development inside a local docker container</li>
+<li>Development inside a remote docker container (e.g. a container running on a Raspberry Pi connected over SSH)!</li>
+</ul>
+<h2 id="developing-a-container"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.3</span> Developing a container<a class="headerlink" href="#developing-a-container" title="Permanent link">¶</a></h2>
+<p>There are actually a number of methods of developing an application within a containerised environment.</p>
+<ol>
+<li>Developing fully outside of the container and then building only using docker build.<ul>
+<li>This is the simplest and most straight forward method, recommended for most applications.</li>
+<li>Iteration can prove to be a little slow as docker build attempts to rebuild the entire container.</li>
+</ul>
+</li>
+<li>Creating/pulling the project outside of the container and bind mounting the project into the container and building within.<ul>
+<li>This can be achieved by using the bind syntax: <code>docker run -itd --name &lt;container reference name&gt; -v $(pwd)/&lt;my local files&gt;:/ros_ws/src/ &lt;containername&gt;</code>. Ommitting the <code>--rm</code> will stop the container from being automatically removed, and therefore the container will always be available/save your working environment.</li>
+<li>This essentially places your local files into the docker container for the container to interact with (read/write/execute).</li>
+<li>The local files can then be viewed and edited by using the docker remote development tool in vscode, then run via the integrated terminal (remember to source ros using <code>source /opt/ros/foxy/setup.bash</code>).</li>
+<li>Any local changes can be built using standard ROS2 procedures (i.e. <code>cd /ros_ws &amp;&amp; colon build packages-select &lt;my package name&gt;</code>)</li>
+<li>Iteration is very quick as changes can be made and built/tested from within the container.</li>
+<li>Any local changes can then be pushed to github/repositories in the usual manner. Note that files created inside the container may have permissions issues, these can be solved by running <code>sudo chown -R &lt;user&gt;:&lt;user&gt; &lt;my project&gt;</code>.</li>
+<li>Container can be restarted if the container enviornment is not quite right (e.g. need more ports or different volume mounted or need different network configuration)</li>
+<li>Recommended method for more complex or detailed applications.</li>
+</ul>
+</li>
+<li>Running a Docker container (such as <code>uobflightlabstarling/starling-controller-base</code>) and creating/pulling the project fully inside the container.<ul>
+<li>Start the container <em>without the --rm</em>, and giving it a permanent name using <code>--name &lt;container name&gt;</code>. This will ensure the container is persistent.</li>
+<li>Use VScode to remote inside the container</li>
+<li>Using the integrated terminal (or by using <code>docker exec ...</code>) install <code>git</code> and any other useful libraries or tools</li>
+<li>Pull or start your project within the ros workspace (<code>/ros_ws</code>)</li>
+<li>Any local changes can be built using standard ROS2 procedures (i.e. <code>cd /ros_ws &amp;&amp; colon build packages-select &lt;my package name&gt;</code>)</li>
+<li>Iteration is very quick and your local environment need not be modified in any way.</li>
+<li>Be aware that you may need to repeat some of these steps after restarting the container if the container environment (e.g. ports/networking) needs to be changed.</li>
+<li>Recommended method if quick changes need to be tested, but not for full development in case the environment needs to be changed.</li>
+</ul>
+</li>
+</ol>
+<h2 id="vscode-ros2-template-project"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.4</span> VSCode / ROS2 Template Project<a class="headerlink" href="#vscode-ros2-template-project" title="Permanent link">¶</a></h2>
+<p>There is a template repository within the StarlingUAS organisation called <a href="https://github.com/StarlingUAS/vscode_ros2_workspace"><code>vscode_ros2_workspace</code></a>. This was developed by an active VSCode/ROS2 developer working in industry. </p>
+<p>This template most likely has many features that you are possibly unlikely to use, but will give you a flavour of what developing systems in ROS2 is like out there. </p>
+<p>Feel free to try and use this template, I would recommend thoroughly reading through the repository README for the full instructions. </p>
+<p>Also if you are on windows you may need to change <a href="https://github.com/StarlingUAS/vscode_ros2_workspace/blob/4392bd0873a5d4c32a804fcaaa9f7fbe1b1057af/.devcontainer/devcontainer.json#L11">line 11 of <code>.devcontainer/devcontainer.json</code></a> to the name of the current docker network (if using docker-compose - see the tutorial example single drone local).</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../writing-a-controller/" title="Developing a controller"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../details/docker/" title="Understanding Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../writing-a-controller/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../details/docker/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

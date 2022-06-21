@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>1. Introduction to Starling - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "1. Introduction to Starling";
+        var mkdocs_page_input_path = "tutorials/introduction.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">1. Introduction to Starling</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#a-brief-introduction-to-linux">5.1 A Brief Introduction to Linux</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-linux">5.1.1 What is Linux</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-terminal">5.1.2 The Terminal</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#navigating-the-file-system">5.1.3 Navigating the file system</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-files">5.1.4 Working with files</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-dependencies-and-useful-programs">5.1.5 Installing Dependencies and Useful Programs</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#installing-git-and-vscode">Installing Git and VSCode</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#sudo">sudo</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#installing-docker">Installing Docker</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#starling-and-docker">5.2 Starling and Docker</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-the-purpose-of-starling">5.2.1 What is the purpose of Starling</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-magic-is-docker-doing">5.2.2 What 'magic' is docker doing</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-an-example-configuration">5.3 Running the an Example Configuration</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-the-example-scenario">5.3.1 Getting the Example Scenario</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-example-scenario">5.3.2 Running the Example Scenario</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-brief-introduction-to-ros">5.4 A Brief Introduction to ROS</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-does-ros-exist">5.4.1 Why does ROS exist?</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-ros">5.4.2 What is ROS</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ros-concepts-through-an-example">5.4.3 ROS concepts through an example</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ros2-for-starling">5.4.4 ROS2 for Starling</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-example-uav-controller">5.5 Running the Example UAV Controller</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-the-example-controller">5.5.1 Getting the Example Controller</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-example-controller">5.5.2 Running the Example Controller</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-the-example-controller">5.5.3 What is the Example Controller</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-and-debugging-starling-with-docker-and-ros">5.6 Inspecting and Debugging Starling with Docker and ROS</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#inspecting-docker">5.6.1 Inspecting Docker</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#inspecting-ros2">5.6.2 Inspecting ROS2</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-and-conclusion">5.7 Summary and Conclusion</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li><li>1. Introduction to Starling</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/tutorials/introduction.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="introduction-to-starling-with-the-fenswood-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> Introduction to Starling with the Fenswood Scenario<a class="headerlink" href="#introduction-to-starling-with-the-fenswood-scenario" title="Permanent link">¶</a></h1>
+<p>This Tutorial aims to give an introductory overview of the Starling system through the use of the Fenswood Scenario example. It will take a student from the basics of Linux, ROS and Docker to hopefully being able to run the Fenswood Scenario simulation environment with a simple controller flying the drone.</p>
+<p>This tutorial was written for the University of Bristol Aerial MSc Group Project 2021.</p>
+<p><strong>On this page:</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#introduction-to-starling-with-the-fenswood-scenario">5. Introduction to Starling with the Fenswood Scenario</a><ul>
+<li><a href="#a-brief-introduction-to-linux">5.1 A Brief Introduction to Linux</a><ul>
+<li><a href="#what-is-linux">5.1.1 What is Linux</a></li>
+<li><a href="#the-terminal">5.1.2 The Terminal</a></li>
+<li><a href="#navigating-the-file-system">5.1.3 Navigating the file system</a></li>
+<li><a href="#working-with-files">5.1.4 Working with files</a></li>
+<li><a href="#installing-dependencies-and-useful-programs">5.1.5 Installing Dependencies and Useful Programs</a><ul>
+<li><a href="#installing-git-and-vscode">Installing Git and VSCode</a></li>
+<li><a href="#sudo">sudo</a></li>
+<li><a href="#installing-docker">Installing Docker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#starling-and-docker">5.2 Starling and Docker</a><ul>
+<li><a href="#what-is-the-purpose-of-starling">5.2.1 What is the purpose of Starling</a></li>
+<li><a href="#what-magic-is-docker-doing">5.2.2 What 'magic' is docker doing</a></li>
+</ul>
+</li>
+<li><a href="#running-the-an-example-configuration">5.3 Running the an Example Configuration</a><ul>
+<li><a href="#getting-the-example-scenario">5.3.1 Getting the Example Scenario</a></li>
+<li><a href="#running-the-example-scenario">5.3.2 Running the Example Scenario</a></li>
+</ul>
+</li>
+<li><a href="#a-brief-introduction-to-ros">5.4 A Brief Introduction to ROS</a><ul>
+<li><a href="#why-does-ros-exist">5.4.1 Why does ROS exist?</a></li>
+<li><a href="#what-is-ros">5.4.2 What is ROS</a></li>
+<li><a href="#ros-concepts-through-an-example">5.4.3 ROS concepts through an example</a></li>
+<li><a href="#ros2-for-starling">5.4.4 ROS2 for Starling</a></li>
+</ul>
+</li>
+<li><a href="#running-the-example-uav-controller">5.5 Running the Example UAV Controller</a><ul>
+<li><a href="#getting-the-example-controller">5.5.1 Getting the Example Controller</a></li>
+<li><a href="#running-the-example-controller">5.5.2 Running the Example Controller</a></li>
+<li><a href="#what-is-the-example-controller">5.5.3 What is the Example Controller</a></li>
+</ul>
+</li>
+<li><a href="#inspecting-and-debugging-starling-with-docker-and-ros">5.6 Inspecting and Debugging Starling with Docker and ROS</a><ul>
+<li><a href="#inspecting-docker">5.6.1 Inspecting Docker</a></li>
+<li><a href="#inspecting-ros2">5.6.2 Inspecting ROS2</a></li>
+</ul>
+</li>
+<li><a href="#summary-and-conclusion">5.7 Summary and Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="a-brief-introduction-to-linux"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> A Brief Introduction to Linux<a class="headerlink" href="#a-brief-introduction-to-linux" title="Permanent link">¶</a></h2>
+<p>Adapted from this <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-basics">digital ocean tutorial</a></p>
+<h3 id="what-is-linux"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.1</span> What is Linux<a class="headerlink" href="#what-is-linux" title="Permanent link">¶</a></h3>
+<p>Linux is a family of free and open-source operating systems based on the Linux kernel (core operating system). Operating systems based on Linux are known as Linux distributions or distros. Examples include Debian, Ubuntu, Fedora, CentOS, Gentoo, Arch Linux, and many others.</p>
+<p>The Linux kernel has been under active development since 1991, and has proven to be extremely versatile and adaptable. You can find computers that run Linux in a wide variety of contexts all over the world, from web servers to cell phones. Today, 90% of all cloud infrastructure and 74% of the world’s smartphones are powered by Linux.</p>
+<p>However, newcomers to Linux may find it somewhat difficult to approach, as Linux filesystems have a different structure than those found on Windows or MacOS. Additionally, Linux-based operating systems depend heavily on working with the command line interface, while most personal computers rely on graphical interfaces.</p>
+<h3 id="the-terminal"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2</span> The Terminal<a class="headerlink" href="#the-terminal" title="Permanent link">¶</a></h3>
+<p>The terms “terminal,” “shell,” and “command line interface” are often used interchangeably, but there are subtle differences between them:</p>
+<ul>
+<li>A <strong>terminal</strong> is an input and output environment that presents a text-only window running a shell.</li>
+<li>A <strong>shell</strong> is a program that exposes the computer’s operating system to a user or program. In Linux systems, the shell presented in a terminal is a command line interpreter. The default shell in Ubuntu Linux is known as <code>bash</code>.</li>
+<li>A <strong>command line interface</strong> is a user interface (managed by a command line interpreter program) which processes commands to a computer program and outputs the results.</li>
+</ul>
+<p>When someone refers to one of these three terms in the context of Linux, they generally mean a terminal environment where you can run commands and see the results printed out to the terminal, such as this:</p>
+<p><img alt="linux terminal" src="../imgs/linux-terminal-on-ubuntu.png"/></p>
+<p>There are two ways to open a terminal:</p>
+<ol>
+<li>Pressing the <kbd class="keys"><kbd class="key-windows">Win</kbd></kbd> or <kbd class="keys"><kbd class="key-command">Cmd</kbd></kbd> key to open the program menu and typing <code>terminal</code>, then pressing <kbd class="keys"><kbd class="key-enter">Enter</kbd></kbd></li>
+<li>Pressing <kbd class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-t">T</kbd></kbd></li>
+</ol>
+<p>This default terminal is known as the 'gnome-terminal'. Other terminals exist such as <a href="https://terminator-gtk3.readthedocs.io/en/latest/">'terminator'</a></p>
+<p>Becoming a Linux user requires you to be comfortable with using a terminal. Any administrative task, including file manipulation, package installation, and user management, can be accomplished through the terminal. The terminal is interactive: you specify commands to run (after the $ sign) and the terminal outputs the results of those commands. To execute any command, you type it into the prompt and press <kbd class="keys"><kbd class="key-enter">Enter</kbd></kbd>.</p>
+<p>When using the Starling system, interacting with Docker and ROS2, you'll most often be doing so through a terminal shell. Although personal computers that run Linux often come with the kind of graphical desktop environment familiar to most computer users, it is often more efficient or practical to perform certain tasks through commands entered into the terminal. As of writing, a GUI (Graphical User Interface) has not been developed for Starling, and so almost all tasks have to be achieved through the terminal shell.</p>
+<p>A basic command to try out is <code>echo</code>, which will print things to the terminal. For example <code>echo hello-world</code> will print <code>hello-world</code> into the terminal. You can also use it to observe the value of <strong>Environment Variables</strong> which record and keep useful variables to the operation of the Operating System. For example, when you run a command in <code>bash</code>, <code>bash</code> will look for the command executable in the locations provided by the environment variable <code>PATH</code>. You can print the contents of this env-var using <code>echo $PATH</code>. The <code>$</code> before the name of the variable tells <code>bash</code> that the following word represents an environment variable, and that it should be looked up.</p>
+<h3 id="navigating-the-file-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> Navigating the file system<a class="headerlink" href="#navigating-the-file-system" title="Permanent link">¶</a></h3>
+<p>Like Windows and Mac, the Linux filesystems are based on a directory tree. This means that you can create directories (which are functionally identical to folders found in other operating systems) inside other directories, and files can exist in any directory.</p>
+<p>The forward slash (<code>/</code>) is used to indicate the root directory in the filesystem hierarchy.</p>
+<p>When a user logs in to the shell, they are brought to their own user directory, stored within <code>/home/&lt;username&gt;</code>. This is referred to as the user’s home directory. Often you may see the <em>tilde</em> (<code>~</code>) character when specifying a file location (e.g. <code>~/Documents/hello.txt</code> = <code>/home/&lt;username&gt;/Documents/hello.txt</code>). This is shorthand for the user's home directory and gets substituted in when used.</p>
+<p>To see what directory you are currently active in you can run the <code>pwd</code> command, which stands for “print working directory”</p>
+<pre><code class="language-console">myuser@my-machine:~$ pwd
+/home/myuser
+</code></pre>
+<p>To see a list of files and directories that exist in your current working directory, run the <code>ls</code> command:</p>
+<pre><code class="language-console">myuser@my-machine:~$ ls
+ Desktop                    Documents
+ Downloads                  Pictures
+ Public                     Wallpapers
+</code></pre>
+<p>You can get more details if you run <code>ls -al</code> command:</p>
+<pre><code class="language-console">myuser@my-machine:~$ ls -al
+drwxr-xr-x  2 myuser myuser   4096 Apr 30  2021  Desktop
+drwxrwxr-x  8 myuser myuser   4096 Oct 29 09:27  Documents
+drwxrwxr-x  8 myuser myuser   4096 Dec 10 14:41  Downloads
+drwxrwxr-x  8 myuser myuser   4096 May 23 10:43  Pictures
+drwxrwxr-x  8 myuser myuser   4096 Jan 19  2017  Public
+drwxrwxr-x  8 myuser myuser   4096 Oct 15 09:43  Wallpapers
+</code></pre>
+<p>You can create one or more new directories within your current working directory with the <code>mkdir</code> command, which stands for “make directory”. For example, to create two new directories named testdir1 and testdir2, you might run the first command. You can create nested directories by using the <code>-p</code> option:</p>
+<pre><code class="language-console">myuser@my-machine:~$ mkdir testdir1 testdir2
+myuser@my-machine:~$ mkdir -p testdir3/testsubdir
+</code></pre>
+<p>To navigate into one of these new directories, run the cd command (which stands for “change directory”) and specify the directory’s name:</p>
+<pre><code class="language-console">myuser@my-machine:~$ cd testdir1
+myuser@my-machine:~/testdir1$
+</code></pre>
+<p>Note that you can navigate from anywhere to anywhere. <code>cd</code> only requires a valid filepath. Note also that <code>.</code> represents the current folder and <code>..</code> represents the parent folder. Note also how is shows the current working directory in the shell as well.</p>
+<pre><code class="language-bash">cd # This will bring you back to home directory
+cd testdir3/testsubdir # Brings you into testsubdir
+cd ../ # Brings you back out one level into testdir3
+cd ../testdir1 # Brings you back out one level and back into testdir1
+cd /home/&lt;username&gt;/testdir2 # Absolute reference to testdir2
+cd ~/testdir2 # Absolute reference using tilde to testdir2
+</code></pre>
+<h3 id="working-with-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.4</span> Working with files<a class="headerlink" href="#working-with-files" title="Permanent link">¶</a></h3>
+<p>You cannot use cd to interact with files; cd stands for “change directory”, and only allows you to navigate directories. You can, however, create, edit, and view the contents of files.</p>
+<p>One way to create a file is with the touch command. This creates an empty file in your current working directory. To create a new file called file.txt:</p>
+<pre><code class="language-bash">touch file.txt
+</code></pre>
+<p>If you decide to rename file.txt later on, you can do so with the mv command. mv stands for “move” and it can move a file or directory from one place to another. By specifying the original file, file.txt, you can “move” it to a new location in the current working directory, thereby renaming it.</p>
+<pre><code class="language-bash">mv file.txt newfile.txt
+</code></pre>
+<p>It is also possible to copy a file to a new location with the cp command. If we want to copy newfile.txt, you can make a copy of newfile.txt named newfile_copy.txt like this:</p>
+<pre><code class="language-bash">cp newfile.txt newfile_copy.txt
+</code></pre>
+<p>However, files are not of much use if they don’t contain anything. To edit files, a file editor is necessary.
+There are many options for file editors, all created by professionals for daily use. Such editors include vim, emacs, nano, and pico.
+<code>nano</code> is a suitable option for beginners: it is relatively user-friendly and doesn’t overload you with cryptic options or commands.</p>
+<pre><code class="language-bash">nano file.txt
+</code></pre>
+<p>This will open a space where you can start typing to edit the file. In <code>nano</code> specifically you can save your written text by pressing <kbd class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-x">X</kbd></kbd>, <kbd class="keys"><kbd class="key-y">Y</kbd></kbd>, and then <kbd class="keys"><kbd class="key-enter">Enter</kbd></kbd>. This returns you to the shell with a newly saved <code>file.txt</code>.</p>
+<p>Now that file.txt has some text within it, you can view it using <code>cat</code> or <code>less</code>.</p>
+<p>The <code>cat</code> command prints the contents of a specified file to your system’s output. Try running <code>cat</code> and pass the <code>file.txt</code> file you just edited as an argument:</p>
+<pre><code class="language-bash">cat file.txt
+</code></pre>
+<p>Using <code>cat</code> to view file contents can be unwieldy and difficult to read if the file is particularly long. As an alternative, you can use the <code>less</code> command which will allow you to paginate the output. Use <code>less</code> to view the contents of the file.txt file, like this:</p>
+<pre><code class="language-bash">less file.txt
+</code></pre>
+<p>This will also print the contents of file.txt, but one terminal page at a time beginning at the start of the file. You can use the spacebar to advance a page, or the arrow keys to go up and down one line at a time. Press <kbd class="keys"><kbd class="key-q">Q</kbd></kbd> to quit out of <code>less</code>.</p>
+<p>Finally, to delete the file.txt file, pass the name of the file as an argument to <code>rm</code>:</p>
+<pre><code class="language-bash">rm file.txt
+rm -d directory
+rmidr directory
+rm -r directory # If the directory you are deleting is not empty
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: If your question has to do with a specific Linux command, the manual pages offer detailed and insightful documentation for nearly every command. To see the <code>man</code> page for any command, pass the command’s name as an argument to the <code>man</code> command - <code>man command</code>.
+For instance, <code>man rm</code> displays the purpose of <code>rm</code>, how to use it, what options are available, examples of use, and more useful information.</p>
+<p><strong>NOTE</strong>: If a command fails or is hanging or you just want to stop it, most of the time you can stop the running process by pressing <kbd class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></kbd>. This will send a Keyboard Interrupt message to the program and hopefully stop it.</p>
+</blockquote>
+<h3 id="installing-dependencies-and-useful-programs"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.5</span> Installing Dependencies and Useful Programs<a class="headerlink" href="#installing-dependencies-and-useful-programs" title="Permanent link">¶</a></h3>
+<p>Like windows and mac, individual programs can be manually downloaded (usually as a <code>tar.gz</code> file instead of <code>exe</code>) and manually installed into your operating system (using <code>dpkg</code>). However, the linux project offers a much more straight forward method through the <code>apt</code> (Advanced Packaging Tool) utility. <code>apt</code> is a free-software user interface that works with core libraries to handle the installation and removal of software on Debian operating systems like Ubuntu. (For other distributions you may come across equivalents like <code>yum</code>). This is the primary method for installing software onto your system.</p>
+<p>To use <code>apt</code>, and more specifically <code>apt-get</code> which 'gets' programs for you, you must first run the <code>update</code> command to get the current list of all available software. Note that because <code>sudo</code> is used, you will most likely need to input your password. <code>sudo</code> will be explained below.</p>
+<pre><code class="language-bash">sudo apt-get update
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> that it will hang (stop responding) or fail if you are not connected to the internet.</p>
+</blockquote>
+<h4 id="installing-git-and-vscode"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.5.1</span> Installing Git and VSCode<a class="headerlink" href="#installing-git-and-vscode" title="Permanent link">¶</a></h4>
+<p>You can then install your programs using <code>apt-get install</code>. For Starling, you will need to use the <code>git</code> version control software to both download Starling and eventually build your own controllers. To install <code>git</code>, run the following:</p>
+<pre><code class="language-bash">sudo apt-get install git
+</code></pre>
+<p>We also recommend the use of <a href="https://code.visualstudio.com/">Visual Studio Code</a> as your development environment or text editor, but you are free to use whatever you want (atom, notepad++ etc etc). We heavily make use of it during development and recommend a number of extensions. VScode can be installed using the <code>snap</code> utility. <code>snap</code> is a slightly more modern successor to <code>apt</code> for more general programs. <code>snap</code> comes ready installed on your linux distrubtion.</p>
+<pre><code class="language-bash">sudo snap install code --classic
+</code></pre>
+<h4 id="sudo"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.5.2</span> <code>sudo</code><a class="headerlink" href="#sudo" title="Permanent link">¶</a></h4>
+<p>Now in these commands, we have prefixed all of them with <code>sudo</code>. <code>sudo</code> these days usually stands for <code>superuser do</code> and allows a command to be run with the privileges of the superuser (aka the <em>root</em> user), if the user has been given permissions to do so. Any command which installs or modifies directories outside of the users home directory will often need superuser privileges to avoid non-superusers from changing things they shouldn't. As the above commands all seek to install programs to the system, they need superuser permissions to do so. Running without <code>sudo</code> will give you a permission error. Running a command with <code>sudo</code> will ask you for your <em>own accounts</em> password.</p>
+<h4 id="installing-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.5.3</span> Installing Docker<a class="headerlink" href="#installing-docker" title="Permanent link">¶</a></h4>
+<p>For Linux systems, see the following <a href="https://docs.docker.com/engine/install/ubuntu/">install page</a>. There are multiple ways of installation docker, but we recommend installing using the repository method:</p>
+<ol>
+<li>
+<p>Update the <code>apt</code> repository and install requirements</p>
+<pre><code>sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+</code></pre>
+</li>
+<li>
+<p>Add Docker's official GPG key:</p>
+<pre><code>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</code></pre>
+</li>
+<li>
+<p>Add Docker's repository:</p>
+<pre><code>echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</code></pre>
+</li>
+<li>
+<p>Install Docker (and docker-compose!):</p>
+<pre><code>sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli docker-compose containerd.io
+</code></pre>
+</li>
+<li>
+<p>Test Docker installation:</p>
+<pre><code>sudo docker run hello-world
+</code></pre>
+</li>
+</ol>
+<p>This will install Docker, accessible using <code>sudo</code> root privileges only. To use docker without sudo, run the following (there are <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">security issues</a> with this, but it doesn't matter for running Starling locally)</p>
+<ol>
+<li>
+<p>Run the following</p>
+<pre><code>sudo groupadd docker
+sudo usermod -aG docker $USER
+</code></pre>
+</li>
+<li>
+<p>Log out and log in again to enforce changes</p>
+</li>
+<li>Verify that it was successful (we will come back to this command):<pre><code>docker run hello-world
+</code></pre>
+</li>
+</ol>
+<p>That is Docker on Linux installed. See <a href="https://docs.docker.com/engine/install/ubuntu/">the original page</a> for any further details.</p>
+<h2 id="starling-and-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Starling and Docker<a class="headerlink" href="#starling-and-docker" title="Permanent link">¶</a></h2>
+<p>So now we have installed this thing called <strong>Docker</strong> - but what is it, and why does it matter to you as a user of Starling. <strong>For now, we recommend you treat <code>docker</code> as a special program that runs programs which we have written for you to use.</strong> For the purposes of this session we will not yet go into the details - we'll leave that for a future session, but we can at least give you a flavour of what Docker has allowed us to do.</p>
+<h3 id="what-is-the-purpose-of-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.1</span> What is the purpose of Starling<a class="headerlink" href="#what-is-the-purpose-of-starling" title="Permanent link">¶</a></h3>
+<p>The purpose of Starling, for the use of this course, is to allow you to quickly and easily install and run a UAV simulation within a simulated environment, so that you can test your developed controllers against a semi-realistic scenario.</p>
+<p>Therefore Starling is a set of pre-built programs/executables, some of which are pre-configured for the following:</p>
+<ul>
+<li>Running a Physics Simulation with Visualisation</li>
+<li>Running the Drone autopilot control software locally (a.k.a Software In The Loop or SITL)</li>
+<li>Running the interface between Mavlink and other protocols such as the Robot Operating System (ROS)</li>
+<li>And many others...</li>
+</ul>
+<p>These pre-built programs, which we refer to as <strong>containers</strong>, are all available in the <a href="https://github.com/StarlingUAS">StarlingUAS repository on github</a>.</p>
+<p>Together these <strong>containers</strong> form a modular ecosystem of drone systems which can be composed together to develop software for real drones. Any controllers developed via the simulator can be directly ported to run on a real drone.</p>
+<h3 id="what-magic-is-docker-doing"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.2</span> What 'magic' is docker doing<a class="headerlink" href="#what-magic-is-docker-doing" title="Permanent link">¶</a></h3>
+<p>Perhaps it is easiest to explain what we (and you) would have to do if docker did not exist! Each of the elements described above uses its own programs. For example the physics simulator is a program called <a href="http://gazebosim.org/">gazebo</a>. On each of your machines you would have to manually install gazebo and configure it to work. Then you would have to do the same for SITL, Mavlink, ROS and so on, and then make sure all of them work together - configuration files, scripts etc etc. And still this is without considering how to write software which will run on a drone on a different computer altogther (we don't want the 'but sir, it worked on my machine' syndrome!).</p>
+<p>With docker, we have essentially <strong>packaged</strong> up the software with all of it's dependencies and configurations to provide only the specific service we want it to provide. We have already figured out how to install and configure, say, gazebo, and how to get it running with everything else, put those instructions together and released it to you as a <strong>container</strong>.</p>
+<p>Almost as importantly, because the installation and configuration is baked into the container, the system itself runs in a <strong>consistent and replicatable environment</strong>, hopefully allowing reproducable results each time. This can be different from running 'bare metal' on your local machine where you may have accidentally changed a configuration without knowing - leading to things going wrong.</p>
+<p>All of this means that it's less work for you as the user, as you don't need to go through the difficulties of set-up and installation of all the many individual components. And it's better for us as we can get down to the interesting stuff quicker making life better for everyone!</p>
+<h2 id="running-the-an-example-configuration"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Running the an Example Configuration<a class="headerlink" href="#running-the-an-example-configuration" title="Permanent link">¶</a></h2>
+<p>A separate respository has been created that provides a configuration to simulate flight at the Univeristy of Bristol's Fenswood Facility for Aerial Research Measurement (FARM). We will use this as an example.</p>
+<p><strong>The Fenswood scenario repository is here: <a href="https://github.com/StarlingUAS/FenswoodScenario">https://github.com/StarlingUAS/FenswoodScenario</a></strong></p>
+<p>This section takes you through step by step as to how to download and run the example, and a bit of information as to what the example contains. This information is also in the example repository README.</p>
+<h3 id="getting-the-example-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.1</span> Getting the Example Scenario<a class="headerlink" href="#getting-the-example-scenario" title="Permanent link">¶</a></h3>
+<p>The example is packaged as github repository. For information on what is github see <a href="https://www.howtogeek.com/180167/htg-explains-what-is-github-and-what-do-geeks-use-it-for/">this article</a>.</p>
+<p>In order to run the example scenario, you will first need to 'clone' the repository locally. Therefore, navigate to a location in the file system where you want to store the repository (e.g. <code>cd ~/Documents</code>) and run the following:</p>
+<pre><code class="language-bash">git clone https://github.com/StarlingUAS/FenswoodScenario.git
+</code></pre>
+<blockquote>
+<p><em>Note</em>: this is why we needed to install <code>git</code> earlier using <code>apt</code></p>
+</blockquote>
+<p>This will download the repository folder into your local directory. Navigate into the folder using <code>cd</code>:</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents$ cd FenswoodScenario
+myuser@my-machine:~/Documents/FenswoodScenario$ ls
+README.md                 docker-compose.windows.yml  foxglove_layout.json
+docker-compose.linux.yml  fenswood
+</code></pre>
+<p>Then you will need to download the associated starling containers to run the simulator and SITL. Thankfully, this is fairly straightforward and can be run by doing the following:</p>
+<pre><code class="language-bash">myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.linux.yml pull
+Pulling simhost         ...
+Pulling sitl            ...
+Pulling mavros          ...
+Pulling rosbridge-suite ...
+Pulling ui
+</code></pre>
+<p>Breaking down this command,</p>
+<ul>
+<li><code>docker-compose</code> is a utility which allows us to compose together multiple docker containers, i.e. run multiple containers together.</li>
+<li><code>-f docker-compose.linux.yml</code> specifies that <code>docker-compose</code> should read the configuration yaml file given by <code>-f</code>. <code>docker-compose.linux.yml</code> is a configuration file we have written which specifies the containers and configurations required to run the fenswood scenario. In this file, we have speciifed that 4 containers will be run.</li>
+<li><code>pull</code> specifies that we would like to download the required containers locally, but not run them just yet.</li>
+</ul>
+<p>This command may take between 20 to 30 minutes as it has to download some large content - the simulator itself is around 5Gb! It is recommended you keep reading and have a look at <a href="#a-brief-introduction-to-ros">5.4 section 5.4 (a brief introduction to ROS)</a> while waiting.</p>
+<p>The downloaded containers are not stored in your local directory, instead they are stored by docker in a local library on your own machine. All downloaded and local containers can be seen by typing.</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents/FenswoodScenario$ docker images
+</code></pre>
+<h3 id="running-the-example-scenario"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2</span> Running the Example Scenario<a class="headerlink" href="#running-the-example-scenario" title="Permanent link">¶</a></h3>
+<p>Once the download of <code>pull</code> has completed, you can run the scenario. To run the example scenario, it is a similar command except now you ask it to <code>up</code>:</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents/FenswoodScenario$ docker-compose -f docker-compose.linux.yml up
+</code></pre>
+<p>This will start 4 containers:</p>
+<ol>
+<li><strong>simhost</strong>: The physics simulator instance which also hosts the simulated drone model and the target spawning.</li>
+<li><strong>sitl</strong>: The software in the loop representing the onboard autopilot software.</li>
+<li><strong>mavros</strong>: This is the bridge between Mavlink and ROS. It also serves to send mavlink messages to a ground station.</li>
+<li><strong>rosbridge-suite</strong>: This is a ros-web interface that is placed there for future use.</li>
+<li><strong>ui</strong>: This is the example ui.</li>
+</ol>
+<p>Wait a minute or so for all of the containers to initialise. Once started, the simulator should be available to see in the browser.</p>
+<ol>
+<li>Open up the firefox browser (click on firefox on the sidebar, or press <kbd class="keys"><kbd class="key-windows">Win</kbd></kbd> and search for firefox)</li>
+<li>Go to <a href="http://localhost:8080">localhost:8080</a></li>
+<li>You should see something like the following</li>
+</ol>
+<p><img alt="Fenswood Firefox Screenshot" src="../imgs/fenswoodscreenshot1.png"/></p>
+<p>The web interface is known as Gazebo Web. You can fly your camera through the environment like many other 3D modelling software:</p>
+<ul>
+<li>Left Click on a location and drag does Panning/Translating</li>
+<li>Middle Click on a location and drag does rotating around a point</li>
+<li>Scrolling the Middle Mouse button will zoom you in and out.</li>
+</ul>
+<p><img alt="Fenswood Scrolling Gif" src="../imgs/fenswoodgif.gif"/></p>
+<p>The full process as a gif:</p>
+<p><img alt="Fenswood Scenario GIF" src="../imgs/starling-fenswood-demo-1.gif"/></p>
+<h2 id="a-brief-introduction-to-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4</span> A Brief Introduction to ROS<a class="headerlink" href="#a-brief-introduction-to-ros" title="Permanent link">¶</a></h2>
+<p>This sections is adapted from <a href="https://dev.to/caelinsutch/a-brief-introduction-to-the-robot-operating-system-ros-15m5">this article</a></p>
+<p>ROS stands for the Robot Operating System, yet it isn't an actual operating system. It's a framework designed to expedite the development time of robot platforms. To understand what ROS is, we should understand why ROS exists in the first place.</p>
+<h3 id="why-does-ros-exist"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4.1</span> Why does ROS exist?<a class="headerlink" href="#why-does-ros-exist" title="Permanent link">¶</a></h3>
+<p>In general, software developers avoid hardware like the plague. It's messy, doesn't have consistent behavior, and there's no ctrl-z in sight.</p>
+<p>Most beginner programmers think you have to have a deep knowledge of electronics and even mechanics to program robots. They think that the hardware and software are so tightly coupled, you have to know both in depth to build anything useful.</p>
+<p>Software developers became software developers for a reason, so they don't have to deal with hardware. For example, lets say you have to debug a faulty sensor. You first have to take out the sensor from the enclosure, test the sensor thoroughly with a multi meter and various test cases, document its behavior, then examine the hardware -level code to ensure that there were no bugs, and so on. That's a lot of interaction with the hardware that's not fun for someone who just wants to write some cool software.</p>
+<p>It's harder to attract good programmers if the programming is coupled deeply with hardware. This is where ROS comes into play. With ROS, you can completely abstract the hardware from software, and instead interact with an API that gives access to that data. You can forget about the hardware, and focus on developing the software that makes the robot do what you want.</p>
+<h3 id="what-is-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4.2</span> What is ROS<a class="headerlink" href="#what-is-ros" title="Permanent link">¶</a></h3>
+<p>ROS is essentially a framework that sits on top of an operating system which defines how particular ROS compatible programs communicate and share data with each other. Essentially ROS defines an interface between which compatible programs can communicate and interact with each other. Over the years that ROS has existed, many people have developed thousands of ROS compatible packages which can be used in a modular fashion.</p>
+<h3 id="ros-concepts-through-an-example"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4.3</span> ROS concepts through an example<a class="headerlink" href="#ros-concepts-through-an-example" title="Permanent link">¶</a></h3>
+<p>To make it more concrete, imagine that on your drone you have a camera. There are also two processes which require, as inputs, that camera image. Say, a machine learning program, and a position estimation program. Traditionally, you would have to manually serialise (compress) and stream the image over a port which the other two programs could read from. But if the port changes or, say, the camera changes, lots of things have to be reconfigured.</p>
+<p>However, this sort of interaction can be made streamlined in ROS. Let us consider the programs we have as ROS <strong>nodes</strong>, i.e. a program which is responsible for one single modular purpose, with particular inputs or outputs:</p>
+<ol>
+<li>A camera image streaming node<ul>
+<li>OUT: camera image</li>
+</ul>
+</li>
+<li>A machine vision system for recognising objects<ul>
+<li>IN: camera image</li>
+<li>OUT: list of recognised objects</li>
+</ul>
+</li>
+<li>A simultaneous localisation and mapping system.<ul>
+<li>IN: camera image</li>
+<li>OUT: vehicle position</li>
+</ul>
+</li>
+</ol>
+<p>These outputs of a node define ROS <strong>topics</strong>, i.e. a single stream of one type of data. Each topic has a particular name which can be referred to. In our example, some of the topics might be:</p>
+<ul>
+<li><code>/drone/camera</code> for the camera image</li>
+<li><code>/drone/recognised_objects</code> for the machine vision system</li>
+<li><code>/drone/slam_position</code> for the SLAM system</li>
+</ul>
+<p>Then, we see that there are two avenues of communication created from these node inputs and outputs.</p>
+<div class="mermaid">graph LR
+A[Camera] --&gt;|out| node[drone/camera]
+node --in--&gt; C[Machine Vision]
+node --in--&gt; D[SLAM]
+style node fill:#f9f,stroke:#333,stroke-width:4px
+</div>
+<p>Now ROS follows a <strong>publisher/subscriber</strong> model of communication. What that means is that nodes <strong>publish</strong> data to <code>topics</code> as outputs. But that data is only sent across the network if a different nodes also <strong>subscribes</strong> to the same topic. So in our example we end up having</p>
+<ol>
+<li>A camera image streaming node<ul>
+<li>OUT: publishing to <code>/drone/camera</code></li>
+</ul>
+</li>
+<li>A machine vision system for recognising objects<ul>
+<li>IN: subscribed to <code>/drone/camera</code></li>
+<li>OUT: publishing to <code>/drone/recognised_objects</code></li>
+</ul>
+</li>
+<li>A simultaneous localisation and mapping system.<ul>
+<li>IN: subscribed to <code>/drone/camera</code></li>
+<li>OUT: publishing to <code>/drone/slam_position</code></li>
+</ul>
+</li>
+</ol>
+<div class="mermaid">graph LR
+A[Camera] --&gt;|out| node[drone/camera]
+node --in--&gt; C[Vision]
+C --&gt;|out| node1[drone/recognised_objects]
+node --in--&gt; D[SLAM]
+D --&gt;|out| node2[drone/slam_position]
+
+style node fill:#f9f,stroke:#333,stroke-width:4px
+style node1 fill:#f9f,stroke:#333,stroke-width:4px
+style node2 fill:#f9f,stroke:#333,stroke-width:4px
+</div>
+<p>Finally, the data that is sent is not just anything. The data or <strong>message</strong> is a specifically templated packet of data containing things specified for that paricular use case. In our example for <code>/drone/slam_position</code> topic, the message might be of type <a href="https://github.com/ros2/common_interfaces/blob/master/geometry_msgs/msg/Point.msg"><code>geometry_msgs/msg/Point.msg</code></a> which is defined like so:</p>
+<pre><code># This contains the position of a point in free space
+float64 x
+float64 y
+float64 z
+</code></pre>
+<p>In other words the message that the <code>/drone/slam_position</code> topic publishes must have a <code>msg.x</code>, <code>msg.y</code> and <code>msg.z</code> field, and the subscriber will only receivea message with those fields. There are a number of messages in the standard ROS library, but many libraries also define their own - as have we in some parts of Starling.</p>
+<p>This can be summarised in this diagram from the <a href="https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html">ROS tutorials</a> demonstrates it very nicely:</p>
+<p><img alt="ros2 node diagram" src="../imgs/ros2node_topic_and_service.gif"/></p>
+<p>The bottom half of this shows how topics get sent from a publisher to a subscriber.</p>
+<p>Interestingly, if you put two topics together, you get some notion of two way communication. This is the basis of a <strong>service</strong> which can be seen in the top of the diagram. A <strong>service</strong> is made of a Request topic and a Response topic, but functions as a single communication type to the user. Similar to messages, a service has a defined request and response types (e.g. see <a href="https://github.com/ros2/common_interfaces/blob/master/std_srvs/srv/SetBool.srv"><code>std_srvs/srv/SetBool.srv</code></a>).  A service request will often wait until a response is received before continuing.</p>
+<p>Note that everything happens asyncronously and in parallel, when a node subscribes or sends a requests, it doesn't know when the response will arrive. It only knows it will (hopefully) arrive at some point. When a packet is received the subscriber can then run a method - this method is usually known as a <strong>callback</strong>, but that will be covered in a later tutorial.</p>
+<p>So in summary, the key conepts and terminology are:</p>
+<ul>
+<li><strong>Nodes</strong></li>
+<li><strong>Topics</strong></li>
+<li><strong>Publishers and Subscribers</strong></li>
+<li><strong>Messages</strong></li>
+<li><strong>Services</strong></li>
+</ul>
+<h3 id="ros2-for-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.4.4</span> ROS2 for Starling<a class="headerlink" href="#ros2-for-starling" title="Permanent link">¶</a></h3>
+<p>There are 2 versions of ROS - ROS1 and ROS2. ROS1, initially created in 2007 by Willow Garage, has become huge among the open source robotics community. However over the years they realised that there are a number of important features which are missing - and adding all of these would simply break ROS1. Also the most recent ROS1 distribution (ROS Noetic) is soon to reach the end of its supported life (EOL 2025) with no more ROS1 there after! (See <a href="https://roboticsbackend.com/ros1-vs-ros2-practical-overview/#Why_ROS2_and_not_keep_ROS1">this article</a> for more details!)</p>
+<p>Therefore, to future proof the system, and to ensure all users get a well rounded experience that will hopefully translate to industry experience, Starling has been implemented in ROS2. Specifically, Starling uses the <strong>Foxy Fitzroy</strong> Long Term Support (LTS) distribution throughout.</p>
+<p>There are some interesting changes between ROS1 and ROS2, but the core elements described above remain identical. A future tutorial will go into a few more details, but this is probably all the context you will need for now!</p>
+<blockquote>
+<p><strong>Note:</strong> Main thing to be aware of is if you are debugging and searching for ROS questions on the internet, be aware that there are many existing questions for ROS1 which will no longer apply for ROS2.</p>
+</blockquote>
+<h2 id="running-the-example-uav-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.5</span> Running the Example UAV Controller<a class="headerlink" href="#running-the-example-uav-controller" title="Permanent link">¶</a></h2>
+<p>The next step in getting the Fenswood Scenario up and running is to actually get the UAV to do something. The previous steps simply started the simulator up, but now we have to instruct and control the UAV. For now we have provided an example controller to all students (to be turned into a tutorial at a later date)</p>
+<p><strong>The example controller repository is here: <a href="https://github.com/StarlingUAS/example_python_controller">https://github.com/StarlingUAS/example_python_controller</a></strong></p>
+<p>This section will take you through step by step as to how to download and run the example, a bit of information about what the example contains. This information is also available in the example repository readme.</p>
+<h3 id="getting-the-example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.5.1</span> Getting the Example Controller<a class="headerlink" href="#getting-the-example-controller" title="Permanent link">¶</a></h3>
+<p>Similar to the simulator, the example controller is packaged up as a github repository. This repository contains a number of example controllers for use in different scenarios and simulators. There is one particular controller which has been developed for the fenswood scenario.</p>
+<p>Again, in order to run the example scenario, you will first need to 'clone' the repository locally. Therefore navigate to a location in the file system where you want to store the repository (e.g. <code>cd ~/Documents</code>) and run the following:</p>
+<pre><code class="language-bash">git clone https://github.com/StarlingUAS/example_python_controller.git
+cd example_python_controller # Navigate into the folder
+</code></pre>
+<p>Now unlike the simulator, you will not need to download the example from the internet. This example is set up so that it will build itself locally when it is run.</p>
+<h3 id="running-the-example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.5.2</span> Running the Example Controller<a class="headerlink" href="#running-the-example-controller" title="Permanent link">¶</a></h3>
+<p>First, open up a terminal and start up the Fenswood Scenario Simulator if you haven't already (Refer to <a href="#running-the-example-scenario">5.3.2 the section above</a>). Double check it is open by going to Gazebo Web at <a href="http://localhost:8080">localhost:8080</a></p>
+<p>Then, open up a second terminal and navigate to the example_python_controller folder. The example controller can be started by running the following:</p>
+<pre><code class="language-console">myuser@my-machine:~/Documents/example_python_controller$ docker-compose -f docker-compose.fenswood.ap.yaml up
+</code></pre>
+<p>With this command, the controller will start off and attempt to find a drone on the network. </p>
+<blockquote>
+<p>If a drone has not been found, try restarting the both the Fenswood Scenario and the controller. </p>
+</blockquote>
+<p>Once a drone has been found, it will attempt to connect to the ardupilot. Once connected the path the vehicle will take is initialised and it is ready to fly if the user sends a mission go.</p>
+<p>Now to send a mission go, you can use the provided simple UI that is started with the FenswoodScenario. Navigate to <a href="http://localhost:3000">localhost:3000</a> in the browser, and a UI will start up:</p>
+<p><img alt="Starling UI" src="../imgs/ui.png"/></p>
+<p>If it says <code>connected to rosbridge</code> in green, then you are ready to send a mission start command. Press the Green GO Button. </p>
+<p>If you go to the terminal it should start sending waypoints. In the UI the camera image should start to change as the vehicle takes off, and you should see the vehicle takeoff in gazebo web as well.</p>
+<p>Then you should hopefully see its attempt to follow a preset trajectory towards the target location.</p>
+<p>This full process can be seen in the following gif:
+<img alt="Fenswood Example Controller demo a" src="../imgs/starling-fenswood-demo-2a.gif"/></p>
+<p>The landing:
+<img alt="Fenswood Example Controller demo a" src="../imgs/starling-fenswood-demo-2b.gif"/></p>
+<h3 id="what-is-the-example-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.5.3</span> What is the Example Controller<a class="headerlink" href="#what-is-the-example-controller" title="Permanent link">¶</a></h3>
+<p>So what exactly is the example controller doing?</p>
+<p>Lets first start with what it is communicating with. On a real drone, the thing that controls the lower level operations of the drone is the <strong>Autopilot</strong> or <strong>Flight controller</strong>. The autopilot contains software which allows for different flight modes and translates hight level commands to motor voltages to fly the drone. As you might have come across, the primary with of controlling the autopilot is through sending Mavlink messages.</p>
+<p>Now the autopilot software itself can be swapped out and changed. For this scenario, we use the <a href="https://ardupilot.org/copter/docs/introduction.html"><strong>Ardupilot Arducopter</strong></a> firmware for the flight controller. It is important to know the specific type of software as different flight controller firmware requires the use of different flight mode and instructions.</p>
+<p>The Fenswood Scenario simulator utilises the Ardupilot Software In The Loop (SITL) simulator. This program is identical to the firmware that would be running onboard the flight controller. Then, within the example controller repository, there are two example controllers - one for Ardupilot (suffixed with <code>ap</code>), and one for the PX4 firmware (suffixed with <code>px4</code>). You can use the former to communicate with the Ardupilot SITL.</p>
+<p>The example controller talks in ROS2 to the SITL via the Mavros translation node mentioned earlier. It sends commands for things like 'takeoff', 'go there' and 'land' via topics which the Mavros node advertises. The Mavros node takes subscribes to these topics and re-publishes them to the Flight Controller using Mavlink in a way Ardupilot understands.</p>
+<p>More details will be given in the next tutorial about how this controller works under the hood, and how to develop your own.</p>
+<h2 id="inspecting-and-debugging-starling-with-docker-and-ros"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.6</span> Inspecting and Debugging Starling with Docker and ROS<a class="headerlink" href="#inspecting-and-debugging-starling-with-docker-and-ros" title="Permanent link">¶</a></h2>
+<p>Now we have the full example Fenswood Scenario running, we can start to inspect what's going on a bit more! This will be more useful when developing your own controller, but this will give you an idea of whether your systems are working or not.</p>
+<h3 id="inspecting-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.6.1</span> Inspecting Docker<a class="headerlink" href="#inspecting-docker" title="Permanent link">¶</a></h3>
+<p>As you will hopefully be aware now, there's a fair amount going on under the hood! Because of all of these pieces which need to fit together, occasionally things fail, and therefore you will need to be able to inspect whats going on.</p>
+<p>As most of Starling relys on using <strong>Docker</strong> we can use some of the docker commands to inspect what is going on!</p>
+<p>It is useful to know what docker containers exist locally on your system and whether they are the most recent release. The following command will list your local docker containers images and when they were last released</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker images
+uobflightlabstarling/starling-sim-iris-ap                                     latest    02ba82372286   6 weeks ago   5.07GB
+uobflightlabstarling/starling-sim-iris                                        &lt;none&gt;    826dab23768b   6 weeks ago   5.84GB
+uobflightlabstarling/starling-sim-ardupilot-gazebo                            latest    df39b5d0181e   6 weeks ago   5.05GB
+uobflightlabstarling/starling-sim-ardupilot-copter                            &lt;none&gt;    6a10c0c95714   6 weeks ago   2.35GB
+uobflightlabstarling/starling-mavros                                          &lt;none&gt;    3a5142abfc0c   6 weeks ago   2.04GB
+uobflightlabstarling/rosbridge-suite                                          latest    97a05ece1aa3   6 weeks ago   887MB
+uobflightlabstarling/starling-ui-example                                      latest    83e9a37ddbdf   6 weeks ago   1.33GB
+</code></pre>
+<p>To see what containers are running, you can use the following. When running Fenswood you should see 5 containers running.</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker ps
+CONTAINER ID   IMAGE                                                       COMMAND                  CREATED       STATUS         PORTS     NAMES
+dfea0bbf9b69   uobflightlabstarling/starling-ui-example                    "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_ui-example_1
+1b72f667a557   uobflightlabstarling/starling-mavros:latest                 "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_mavros_1
+9d55eb4de60e   uobflightlabstarling/rosbridge-suite:latest                 "/ros_entrypoint.sh …"   3 hours ago   Up 9 minutes             fenswoodscenario_rosbridge-suite_1
+5205bcf5495f   example_python_controller_controller                        "/ros_entrypoint.sh …"   3 weeks ago   Up 8 minutes             example_python_controller_controller_1
+9fa66d47e21e   uobflightlabstarling/starling-sim-ardupilot-copter:latest   "/home/root/entrypoi…"   4 weeks ago   Up 9 minutes             fenswoodscenario_sitl_1
+e5e47cc36ec1   uobflightlabstarling/starling-sim-iris-ap:latest            "/ros_entrypoint.sh …"   5 weeks ago   Up 9 minutes             fenswoodscenario_simhost_1
+</code></pre>
+<p>When running docker ps, it shows some useful information. You can use this information to inspect the inside of a container. Now what do we mean by the 'inside of a container'. Essentially the container allows us to run a pre-set set of instructions inside a blank mini version of linux. When we are debugging, it is sometimes really useful to have a look at what is going on inside this mini version of linux!</p>
+<p>The <code>exec</code> command allows us to go inside one of these containers to make changes directly. Note that when we are inside, we are no longer in your own version of the desktop, and that changes made are persistent inside the container! When inside the container, you can run some of the ROS2 comamnds in the next section.</p>
+<pre><code>docker exec -it &lt;container id&gt; bash
+</code></pre>
+<p>e.g.</p>
+<pre><code class="language-console">myuser@my-machine:~$ docker exec -it 1b72f667a557 bash
+root@my-machine:/ros_ws# 
+</code></pre>
+<p>If a particular docker container is not working properly, you can also kill a container:</p>
+<pre><code>docker kill &lt;container id&gt;
+</code></pre>
+<h3 id="inspecting-ros2"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.6.2</span> Inspecting ROS2<a class="headerlink" href="#inspecting-ros2" title="Permanent link">¶</a></h3>
+<p>As mentioned before, everything in starling is running ROS2. Therefore all of the ROS2 nodes, topics and services can be inspected and observed. We can do this inspection using the following few commands.</p>
+<p>First ensure that you have <code>docker exec</code> into any of the containers. For example using the container id of the container labelled <code>starling-mavros</code>.</p>
+<p>Once you are inside, you first need to run the following to enable ROS2 commands. (<kbd class="keys"><kbd class="key-tab">Tab</kbd></kbd> autocompleting is available)</p>
+<pre><code>root@my-machine:~$ source /opt/ros/foxy/setup.bash
+</code></pre>
+<p>The first thing you can do is list all of the ROS2 nodes in the network <code>node</code> command:</p>
+<pre><code>root@my-machine:~$ ros2 node list
+WARNING: Be aware that are nodes in the graph that share an exact name, this can have unintended side effects.
+/gazebo
+/rosapi
+/rosapi
+/rosbridge_websocket
+/vehicle_1/camera_controller
+/vehicle_1/example_controller
+/vehicle_1/gimbal_small_2d
+/vehicle_1/ros_bridge
+</code></pre>
+<p>This will show a list of all the nodes that ROS2 can find. You should see all of the nodes from the simulator and the example controller.</p>
+<p>Then, we can inspect the list of available topics using the <code>topic</code> command.</p>
+<pre><code class="language-console">root@my-machine:~$ ros2 topic list
+/client_count
+/clock
+/connected_clients
+/emergency_stop
+/mission_start
+/parameter_events
+/performance_metrics
+/rosout
+/vehicle_1/camera/camera_info
+/vehicle_1/camera/image_raw
+/vehicle_1/camera/image_raw/compressed
+/vehicle_1/camera/image_raw/compressedDepth
+/vehicle_1/camera/image_raw/theora
+/vehicle_1/gimbal_tilt_cmd
+/vehicle_1/gimbal_tilt_status
+/vehicle_1/mavlink/from
+/vehicle_1/mavlink/to
+/vehicle_1/mavros/battery
+/vehicle_1/mavros/distance_sensor/hrlv_ez4_sonar
+/vehicle_1/mavros/distance_sensor/lidarlite_laser
+/vehicle_1/mavros/distance_sensor/rangefinder
+/vehicle_1/mavros/distance_sensor/temperature
+/vehicle_1/mavros/global_position/global
+/vehicle_1/mavros/global_position/velocity
+/vehicle_1/mavros/image/camera_image
+/vehicle_1/mavros/local_position/pose
+/vehicle_1/mavros/manual_control/control
+/vehicle_1/mavros/manual_control/send
+/vehicle_1/mavros/mission/reached
+/vehicle_1/mavros/mission/waypoints
+/vehicle_1/mavros/px4flow/ground_distance
+/vehicle_1/mavros/px4flow/raw/optical_flow_rad
+/vehicle_1/mavros/safety_area
+/vehicle_1/mavros/setpoint_accel/accel
+/vehicle_1/mavros/setpoint_attitude/attitude
+/vehicle_1/mavros/setpoint_attitude/cmd_vel
+/vehicle_1/mavros/setpoint_attitude/thrust
+/vehicle_1/mavros/setpoint_position/global
+/vehicle_1/mavros/setpoint_position/global_to_local
+/vehicle_1/mavros/setpoint_position/local
+/vehicle_1/mavros/setpoint_raw/attitude
+/vehicle_1/mavros/setpoint_raw/global
+/vehicle_1/mavros/setpoint_raw/local
+/vehicle_1/mavros/setpoint_velocity/cmd_vel_unstamped
+/vehicle_1/mavros/state
+/vehicle_1/mavros/vision_pose/pose
+/vehicle_1/mavros/vision_pose/pose_cov
+/vehicle_1/mavros/vision_speed/speed_twist
+/vehicle_1/mavros/vision_speed/speed_vector
+</code></pre>
+<p>If there is a particular topic you want to inspect, you can use the <code>echo</code> command of <code>topic</code>, for example if we wanted to inspect the topic <code>/vehicle_1/mavros/state</code> we can run:</p>
+<pre><code>root@my-machine:~$ ros2 topic echo /vehicle_1/mavros/state
+header:
+  stamp:
+    sec: 1639423734
+    nanosec: 393874329
+  frame_id: ''
+connected: true
+armed: false
+guided: true
+manual_input: true
+mode: GUIDED
+system_status: 3
+---
+header:
+  stamp:
+    sec: 1639423735
+    nanosec: 435107761
+  frame_id: ''
+connected: true
+armed: false
+guided: true
+manual_input: true
+mode: GUIDED
+system_status: 3
+---
+^C
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> Press <kbd class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></kbd> to stop the echo stream</p>
+</blockquote>
+<p>This should (assuming the connection to all of the other elements is working) start printing out the current state of the drone. Including whether it is armed or not, and which mode it is currently in.</p>
+<p>Finally, you can also inspect the services on the network using the <code>service</code> command like the following:</p>
+<pre><code>root@my-machine:~$ ros2 service list
+...
+/unpause_physics
+/vehicle_1/camera_controller/describe_parameters
+/vehicle_1/camera_controller/get_parameter_types
+/vehicle_1/camera_controller/get_parameters
+/vehicle_1/camera_controller/list_parameters
+/vehicle_1/camera_controller/set_parameters
+/vehicle_1/camera_controller/set_parameters_atomically
+/vehicle_1/example_controller/describe_parameters
+/vehicle_1/example_controller/get_parameter_types
+/vehicle_1/example_controller/get_parameters
+/vehicle_1/example_controller/list_parameters
+/vehicle_1/example_controller/set_parameters
+/vehicle_1/example_controller/set_parameters_atomically
+/vehicle_1/gimbal_small_2d/describe_parameters
+/vehicle_1/gimbal_small_2d/get_parameter_types
+/vehicle_1/gimbal_small_2d/get_parameters
+/vehicle_1/gimbal_small_2d/list_parameters
+/vehicle_1/gimbal_small_2d/set_parameters
+/vehicle_1/gimbal_small_2d/set_parameters_atomically
+/vehicle_1/mavros/cmd/arming
+/vehicle_1/mavros/cmd/command
+/vehicle_1/mavros/cmd/command_int
+/vehicle_1/mavros/cmd/land
+/vehicle_1/mavros/cmd/set_home
+/vehicle_1/mavros/cmd/takeoff
+/vehicle_1/mavros/cmd/trigger_control
+/vehicle_1/mavros/mission/clear
+/vehicle_1/mavros/mission/pull
+/vehicle_1/mavros/mission/push
+/vehicle_1/mavros/mission/set_current
+/vehicle_1/mavros/set_mode
+/vehicle_1/mavros/set_stream_rate
+/vehicle_1/ros_bridge/describe_parameters
+/vehicle_1/ros_bridge/get_parameter_types
+/vehicle_1/ros_bridge/get_parameters
+/vehicle_1/ros_bridge/list_parameters
+/vehicle_1/ros_bridge/set_parameters
+/vehicle_1/ros_bridge/set_parameters_atomically
+/vehicle_1/set_camera_info
+</code></pre>
+<h2 id="summary-and-conclusion"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.7</span> Summary and Conclusion<a class="headerlink" href="#summary-and-conclusion" title="Permanent link">¶</a></h2>
+<p>Congratulations! You have gotten to the end of this tutorial!</p>
+<p>Especially if this is your first time touching linux and using this stuff, a lot of the content here can be daunting - but feel free to read it over again and hopefully you will slowly come to understand what is going on.</p>
+<p>In this introductory tutorial, we have only really scratched the surface of a lot of the technologies that we've been using. If you wish to have a deeper understanding, I would recommend having a read through the official documentation of all of them. The <a href="https://www.docker.com/101-tutorial">docker</a> and <a href="https://docs.ros.org/en/foxy/Tutorials.html">ROS2 tutorials</a> are really good. But I wish to emphasise that you will hopefully not need an extremely deep understanding to use Starling.</p>
+<p>The next step after this tutorial is then to cover how you might actually build your own controller. This will go into more detail about Mavlink, ROS2 and Docker - including how to build your own projects and run them against the Fenswood Scenario Simulator!</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../other/related_projects_and_links/" title="Ecosystem"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../guide/cli/" title="2. The Starling CLI">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../other/related_projects_and_links/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../guide/cli/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({});</script></body>
+</html>

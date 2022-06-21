@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Build System - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Build System";
+        var mkdocs_page_input_path = "details/build_system.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Build System</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#development-workflow">26.1 Development Workflow</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building">26.2 Building</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-locally-and-for-arm-using-buildx-bake">26.2.1 Building locally and for ARM using buildx bake</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-github-actions-workflows">26.2.2 The GitHub Actions Workflows</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#releases">Releases</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#development-releases">Development Releases</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#images-on-dockerhub">Images on DockerHub</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-the-cache">Updating the cache</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Implementation »</li><li>Build System</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/details/build_system.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="project-starling-development-and-build-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Project Starling Development and Build System<a class="headerlink" href="#project-starling-development-and-build-system" title="Permanent link">¶</a></h1>
+<div class="toc">
+<ul>
+<li><a href="#project-starling-development-and-build-system">26. Project Starling Development and Build System</a><ul>
+<li><a href="#development-workflow">26.1 Development Workflow</a></li>
+<li><a href="#building">26.2 Building</a><ul>
+<li><a href="#building-locally-and-for-arm-using-buildx-bake">26.2.1 Building locally and for ARM using buildx bake</a></li>
+<li><a href="#the-github-actions-workflows">26.2.2 The GitHub Actions Workflows</a><ul>
+<li><a href="#releases">Releases</a></li>
+<li><a href="#development-releases">Development Releases</a></li>
+<li><a href="#images-on-dockerhub">Images on DockerHub</a></li>
+<li><a href="#updating-the-cache">Updating the cache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="development-workflow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">¶</a></h2>
+<p>As this project gets larger and releases get pushed out, the standard single master branch is not longer viable. Therefore we start using a more scalable (and safer) method of project management (read <a href="https://nvie.com/posts/a-successful-git-branching-model/">this article</a> for more info).</p>
+<ul>
+<li><strong>master</strong> branch is reserved solely for core releases and should always remain stable. Master should only be updated and modified via pull requests, and each pull request should correspond to a new tagged release. A release will then trigger the continuous integration github action (see below) to update all of the docker images.</li>
+<li><strong>dev</strong> branch is for general development and should always remain ahead of the <strong>master</strong> branch. All feature branches should merge into <strong>dev</strong> when verified. When enough features have been added, <strong>dev</strong> can raise a PR to merge into master. For testing <strong>dev</strong> releases can be created to trigger dev builds on ":nightly" tags.</li>
+</ul>
+<p><img alt="development method" src="../../img/git-modelx.png"/></p>
+<h2 id="building"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> Building<a class="headerlink" href="#building" title="Permanent link">¶</a></h2>
+<h3 id="building-locally-and-for-arm-using-buildx-bake"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.1</span> Building locally and for ARM using buildx bake<a class="headerlink" href="#building-locally-and-for-arm-using-buildx-bake" title="Permanent link">¶</a></h3>
+<p>At present the build system is based on Docker's <code>buildx bake</code>, using a <code>bake.hcl</code> file to configure the build. The
+<code>docker-bake.hcl</code> file contains definitions for each image to be built and which platforms they are to be built for.</p>
+<p>At the moment, <code>bake</code> doesn't have a way of setting dependencies between images so the images need to be built in the
+correct order. At present, there are three groups defined in the <code>bake.hcl</code> file to set the ordering. These are named
+<code>stage1</code> through <code>stage3</code>. The <code>build_local.sh</code> script calls <code>buildx bake</code> for each of these stages in turn, ensuring
+that all dependencies are in place for the next stage of the build.</p>
+<p>Another aspect of this lack of dependency tracking is that images that extend other images need to explicitly use the
+the correct version. In order to keep this portable, Dockerfiles that depend on an existing image have had a <code>VERSION</code>
+build argument added. This is appended to the end of the name of the parent Docker image. The default value is <code>latest</code>,
+which is equivalent to leaving it blank in Docker tooling.</p>
+<p>To create a set of images with matching tags, use an environment variable <code>BAKE_VERSION</code>. This will be appended as a tag
+to the images and passed as the <code>VERSION</code> build argument to dockerfiles that depend on other <code>starling-*</code> images.</p>
+<p>Multiplatform support is more complicated. The local docker image store cannot handle multi-platform images so
+<code>buildx</code>'s default <code>docker</code> driver cannot be used. <code>build_local_multiplatform.sh</code> deals with this by spawning a new
+builder using the <code>docker-container</code> driver alongside a local container registry that the builder interacts with. This
+significantly complicates things.</p>
+<p>To setup your local machine to do the multiplatform builds, you need to install the required emulators for the <code>arm64</code>
+builds. Luckily someone has already done the hard work. All that should be required is:</p>
+<pre><code>docker run --privileged --rm tonistiigi/binfmt --install arm64
+</code></pre>
+<p>Similar to the <code>VERSION</code> argument outlined above, the use of a local registry requires a <code>REGISTRY</code> build argument be
+used in the Dockerfiles. Again this is provided by the <code>bake.hcl</code> script. It defaults to blank, which is equivalent to
+using Docker Hub. Once built, the images can be pulled from the local registry using a <code>localhost:5000/</code> prefix.
+Override by setting <code>BAKE_REGISTRY</code> in the environment before calling <code>bake</code>.</p>
+<p>The <code>bake.hcl</code> script takes values from the environment to be passed on to the Dockerfiles. Two of these are the
+<code>BAKE_VERSION</code> and <code>BAKE_REGISTRY</code> arguments outlined above. <code>BAKE_RELEASENAME</code> can also be supplied to the <code>bake.hcl</code>
+script. <code>BAKE_RELEASENAME</code> defaults to blank. If it is set, all images will be tagged with both the tag specified by
+<code>BAKE_VERSION</code> (or <code>latest</code> if that is not set) and that specified by <code>BAKE_RELEASENAME</code>.</p>
+<p>Finally, there are some further options to control caching. The main options are <code>BAKE_CACHETO_NAME</code> and
+<code>BAKE_CACHEFROM_NAME</code>, which by default are blank. These exists to allow local builds to be cached from online sources
+and pushed to a local registry or to allow local builds to be used to populate the online caches. When they are blank,
+no caches will be used. This allows for one-directional caching, <em>e.g.</em> refreshing the online caches from local builds.
+Two further caching options are available: <code>BAKE_CACHETO_REGISTRY</code> and <code>BAKE_CACHEFROM_REGISTRY</code>. These control the
+destination and source registries for the cache images. By default, they will be blank, equivalent to using Docker Hub.</p>
+<h3 id="the-github-actions-workflows"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.2</span> The GitHub Actions Workflows<a class="headerlink" href="#the-github-actions-workflows" title="Permanent link">¶</a></h3>
+<h4 id="releases"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.2.1</span> Releases<a class="headerlink" href="#releases" title="Permanent link">¶</a></h4>
+<p>When a tag of the form <code>vX.Y.Z</code> is pushed to the repo, a workflow will be started. This workflow builds all the images
+from the <code>bake.hcl</code> script, tags them with both the version tag and <code>:latest</code>, and pushes them to Docker Hub.</p>
+<h4 id="development-releases"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.2.2</span> Development Releases<a class="headerlink" href="#development-releases" title="Permanent link">¶</a></h4>
+<p>A similar workflow exists for development images.  A tag of the form <code>vX.Y.Z-dev</code> will cause the images to be built and tagged with
+both the tag name and <code>:nightly</code>, before being pushed to DockerHub. These additional tags are controlled by setting the
+<code>BAKE_RELEASENAME</code> environment variable.</p>
+<p>The actions workflows attempt to make use of <code>buildx</code>'s cache to repository. The <code>:cache</code> and <code>:cache-dev</code> tags are used
+for each image for the caches. This is done by setting the <code>BAKE_CACHENAME</code> variable. There's likely the opportunity to
+streamline the two workflows into one, which should reduce maintainence.</p>
+<h4 id="images-on-dockerhub"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.2.3</span> Images on DockerHub<a class="headerlink" href="#images-on-dockerhub" title="Permanent link">¶</a></h4>
+<p>The set of images are automatically updated on DockerHub. Each image will have a set of tags:</p>
+<ul>
+<li><code>:latest</code> tracking the most recent push to <code>master</code> branch</li>
+<li><code>:nightly</code> tracking the most recent push to the <code>dev</code> branch</li>
+<li><code>:vX.Y.Z</code> fixed release tags</li>
+<li><code>:${BRANCH}</code> tracking most recent push to PR branches while active</li>
+</ul>
+<h4 id="updating-the-cache"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2.2.4</span> Updating the cache<a class="headerlink" href="#updating-the-cache" title="Permanent link">¶</a></h4>
+<p>The builds can be run locally to update the cache if GitHub is timing out. <code>starling-mavros</code> is usually the culprit.
+The command below will update the nightly tag on Docker Hub, both caching from and to the dev caches.</p>
+<pre><code class="language-bash">BAKE_VERSION=nightly BAKE_CACHEFROM_NAME=cache-dev BAKE_CACHETO_NAME=cache-dev docker buildx bake -f buildtools/docker-bake.hcl --push starling-mavros
+</code></pre>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../kubernetes-deployment/" title="Example Kubernetes Deployments"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../../docker-images/ui/" title="starling-ui">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../kubernetes-deployment/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../../docker-images/ui/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

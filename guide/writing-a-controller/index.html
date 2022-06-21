@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Developing a controller - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Developing a controller";
+        var mkdocs_page_input_path = "guide/writing-a-controller.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Developing a controller</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#overview">17.1 Overview</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation">17.2 Implementation</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#launch-files">17.2.1 Launch Files</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-launch-file">Basic launch file:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#enabling-running-in-simulation">Enabling running In simulation</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#build-and-bake-files">17.2.2 Build and Bake Files</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-bake-file">17.2.3 Basic Bake file:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#make-files">17.2.4 Make Files</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Additional Guides »</li><li>Developing a controller</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/writing-a-controller.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="creating-your-own-controller"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.</span> Creating your own controller<a class="headerlink" href="#creating-your-own-controller" title="Permanent link">¶</a></h1>
+<p>This documentation describes creating your own controller which is compatible with the Starling ecosystem. </p>
+<p>TODO: Complete this docs page</p>
+<div class="toc">
+<ul>
+<li><a href="#creating-your-own-controller">17. Creating your own controller</a><ul>
+<li><a href="#overview">17.1 Overview</a></li>
+<li><a href="#implementation">17.2 Implementation</a><ul>
+<li><a href="#launch-files">17.2.1 Launch Files</a><ul>
+<li><a href="#basic-launch-file">Basic launch file:</a></li>
+<li><a href="#enabling-running-in-simulation">Enabling running In simulation</a></li>
+</ul>
+</li>
+<li><a href="#build-and-bake-files">17.2.2 Build and Bake Files</a></li>
+<li><a href="#basic-bake-file">17.2.3 Basic Bake file:</a></li>
+<li><a href="#make-files">17.2.4 Make Files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.1</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<h2 id="implementation"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2</span> Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h2>
+<h3 id="launch-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.1</span> Launch Files<a class="headerlink" href="#launch-files" title="Permanent link">¶</a></h3>
+<p>The controller itself can be run using <code>ros2 run</code>, but if you might want to run multiple nodes together, or provide some more complex functionality, it is recommended that ros2 nodes be run using launch files. ROS2 launch files can be written as xml or python programmes. Here we will explain using xml which imo is clearer, but the python is much more flexible. </p>
+<h4 id="basic-launch-file"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.1.1</span> Basic launch file:<a class="headerlink" href="#basic-launch-file" title="Permanent link">¶</a></h4>
+<p>Here is an example of a launch file which should be saved as <code>controller.launch.xml</code> in a <code>launch</code> folder in the root of the repository: </p>
+<pre><code class="language-xml">&lt;launch&gt;
+    &lt;arg name="vehicle_namespace" default="$(env VEHICLE_NAMESPACE vehicle_$(env VEHICLE_MAVLINK_SYSID))" /&gt;
+    &lt;arg name="demonstration" default="true"/&gt;
+    &lt;group&gt;
+        &lt;push-ros-namespace namespace="$(var vehicle_namespace)"/&gt;
+        &lt;!-- &lt;node name="primitive_4pl_controller" pkg="primitive_4pl" exec="controller" output="screen" respawn="true"&gt; --&gt;
+        &lt;node name="primitive_4pl_controller" pkg="primitive_4pl" exec="controller" output="screen"&gt;
+            &lt;param name="use_sim_time" value="$(env USE_SIMULATED_TIME false)"/&gt;
+            &lt;param name="frame_id" value="map"/&gt;
+            &lt;param name="setpoint_frame_id" value="$(var vehicle_namespace)/setpoint"/&gt;
+            &lt;param name="vehicle_frame_id" value="$(var vehicle_namespace)/body"/&gt;
+        &lt;/node&gt;
+
+        &lt;node name="primitive_4pl_controller" pkg="primitive_4pl" exec="demonstration" output="screen" if="$(var demonstration)"/&gt;
+    &lt;/group&gt;
+
+&lt;/launch&gt;
+</code></pre>
+<p>This launch file takes two arguments which can be set by the user. Importantly the <code>vehicle_namespace</code> is set by the environment varible <code>VEHICLE_NAMESPACE</code> which is populated by an initialsation script in the controller base. </p>
+<p>Then to ensure that the controller is an <code>onboard</code> controller, so we have one controller running for one vehicle, we create a group and set the namespace to vehicle namespace. As long as the topic names used inside of the controller are not absolute (i.e. no leading <code>/</code> - <code>mytopic</code> vs <code>/mytopic</code>), the nodes topics will get mapped to <code>vehicle_1/mytopic</code>. </p>
+<p>Two nodes are started inside this node group. The first one requires a number of parameters which can need to use the vehicle name. The second one doesnt need any. </p>
+<h4 id="enabling-running-in-simulation"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.1.2</span> Enabling running In simulation<a class="headerlink" href="#enabling-running-in-simulation" title="Permanent link">¶</a></h4>
+<p>The base controller has a USE_SIMULATED_TIME environment variable. Any node in the controller launchfile should include the following line if the controller requires use of time:</p>
+<pre><code class="language-xml">&lt;node pkg="mypkg" exec="controller" ...&gt;
+    &lt;param name="use_sim_time" value="$(env USE_SIMULATED_TIME false)"/&gt;
+   ...
+&lt;/node&gt;
+</code></pre>
+<p>So when you want to run the controller in simulation, you can simply set the <code>USE_SIMULATED_TIME</code> to true. For example <code>docker run --it --rm -e USE_SIMULATED_TIME mycontroller</code>. </p>
+<h3 id="build-and-bake-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.2</span> Build and Bake Files<a class="headerlink" href="#build-and-bake-files" title="Permanent link">¶</a></h3>
+<p>A bake file is a configuration file used to specify how to build a particular dockerfile. We use it in particular because it allows us to build cross-platfrom executables in the case we want to run our containers on a drone. A drone running a raspberry pi runs the <code>arm64</code> architecture, vs your own machine which most likely runs the <code>amd64</code> architecture. </p>
+<h3 id="basic-bake-file"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.3</span> Basic Bake file:<a class="headerlink" href="#basic-bake-file" title="Permanent link">¶</a></h3>
+<p>TODO: Explain what this means</p>
+<pre><code>variable "BAKE_VERSION" {
+    default = "latest"
+}
+
+variable "BAKE_REGISTRY" {
+    default = ""
+}
+
+variable "BAKE_RELEASENAME" {
+    default = ""
+}
+
+variable "BAKE_CACHEFROM_REGISTRY" {
+    default = ""
+}
+
+variable "BAKE_CACHETO_REGISTRY" {
+    default = ""
+}
+
+variable "BAKE_CACHEFROM_NAME" {
+    default = ""
+}
+
+variable "BAKE_CACHETO_NAME" {
+    default = ""
+}
+
+/*
+ * Groups for target ordering
+ */
+group "stage1" {
+    targets = ["4pl"]
+}
+
+// This target depends on starling-controller-base
+target "4pl-controller" {
+    context = "."
+    args = {
+        "VERSION": "${BAKE_VERSION}",
+        "REGISTRY": "${BAKE_REGISTRY}"
+        }
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/4pl-controller:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/4pl-controller:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/4pl-controller:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/4pl-controller:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+</code></pre>
+<h3 id="make-files"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2.4</span> Make Files<a class="headerlink" href="#make-files" title="Permanent link">¶</a></h3>
+<p>It is recommended that make (or nmake for windows) be used as a tool for building your controller. Make is a useful tool as it allows the running of any number of specific commands (similar to a bash file but with arguments dealt with for you). It is recommended that the makefile look something like the following, and be put in the root of the project folder:</p>
+<pre><code class="language-make">MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+BAKE_SCRIPT:=$(MAKEFILE_DIR)/docker-bake.hcl
+BUILDX_HOST_PLATFORM:=$(shell docker buildx inspect default | sed -nE 's/^Platforms: ([^,]*),.*$$/\1/p')
+BAKE:=docker buildx bake --builder default --load --set *.platform=$(BUILDX_HOST_PLATFORM) -f $(BAKE_SCRIPT)
+
+CONTROLLER_NAME=controller
+NETWORK?=4pl-ros2-controller_default
+ENV?=
+BUILD_ARGS?=
+
+all: build
+
+build:
+    $(BAKE) $(BUILD_ARGS) $(CONTROLLER)
+
+# This mybuilder needs the following lines to be run:
+# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+# docker buildx create --name mybuilder
+# docker buildx use mybuilder
+# docker buildx inspect --bootstrap
+local-build-push:
+    docker buildx bake --builder mybuilder -f $(BAKE_SCRIPT) --push $(CONTROLLER_NAME)
+
+run: build
+    docker run -it --rm --net=$(NETWORK) $(ENV) -e USE_SIMULATED_TIME=true $(CONTROLLER_NAME):latest
+
+run_bash: build
+    docker run -it --rm --net=$(NETWORK) -e USE_SIMULATED_TIME=true $(CONTROLLER_NAME):latest bash
+
+.PHONY: all build local-build-push run run_bash
+</code></pre>
+<p>Breaking down the make file, we have a number of commands. </p>
+<pre><code class="language-make">MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+BAKE_SCRIPT:=$(MAKEFILE_DIR)/docker-bake.hcl
+BUILDX_HOST_PLATFORM:=$(shell docker buildx inspect default | sed -nE 's/^Platforms: ([^,]*),.*$$/\1/p')
+BAKE:=docker buildx bake --builder default --load --set *.platform=$(BUILDX_HOST_PLATFORM) -f $(BAKE_SCRIPT)
+</code></pre>
+<p>The first 4 lines define a number of useful variables including where the current directory is, the location of your bake script, your system's curent platform to build for and the final buildx bake command for building your controller</p>
+<pre><code class="language-make">CONTROLLER_NAME=controller
+NETWORK?=controller_default
+ENV?=
+BUILD_ARGS?=
+</code></pre>
+<p>Then we define some useful variables to us, including the name of the controller and the local network (set to the default of foldername_default). Note that ENV and BUILD_ARGS have been set to a default of empty string on purporse. Then when running the file these can be specified e.g. <code>make ENV=-e HELLO=mynewvariable</code>. </p>
+<pre><code class="language-make">all: build
+
+build:
+    $(BAKE) $(BUILD_ARGS) $(CONTROLLER)
+
+# This mybuilder needs the following lines to be run:
+# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+# docker buildx create --name mybuilder
+# docker buildx use mybuilder
+# docker buildx inspect --bootstrap
+local-build-push:
+    docker buildx bake --builder mybuilder -f $(BAKE_SCRIPT) --push $(CONTROLLER_NAME)
+
+run: build
+    docker run -it --rm --net=$(NETWORK) $(ENV) -e USE_SIMULATED_TIME=true $(CONTROLLER_NAME):latest
+
+run_bash: build
+    docker run -it --rm --net=$(NETWORK) -e USE_SIMULATED_TIME=true $(CONTROLLER_NAME):latest bash
+</code></pre>
+<p>Then we specify the commands. Here we have specified 5 commands: <code>all</code>, <code>build</code>, <code>local-build-push</code>,<code>run</code> and <code>run_bash</code>. The important one is <code>build</code> which can be run using <code>make build</code> which builds the container. A useful is <code>run</code> which will both build and run the newly built docker container. <code>run_bash</code> is the same as <code>run</code> except it puts you into the bash shell of the container instead of directly running. <code>local-build-push</code> is a helper which will help you push your container to dockerhub if you so need to. </p>
+<pre><code class="language-make">.PHONY: all build local-build-push run run_bash
+</code></pre>
+<p>This final line is makefile syntax just in case you have any local files which are accidentally named exactly the same as one of the named commands.</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../windows-support/" title="Windows Support and FAQ"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../development/" title="Development Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../windows-support/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../development/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

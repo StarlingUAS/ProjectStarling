@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>2. The Starling CLI - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "2. The Starling CLI";
+        var mkdocs_page_input_path = "guide/cli.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1 current"><a class="reference internal current" href="./">2. The Starling CLI</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#background">6.1 Background</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">6.2 Installation</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#only-local-development-step-1">6.2.1 Only local development (step 1)</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-vehicle-local-testing-step-2">6.2.2 Multi-Vehicle Local testing (step 2)</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-vehicle-multi-computer-setup">6.2.3 Multi-Vehicle Multi-Computer Setup</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-compose-usage">6.3 Docker-Compose Usage</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#kind-usage">6.4 Kind Usage</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-or-stopping-the-kind-cluster">6.4.1 Starting or stopping the kind cluster</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#monitoring">6.4.2 Monitoring:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-simulator">6.4.3 Running the simulator</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deploying-containers">6.4.4 Deploying containers</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../windows-support/">Windows Support and FAQ</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Tutorials »</li><li>2. The Starling CLI</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/cli.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-cli"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.</span> Starling CLI<a class="headerlink" href="#starling-cli" title="Permanent link">¶</a></h1>
+<p>This guide/tutorial provides a top to bottom set of instructions on how to use the Starling Command Line Interface present within the <a href="https://github.com/StarlingUAS/Murmuration">Murmuration repostiroy</a>.</p>
+<p>This guide will be useful to those who have completed the first introduction and wish to start using starling more actively, especially with multiple vehicles.</p>
+<div class="toc">
+<ul>
+<li><a href="#starling-cli">6. Starling CLI</a><ul>
+<li><a href="#background">6.1 Background</a></li>
+<li><a href="#installation">6.2 Installation</a><ul>
+<li><a href="#only-local-development-step-1">6.2.1 Only local development (step 1)</a></li>
+<li><a href="#multi-vehicle-local-testing-step-2">6.2.2 Multi-Vehicle Local testing (step 2)</a></li>
+<li><a href="#multi-vehicle-multi-computer-setup">6.2.3 Multi-Vehicle Multi-Computer Setup</a></li>
+</ul>
+</li>
+<li><a href="#docker-compose-usage">6.3 Docker-Compose Usage</a></li>
+<li><a href="#kind-usage">6.4 Kind Usage</a><ul>
+<li><a href="#starting-or-stopping-the-kind-cluster">6.4.1 Starting or stopping the kind cluster</a></li>
+<li><a href="#monitoring">6.4.2 Monitoring:</a></li>
+<li><a href="#running-the-simulator">6.4.3 Running the simulator</a></li>
+<li><a href="#deploying-containers">6.4.4 Deploying containers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#docker-compose-examples">7. Docker-Compose Examples</a><ul>
+<li><a href="#px4-examples">7.1 PX4 Examples</a><ul>
+<li><a href="#core-system">7.1.1 Core System</a></li>
+<li><a href="#simple-offboard-with-trajectory-follower-ui-system">7.1.2 Simple Offboard with Trajectory Follower UI System</a></li>
+</ul>
+</li>
+<li><a href="#ardupilot-examples">7.2 Ardupilot Examples</a><ul>
+<li><a href="#core-system_1">7.2.1 Core System</a></li>
+</ul>
+</li>
+<li><a href="#running-external-examples">7.3 Running External Examples</a></li>
+</ul>
+</li>
+<li><a href="#kubernetes-examples">8. Kubernetes Examples</a></li>
+</ul>
+</div>
+<h2 id="background"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.1</span> Background<a class="headerlink" href="#background" title="Permanent link">¶</a></h2>
+<p>The starling cli is comprised of a number of bash and python scripts to help streamline the usage of common aspects of the Starling vehicle controller simulation stack.</p>
+<p>It is envisioned as aiding the process of following the Starling application development workflow:</p>
+<ol>
+<li>Developing and testing the application locally in containers on a single simulated drone</li>
+<li>Developing and testing the application locally within a simulated network archietcture of the flight arena using single or multiple simulated drones</li>
+<li>Developing and testing the application on real vehicles within the flight arena.</li>
+</ol>
+<p>The only requirement of the starling cli is a terminal running a shell and git. However please make sure you are running on a suitable computer as some of the applications are quite resource intensive.</p>
+<h2 id="installation"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2</span> Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<p>There are no installation steps apart from cloneing this github repository into your local workspace.</p>
+<pre><code class="language-console">git clone https://github.com/StarlingUAS/Murmuration.git
+</code></pre>
+<p>In the root of the repository, there is the core cli script named <code>starling</code>. <code>starling</code> includes a further installation script to help install further requirements. This installation script will need to be run using root. See the following guide on which arguments you should give.</p>
+<blockquote>
+<p>If running within Murmuration, swap <code>starling</code> for <code>./starling</code>. However for convenience, you can put <code>starling</code> onto your path. This can be done by adding <code>export PATH=&lt;Path to murmuration&gt;:$PATH</code> into <code>~/.bashrc</code> and <code>source ~/.bashrc</code> , or running the same command locally in the terminal. Then you can use the below commands verbatim.</p>
+</blockquote>
+<h3 id="only-local-development-step-1"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2.1</span> Only local development (step 1)<a class="headerlink" href="#only-local-development-step-1" title="Permanent link">¶</a></h3>
+<p>To install the bare minimum requirements of starling, run the following.</p>
+<pre><code class="language-console">sudo starling install
+</code></pre>
+<p>This will</p>
+<ul>
+<li>Update the system</li>
+<li>Install python3, pip, curl, udmap and a python utility called click</li>
+<li>Add the Mumuration directory to your path so you can run starling from anywhere</li>
+<li>Install docker</li>
+</ul>
+<h3 id="multi-vehicle-local-testing-step-2"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2.2</span> Multi-Vehicle Local testing (step 2)<a class="headerlink" href="#multi-vehicle-local-testing-step-2" title="Permanent link">¶</a></h3>
+<p>For this we utilise kubernetes in docker, a.k.a <em>kind</em> <a href="https://kind.sigs.k8s.io/docs/user/quick-start/">link</a>:</p>
+<pre><code class="language-console">sudo starling install kind
+</code></pre>
+<p>This is an application which will allow us to test out kubernetes deployments within a docker container without needing to install kubernetes elements locally. It also allows windows and mac users to develop starling applications as well.</p>
+<h3 id="multi-vehicle-multi-computer-setup"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2.3</span> Multi-Vehicle Multi-Computer Setup<a class="headerlink" href="#multi-vehicle-multi-computer-setup" title="Permanent link">¶</a></h3>
+<p>The final step allows you to setup the setup used in the flight arena using multiple physical machines. For this, we utilise k3s.</p>
+<blockquote>
+<p>This is not recommended for most users. Most should be able to use kind for testing, to then deploy straight in the flight arena.</p>
+</blockquote>
+<pre><code class="language-console">sudo starling install k3s
+</code></pre>
+<h2 id="docker-compose-usage"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3</span> Docker-Compose Usage<a class="headerlink" href="#docker-compose-usage" title="Permanent link">¶</a></h2>
+<p>The <code>starling</code> utility is made up of a number of useful scripts which can be used together to run the simulation and your own controllers. Using <code>starling</code> with <code>docker-compose</code> is very simple and essentially a drop in replacement.</p>
+<p>Once <code>starling</code> has installed, a docker compose configuration yaml file can be run with the following command:</p>
+<pre><code class="language-bash">starling deploy -f &lt;docker compose file&gt;
+# e.g.
+starling deploy -f docker-compose.px4.yaml
+# or if the system needs to build a local container
+starling deploy -f docker-compose.px4.yaml --build
+</code></pre>
+<p>The container can then be stopped by pressing <code>CTRL+C</code>.</p>
+<p>If other docker-compose commands are required, you can just use the <code>docker-compose</code> cli.</p>
+<p>If you want to run a container standalone, please refer to normal usage of <code>docker run ....</code>.</p>
+<h2 id="kind-usage"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4</span> Kind Usage<a class="headerlink" href="#kind-usage" title="Permanent link">¶</a></h2>
+<p>The <code>starling</code> utility is made up of a number of useful scripts which can be used together to run the simulation and your own controllers</p>
+<h3 id="starting-or-stopping-the-kind-cluster"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4.1</span> Starting or stopping the kind cluster<a class="headerlink" href="#starting-or-stopping-the-kind-cluster" title="Permanent link">¶</a></h3>
+<p>Running the following will give you a single drone cluster</p>
+<pre><code>starling start kind
+</code></pre>
+<p>If you are looking to experiment with a multi-drone system, you can specify the number using the <code>-n</code> option. For example for a 3 node (drone) cluster</p>
+<pre><code>starling start kind -n 3
+</code></pre>
+<p>To stop the cluster, simply run the following. Note that this will delete all changes within the kind cluster and maybe require re-setup.</p>
+<pre><code>starling stop kind
+</code></pre>
+<h3 id="monitoring"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4.2</span> Monitoring:<a class="headerlink" href="#monitoring" title="Permanent link">¶</a></h3>
+<blockquote>
+<p>For more details, see the <a href="https://docs.starlinguas.dev/details/kubernetes-dashboard/">following tutorial</a> for an illustrated guide.</p>
+</blockquote>
+<p>Once started, you can start the monitoring dashboard using the following command:</p>
+<pre><code>starling start dashboard
+</code></pre>
+<p>This will start up the <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">kubernetes dashboard</a>. To access the dashboard, open up a browser and go to https://localhost:31771.</p>
+<blockquote>
+<p>Note the browser may not like the security, we promise it is safe to access! If you click 'advanced options' and 'continue to website' you should be able to access the website.</p>
+</blockquote>
+<p>To log on, the above command should show something like the following:</p>
+<pre><code class="language-console">The Dashboard is available at https://localhost:31771
+You will need the dashboard token, to access it.
+Copy and paste the token from below
+-----BEGIN DASHBOARD TOKEN-----
+&lt;LONG TOKEN&gt;
+-----END DASHBOARD TOKEN-----
+Note: your browser may not like the self signed ssl certificate, ignore and continue for now
+To get the token yourself run: kubectl -n kubernetes-dashboard describe secret admin-user-token
+</code></pre>
+<p>You can copy the <code>&lt;LONG TOKEN&gt;</code> and paste it into the dashboard token. You can also get the access token again by running:</p>
+<pre><code>starling utils get-dashboard-token
+</code></pre>
+<p>You can also monitor the system using</p>
+<pre><code class="language-bash">starling status
+# or to continually watch
+starling status --watch
+</code></pre>
+<p>And finally, you can inspect the system using the standard <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/"><code>kubectl</code> commands</a></p>
+<h3 id="running-the-simulator"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4.3</span> Running the simulator<a class="headerlink" href="#running-the-simulator" title="Permanent link">¶</a></h3>
+<p>Once the simulator in kind has started, we can start the general simulator.</p>
+<blockquote>
+<p><strong>IMPORTANT</strong>: The simulator can potentially be resource heavy to run. This is with respect to both CPU usage and RAM. Before going further, please ensure you have enough space on your primary drive (at least 30Gb to be safe, especially C drive on windows). This is especially true if running multiple vehicles. It is not recommended to run more than around 6.</p>
+</blockquote>
+<p>First we should load or download the required simulation containers locally. This can be done using the follwoing command. We need to run the load command as we want to load the local container images into the kind container. This avoids the need for the kind containers to download the containers themselves at each runtime.</p>
+<blockquote>
+<p>This command can take as long as 30 minutes depending on internet connection. It goes through the deployment files and downloads a couple of large containers e.g. the gazebo and sitl containers.</p>
+<p>If the container doesn't already exist locally, it will attempt to download it from docker hub</p>
+</blockquote>
+<pre><code>starling simulator load
+</code></pre>
+<p>Once containers are downloaded and loaded into Kind, we can start the simulator containers using the following:</p>
+<pre><code class="language-bash">starling simulator start
+# or to do both steps at the same time:
+starling simulator start --load
+</code></pre>
+<p>Once run, you can monitor the deployments on the kubernetes dashboard. In particular you can inspect the <strong>worloads</strong> -&gt; <strong>pods</strong>. If they show green the systems should hopefully have started correctly.</p>
+<blockquote>
+<p>Again, see <a href="https://docs.starlinguas.dev/details/kubernetes-dashboard/">this illustrated guide</a> to the dashboard</p>
+<p>Note, if the load was unsucessful, or had issues, some containers might take a while to download starling containers.</p>
+</blockquote>
+<p>Once started, the simulator should be available to inspect from https://localhost:8080</p>
+<p>At this point, you can run your own deployments or some of the examples.</p>
+<p>If at any point, you want to restart the simulation, you can run the following. This will delete the starling simulator containers, and then start them again.</p>
+<pre><code class="language-bash">starling simulator restart
+</code></pre>
+<p>If you want to stop the simulation, simply run</p>
+<pre><code class="language-bash">starling simulator stop
+</code></pre>
+<h3 id="deploying-containers"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4.4</span> Deploying containers<a class="headerlink" href="#deploying-containers" title="Permanent link">¶</a></h3>
+<p>The primary usage of starling is to test your local containers. To do so, please follow the following steps.</p>
+<p>First, if it is a local container - a container image which exists on your local machine either through having pulled it from docker hub, or built locally - you will need to load that image into kind. Each time you rebuild or change the image, you will need to load it into kind. This can be achieved using the following command:</p>
+<blockquote>
+<p>Note: If the container doesnt exist locally it will automatically try and download it from docker hub</p>
+</blockquote>
+<pre><code class="language-bash">starling utils kind-load &lt;container name&gt;
+# e.g.
+starling utils kind-load uobflightlabstarling/starling-mavros:latest
+</code></pre>
+<p>Secondly, you will need to write a kubernetes deployment file known as a kubeconfig. A kubeconfig is a yaml file which specifies what sort of deployment you want, along with many options (where to run your controller etc.). For now, see the <em>deployment</em> folder and the repositories in StarlingUAS for examples. In particular we mention the existence of two types of deployment:</p>
+<ol>
+<li><strong>Deployment</strong>: This specfies the self-healing deployment of one <em>pod</em> (a.k.a a collection of containers) to a node.</li>
+<li><strong>DaemonSet</strong>: This specifies the self-healing automatic deployment of a pod to all nodes which match a given specification. Use this for a deployment to all vehicles.</li>
+</ol>
+<p>Once a kubernetes configuration has been written, it can be deployed to kind.</p>
+<pre><code class="language-bash">starling deploy -k &lt;path to kubeconfig file&gt; start
+</code></pre>
+<blockquote>
+<p><em>Note</em> if you have added starling to path (through standard installation or otherwise), you can run this from any directory, in particular the directory of the project you wish to deploy. If you haven't, you may need to give a full absolute path.</p>
+<p><em>Note</em> if kind is not active or installed, <code>starling deploy</code> will interpret commands for <code>docker-compose</code>.</p>
+</blockquote>
+<p>To stop or restart a deployment you can use the following:</p>
+<pre><code class="language-bash">starling deploy -k &lt;path to kubeconfig file&gt; stop
+starling deploy -k &lt;path to kubeconfig file&gt; restart
+</code></pre>
+<p>To restart a deployment with an update to the container, you just need to ensure you have loaded it in before you restart:</p>
+<pre><code class="language-bash">starling utils kind-load &lt;container name&gt;
+starling deploy -k &lt;path to kubeconfig file&gt; restart
+</code></pre>
+<p>Again, use the dashboard to monitor the status of your deployment</p>
+<h1 id="docker-compose-examples"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.</span> Docker-Compose Examples<a class="headerlink" href="#docker-compose-examples" title="Permanent link">¶</a></h1>
+<p>The <a href="docker-compose"><code>docker-compose</code></a> contains a number of preset examples which spin up at minimum a simulator, a software autopilot, mavros and a ros webridge, but also example ui's and basic controllers.</p>
+<p>Each example file has a <em>linux</em> and <em>windows</em> variant.
+- The <em>linux</em> variant runs <code>network_mode=host</code> which allows for ROS2 traffic to be shared between the container and your local network. Therefore the traffic is visible to your machine's local (non-container) ROS2 foxy instance, allowing you to run bare-metal application such as rviz2 or your own controllers (i.e. you do not need to wrap your own controllers in a docker container). Any exposed ports are automatically exposed to <code>localhost</code>.
+- The <em>windows</em> variant runs inside a docker-compose network named <code>&lt;folder-which the-docker-compose-file-is-in&gt;_default</code>, (e.g. running a px4 example will create a local network <code>px4_default</code>). This network is segregated from your local network traffic <em>except</em> for the exposed ports in the docker-compose file which are now accessible from <code>localhost</code> (Windows has no support of <code>net=host</code>). Any other ROS2 nodes will need to be wrapped in a docker container for running and run with <code>--network px4_default</code> or <code>--network ardupilot_default</code>. See the example controller repository for an example ROS2-in-docker setup.</p>
+<h2 id="px4-examples"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.1</span> PX4 Examples<a class="headerlink" href="#px4-examples" title="Permanent link">¶</a></h2>
+<p>The <a href="docker-compose/px4">docker-compose/px4</a> folder contains a number of px4 based examples. See the <a href="https://github.com/StarlingUAS/Murmuration/blob/main/docker-compose/px4/README.md">README</a> for more details.</p>
+<h3 id="core-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.1.1</span> Core System<a class="headerlink" href="#core-system" title="Permanent link">¶</a></h3>
+<p>To start the simulator, a px4 SITL, mavros and the web-bridge, use the following command:</p>
+<pre><code class="language-bash"># Pull and Run the docker-containers
+starling deploy -f docker-compose/px4/docker-compose.core.linux.yml --pull
+# or for windows
+starling deploy -f docker-compose/px4/docker-compose.core.windows.yml --pull
+</code></pre>
+<h3 id="simple-offboard-with-trajectory-follower-ui-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.1.2</span> Simple Offboard with Trajectory Follower UI System<a class="headerlink" href="#simple-offboard-with-trajectory-follower-ui-system" title="Permanent link">¶</a></h3>
+<p>To start the core with a <a href="https://github.com/StarlingUAS/starling_simple_offboard">simple-offboard controller</a>, <a href="https://github.com/StarlingUAS/starling_allocator">simple-allocator</a> and <a href="https://github.com/StarlingUAS/starling_ui_dashly">Trajectory follower Web GUI</a>, use the following command:</p>
+<pre><code class="language-bash"># Run the docker-containers
+starling deploy -f docker-compose/px4/docker-compose.simple-offboard.linux.yml --pull
+# or for windows
+starling deploy -fdocker-compose/px4/docker-compose.simple-offboard.windows.yml --pull
+</code></pre>
+<h2 id="ardupilot-examples"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.2</span> Ardupilot Examples<a class="headerlink" href="#ardupilot-examples" title="Permanent link">¶</a></h2>
+<p>The <a href="docker-compose/ardupilot">docker-compose/ardupilot</a> folder contains a number of px4 based examples. See the <a href="https://github.com/StarlingUAS/Murmuration/blob/main/docker-compose/ardupilot/README.md">README</a> for more details.</p>
+<h3 id="core-system_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.2.1</span> Core System<a class="headerlink" href="#core-system_1" title="Permanent link">¶</a></h3>
+<p>To start the gazebo simulator, an arducopter SITL, mavros and the web-bridge, use the following command:</p>
+<pre><code class="language-bash"># Run the docker-containers
+starling deploy -f docker-compose/ardupilot/docker-compose.ap-gazebo.linux.yml --pull
+# or for windows
+starling deploy -f docker-compose/ardupilot/docker-compose.ap-gazebo.windows.yml --pull
+</code></pre>
+<h2 id="running-external-examples"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3</span> Running External Examples<a class="headerlink" href="#running-external-examples" title="Permanent link">¶</a></h2>
+<p>An example offboard ROS2 controller can then be conncted to SITL by running the following in a separate terminal. For this we have to use <code>docker</code>'s built in command line interface.</p>
+<pre><code># Download the latest container
+docker pull uobflightlabstarling/example_controller_python
+
+docker run -it --rm --network px4_default uobflightlabstarling/example_controller_python
+# or for ardupilot
+docker run -it --rm --network ardupilot_default uobflightlabstarling/example_controller_python
+</code></pre>
+<p>See <a href="https://docs.starlinguas.dev/guide/single-drone-local-machine/#2-running-example-ros2-offboard-controller-node">the docs</a> for further details</p>
+<h1 id="kubernetes-examples"><span class="enumerate-headings-plugin enumerate-heading-plugin">8.</span> Kubernetes Examples<a class="headerlink" href="#kubernetes-examples" title="Permanent link">¶</a></h1>
+<p>A folder of example deployments is provided in the repository. Currently there is only the one example, but hopefully more will follow! These can all be run using the <code>deploy</code> command with the name of the example (corresponds to name of the folder)</p>
+<pre><code class="language-bash">starling deploy example &lt;example-name&gt;
+#e.g.
+starling deploy example simple-offboard
+</code></pre>
+<ol>
+<li><strong>simple-offboard</strong> - This example deploys 3 elements which together allow the running of simple waypoint following examples through a graphical user interface on one or more UAVs. Can be run using <code>starling deploy example simple-offboard</code> once the simulator has been initialised<ol>
+<li>A daemonset is used to deploy the <a href="https://github.com/StarlingUAS/starling_simple_offboard">simple offboard controller</a> to each vehicle. This provides a high level interface for controlling a vehicle</li>
+<li>An example <a href="https://github.com/StarlingUAS/starling_ui_dashly">Python based UI using the dash library</a>. This provides a graphical user interface to upload and fly trajectories.</li>
+<li>An <a href="https://github.com/StarlingUAS/starling_allocator">allocator module</a> which takes a trajectory from the UI and distributes it to a particular vehicle to fly.</li>
+</ol>
+</li>
+</ol>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../../tutorials/introduction/" title="1. Introduction to Starling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../single-drone-local-machine/" title="Single Drone Simulation on Local Machine">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../../tutorials/introduction/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../single-drone-local-machine/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

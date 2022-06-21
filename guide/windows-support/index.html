@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Windows Support and FAQ - Project Starling</title>
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../../kbd.css" rel="stylesheet"/>
+<script>
+        // Current page data
+        var mkdocs_page_name = "Windows Support and FAQ";
+        var mkdocs_page_input_path = "guide/windows-support.md";
+        var mkdocs_page_url = null;
+      </script>
+<script defer="" src="../../js/jquery-3.6.0.min.js"></script>
+<!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Project Starling
+        </a><div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/">Getting Started</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/background/">Background</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/related_projects_and_links/">Ecosystem</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/introduction/">1. Introduction to Starling</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">2. The Starling CLI</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Single Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-local-machine/">Single Drone Simulation on Local Machine</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../kube-single-drone-local-machine/">Single Drone Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../single-drone-drones/">Single Drone on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Multiple Drone User Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-local-machine/">Multiple Drones Simulation on Local Cluster</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../multiple-drone-drones/">Multiple Drones on Hardware</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Simulation and SITL</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../different_vehicles/">Spawning Different Vehicles and Objects</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Additional Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Windows Support and FAQ</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#installing-docker">16.1 Installing Docker</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-git">16.2 Installing Git</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-wsl">16.3 Installing WSL</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-starling">16.4 Getting Starling</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running">16.5 Running</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#things-to-be-aware-of">16.6 Things to be aware of</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-a-controller/">Developing a controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development Guide</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/docker/">Understanding Docker</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes/">Understanding Kubernetes</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-dashboard/">Kubernetes Dashboard Guide</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Physical Flight</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../details/flight_arena/">BRL Flight Arena</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/adding_physical_drone/">Adding A New Vehicle</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example-controller/">Example Python Controller</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/kubernetes-deployment/">Example Kubernetes Deployments</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../details/build_system/">Build System</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Image Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/ui/">starling-ui</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/mavros/">starling-mavros</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/controller-base/">starling-controller-base</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-core/">starling-sim-base-core</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-base-px4/">starling-sim-base-px4</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-vehicle/">starling-sim-ardupilot-copter/plane</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-ardupilot-gazebo/">starling-sim-ardupilot-gazebo</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/sim-iris-ap/">starling-sim-iris-ap</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker-images/starling-vicon/">starling-vicon</a>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ideas/">Ideas</a>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/MATLAB/">MATLAB (unstable)</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Project Starling</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content"><div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a alt="Docs" class="icon icon-home" href="../.."></a> »</li>
+<li>Additional Guides »</li><li>Windows Support and FAQ</li>
+<li class="wy-breadcrumbs-aside">
+<a class="icon icon-github" href="https://github.com/UoBFlightLab/ProjectStarling/edit/master/docs/guide/windows-support.md"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div class="section" itemprop="articleBody">
+<h1 id="starling-on-windows"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.</span> Starling on Windows<a class="headerlink" href="#starling-on-windows" title="Permanent link">¶</a></h1>
+<p>Running Starling on Windows needs a few things to be installed:</p>
+<h2 id="installing-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.1</span> Installing Docker<a class="headerlink" href="#installing-docker" title="Permanent link">¶</a></h2>
+<p>Starling relies on a technology called Docker. This has a Windows installer on the docker site:
+<a href="https://docs.docker.com/docker-for-windows/install/">docs.docker.com/docker-for-windows/install/</a></p>
+<p>Download and run the installer, to install Docker on Windows. Note that if you have Windows 10 Home
+(rather than Pro), the instructions differ slightly. They can be found here:
+<a href="https://docs.docker.com/docker-for-windows/install-windows-home/">docs.docker.com/docker-for-windows/install-windows-home/</a>.</p>
+<h2 id="installing-git"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.2</span> Installing Git<a class="headerlink" href="#installing-git" title="Permanent link">¶</a></h2>
+<p>If you don't already have Git installed, it is <em>highly</em> recommended. Git manages source code
+versioning and is used for distributing the core Starling files. It can be downloaded from here:
+<a href="https://git-scm.com/download/win">git-scm.com/download/win</a>. You could also install GitHub Desktop
+(other vendors are available).</p>
+<h2 id="installing-wsl"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.3</span> Installing WSL<a class="headerlink" href="#installing-wsl" title="Permanent link">¶</a></h2>
+<p>Windows Subsystem for Linux allows a windows machine to run a linux environment without needing a Virtual Machine or having to restart the computer. While it is not strictly necessary (most things can be run with Powershell), it is <strong>hightly</strong> recommended as it reduces most issues caused by windows itself. To install, you should follow the instructions from <a href="https://docs.microsoft.com/en-us/windows/wsl/install">https://docs.microsoft.com/en-us/windows/wsl/install</a>.</p>
+<h2 id="getting-starling"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.4</span> Getting Starling<a class="headerlink" href="#getting-starling" title="Permanent link">¶</a></h2>
+<p>For simple usage of the system, clone the <code>Mumuration</code> repo to a working folder on your computer. If you are doing slightly more complex work, clone the <code>ProjectStarling</code> repo to a working folder on your computer. You probably want to avoid
+any cloud-backed folders as these tend to interfere with Git.</p>
+<p>With Git installed as above, you can open PowerShell, navigate to the folder where you want to
+clone the project (using <code>cd</code>) and run:</p>
+<pre><code># Mumurations
+git clone https://github.com/StarlingUAS/Mumuration
+# ProjectStarling
+git clone --recurse-subdmoules https://github.com/StarlingUAS/ProjectStarling
+</code></pre>
+<h2 id="running"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.5</span> Running<a class="headerlink" href="#running" title="Permanent link">¶</a></h2>
+<p>Using the <a href="../cli/">Starling CLI</a> should reduce many of the problems.</p>
+<p>With Docker installed and the repo downloaded, navigate into the project folder in a terminal.
+Once there you should see a file called <code>docker-compose.tcp.yml</code>. This contains instructions for a
+tool called Docker Compose to setup a set of containers for you. Note that this version has been
+modified slightly to use TCP ports which makes things easier on Windows/WSL.</p>
+<p>To launch the containers, open PowerShell, make sure you're in the root of the Mumuration repo (if using ProjectStarling it will be 'ProjectStarling/Mumuration')
+and run the windows version of any launch:</p>
+<pre><code class="language-ps">docker-compose -f docker-compose/px4/docker-compose.simple-offboard.windows.yml up
+</code></pre>
+<p>You should see the tool begin to "pull" (download) the files needed to run the project. These have
+been built from files in the Starling repo and uploaded to DockerHub to save you time. Some of these
+files are quite big, so be prepared to wait a while for downloading to finish. After the first run,
+the system will use the already-downloaded files which will speed up the process.</p>
+<p>One the downloading process is complete, the tool will begin to setup the containers. At this point,
+Windows may prompt you to allow "Docker Container Backend" to connect to networks</p>
+<p>With everything running, and docker allowed to access the network, open a web browser and go to
+<a href="http://localhost:8080">localhost:8080</a> where you should see the web-based Gazebo interface.</p>
+<p>You can also launch Mission Planner (other GCS software is available) and connect to TCP port 5760.
+Using the IP address of <code>127.0.0.1</code> should work as docker will ensure that the connection gets
+routed to the right place.</p>
+<h2 id="things-to-be-aware-of"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.6</span> Things to be aware of<a class="headerlink" href="#things-to-be-aware-of" title="Permanent link">¶</a></h2>
+<p>Docker works slightly differently in Windows compared to Linux which can cause problems, especially with regards to networking. If you're webpages for gazebo or others are not connecting on local ports, it may be because you have run the linux docker-compose file by accident!</p>
+</div>
+</div><footer>
+<div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-left" href="../different_vehicles/" title="Spawning Different Vehicles and Objects"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+<a class="btn btn-neutral float-right" href="../writing-a-controller/" title="Developing a controller">Next <span class="icon icon-circle-arrow-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+<p>Copyright © 2021 University of Bristol Flight Laboratory</p>
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="Versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span>
+<a class="fa fa-github" href="https://github.com/UoBFlightLab/ProjectStarling" style="color: #fcfcfc"> GitHub</a>
+</span>
+<span><a href="../different_vehicles/" style="color: #fcfcfc">« Previous</a></span>
+<span><a href="../writing-a-controller/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme_extra.js"></script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="../../search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>

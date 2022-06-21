@@ -1,0 +1,5 @@
+mkdocs
+mkdocs-macros-plugin
+pymdown-extensions
+mkdocs-enumerate-headings-plugin
+mkdocs-mermaid2-plugin
