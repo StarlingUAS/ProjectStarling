@@ -45,6 +45,53 @@ This means that any machine or laptop connected to the flight arena network and 
 Kubernetes generates its own network layer between its nodes on `10.42.0.0/24`. These are primarily extra deployments, daemonsets and services which facilitate pod failure recovery, automatic deployment and web based user interface port forwarding.
 
 
+## Flight Arena Setup
+
+### Setting up central server
+
+The server can be set up using the Starling CLI that comes with the Murmuration. Once you have pulled Murmuration, you can run on the server (flyingserver.local):
+
+```
+./bin/starling install k3s --node-external-ip <SERVER_INTERNAL_IP>
+```
+
+This will update and install docker and install/reinstall k3s onto the system. 
+
+> *Note:* If the server has multiple IP addresses, you will need to use the `--node-external-ip` setting with the ip address that the nodes (vehicles) are going to connect to. In our case that is `192.168.10.80`. If you do not, when you add the nodes, they will not appear in the set of nodes connected to the network.
+
+### Accessing the cluster from the arena computers
+
+The cluster can currently only be accessed by being on the server. To access from another machine, you will need to first install the `kubectl` tool. Then you will need to get the kubectl configuration from the flyingserver. Run the following:
+
+```
+scp flyingadmin@flyingserver.local:~/.kube/config/k3s.yaml ~/.kube/config/k3s.yaml
+```
+
+This will  copy the configuration into your local `~/.kube/config/k3s.yaml` file. 
+
+Then you will need to open up that file in your favourite text editor and change the `server:` entry from `127.0.0.1:6443` to `<SERVER_IP>:6443`
+
+Then you will need to set this as an environment variable for kubectl. Add the following line to your bashrc or zshrc:
+
+```
+export KUBECONFIG=/path/to/k3s.yaml
+```
+
+Dont forget to resource your bashrc. 
+
+### Adding UAV Nodes to the central server
+
+Once the central server has been setup, you can add vehicles as nodes. First ssh into the flyingserver and navigate to the Murmuration scripts directory. You can use the `start_k3s_agent.sh` script to install and add a vehicle to the cluster. 
+
+> *Note:* The vehicles are assumed to be installed with the base Starling ISO OS. They are assumed to be root accessible and have a number of files in the root directory to facilitate the setup of nodes in our airgapped environment. 
+
+Within the scripts directory, you can run the following:
+```
+K3S_SERVER=https://192.168.10.80:6443 ./start_k3s_agent.sh <uav_pi_username> <uav_pi_ip_address> <node name>
+# e.g.
+K3S_SERVER=https://192.168.10.80:6443 ./start_k3s_agent.sh pi 192.168.10.106 clover13
+```
+
 ## Flight Arena Details
 
 ### Using `kubectl` from Remote Machines
