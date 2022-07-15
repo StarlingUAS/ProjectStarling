@@ -39,4 +39,9 @@
     <!-- Launch Estop Node -->
     <node name="estop" pkg="starling_mavros_extras" exec="estop" output="screen" respawn="true" namespace="$(var vehicle_namespace)"/>
 
+    <!-- Launch Ping Node -->
+    <node name="ping" pkg="starling_mavros_extras" exec="ping" output="screen" respawn="true" namespace="$(var vehicle_namespace)">
+        <param name="vehicle_id" value="$(var vehicle_namespace)"/>
+    </node>
+
 </launch>

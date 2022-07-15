@@ -45,7 +45,18 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p"]
+    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p", "ping-monitor"]
+}
+
+target "ping-monitor" {
+    context = "system/ping_monitor"
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "rosbridge-suite" {

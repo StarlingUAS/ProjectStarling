@@ -23,4 +23,7 @@ mavp2p:
 vicon:
 	$(BAKE) starling-vicon
 
-.PHONY: mavros mavros_all_arch controller-base rosbridge-suite vicon mavp2p all
+ping-monitor:
+	$(BAKE) ping-monitor
+
+.PHONY: mavros mavros_all_arch controller-base rosbridge-suite vicon mavp2p all ping-monitor
