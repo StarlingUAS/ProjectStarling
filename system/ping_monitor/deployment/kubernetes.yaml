@@ -1,0 +1,34 @@
+# Central montior
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-monitor-offboard-controller
+  labels:
+    app: starling
+    project: ping-monitor
+spec:
+  selector:
+    matchLabels:
+      app:  ping-monitor-offboard-controller
+  template:
+    metadata:
+      labels:
+        app: ping-monitor-offboard-controller
+    spec:
+
+      hostNetwork: true
+      shareProcessNamespace: true
+
+      nodeSelector:
+        name: master
+
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+
+      containers:
+      - name: offboard-controller
+        image: uobflightlabstarling/ping-monitor
+        imagePullPolicy: Always
+

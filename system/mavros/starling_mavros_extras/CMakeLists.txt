@@ -22,14 +22,19 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp  REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
+find_package(diagnostic_msgs REQUIRED)
 
-set(HEADER_FILES include/estop.hpp)
-
-add_executable(estop src/estop.cpp ${HEADER_FILES})
+add_executable(estop src/estop.cpp include/estop.hpp)
 ament_target_dependencies(estop
   rclcpp std_msgs mavros_msgs
 )
 target_include_directories(estop PRIVATE include)
+
+add_executable(ping src/ping.cpp include/ping.hpp)
+ament_target_dependencies(ping
+  rclcpp std_msgs
+)
+target_include_directories(ping PRIVATE include)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -44,6 +49,7 @@ endif()
 
 install(TARGETS
   estop
+  ping
   DESTINATION lib/${PROJECT_NAME}
 )
 

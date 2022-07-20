@@ -1,0 +1,40 @@
+
+version: '3'
+
+services:
+  simhost: # Must be called simhost
+    image: uobflightlabstarling/starling-sim-iris-px4-flightarena:latest
+    ports:
+      - "8080:8080"
+
+  sitl:
+    image: uobflightlabstarling/starling-sim-px4-sitl:latest
+    environment:
+      - "PX4_SIM_HOST=simhost"
+      - "PX4_OFFBOARD_HOST=mavros"
+    depends_on:
+      - simhost
+    ports:
+      - "18570:18570/udp"
+
+  mavros:
+    image: uobflightlabstarling/starling-mavros:latest
+    command: ros2 launch launch/mavros_bridge.launch.xml
+    environment:
+      - "MAVROS_TGT_SYSTEM=1"
+      - "MAVROS_FCU_IP=0.0.0.0"
+      - "MAVROS_GCS_URL=tcp-l://0.0.0.0:5760"
+    depends_on:
+      - simhost
+    ports:
+      - "5760:5760"
+
+  rosbridge-suite:
+    image: uobflightlabstarling/rosbridge-suite:latest
+    ports:
+      - "9090:9090"
+
+  starling-ui-example:
+    image: uobflightlabstarling/starling-ui-example:latest
+    ports:
+      - "3000:3000"
