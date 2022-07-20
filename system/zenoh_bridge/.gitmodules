@@ -1,0 +1,3 @@
+[submodule "position_trajectory_controller/external/libInterpolate"]
+	path = position_trajectory_controller/external/libInterpolate
+	url = https://github.com/CD3/libInterpolate.git

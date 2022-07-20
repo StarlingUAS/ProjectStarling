@@ -45,7 +45,18 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p", "ping-monitor"]
+    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p", "ping-monitor", "zenoh-bridge"]
+}
+
+target "zenoh-bridge" {
+    context = "system/zenoh_bridge"
+    tags = [
+        "${BAKE_REGISTRY}uobflightlabstarling/zenoh-bridge:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/zenoh-bridge:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/zenoh-bridge:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/zenoh-bridge:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "ping-monitor" {
