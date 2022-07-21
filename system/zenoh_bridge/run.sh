@@ -17,7 +17,7 @@ else
     echo "VEHICLE_MAVLINK_SYSID not set, default to 1"
 fi
 
-ZENOH_ALLOW_TOPICS="/mavros/|$ZENOH_ALLOW_TOPICS"
+ZENOH_ALLOW_TOPICS"*|$ZENOH_ALLOW_TOPICS"
 
 export RUST_LOG=warn
 
@@ -35,8 +35,8 @@ if [ ! -v $SERVER ]; then
 else
     echo "Running Zenoh on Board Vehicle $VEHICLE_MAVLINK_SYSID, with ROS_DOMAIN_ID set to $VEHICLE_MAVLINK_SYSID"
     exec zenoh-bridge-dds \
-        -d "$VEHICLE_MAVLINK_SYSID" \
+        -d 0\
         # --no-multicast-scouting \
         -l tcp/0.0.0.0:7447 \
-        --allow "$ZENOH_ALLOW_TOPICS"
+        # --allow "$ZENOH_ALLOW_TOPICS"
 fi
