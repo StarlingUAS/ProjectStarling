@@ -93,3 +93,5 @@ spec:
             value: "true"
           - name: ZENOH_ALLOW_TOPICS
             value: "mavros/"
+          - name: ROS_LOG
+            value: info

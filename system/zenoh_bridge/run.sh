@@ -17,7 +17,7 @@ else
     echo "VEHICLE_MAVLINK_SYSID not set, default to 1"
 fi
 
-ZENOH_ALLOW_TOPICS = "mavros|$ZENOH_ALLOW_TOPICS"
+ZENOH_ALLOW_TOPICS="mavros|$ZENOH_ALLOW_TOPICS"
 
 export RUST_LOG=info
 
