@@ -38,6 +38,12 @@ spec:
         - mountPath: /etc/starling/vehicle.config
           name: vehicleconfig
           readOnly: true
+        ports:
+        - containerPort: 7447
+        - containerPort: 8000
+        env:
+        - name: ROS_LOG
+          value: info
 
       volumes:
       - name: vehicleconfig
@@ -79,6 +85,9 @@ spec:
       - name: zenoh-bridge
         image: uobflightlabstarling/zenoh-bridge:pr-zenoh
         imagePullPolicy: Always
+        ports:
+        - containerPort: 7447
+        - containerPort: 8000
         env:
           - name: SERVER
             value: "true"
