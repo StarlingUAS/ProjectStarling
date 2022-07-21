@@ -49,7 +49,7 @@ jobs:
             arm64: false
           - target: ping-monitor
             arm64: false
-          - target: pr-zenoh
+          - target: zenoh-bridge
             arm64: true
     steps:
       - name: Build Image
