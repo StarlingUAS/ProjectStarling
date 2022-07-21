@@ -9,7 +9,7 @@
     <arg name="config_yaml" default="$(env MAVROS_MOD_CONFIG_PATH)"/>
     <arg name="pluginlists_yaml" default="$(env MAVROS_PLUGINLISTS_PATH)"/>
     <arg name="bridge_yaml" default="$(env BRIDGE_MOD_CONFIG_PATH)"/>
-    <arg name="bridge_launch_delay" default="$(env BRIDGE_LAUNCH_DELAY 2.0)"/>
+    <arg name="bridge_launch_delay" default="$(env BRIDGE_LAUNCH_DELAY 5.0)"/>
 
     <!-- Launch the ROS1 stack -->
     <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch /ros_ws/launch/mavros.launch
@@ -38,7 +38,8 @@
     <node pkg="ros1_bridge"
           exec="dynamic_bridge"
           namespace="$(var vehicle_namespace)"
-          respawn="true">
+          respawn="true"
+          launch-prefix="bash -c 'sleep $(var bridge_launch_delay); $0 $@' ">
     </node>
 
     <!-- Launch Estop Node -->
