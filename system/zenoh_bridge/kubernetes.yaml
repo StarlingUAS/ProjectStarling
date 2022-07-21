@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: zenoh-bridge-onboard-controller
+  name: zenoh-bridge-onboard
   labels:
     app: starling
     project: zenoh-bridge
@@ -9,12 +9,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: zenoh-bridge-onboard-controller
+      name: zenoh-bridge-onboard
 
   template:
     metadata:
       labels:
-        name: zenoh-bridge-onboard-controller
+        name: zenoh-bridge-onboard
 
     spec:
       nodeSelector:
@@ -31,8 +31,8 @@ spec:
       shareProcessNamespace: true
 
       containers:
-      - name: onboard-controller
-        image: mickeyli789/zenoh-bridge
+      - name: zenoh-bridge-onboard
+        image: uobflightlabstarling/zenoh-bridge:pr-zenoh
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /etc/starling/vehicle.config
@@ -50,18 +50,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zenoh-bridge-offboard-controller
+  name: zenoh-bridge-offboard
   labels:
     app: starling
     project: zenoh-bridge
 spec:
   selector:
     matchLabels:
-      app:  zenoh-bridge-offboard-controller
+      app:  zenoh-bridge-offboard
   template:
     metadata:
       labels:
-        app: zenoh-bridge-offboard-controller
+        app: zenoh-bridge-offboard
     spec:
 
       hostNetwork: true
@@ -76,19 +76,9 @@ spec:
         effect: NoSchedule
 
       containers:
-      - name: offboard-controller
-        image: mickeyli789/zenoh-bridge
+      - name: zenoh-bridge
+        image: uobflightlabstarling/zenoh-bridge:pr-zenoh
         imagePullPolicy: Always
         env:
-          - name: OFFBOARD
+          - name: SERVER
             value: "true"
-      - name: starling-ui
-        image: uobflightlabstarling/starling-ui-example:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-      - name: rosbridge-suite
-        image: uobflightlabstarling/rosbridge-suite:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 9090

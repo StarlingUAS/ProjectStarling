@@ -30,6 +30,8 @@ jobs:
           - starling-sim-iris
           - starling-sim-iris-ap
           - starling-sim-ardupilot-copter
+          - ping-monitor
+          - zenoh-bridge
     steps:
       - name: Delete Image
         uses: mhl787156/dockerhub-delete-tag-action@v1

@@ -36,7 +36,7 @@ else
     echo "Running Zenoh on Board Vehicle $VEHICLE_MAVLINK_SYSID, with ROS_DOMAIN_ID set to $VEHICLE_MAVLINK_SYSID"
     exec zenoh-bridge-dds \
         -d "$VEHICLE_MAVLINK_SYSID" \
-        --no-multicast-scouting \
+        # --no-multicast-scouting \
         -l tcp/0.0.0.0:7447 \
         --allow "$ZENOH_ALLOW_TOPICS"
 fi
