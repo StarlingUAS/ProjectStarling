@@ -88,6 +88,8 @@ spec:
         ports:
         - containerPort: 7447
         - containerPort: 8000
+        - containerPort: 7416
+          protocol: UDP
         env:
           - name: SERVER
             value: "true"

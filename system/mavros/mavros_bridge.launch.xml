@@ -28,18 +28,18 @@
     <!-- Launch the bridge in the correct namespace to avoid collisions-->
     <!-- Note that args must be included to ensure the namespace is remapped -->
     <!-- Delay is needed to ensure that roscore has been instantiated -->
-    <!-- <node pkg="ros1_bridge"
+    <node pkg="ros1_bridge"
           exec="parameter_bridge"
           args="/$(var vehicle_namespace)/topics /$(var vehicle_namespace)/services_1to2 /$(var vehicle_namespace)/services_2to1"
           namespace="$(var vehicle_namespace)"
           respawn="true"
           launch-prefix="bash -c 'sleep $(var bridge_launch_delay); $0 $@' ">
-    </node> -->
-    <node pkg="ros1_bridge"
+    </node>
+    <!-- <node pkg="ros1_bridge"
           exec="dynamic_bridge"
           namespace="$(var vehicle_namespace)"
-          respawn="true"/>
-    </node>
+          respawn="true">
+    </node> -->
 
     <!-- Launch Estop Node -->
     <node name="estop" pkg="starling_mavros_extras" exec="estop" output="screen" respawn="true" namespace="$(var vehicle_namespace)"/>

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
-   <Domain id="any">
-        <General>
-            <NetworkInterfaceAddress>lo</NetworkInterfaceAddress>
-            <AllowMulticast>true</AllowMulticast>
-            <MaxMessageSize>65500B</MaxMessageSize>
-            <FragmentSize>4000B</FragmentSize>
-        </General>
-        <Discovery>
-        </Discovery>
-        <Internal>
-            <Watermarks>
-                <WhcHigh>500kB</WhcHigh>
-            </Watermarks>
-            <AssumeMulticastCapable>lo</AssumeMulticastCapable>
-        </Internal>
-        <Tracing>
-            <Verbosity>severe</Verbosity>
-            <OutputFile>stdout</OutputFile>
-        </Tracing>
-   </Domain>
-</CycloneDDS>
+<profiles>
+  <participant profile_name="participant_profile" is_default_profile="true">
+    <rtps>
+      <builtin>
+        <metatrafficUnicastLocatorList>
+          <locator/>
+        </metatrafficUnicastLocatorList>
+        <initialPeersList>
+          <locator>
+            <udpv4>
+              <address>127.0.0.1</address>
+            </udpv4>
+          </locator>
+        </initialPeersList>
+      </builtin>
+    </rtps>
+  </participant>
+</profiles>
