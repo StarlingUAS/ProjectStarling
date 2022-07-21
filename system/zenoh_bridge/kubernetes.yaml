@@ -82,3 +82,5 @@ spec:
         env:
           - name: SERVER
             value: "true"
+          - name: ZENOH_ALLOW_TOPICS
+            value: "mavros/"

@@ -6,6 +6,7 @@ RUN apt-get update \
       ros-${ROS1_DISTRO}-mavros \
       ros-${ROS1_DISTRO}-mavros-extras \
       ros-${ROS2_DISTRO}-mavros-msgs \
+      ros-foxy-rmw-cyclonedds-cpp \
     && rm -rf /var/lib/apt/lists/
 
 # Part of MAVROS setup
@@ -65,8 +66,8 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && rm -r build
 
 # Add custom ROS DDS configuration (force UDP always)
-COPY fastrtps_profiles.xml /ros_ws/
-ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+COPY cyclone_profile.xml /ros_ws/
+ENV CYCLONEDDS_URI /ros_ws/cyclone_profile.xml
 
 # TODO: Rename to FCU_PROTOCOL
 ENV MAVROS_FCU_CONN="udp"
@@ -78,5 +79,7 @@ ENV MAVROS_TGT_SYSTEM="auto"
 ENV PX4_INSTANCE_BASE=0
 ENV MAVROS_TGT_FIRMWARE="px4"
 ENV MAVROS_GCS_URL="udp-pb://@:14550"
+
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 CMD [ "ros2", "launch", "launch/mavros_bridge.launch.xml"]
