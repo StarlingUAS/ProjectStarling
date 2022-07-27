@@ -25,21 +25,12 @@ if [ ! -v $SERVER ]; then
     echo "Running Zenoh on Server"
     exec zenoh-bridge-dds \
         -d 0 \
-        # --no-multicast-scouting \
-        -l tcp/0.0.0.0:7447 \
-        -f 
-        # -e tcp/10.0.0.101:7447 \
-        # -e tcp/10.0.0.102:7447 \
-        # -e tcp/10.0.0.103:7447 \
-        # -e tcp/10.0.0.104:7447 \
-        # -e tcp/10.0.0.105:7447 \
+        -l tcp/0.0.0.0:7447
 else
     echo "Running Zenoh on Board Vehicle $VEHICLE_MAVLINK_SYSID, with ROS_DOMAIN_ID=0 and scope set to $VEHICLE_MAVLINK_SYSID"
     exec zenoh-bridge-dds \
         -d 0\
-        -f \
-        --no-multicast-scouting \
         -l tcp/0.0.0.0:7447 \
-        # --allow "'"$ZENOH_ALLOW_TOPICS"'" \
+        --allow "'"$ZENOH_ALLOW_TOPICS"'" \
         --scope "$VEHICLE_MAVLINK_SYSID"
 fi

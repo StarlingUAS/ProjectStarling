@@ -59,10 +59,20 @@ The vehicle can now be added as a node to the cluster.
 
 5. Add the following tags to the node either through the edit functionality in the kubernetes dashboard (the pencil in the upper right corner) or manually through the command line. The tag keys must be fixed, but the values can be varied depending on application. These are required for automatic deployment of containers.
 
+#### Clover UAVs
+
 ```
 starling.dev/type: vehicle
 starling.dev/vehicle-class: rotary
 starling.dev/vehicle-type: clover
+```
+
+#### Tamiya Dump-Truck UGV
+
+```
+starling.dev/type: vehicle
+starling.dev/vehicle-class: car
+starling.dev/vehicle-type: tamiya-truck
 ```
 
 The vehicle should now be visible under `nodes` on the Kubernetes dashboard.
