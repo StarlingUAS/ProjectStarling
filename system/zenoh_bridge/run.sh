@@ -88,12 +88,14 @@ if [ ! -v $SERVER ]; then
     echo "Running Zenoh on Server"
     exec zenoh-bridge-dds \
         -d 0 \
+        -f \
         -l tcp/0.0.0.0:7447
 else
     echo "Running Zenoh on Board Vehicle $VEHICLE_MAVLINK_SYSID, with ROS_DOMAIN_ID=0 and scope set to $VEHICLE_MAVLINK_SYSID"
     echo "Allowing the following topics: '"$ZENOH_ALLOW_TOPICS"'"
     exec zenoh-bridge-dds \
         -d 0\
+        -f \
         -l tcp/0.0.0.0:7447 \
         --allow "'"$ZENOH_ALLOW_TOPICS"'" \
         --scope "/"$VEHICLE_NAMESPACE""
