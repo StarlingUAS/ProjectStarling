@@ -38,6 +38,7 @@
     <node pkg="ros1_bridge"
           exec="dynamic_bridge"
           namespace="$(var vehicle_namespace)"
+          args="--bridge-all-topics" 
           respawn="true"
           launch-prefix="bash -c 'sleep $(var bridge_launch_delay); $0 $@' ">
     </node>

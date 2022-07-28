@@ -94,6 +94,6 @@ spec:
           - name: SERVER
             value: "true"
           - name: ZENOH_ALLOW_TOPICS
-            value: "mavros/"
+            value: "/tf|/ping_sink|/ping_source|mavros"
           - name: ROS_LOG
             value: info

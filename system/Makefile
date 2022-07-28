@@ -26,7 +26,7 @@ vicon:
 ping-monitor:
 	$(BAKE) ping-monitor
 
-zenoh-bridge:
+zenoh-bridge: controller-base
 	$(BAKE) zenoh-bridge
 
 .PHONY: mavros mavros_all_arch controller-base rosbridge-suite vicon mavp2p all ping-monitor zenoh-bridge
