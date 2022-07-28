@@ -59,7 +59,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: false
           load: true
@@ -86,7 +86,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
 
@@ -117,7 +117,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: false
           load: true
@@ -144,7 +144,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
 
@@ -171,7 +171,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{ matrix.arm64 }}
           push: false
           load: true
@@ -198,7 +198,7 @@ jobs:
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
-          prefix: StarlingUAS
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
 
