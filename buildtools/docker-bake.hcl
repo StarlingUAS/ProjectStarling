@@ -26,6 +26,10 @@ variable "BAKE_CACHETO_NAME" {
     default = ""
 }
 
+variable "BAKE_PREFIX" {
+    default = "uobflightlabstarling"
+}
+
 /*
  * Groups for target ordering
  */
@@ -51,56 +55,56 @@ group "system" {
 target "rosbridge-suite" {
     context = "system/rosbridge-suite"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/rosbridge-suite:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-controller-base" {
     context = "system/controller-base"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-controller-base:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-mavros" {
     context = "system/mavros"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "mavp2p" {
     context = "system/mavp2p"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/mavp2p:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-vicon" {
     context = "system/vicon"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-vicon:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 
@@ -117,12 +121,12 @@ group "simulator" {
 target "starling-sim-base-core" {
     context = "simulator/base/core"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-base-core:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 group "simulator-px4" {
@@ -140,24 +144,24 @@ target "starling-sim-base-px4" {
         "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-base-px4:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-sim-px4-sitl" {
     context = "simulator/base/px4"
     dockerfile = "sitl.Dockerfile"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-px4-sitl:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 group "simulator-ardupilot" {
@@ -176,12 +180,12 @@ target "starling-sim-ardupilot-copter" {
         "BRANCH": "ArduCopter-stable"
     }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-copter:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-sim-ardupilot-plane" {
@@ -192,12 +196,12 @@ target "starling-sim-ardupilot-plane" {
         "BRANCH": "ArduPlane-stable"
     }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-plane:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "starling-sim-ardupilot-gazebo" {
@@ -207,12 +211,12 @@ target "starling-sim-ardupilot-gazebo" {
         "REGISTRY": "${BAKE_REGISTRY}"
     }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 /*
@@ -232,12 +236,12 @@ target "example_python_controller" {
         "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/example_controller_python:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 /*
@@ -251,12 +255,12 @@ target "starling-sim-iris" {
         "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-iris:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 // This target depends on starling-sim-base-ardupilot
@@ -267,10 +271,10 @@ target "starling-sim-iris-ap" {
         "REGISTRY": "${BAKE_REGISTRY}"
         }
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/starling-sim-iris-ap:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_CACHEFROM_NAME}" : "" ]
 }

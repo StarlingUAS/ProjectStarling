@@ -51,13 +51,15 @@ jobs:
     steps:
       - name: Build Image (no push)
         id: build_image
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{matrix.arm64}}
           push: false
           load: true
@@ -76,13 +78,15 @@ jobs:
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
       - name: Build Image (load and push)
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{matrix.arm64}}
           push: true
 
@@ -105,13 +109,15 @@ jobs:
     steps:
       - name: Build Image
         id: build_image
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{matrix.arm64}}
           push: false
           load: true
@@ -130,13 +136,15 @@ jobs:
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
       - name: Build Image (load and push)
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{matrix.arm64}}
           push: true
 
@@ -155,13 +163,15 @@ jobs:
     steps:
       - name: Build Image
         id: build_image
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{ matrix.arm64 }}
           push: false
           load: true
@@ -180,20 +190,48 @@ jobs:
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
       - name: Build Image (load and push)
-        uses: mhl787156/starling-bake-build-action@main
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: StarlingUAS
           build_arm64: ${{matrix.arm64}}
           push: true
 
   release_version:
     needs: [bump_version, bake_images_stage_3]
     runs-on: ubuntu-latest
-    steps:  
+    steps:
+      - name: Install regctl
+        uses: regclient/actions/regctl-installer@main
+
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Upload images to DockerHub
+        run: |
+          for IMAGE in ${IMAGES}; do
+            regctl image copy \
+                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bump_version.outputs.tag }}
+                uobflightlabstarling/${IMAGE}:${{ needs.bump_version.outputs.tag }}
+          done
+        env:
+          IMAGES: "rosbridge-suite starling-controller-base starling-mavros starling-vicon starling-sim-base-core mavp2p starling-sim-base-px4 starling-sim-px4-sitl starling-sim-ardupilot-gazebo starling-sim-ardupilot-copter example_python_controller starling-sim-iris starling-sim-iris-ap"
+
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         if: |
