@@ -44,6 +44,8 @@ spec:
         env:
         - name: ROS_LOG
           value: info
+        - name: ZENOH_ALLOW_TOPICS
+          value: "/tf|/ping_sink|/ping_source|mavros"
 
       volumes:
       - name: vehicleconfig
@@ -93,7 +95,5 @@ spec:
         env:
           - name: SERVER
             value: "true"
-          - name: ZENOH_ALLOW_TOPICS
-            value: "/tf|/ping_sink|/ping_source|mavros"
           - name: ROS_LOG
             value: info

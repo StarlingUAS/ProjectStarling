@@ -97,6 +97,6 @@ else
         -d 0\
         -f \
         -l tcp/0.0.0.0:7447 \
-        --allow "'"$ZENOH_ALLOW_TOPICS"'" \
+        # --allow "'"$ZENOH_ALLOW_TOPICS"'" \
         --scope "/"$VEHICLE_NAMESPACE""
 fi
