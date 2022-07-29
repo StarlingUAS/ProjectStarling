@@ -1,5 +1,7 @@
 # Example Python Controller
 
+**NEEDS UPDATING** For now see the [example_python_controller](https://github.com/StarlingUAS/example_python_controller) repository for exact commands. The theoretical content is still useful though.
+
 This is a very basic "controller" written in Python, using ROS2 and MAVROS to control a PX4-based vehicle. It commands all current vehicles to fly in a 1m radius circle at a height of 2.5m.
 
 It begins sending offboard setpoints, sets the mode to `OFFBOARD`, arms the vehicle, and finally begins moving the setpoint around the sky.
@@ -18,7 +20,7 @@ docker run -it --network projectstarling_default example_controller_python
 ```
 where `projectstarling_default` is the name of the default network created by the example `docker-compose.yaml` in the root directory.
 
-Replace `example_controller_python` with `uobflightlabstarling/example_controller_python` if you have not locally built the controller. 
+Replace `example_controller_python` with `uobflightlabstarling/example_controller_python` if you have not locally built the controller.
 
 > **Note:** Due to the way rclpy works, this container can not be killed gracefully unless
 using the `-it` flags for docker run. See [this issue](https://github.com/ros2/rclpy/issues/527).
@@ -30,25 +32,25 @@ To run the controller in kubernetes, k3s must be up and running, then simply app
 kubectl apply -f example_controller_python/k8.example_controller_python.amd64.yaml
 ```
 
-This will firstly run the local `uobflightlabstarling/example_controller_python` if one exists, otherwise it will pull from docker hub. 
+This will firstly run the local `uobflightlabstarling/example_controller_python` if one exists, otherwise it will pull from docker hub.
 
 ## Details
 
 ### Controller Phases
 
  1. #### Initialisation
-    
+
     In the initialisation phase, the controller sends a stream of setpoints to
     the vehicle while it waits for a valid position. This is needed as PX4 will
     not switch into `OFFBOARD` mode without a valid setpoint stream. In this
     phase, the controller also initialises the initial position of the vehicle.
 
  1. #### Mode switching
- 
+
     PX4 follows various types of setpoints when in `OFFBOARD` mode. The
     controller uses a ROS service to command the vehicle to switch into this
     mode. It will retry the mode switch once per second until it succeeds.
-    Once this is complete it will wait for a ros message from `/mission_start` before continuing on to ARM. 
+    Once this is complete it will wait for a ros message from `/mission_start` before continuing on to ARM.
 
  1. #### Arming
 
@@ -73,13 +75,13 @@ This will firstly run the local `uobflightlabstarling/example_controller_python`
     vehicle. In this case, these follow a circle around the local coordinate
     system origin.
 
-> **Note:** If a message is sent on the `/emergency_stop` topic this controller will send the PX4 e-STOP command. This stops the motors of the drones. 
+> **Note:** If a message is sent on the `/emergency_stop` topic this controller will send the PX4 e-STOP command. This stops the motors of the drones.
 
 ### Multiple Drones
 
-If this controller is run with multiple SITL or real drone instances, each broadcasting their topics in the form `<drone_name>/mavros/...`, then one controller is deployed for each drone instance. 
+If this controller is run with multiple SITL or real drone instances, each broadcasting their topics in the form `<drone_name>/mavros/...`, then one controller is deployed for each drone instance.
 
-By default, `launch/example_fly_all.launch.py` is the launch file which produces this behaviour. It provides an example for how to write an offboard multi-drone controller. 
+By default, `launch/example_fly_all.launch.py` is the launch file which produces this behaviour. It provides an example for how to write an offboard multi-drone controller.
 
 ### Coordinate Systems
 
