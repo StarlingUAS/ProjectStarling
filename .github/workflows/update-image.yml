@@ -89,6 +89,8 @@ jobs:
           prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
+          skip_setup: true
+
 
   bake_images_stage_2:
     runs-on: ubuntu-latest
@@ -147,7 +149,7 @@ jobs:
           prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
-
+          skip_setup: true
 
     
   bake_images_stage_3:
@@ -201,6 +203,8 @@ jobs:
           prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
           push: true
+          skip_setup: true
+
 
   release_version:
     needs: [bump_version, bake_images_stage_3]
