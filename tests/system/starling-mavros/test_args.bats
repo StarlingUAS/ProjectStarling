@@ -2,7 +2,7 @@
 
 load ../../utils.bash
 TEST_TAG=$(get_test_tag)
-MAVROS_IMAGE=$(get_tagged_image uobflightlabstarling/starling-mavros)
+MAVROS_IMAGE=$(get_tagged_image starling-mavros)
 
 function setup_file() {
     export CONTAINER_ID=$(docker run -d --rm $MAVROS_IMAGE)

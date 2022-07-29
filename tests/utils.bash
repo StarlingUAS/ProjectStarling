@@ -10,5 +10,5 @@ function get_test_tag {
 }
 
 function get_tagged_image {
-    echo "$1:${TEST_IMAGE_TAG-latest}"
+    echo "${TEST_IMAGE_PREFIX-uobflightlabstarling}/$1:${TEST_IMAGE_TAG-latest}"
 }

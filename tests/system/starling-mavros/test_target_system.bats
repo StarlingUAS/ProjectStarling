@@ -4,7 +4,7 @@ EXAMPLE_CONFIG_DIR=$BATS_TEST_DIRNAME/resources/starling/
 
 load ../../utils.bash
 TEST_TAG=$(get_test_tag)
-MAVROS_IMAGE=$(get_tagged_image uobflightlabstarling/starling-mavros)
+MAVROS_IMAGE=$(get_tagged_image starling-mavros)
 
 @test "[$TEST_TAG] explicit MAVROS_TGT_SYSTEM" {
     docker run --rm -e MAVROS_TGT_SYSTEM=123 $MAVROS_IMAGE bash -c '[ "$MAVROS_TGT_SYSTEM" -eq 123 ]'

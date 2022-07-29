@@ -77,6 +77,7 @@ jobs:
           fi
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
       - name: Build Image (load and push)
         uses: StarlingUAS/starling-bake-build-action@main
         with:
@@ -137,6 +138,7 @@ jobs:
           fi
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
       - name: Build Image (load and push)
         uses: StarlingUAS/starling-bake-build-action@main
         with:
@@ -191,6 +193,7 @@ jobs:
           fi
         env:
           TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
       - name: Build Image (load and push)
         uses: StarlingUAS/starling-bake-build-action@main
         with:
