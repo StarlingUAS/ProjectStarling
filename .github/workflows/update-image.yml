@@ -107,6 +107,8 @@ jobs:
             arm64: false
           - target: starling-sim-ardupilot-copter
             arm64: false
+          - target: starling-sim-ardupilot-plane
+            arm64: false
           - target: example_python_controller
             arm64: true
     steps:
