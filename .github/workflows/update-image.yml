@@ -166,6 +166,9 @@ jobs:
             arm64: false
           - target: starling-sim-iris-ap
             arm64: false
+    outputs:
+      release: ${{steps.push_image.outputs.release }}
+      version: ${{steps.build_image.outputs.version }}
     steps:
       - name: Build Image
         id: build_image
@@ -235,8 +238,13 @@ jobs:
         run: |
           for IMAGE in ${IMAGES}; do
             regctl image copy \
-                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bump_version.outputs.tag }}
-                uobflightlabstarling/${IMAGE}:${{ needs.bump_version.outputs.tag }}
+                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }}
+                uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }}
+            if [ ! -z ${{ needs.bake_images_stage_3.outputs.release }} ]; then
+              regctl image copy \
+                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }}
+                uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }}
+            fi
           done
         env:
           IMAGES: "rosbridge-suite starling-controller-base starling-mavros starling-vicon starling-sim-base-core mavp2p starling-sim-base-px4 starling-sim-px4-sitl starling-sim-ardupilot-gazebo starling-sim-ardupilot-copter example_python_controller starling-sim-iris starling-sim-iris-ap"
