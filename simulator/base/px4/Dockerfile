@@ -5,6 +5,7 @@
 
 ARG VERSION=latest
 ARG REGISTRY
+ARG PREFIX=uobflightlabstarling
 
 # Include the common Dockerfile to get the PX4 repo
 INCLUDE+ ./px4builder.Dockerfile
@@ -68,7 +69,7 @@ RUN find . -maxdepth 1 -type d \
 WORKDIR /src/PX4-Autopilot/build/px4_sitl_default/build_gazebo
 RUN rm -r CMakeFiles ${REMOVE_GAZEBO_LIBRARIES} *.cc *.h *.ninja unit_tests include
 
-FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}
+FROM ${REGISTRY}${PREFIX}/starling-sim-base-core:${VERSION}
 
 # Copy built PX4 repo into this image
 COPY --from=px4builder /src/PX4-Autopilot/build/px4_sitl_default/build_gazebo /src/PX4-Autopilot/build/px4_sitl_default/build_gazebo

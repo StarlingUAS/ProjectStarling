@@ -141,7 +141,8 @@ target "starling-sim-base-px4" {
     context = "simulator/base/px4"
     args = {
         "VERSION": "${BAKE_VERSION}",
-        "REGISTRY": "${BAKE_REGISTRY}"
+        "REGISTRY": "${BAKE_REGISTRY}",
+        "PREFIX": "${BAKE_PREFIX}",
         }
     tags = [
         "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_VERSION}",
@@ -208,7 +209,8 @@ target "starling-sim-ardupilot-gazebo" {
     context = "simulator/base/ardupilot"
     args = {
         "VERSION": "${BAKE_VERSION}",
-        "REGISTRY": "${BAKE_REGISTRY}"
+        "REGISTRY": "${BAKE_REGISTRY}",
+        "PREFIX": "${BAKE_PREFIX}",
     }
     tags = [
         "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_VERSION}",
@@ -233,7 +235,8 @@ target "example_python_controller" {
     context = "controllers/example_controller_python"
     args = {
         "VERSION": "${BAKE_VERSION}",
-        "REGISTRY": "${BAKE_REGISTRY}"
+        "REGISTRY": "${BAKE_REGISTRY}",
+        "PREFIX": "${BAKE_PREFIX}",
         }
     tags = [
         "${BAKE_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_VERSION}",
@@ -252,7 +255,8 @@ target "starling-sim-iris" {
     context = "simulator/vehicles/iris"
     args = {
         "VERSION": "${BAKE_VERSION}",
-        "REGISTRY": "${BAKE_REGISTRY}"
+        "REGISTRY": "${BAKE_REGISTRY}",
+        "PREFIX": "${BAKE_PREFIX}",
         }
     tags = [
         "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_VERSION}",
@@ -268,7 +272,8 @@ target "starling-sim-iris-ap" {
     context = "simulator/vehicles/iris-ap"
     args = {
         "VERSION": "${BAKE_VERSION}",
-        "REGISTRY": "${BAKE_REGISTRY}"
+        "REGISTRY": "${BAKE_REGISTRY}",
+        "PREFIX": "${BAKE_PREFIX}",
         }
     tags = [
         "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_VERSION}",
