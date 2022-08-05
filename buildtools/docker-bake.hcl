@@ -59,7 +59,7 @@ target "rosbridge-suite" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/rosbridge-suite:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -70,7 +70,7 @@ target "starling-controller-base" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-controller-base:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -81,7 +81,7 @@ target "starling-mavros" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -92,7 +92,7 @@ target "mavp2p" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/mavp2p:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -103,7 +103,7 @@ target "starling-vicon" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-vicon:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -125,7 +125,7 @@ target "starling-sim-base-core" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-base-core:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -149,7 +149,7 @@ target "starling-sim-base-px4" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-base-px4:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -161,7 +161,7 @@ target "starling-sim-px4-sitl" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-px4-sitl:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -185,7 +185,7 @@ target "starling-sim-ardupilot-copter" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-copter:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -201,7 +201,7 @@ target "starling-sim-ardupilot-plane" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-plane:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -217,7 +217,7 @@ target "starling-sim-ardupilot-gazebo" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-ardupilot-gazebo:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -243,7 +243,7 @@ target "example_controller_python" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64", "linux/arm64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/example_controller_python:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -263,7 +263,7 @@ target "starling-sim-iris" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-iris:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
@@ -280,6 +280,6 @@ target "starling-sim-iris-ap" {
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_CACHETO_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-sim-iris-ap:${BAKE_CACHEFROM_NAME}" : "" ]
 }
