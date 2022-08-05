@@ -238,11 +238,11 @@ jobs:
         run: |
           for IMAGE in ${IMAGES}; do
             regctl image copy \
-                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }}
+                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }} \
                 uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }}
             if [ ! -z ${{ needs.bake_images_stage_3.outputs.release }} ]; then
               regctl image copy \
-                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }}
+                ghcr.io/StarlingUAS/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }} \
                 uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }}
             fi
           done
