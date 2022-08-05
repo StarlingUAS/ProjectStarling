@@ -26,7 +26,7 @@ jobs:
           - starling-sim-base-px4
           - starling-sim-ardupilot-gazebo
           - starling-sim-px4-sitl
-          - example_python_controller
+          - example_controller_python
           - starling-sim-iris
           - starling-sim-iris-ap
           - starling-sim-ardupilot-copter

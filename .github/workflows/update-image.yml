@@ -109,7 +109,7 @@ jobs:
             arm64: false
           - target: starling-sim-ardupilot-plane
             arm64: false
-          - target: example_python_controller
+          - target: example_controller_python
             arm64: true
     steps:
       - name: Build Image
@@ -247,7 +247,7 @@ jobs:
             fi
           done
         env:
-          IMAGES: "rosbridge-suite starling-controller-base starling-mavros starling-vicon starling-sim-base-core mavp2p starling-sim-base-px4 starling-sim-px4-sitl starling-sim-ardupilot-gazebo starling-sim-ardupilot-copter example_python_controller starling-sim-iris starling-sim-iris-ap"
+          IMAGES: "rosbridge-suite starling-controller-base starling-mavros starling-vicon starling-sim-base-core mavp2p starling-sim-base-px4 starling-sim-px4-sitl starling-sim-ardupilot-gazebo starling-sim-ardupilot-copter example_controller_python starling-sim-iris starling-sim-iris-ap"
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1

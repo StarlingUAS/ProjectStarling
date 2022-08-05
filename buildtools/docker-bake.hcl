@@ -227,11 +227,11 @@ target "starling-sim-ardupilot-gazebo" {
 // Build this target before simulator-px4
 group "controllers" {
     targets = [
-        "example_python_controller",
+        "example_controller_python",
         ]
 }
 // This target depends on starling-controller-base
-target "example_python_controller" {
+target "example_controller_python" {
     context = "controllers/example_controller_python"
     args = {
         "VERSION": "${BAKE_VERSION}",
