@@ -34,7 +34,7 @@ group "stage1" {
 }
 
 group "stage2" {
-    targets = ["simulator-px4", "simulator-ardupilot", "controllers"]
+    targets = ["simulator-px4", "simulator-ardupilot", "controllers", "ping-monitor"]
 }
 
 group "stage3" {
@@ -45,7 +45,7 @@ group "stage3" {
  * System targets
  */
 group "system" {
-    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p", "ping-monitor", "zenoh-bridge"]
+    targets = ["rosbridge-suite", "starling-controller-base", "starling-mavros", "starling-vicon", "mavp2p", "zenoh-bridge"]
 }
 
 target "zenoh-bridge" {

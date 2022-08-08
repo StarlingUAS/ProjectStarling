@@ -8,7 +8,7 @@ COPY ros_entrypoint.sh /
 # Install the ROS2 version of mavros_msgs
 # Clone the repo
 RUN apt-get update \
-    && apt-get install -y ros-${ROS_DISTRO}-mavros-msgs \
+    && apt-get install -y ros-${ROS_DISTRO}-mavros-msgs ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
     && rm -rf /var/lib/apt/lists/*
 
 # # Build the package
@@ -23,6 +23,11 @@ COPY base_env_setup.sh /ros.env.d/controller_base/setup.bash
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
+# Add custom cylonedds configuration and set as default
+COPY cyclonedds.xml /ros_ws/
+ENV CYCLONEDDS_URI /ros_ws/cyclonedds.xml
+ENV RMW_IMPLEMENTATION rmw_cyclonedds_cpp
 
 ENV USE_SIMULATED_TIME false
 

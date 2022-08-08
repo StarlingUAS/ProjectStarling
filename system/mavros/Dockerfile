@@ -6,6 +6,7 @@ RUN apt-get update \
       ros-${ROS1_DISTRO}-mavros \
       ros-${ROS1_DISTRO}-mavros-extras \
       ros-${ROS2_DISTRO}-mavros-msgs \
+      ros-${ROS2_DISTRO}-rmw-cyclonedds-cpp \
     && rm -rf /var/lib/apt/lists/
 
 # Part of MAVROS setup
@@ -74,6 +75,11 @@ RUN apt-get update \
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+
+# Add custom cylonedds configuration and set as default
+COPY cyclonedds.xml /ros_ws/
+ENV CYCLONEDDS_URI /ros_ws/cyclonedds.xml
+ENV RMW_IMPLEMENTATION rmw_cyclonedds_cpp
 
 # TODO: Rename to FCU_PROTOCOL
 ENV MAVROS_FCU_CONN="udp"
