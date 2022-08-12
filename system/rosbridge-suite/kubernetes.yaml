@@ -19,3 +19,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
+        env:
+        - name: ROS_DISCOVERY_SERVER
+          value: "127.0.0.1:11811"

@@ -31,4 +31,7 @@ spec:
       - name: offboard-controller
         image: uobflightlabstarling/ping-monitor
         imagePullPolicy: Always
+        env:
+        - name: ROS_DISCOVERY_SERVER
+          value: "127.0.0.1:11811"
 

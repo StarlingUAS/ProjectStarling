@@ -26,6 +26,7 @@ COPY rosbridge_websocket_launch.xml /ros_ws/
 COPY ros_entrypoint.sh /
 COPY run.sh /
 
+ENV ROS_DISCOVERY_SERVER=
 ENV ROSBRIDGE_PORT 9090
 ENV MSGS_WS "/msgs_ws"
 
