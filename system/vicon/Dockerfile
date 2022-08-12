@@ -21,6 +21,9 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
 # Setup the new entrypoint
 COPY entrypoint.sh /ros_entrypoint.sh
 
+# Setup vicon to use discovery server if necessary
+ENV ROS_DISCOVERY_SERVER=
+
 # Default Vicon UDP port is 51001
 EXPOSE 51001/udp
 

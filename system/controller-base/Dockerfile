@@ -23,6 +23,7 @@ COPY base_env_setup.sh /ros.env.d/controller_base/setup.bash
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+ENV ROS_DISCOVERY_SERVER=
 
 ENV USE_SIMULATED_TIME false
 

@@ -67,6 +67,7 @@ RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
+ENV ROS_DISCOVERY_SERVER=
 
 # TODO: Rename to FCU_PROTOCOL
 ENV MAVROS_FCU_CONN="udp"
