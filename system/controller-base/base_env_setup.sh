@@ -22,11 +22,14 @@ else
 fi
 
 # Check if using a discovery server or not
-if [[ -v $ROS_DISCOVERY_SERVER ]] && [[ ! -z "$ROS_DISCOVERY_SERVER" ]]; then
-    echo "ROS DISCOVERY SERVER SET TO: $ROS_DISCOVERY_SERVER"
-    export ROS_DISCOVERY_SERVER
+if [ "$DISCOVERY_SERVER" = "local" ]; then
+    export ROS_DISCOVERY_SERVER="127.0.0.1:11811"
+    echo "DISCOVERY_SERVER set to $DISCOVERY_SERVER, assigning ROS_DISCOVERY_SERVER to $ROS_DISCOVERY_SERVER"
+elif [ "$DISCOVERY_SERVER" = "global" ]; then
+    export ROS_DISCOVERY_SERVER="127.0.0.1:11811;$CENTRAL_ROS_DISCOVERY_SERVER"
+    echo "DISCOVERY_SERVER set to $DISCOVERY_SERVER, assigning ROS_DISCOVERY_SERVER to $ROS_DISCOVERY_SERVER"
 else
-    echo "ROS_DISCOVERY_SERVER Not Set"
+    echo "DISCOVERY_SERVER not set to local or global (set to $DISCOVERY_SERVER), ros2 uses default discovery mechanism"
 fi
 
 echo "---- controller base setup END ------------"
