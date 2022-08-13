@@ -21,4 +21,12 @@ else
     echo "VEHICLE_NAMESPACE not set, default to launchfile defaults"
 fi
 
+# Check if using a discovery server or not
+if [[ -v $ROS_DISCOVERY_SERVER ]] && [[ ! -z "$ROS_DISCOVERY_SERVER" ]]; then
+    echo "ROS DISCOVERY SERVER SET TO: $ROS_DISCOVERY_SERVER"
+    export ROS_DISCOVERY_SERVER
+else
+    echo "ROS_DISCOVERY_SERVER Not Set"
+fi
+
 echo "---- controller base setup END ------------"

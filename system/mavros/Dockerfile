@@ -69,6 +69,10 @@ COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 ENV ROS_DISCOVERY_SERVER=
 
+# Add Super Client Configuration for use with fastdds discovery
+COPY super_client_configuration_file.xml /
+COPY enable_ros2_cli.sh /
+
 # TODO: Rename to FCU_PROTOCOL
 ENV MAVROS_FCU_CONN="udp"
 # TODO: Rename to FCU_HOST

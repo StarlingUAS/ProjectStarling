@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+echo "---- mavros_setup.sh setup START ------------"
+
 HAS_VEHICLE_CONFIG=false
 TGT_SYSTEM_SET=false
 
@@ -133,3 +136,13 @@ if [ ! -f "$BRIDGE_MOD_CONFIG_PATH" ]; then
 else
     echo "Modified Bridge Config for $VEHICLE_NAMESPACE already exists at $BRIDGE_MOD_CONFIG_PATH. Using for launch"
 fi
+
+# Check if using a discovery server or not
+if [[ -v $ROS_DISCOVERY_SERVER ]] && [[ ! -z "$ROS_DISCOVERY_SERVER" ]]; then
+    echo "ROS DISCOVERY SERVER SET TO: $ROS_DISCOVERY_SERVER"
+    export ROS_DISCOVERY_SERVER
+else
+    echo "ROS_DISCOVERY_SERVER Not Set"
+fi
+
+echo "---- mavros_setup.sh setup END ------------"
