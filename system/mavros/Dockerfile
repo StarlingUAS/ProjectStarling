@@ -1,4 +1,5 @@
-FROM ros:foxy-ros1-bridge
+# FROM ros:foxy-ros1-bridge (18/03/2022: https://github.com/docker-library/repo-info/blob/c659a4c50ed712fcc52cfe86728ae543d42f5dfb/repos/ros/remote/foxy-ros1-bridge.md)
+FROM ros@sha256:dc8d0052b78ff87bf1cfa606cf03a31f8323c84876e81147ceecb4f2f2eedf72
 
 # Install mavros
 RUN apt-get update \

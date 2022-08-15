@@ -1,4 +1,5 @@
-FROM ros:foxy-ros-base-focal
+# FROM ros:foxy-ros-base-focal (18/03/2022: https://github.com/docker-library/repo-info/blob/c659a4c50ed712fcc52cfe86728ae543d42f5dfb/repos/ros/remote/foxy-ros-base-focal.md)
+FROM ros@sha256:953899ce6b949c54ee4f76b15544e7fe139ca18319918f52044500237a864111
 
 # Overwrite existing entrypoint script to allow additional sources from /ros.env and /ros.env.d
 RUN touch /ros.env
