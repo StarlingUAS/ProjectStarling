@@ -1,6 +1,7 @@
 ARG VERSION=latest
 ARG REGISTRY
-FROM ${REGISTRY}uobflightlabstarling/starling-sim-ardupilot-gazebo:${VERSION}
+ARG PREFIX=uobflightlabstarling
+FROM ${REGISTRY}${PREFIX}/starling-sim-ardupilot-gazebo:${VERSION}
 
 # Copy in the vehicle launch file
 COPY iris.launch.xml /ros_ws/launch/

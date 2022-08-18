@@ -3,8 +3,9 @@
 
 ARG VERSION=latest
 ARG REGISTRY
+ARG PREFIX=uobflightlabstarling
 
-FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION} as apgbuilder
+FROM ${REGISTRY}${PREFIX}/starling-sim-base-core:${VERSION} as apgbuilder
 
 # Clone and build the AP Gazebo plugins
 RUN git clone https://github.com/khancyr/ardupilot_gazebo \
@@ -15,7 +16,7 @@ RUN git clone https://github.com/khancyr/ardupilot_gazebo \
     && make -j4 \
     && make install
 
-FROM ${REGISTRY}uobflightlabstarling/starling-sim-base-core:${VERSION}
+FROM ${REGISTRY}${PREFIX}/starling-sim-base-core:${VERSION}
 
 # Only adding libArduPilotPlugin.so, ignoring ArduCopterIRLockPlugin.
 COPY --from=apgbuilder /ardupilot_gazebo/build/libArduPilotPlugin.so /ardupilot_gazebo/build/libArduPilotPlugin.so

@@ -1,6 +1,7 @@
 ARG VERSION=latest
 ARG REGISTRY
-FROM ${REGISTRY}uobflightlabstarling/starling-controller-base:${VERSION}
+ARG PREFIX=uobflightlabstarling
+FROM ${REGISTRY}${PREFIX}/starling-controller-base:${VERSION}
 
 COPY example_controller_python /ros_ws/src/example_controller_python
 
