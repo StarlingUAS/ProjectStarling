@@ -41,4 +41,15 @@ docker run -it --rm --net=host --privileged -v /dev:/dev microros/micro-ros-agen
 
 where the button is connected via USB on `/dev/ttyACM0`
 
+Make sure to set the `ROS_DOMAIN_ID` to 2 when running the agent
+
+### Setting Domain ID
+
+As the Arduino runs its own DDS node, you have to set it's domain_id to match that of the rest of the ROS2 DDS network. This involves hardcoding it at build-time. This is achieved by setting the below node options.
+
+```c++
+// Set node options, set ros domain id to 2 corresponding with ROS_DOMAIN_ID
+rcl_node_options_t node_ops = rcl_node_get_default_options();
+node_ops.domain_id = 2;
+```
 

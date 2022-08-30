@@ -112,8 +112,12 @@ bool create_entities() {
   //create init_options
   RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
 
+  //Set node options, set ros domain id to 2 corresponding with ROS_DOMAIN_ID
+  rcl_node_options_t node_ops = rcl_node_get_default_options();
+  node_ops.domain_id = 2;
+
   // create node
-  RCCHECK(rclc_node_init_default(&node, "safety_button", "", &support));
+  RCCHECK(rclc_node_init_with_options(&node, "safety_button", "", &support, &node_ops));
 
   // create mission_start_publisher
   RCCHECK(rclc_publisher_init_default(

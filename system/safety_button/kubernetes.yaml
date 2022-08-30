@@ -23,6 +23,9 @@ spec:
         volumeMounts:
           - mountPath: /dev
             name: dev
+        env:
+          - name: ROS_DOMAIN_ID
+            value: "2"
 
       nodeSelector:
         kubernetes.io/arch: "amd64"
