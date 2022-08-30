@@ -8,6 +8,9 @@
 # The Type must be a ROS2 type
 topics:
   - queue_size: 1
+    topic: mavros/actuator_control
+    type: mavros_msgs/msg/ActuatorControl
+  - queue_size: 1
     topic: mavros/state
     type: mavros_msgs/msg/State
   - queue_size: 1

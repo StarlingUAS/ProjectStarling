@@ -5,6 +5,8 @@
 # Include the common Dockerfile to get the PX4 repo
 INCLUDE+ ./px4builder.Dockerfile
 
+RUN sed -i '387s/0.0/-1.0/' /src/PX4-Autopilot/src/modules/rover_pos_control/RoverPositionControl.cpp
+
 # Add support for remote host in SITL & build it
 RUN make px4_sitl
 

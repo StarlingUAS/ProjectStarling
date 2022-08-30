@@ -61,6 +61,7 @@ RUN find . -maxdepth 1 -type d \
         ! -path ./gps \
         ! -path ./iris \
         ! -path ./r1_rover  \
+        ! -path ./rover  \
         ${KEEP_PX4_VEHICLES} \
         -exec rm -r '{}' \;
 

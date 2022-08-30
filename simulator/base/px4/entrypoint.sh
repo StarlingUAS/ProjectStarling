@@ -44,7 +44,16 @@ if [[ $ENABLE_EXTERNAL_VISION ]]; then
         echo "Enabled External Vision in SITL, set EKF2_HGT_MODE to 3 and EKF2_AID_MASK to 24 (EV_POS+EV_YAW)"
         sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_HGT_MODE 3' "$RCS_FILE"
         sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_AID_MASK 24' "$RCS_FILE"
+        sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_EV_DELAY 10' "$RCS_FILE"
     fi
+fi
+
+if [[ $ENABLE_ROVER ]]; then
+    RCS_FILE="/src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS"
+    echo "Enable Rover, EKF2_RANGE_AID set to 0"
+    sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_RNG_AID 0' "$RCS_FILE"
+    sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_GND_EFF_DZ 0.0' "$RCS_FILE"
+    sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_GND_MAX_HGT 5.0' "$RCS_FILE"
 fi
 
 /ros_entrypoint.sh "$@"
