@@ -15,15 +15,8 @@ RUN /opt/ros/${ROS1_DISTRO}/lib/mavros/install_geographiclib_datasets.sh
 #  (So we probably don't need to use the ros1-bridge image...)
 # Remove the preinstalled version
 RUN apt-get remove -y ros-foxy-ros1-bridge
-# Get the source (use specific commit hash instead of foxy due to this issue when building mavros: https://github.com/ros2/ros1_bridge/issues/313)
-RUN git clone -b foxy https://github.com/ros2/ros1_bridge /bridge_ws/src/ros1_bridge \
-    && cd /bridge_ws/src/ros1_bridge \
-    && git checkout 82d1f4588761d6e54eeaca821398137be0e475f1
-
-# Swap line 36 and 41 to fix this issue: https://github.com/ros2/ros1_bridge/issues/316
-# For use of parameter server.
-RUN sed -i "41d" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp \
-    && sed -i "36 i rclcpp::init(argc, argv);" /bridge_ws/src/ros1_bridge/src/parameter_bridge.cpp
+# Get the source from our branch with extra param bridge functionality (supports direction)
+RUN git clone -b foxy https://github.com/mhl787156/ros1_bridge.git /bridge_ws/src/ros1_bridge 
 
 # Build with ROS2 mavros_msgs on path
 RUN cd /bridge_ws \
