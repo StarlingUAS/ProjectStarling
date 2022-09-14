@@ -4,7 +4,7 @@
 
 ## Vehicle Specification
 
-Starling can be made compatible with almost all vehicles both ground and aerial. In the majority of cases, a vehicle is valid if it has enough compute to run docker containers and connect to the network. The recommended minimum is a Raspberry Pi 4 with 2Gb RAM with WiFi connectivity. The compute should be sufficient such that all the containers can be run safely without saturating the CPU, Memory or Netowrk Bandwidth. 
+Starling can be made compatible with almost all vehicles both ground and aerial. In the majority of cases, a vehicle is valid if it has enough compute to run docker containers and connect to the network. The recommended minimum is a Raspberry Pi 4 with 2Gb RAM with WiFi connectivity. The compute should be sufficient such that all the containers can be run safely without saturating the CPU, Memory or Network Bandwidth. 
 
 ### Aerial Vehicles
 
@@ -29,6 +29,24 @@ The image is based on Ubuntu 20.04 for ARM chips (Raspberry Pi), and has the fol
 * To ensure connectivity with the pixhawk, [`99-px4fmu.rules`](https://github.com/CopterExpress/clover/blob/master/clover/udev/99-px4fmu.rules) has been added to `/lib/udev/rules.d` to ensure the pixhwak is connected via `/dev/px4fmu`.
 * `Chrony` library has been installed and that `/etc/chonry/chonry.conf` is configured to use the flight arena server at `192.168.10.80` [(see the BRL flight arena doc)](../flight_arena#time-synchronisation)
 * The Docker Daemon registry mirrors has been set via `/etc/docker/daemon.json` to use the flight arena server at `192.168.10.80:5000` to ensure the drone can pull docker images from the internet. [(see the BRL flight arena doc)](../flight_arena#docker-local-registry-as-a-pass-through-cache)
+
+**Connecting Pixhawk via UART Serial** (Added 14/09/2022)
+
+By default, the pixhawk is connected via the USB ports. However the pixhawk can also be connected directly by UART Serial via the serial Rx/Tx (14/15) pi GPIO pins. To enable this to work [reference](https://raspberrypi.stackexchange.com/questions/114366/rpi4-serial-port-not-working-on-either-raspberry-os-or-ubuntu):
+
+* add `enable_uart=1` to `/boot/config.txt`
+* disable the serial console: `sudo systemctl stop serial-getty@ttyS0.service && sudo systemctl disable serial-getty@ttyS0.service`
+
+> This can also done using `raspi-config` as specified in [ardupilot docs](https://ardupilot.org/dev/docs/raspberry-pi-via-mavlink.html)
+
+Then to set up the connection so that it is the same as previous, you will need to add the following line to the bottom of `/lib/udev/rules.d/99-px4fmu.rules`. This assumes that the serial connection exists through `/dev/ttyS0`. This will symlink it to `/dev/px4fmu` as before. 
+
+```
+# Serial Connection
+KERNEL=="ttyS0", SYMLINK+="px4fmu"
+```
+
+Note also that you will need to set the correct parameters on the pixhawk itself. [See this example of PX4](https://docs.px4.io/main/en/peripherals/mavlink_peripherals.html#example)
 
 ### Vehicle Specific Setup
 
