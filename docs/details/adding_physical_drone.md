@@ -46,7 +46,7 @@ Then to set up the connection so that it is the same as previous, you will need 
 KERNEL=="ttyS0", SYMLINK+="px4fmu"
 ```
 
-Note also that you will need to set the correct parameters on the pixhawk itself. [See this example of PX4](https://docs.px4.io/main/en/peripherals/mavlink_peripherals.html#example)
+You will also need to set the correct parameters on the pixhawk itself. [See this example of PX4](https://docs.px4.io/main/en/peripherals/mavlink_peripherals.html#example). In particular, whatever baudrate you set for `SER_TEL2_BAUD`, you will also need to set the mavros reading baudrate, otherwise it will fail. For a particular drone, you can edit the `VEHICLE_FCU_URL` env var `/etc/starling/vehicle.config` specified below. Instead of `115200` you can put whichever baudrate you need. By default the baudrate is set to `57600`. The default pixhawk serial baudrate is `921600`.
 
 ### Vehicle Specific Setup
 
