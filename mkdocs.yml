@@ -28,7 +28,7 @@ nav:
     - "Ecosystem": 'other/related_projects_and_links.md'
   - "Tutorials":
     - "1. Introduction to Starling for Fenswood (Ardupilot)": 'tutorials/introduction.md'
-    - "3. Introduction to Starling for Indoor (PX4)": "tutorials/introduction_px4.md"
+    - "2. Introduction to Starling for Indoor (PX4)": "tutorials/introduction_px4.md"
     - "3. The Starling CLI": 'guide/cli.md'
   # - "Single Drone User Guides":
   #   - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
