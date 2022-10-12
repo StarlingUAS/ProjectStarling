@@ -27,15 +27,16 @@ nav:
     - "Background": 'details/background.md'
     - "Ecosystem": 'other/related_projects_and_links.md'
   - "Tutorials":
-    - "1. Introduction to Starling": 'tutorials/introduction.md'
-    - "2. The Starling CLI": 'guide/cli.md'
-  - "Single Drone User Guides":
-    - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
-    - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
-    - "Single Drone on Hardware": "guide/single-drone-drones.md"
-  - "Multiple Drone User Guides":
-    - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
-    - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+    - "1. Introduction to Starling for Fenswood (Ardupilot)": 'tutorials/introduction.md'
+    - "3. Introduction to Starling for Indoor (PX4)": "tutorials/introduction_px4.md"
+    - "3. The Starling CLI": 'guide/cli.md'
+  # - "Single Drone User Guides":
+  #   - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
+  #   - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
+  #   - "Single Drone on Hardware": "guide/single-drone-drones.md"
+  # - "Multiple Drone User Guides":
+  #   - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
+  #   - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
   - "Simulation and SITL":
     - "Spawning Different Vehicles and Objects": "guide/different_vehicles.md"
   - "Additional Guides":
