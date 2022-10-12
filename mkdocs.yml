@@ -46,6 +46,7 @@ nav:
     - "Understanding Docker": 'details/docker.md'
     - "Understanding Kubernetes": "details/kubernetes.md"
     - "Kubernetes Dashboard Guide": 'details/kubernetes-dashboard.md'
+    - "Collecting Data": 'guide/collectingdata.md'
   - "Physical Flight":
     - "BRL Flight Arena": "details/flight_arena.md"
     - "Adding A New Vehicle" : "details/adding_physical_drone.md"
