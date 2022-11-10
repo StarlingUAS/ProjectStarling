@@ -7,8 +7,9 @@ RUN git clone -b 1.1.2 https://github.com/RobotWebTools/rosbridge_suite.git /ros
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
-        ros-foxy-mavros-msgs \
-        ros-foxy-gazebo-msgs \
+        ros-${ROS_DISTRO}-mavros-msgs \
+        ros-${ROS_DISTRO}-gazebo-msgs \
+        ros-${ROS_DISTRO}-rmw-cyclonedds-cpp\
     && rosdep install --from-paths /ros_ws/src -y\
     && rm -rf /var/lib/apt/lists/*
 

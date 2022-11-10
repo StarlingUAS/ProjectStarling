@@ -8,7 +8,9 @@ COPY ros_entrypoint.sh /
 # Install the ROS2 version of mavros_msgs
 # Clone the repo
 RUN apt-get update \
-    && apt-get install -y ros-${ROS_DISTRO}-mavros-msgs \
+    && apt-get install -y \
+        ros-${ROS_DISTRO}-mavros-msgs \
+        ros-${ROS_DISTRO}-rmw-cyclonedds-cpp\
     && rm -rf /var/lib/apt/lists/*
 
 # # Build the package

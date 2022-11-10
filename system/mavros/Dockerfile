@@ -6,6 +6,7 @@ RUN apt-get update \
       ros-${ROS1_DISTRO}-mavros \
       ros-${ROS1_DISTRO}-mavros-extras \
       ros-${ROS2_DISTRO}-mavros-msgs \
+      ros-${ROS_DISTRO}-rmw-cyclonedds-cpp\
     && rm -rf /var/lib/apt/lists/
 
 # Part of MAVROS setup
