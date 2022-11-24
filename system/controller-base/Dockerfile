@@ -24,4 +24,6 @@ COPY base_env_setup.sh /ros.env.d/controller_base/setup.bash
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml
 
+ENV USE_SIMULATED_TIME false
+
 WORKDIR /ros_ws

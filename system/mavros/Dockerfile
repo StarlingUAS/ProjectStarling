@@ -56,6 +56,14 @@ ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists_px4.yaml"
 ENV BRIDGE_MOD_CONFIG_PATH="/bridge_config_mod.yaml"
 ENV BRIDGE_CONFIG_PATH="/bridge_config.yaml"
 
+# Build extra custom nodes in Mavros
+COPY starling_mavros_extras /ros_ws/src/starling_mavros_extras
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+    && cd /ros_ws \
+    && colcon build --packages-select starling_mavros_extras \
+    && rm -r build
+
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/
 ENV FASTRTPS_DEFAULT_PROFILES_FILE /ros_ws/fastrtps_profiles.xml

@@ -12,7 +12,7 @@ This systems provides a number of key features.
 - Built in simulation stack based on Gazebo
 - Quick transition from simulation to flying controllers on real drones.
 
-![Simple Architecture](/img/ArchSimple.jpg)
+![Simple Architecture](../img/ArchSimple.jpg)
 
 ## Documentation
 
@@ -22,6 +22,18 @@ The documentation is built using [MKDocs](https://www.mkdocs.org/) and can be se
 
 1. Install requirements `pip install -r docs/requirements.txt`
 2. In the project root, run `make docs` or `make serve-docs` if you want live viewing (serving to `localhost:8000`)
+
+## Setup
+
+For the simplest usage, a simple Command Line Interface and examples are available in the [Murmuration repository](https://github.com/StarlingUAS/Murmuration). Refer to the documentation for furhter details.
+```
+git clone https://github.com/StarlingUAS/Murmuration.git
+```
+
+For inspecting and developing core Starling clone the repository recursively so that all submodules are included.
+```
+git clone --recurse-submodules https://github.com/StarlingUAS/ProjectStarling.git
+```
 
 ## Features
 ### Drone Sandbox
@@ -43,11 +55,11 @@ By virtue of the architecture, the system also includes failure recovery and det
 ## Contact
 The initial developers of this project are:
 
-- Mickey Li - [email](mailto:mickey.li@bristol.ac.uk) - [github](github.com/mhl787156)
-- Robert Clarke - [email](mailto:robert.clarke@bristol.ac.uk) - [github](github.com/rob-clarke)
+- Mickey Li - [email](mailto:mickey.li@bristol.ac.uk) - [github](https://github.com/mhl787156)
+- Robert Clarke - [email](mailto:robert.clarke@bristol.ac.uk) - [github](https://github.com/rob-clarke)
 
 ## FAQs
-Please see documentation, or raise an [Issue on the github repo](github.com/UoBFlightLab/ProjectStarling/issues)
+Please see documentation, or raise an [Issue on the github repo](https://github.com/StarlingUAS/ProjectStarling/issues)
 
 ## License
-This project is released under the MIT license. Please see the [License file](https://github.com/UoBFlightLab/ProjectStarling/blob/master/LICENSE) for more details.
+This project is released under the MIT license. Please see the [License file](https://github.com/StarlingUAS/ProjectStarling/blob/master/LICENSE) for more details.

@@ -6,9 +6,6 @@ FROM ardupilot/ardupilot-dev-chibios as ardupilot_builder
 ARG VEHICLE=copter
 ARG BRANCH=ArduCopter-stable
 
-# Install PyGeodesy
-RUN python -m pip install --no-cache-dir pymap3d
-
 # Fetch ArduPilot
 RUN git clone --recurse-submodules --depth 1 --shallow-submodules -j4 \
     -b ${BRANCH} https://github.com/ArduPilot/ardupilot /src/ardupilot
@@ -16,6 +13,16 @@ RUN git clone --recurse-submodules --depth 1 --shallow-submodules -j4 \
 # Build the SITL
 WORKDIR /src/ardupilot
 RUN ./waf configure && ./waf ${VEHICLE}
+
+FROM ardupilot/ardupilot-dev-base
+
+ARG VEHICLE
+
+COPY --from=ardupilot_builder /src/ardupilot/build /src/ardupilot/build
+COPY --from=ardupilot_builder /src/ardupilot/Tools /src/ardupilot/Tools
+
+# Install PyGeodesy
+RUN python -m pip install --no-cache-dir pymap3d
 
 WORKDIR /home/root
 COPY entrypoint.sh \
