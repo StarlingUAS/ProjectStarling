@@ -1,7 +1,6 @@
-# `starling-mavros` Container
+# `starling-mavros2` Container
 
-This container holds both MAVROS and a ROS1/2 bridge. In the future, we expect to use the ROS2 version of MAVROS which
-will eliminate the need for the ROS1/2 bridge.
+This container is the native ROS2 MAVROS container. Most of the below still holds.
 
 ## Contents
 [TOC]
@@ -48,7 +47,7 @@ There are two docker files:
 
 ## Configuration
 
-We have identified that mavros is a base requirement for any drone running onboard compute in order to communicate with both the autopilot and GCS. 
+We have identified that mavros is a base requirement for any drone running onboard compute in order to communicate with both the autopilot and GCS.
 
 The mavros container exposes an environment variable `MAVROS_FCU_URL` which is passed to mavros's `fcu_url` option for configuring the mavlink connection to mavros. The default value is:
 > `MAVROS_FCU_URL=udp://127.0.0.1:14550@14555`
@@ -138,3 +137,11 @@ The container is configured based on the detected ordinal from the hostname.
 ### Running isolated
 
 Default values will be used, equivalent to the Kubernetes case with `ORDINAL=0`
+
+### Weird Namespacing for mavros pluginlists
+
+In ROS2 a parameter file has an annoying specific format. The first entry should be the name of the node which the following ros2 parameters apply to. This must directly map to the node name.
+
+We would like our node to be under `<vehicle_namepsace>/mavros/...`. But by default the topics all come out on `...` essentially root. Therefore in the `mavros.launch.xml` we set the mavros node to use namespace `<vehicle_namepsace>/mavros`. However in order for the param file to match, we need to match the root mavros node name which is `<vehicle_namepsace>/mavros/mavros`.
+
+Therefore the top of `mavros_pluginlists_px4.yaml` must specify the node name `<vehicle_namepsace>/mavros/mavros`. The template pluginlists only specifies `mavros`, so the `mavros_setup.sh` dynamically renames the pluginlist yaml file with the correct namespace.
