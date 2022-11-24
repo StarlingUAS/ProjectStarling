@@ -120,9 +120,7 @@ MAVROS_MOD_PLUGINLISTS_PATH=${MAVROS_MOD_PLUGINLISTS_PATH:-"/mavros_pluginlists_
 MAVROS_PLUGINLISTS_PATH=${MAVROS_PLUGINLISTS_PATH:-"/mavros_pluginlists_px4.yaml"}
 if [ ! -f "$MAVROS_MOD_PLUGINLISTS_PATH" ]; then
     echo "Modified Mavros Pluginlist for $VEHICLE_NAMESPACE does not exist at $MAVROS_PLUGINLISTS_PATH. Generating specialised configuration for launch."
-    sed -E "s#mavros#/$VEHICLE_NAMESPACE/mavros#g" $MAVROS_PLUGINLISTS_PATH > $MAVROS_MOD_PLUGINLISTS_PATH
+    sed -E "s#mavros#/$VEHICLE_NAMESPACE/mavros/mavros#g" $MAVROS_PLUGINLISTS_PATH > $MAVROS_MOD_PLUGINLISTS_PATH
 else
     echo "Modified Mavros Pluginlist for $VEHICLE_NAMESPACE already exists at $MAVROS_MOD_PLUGINLISTS_PATH. Using for launch"
 fi
-
-

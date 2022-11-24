@@ -3,27 +3,26 @@ mavros:
     component_id: 191
     plugin_denylist:
       - "*"
-    plugin_allowlist: 
-      - 'sys_*'
-      - altitude
+    plugin_allowlist:
+      # - altitude
       - command
       - distance_sensor
       # - ftp
-      - global_position
-      - imu
+      # - global_position
+      # - imu
       - local_position
-      - manual_control
+      # - manual_control
       # - param
-      - px4flow
+      # - px4flow
       # - rc_io
-      - setpoint_accel
-      - setpoint_attitude
+      # - setpoint_accel
+      # - setpoint_attitude
       - setpoint_position
-      - setpoint_raw
-      - setpoint_velocity
+      # - setpoint_raw
+      # - setpoint_velocity
       - sys_status
       - sys_time
       - vision_pose
-      - onboard_computer_status
-      - vibration
-    
+      - log_transfer
+      # - onboard_computer_status
+      # - vibration

@@ -15,7 +15,7 @@
 
     <node pkg="mavros"
           exec="mavros_node"
-          namespace="$(var vehicle_namespace)">
+          namespace="$(var vehicle_namespace)/mavros">
         <param name="fcu_url" value="$(var fcu_url)?ids=$(var system_id),240"/>
         <param name="gcs_url" value="$(var gcs_url)"/>
         <param name="tgt_system" value="$(var target_system)"/>
@@ -24,9 +24,9 @@
         <param from="$(var config_yaml)"/>
         <param from="$(var pluginlists_yaml)"/>
 
-        <remap from="set_mode" to="mavros/set_mode"/>
-        <remap from="set_stream_rate" to="mavros/set_stream_rate"/>
-        <remap from="set_message_interval" to="mavros/set_message_interval"/>
+        <!-- <remap from="set_mode" to="mavros/set_mode"/> -->
+        <!-- <remap from="set_stream_rate" to="mavros/set_stream_rate"/> -->
+        <!-- <remap from="set_message_interval" to="mavros/set_message_interval"/> -->
     </node>
 
     <!-- Launch Estop Node -->
