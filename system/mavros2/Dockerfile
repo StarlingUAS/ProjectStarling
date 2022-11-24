@@ -5,6 +5,7 @@ WORKDIR /ros_ws
 # Install mavros from apt
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        libboost-system-dev \
         wget \
         python3-pip \
         ros-${ROS_DISTRO}-mavros\
@@ -31,6 +32,14 @@ ENV MAVROS_MOD_CONFIG_PATH="/mavros_config_mod.yaml"
 ENV MAVROS_CONFIG_PATH="/mavros_config_px4.yaml"
 ENV MAVROS_MOD_PLUGINLISTS_PATH="/mavros_pluginlists_mod.yaml"
 ENV MAVROS_PLUGINLISTS_PATH="/mavros_pluginlists_px4.yaml"
+
+# Build extra custom nodes in Mavros
+COPY starling_mavros_extras /ros_ws/src/starling_mavros_extras
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && export CMAKE_PREFIX_PATH=$AMENT_PREFIX_PATH:$CMAKE_PREFIX_PATH \
+    && cd /ros_ws \
+    && colcon build --packages-select starling_mavros_extras \
+    && rm -r build
 
 # Add custom ROS DDS configuration (force UDP always)
 COPY fastrtps_profiles.xml /ros_ws/

@@ -12,8 +12,8 @@
     <arg name="respawn_mavros" default="true"/>
     <arg name="log_output" default="screen" />
 	<arg name="fcu_protocol" default="v2.0" />
-    
-    <node pkg="mavros" 
+
+    <node pkg="mavros"
           exec="mavros_node"
           namespace="$(var vehicle_namespace)">
         <param name="fcu_url" value="$(var fcu_url)?ids=$(var system_id),240"/>
@@ -24,9 +24,17 @@
         <param from="$(var config_yaml)"/>
         <param from="$(var pluginlists_yaml)"/>
 
-        <remap from="set_mode" to="mavros/set_mode"/>    
-        <remap from="set_stream_rate" to="mavros/set_stream_rate"/>    
-        <remap from="set_message_interval" to="mavros/set_message_interval"/>    
+        <remap from="set_mode" to="mavros/set_mode"/>
+        <remap from="set_stream_rate" to="mavros/set_stream_rate"/>
+        <remap from="set_message_interval" to="mavros/set_message_interval"/>
+    </node>
+
+    <!-- Launch Estop Node -->
+    <node name="estop" pkg="starling_mavros_extras" exec="estop" output="screen" respawn="true" namespace="$(var vehicle_namespace)"/>
+
+    <!-- Launch Ping Node -->
+    <node name="ping" pkg="starling_mavros_extras" exec="ping" output="screen" respawn="true" namespace="$(var vehicle_namespace)">
+        <param name="vehicle_id" value="$(var vehicle_namespace)"/>
     </node>
 
 </launch>
