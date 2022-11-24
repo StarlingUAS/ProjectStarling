@@ -9,6 +9,7 @@
     <arg name="config_yaml" default="$(env MAVROS_MOD_CONFIG_PATH)"/>
     <arg name="pluginlists_yaml" default="$(env MAVROS_PLUGINLISTS_PATH)"/>
     <arg name="bridge_yaml" default="$(env BRIDGE_MOD_CONFIG_PATH)"/>
+    <arg name="bridge_launch_delay" default="$(env BRIDGE_LAUNCH_DELAY 2.0)"/>
 
     <!-- Launch the ROS1 stack -->
     <executable cmd="/ros_ws/scripts/run_ros1.sh roslaunch /ros_ws/launch/mavros.launch
@@ -32,7 +33,15 @@
           args="/$(var vehicle_namespace)/topics /$(var vehicle_namespace)/services_1to2 /$(var vehicle_namespace)/services_2to1"
           namespace="$(var vehicle_namespace)"
           respawn="true"
-          launch-prefix="bash -c 'sleep 2.0; $0 $@' ">
+          launch-prefix="bash -c 'sleep $(var bridge_launch_delay); $0 $@' ">
+    </node>
+
+    <!-- Launch Estop Node -->
+    <node name="estop" pkg="starling_mavros_extras" exec="estop" output="screen" respawn="true" namespace="$(var vehicle_namespace)"/>
+
+    <!-- Launch Ping Node -->
+    <node name="ping" pkg="starling_mavros_extras" exec="ping" output="screen" respawn="true" namespace="$(var vehicle_namespace)">
+        <param name="vehicle_id" value="$(var vehicle_namespace)"/>
     </node>
 
 </launch>

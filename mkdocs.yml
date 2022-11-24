@@ -8,10 +8,17 @@ copyright: Copyright &copy; 2021 University of Bristol Flight Laboratory
 markdown_extensions:
   - toc:
       permalink: True
+  - pymdownx.keys:
+      strict: True
 
 plugins:
   - search
   - macros
+  - enumerate-headings:
+      toc_depth: 3
+  - mermaid2
+
+extra_css: [ kbd.css ]
 
 nav:
   - "Home":
@@ -19,19 +26,27 @@ nav:
     - "Getting Started": 'guide/getting-started.md'
     - "Background": 'details/background.md'
     - "Ecosystem": 'other/related_projects_and_links.md'
-  - "Single Drone User Guides":
-    - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
-    - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
-    - "Single Drone on Hardware": "guide/single-drone-drones.md"
-    - "Windows Support": "guide/windows-support.md"
-  - "Multiple Drone User Guides":
-    - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
-    - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+  - "Tutorials":
+    - "1. Introduction to Starling for Fenswood (Ardupilot)": 'tutorials/introduction.md'
+    - "2. Introduction to Starling for Indoor (PX4)": "tutorials/introduction_px4.md"
+    - "3. The Starling CLI": 'guide/cli.md'
+  # - "Single Drone User Guides":
+  #   - "Single Drone Simulation on Local Machine": "guide/single-drone-local-machine.md"
+  #   - "Single Drone Simulation on Local Cluster": "guide/kube-single-drone-local-machine.md"
+  #   - "Single Drone on Hardware": "guide/single-drone-drones.md"
+  # - "Multiple Drone User Guides":
+  #   - "Multiple Drones Simulation on Local Cluster": "guide/multiple-drone-local-machine.md"
+  #   - "Multiple Drones on Hardware": "guide/multiple-drone-drones.md"
+  - "Simulation and SITL":
+    - "Spawning Different Vehicles and Objects": "guide/different_vehicles.md"
   - "Additional Guides":
+    - "Windows Support and FAQ": "guide/windows-support.md"
+    - "Developing a controller": 'guide/writing-a-controller.md'
     - "Development Guide": 'guide/development.md'
     - "Understanding Docker": 'details/docker.md'
     - "Understanding Kubernetes": "details/kubernetes.md"
     - "Kubernetes Dashboard Guide": 'details/kubernetes-dashboard.md'
+    - "Collecting Data": 'guide/collectingdata.md'
   - "Physical Flight":
     - "BRL Flight Arena": "details/flight_arena.md"
     - "Adding A New Vehicle" : "details/adding_physical_drone.md"
@@ -42,10 +57,13 @@ nav:
   - "Image Documentation":
     - "starling-ui": "docker-images/ui.md"
     - "starling-mavros": "docker-images/mavros.md"
+    - "starling-controller-base": "docker-images/controller-base.md"
     - "starling-sim-base-core": "docker-images/sim-base-core.md"
+    - "starling-sim-base-px4": "docker-images/sim-base-px4.md"
     - "starling-sim-ardupilot-copter/plane": "docker-images/sim-ardupilot-vehicle.md"
     - "starling-sim-ardupilot-gazebo": "docker-images/sim-ardupilot-gazebo.md"
     - "starling-sim-iris-ap": "docker-images/sim-iris-ap.md"
+    - "starling-vicon": "docker-images/starling-vicon.md"
   - "Miscellaneous":
     - "Ideas": "other/ideas.md"
     - "MATLAB (unstable)": "other/MATLAB.md"

@@ -28,13 +28,14 @@ jobs:
           DEFAULT_PRERELEASE_BUMP: none
           DRY_RUN: true # Dont push new tag here, only push on successful build
           PRERELEASE_SUFFIX: ${{ steps.extract_branch.outputs.branch }}
-      
+
   bake_images_stage_1:
     runs-on: ubuntu-latest
     needs: bump_version
     strategy:
+      fail-fast: false
       matrix:
-        include: 
+        include:
           - target: rosbridge-suite
             arm64: false
           - target: starling-controller-base
@@ -50,22 +51,56 @@ jobs:
           - target: mavp2p
             arm64: false
     steps:
-      - name: Build Image
-        uses: mhl787156/starling-bake-build-action@main
+      - name: Build Image (no push)
+        id: build_image
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
+          push: false
+          load: true
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
+          if [ ! -z "$TESTS" ]; then
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
+          else
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
+          fi
+        env:
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
+      - name: Build Image (load and push)
+        uses: StarlingUAS/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
+          build_arm64: ${{matrix.arm64}}
+          push: true
+          skip_setup: true
+
 
   bake_images_stage_2:
     runs-on: ubuntu-latest
     needs: [bump_version, bake_images_stage_1]
     strategy:
       matrix:
-        include: 
+        include:
           - target: starling-sim-base-px4
             arm64: false
           - target: starling-sim-px4-sitl
@@ -74,20 +109,55 @@ jobs:
             arm64: false
           - target: starling-sim-ardupilot-copter
             arm64: false
-          - target: example_python_controller
+          - target: starling-sim-ardupilot-plane
+            arm64: false
+          - target: example_controller_python
             arm64: true
     steps:
       - name: Build Image
-        uses: mhl787156/starling-bake-build-action@main
+        id: build_image
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
           build_arm64: ${{matrix.arm64}}
+          push: false
+          load: true
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
+          if [ ! -z "$TESTS" ]; then
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
+          else
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
+          fi
+        env:
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
+      - name: Build Image (load and push)
+        uses: StarlingUAS/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
+          build_arm64: ${{matrix.arm64}}
+          push: true
+          skip_setup: true
 
-    
+
   bake_images_stage_3:
     runs-on: ubuntu-latest
     needs: [bump_version, bake_images_stage_2]
@@ -98,21 +168,89 @@ jobs:
             arm64: false
           - target: starling-sim-iris-ap
             arm64: false
+    outputs:
+      release: ${{steps.push_image.outputs.release }}
+      version: ${{steps.build_image.outputs.version }}
     steps:
       - name: Build Image
-        uses: mhl787156/starling-bake-build-action@main
+        id: build_image
+        uses: StarlingUAS/starling-bake-build-action@main
         with:
           bakefile: ./buildtools/docker-bake.hcl
           target: ${{ matrix.target }}
           tag: ${{ needs.bump_version.outputs.tag }}
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
           build_arm64: ${{ matrix.arm64 }}
+          push: false
+          load: true
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.5.0
+      - name: Run Tests
+        run: |
+          TESTS=$(find tests/ -type f -path '*${{ matrix.target }}*/*.bats' | sort)
+          if [ ! -z "$TESTS" ]; then
+            bats -F cat --jobs $(nproc) --timing $TESTS | sed -E 's|^ok|✔️ OK   |; s|^begin|➡️ Begin|; s|^suite .+/([^/]+/[^/]+.bats)$|📋 Suite \1|'
+          else
+            echo "No bats tests for ${{ matrix.target }} found in folder tests"
+          fi
+        env:
+          TEST_IMAGE_TAG: ${{ steps.build_image.outputs.version }}
+          TEST_IMAGE_PREFIX: ghcr.io/starlinguas
+      - name: Build Image (load and push)
+        uses: StarlingUAS/starling-bake-build-action@main
+        with:
+          bakefile: ./buildtools/docker-bake.hcl
+          target: ${{ matrix.target }}
+          tag: ${{ needs.bump_version.outputs.tag }}
+          registry: ghcr.io
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          prefix: starlinguas
+          build_arm64: ${{matrix.arm64}}
+          push: true
+          skip_setup: true
+
 
   release_version:
     needs: [bump_version, bake_images_stage_3]
     runs-on: ubuntu-latest
-    steps:  
+    steps:
+      - name: Install regctl
+        uses: regclient/actions/regctl-installer@main
+
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Upload images to DockerHub
+        run: |
+          for IMAGE in ${IMAGES}; do
+            regctl image copy \
+                ghcr.io/starlinguas/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }} \
+                uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.version }}
+            if [ ! -z ${{ needs.bake_images_stage_3.outputs.release }} ]; then
+              regctl image copy \
+                ghcr.io/starlinguas/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }} \
+                uobflightlabstarling/${IMAGE}:${{ needs.bake_images_stage_3.outputs.release }}
+            fi
+          done
+        env:
+          IMAGES: "rosbridge-suite starling-controller-base starling-mavros starling-vicon starling-sim-base-core mavp2p starling-sim-base-px4 starling-sim-px4-sitl starling-sim-ardupilot-gazebo starling-sim-ardupilot-copter example_controller_python starling-sim-iris starling-sim-iris-ap"
+
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         if: |
@@ -122,5 +260,3 @@ jobs:
           tag: ${{ needs.bump_version.outputs.tag }}
           name: Release ${{ needs.bump_version.outputs.tag }}
           allowUpdates: true
-
-          

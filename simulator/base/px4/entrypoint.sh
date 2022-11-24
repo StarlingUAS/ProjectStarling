@@ -34,4 +34,17 @@ fi
 export PX4_SYSID=$((PX4_INSTANCE + 1))
 echo "PX4 SYSID is set to $PX4_SYSID"
 
+# Enable simulated external vision system in SITL
+# To be used with the gazebo ros state (libgazebo_ros_state) plugin to emulate VICON
+# See: https://docs.px4.io/master/en/advanced_config/tuning_the_ecl_ekf.html#external-vision-system
+if [[ $ENABLE_EXTERNAL_VISION ]]; then
+    # Check if params have already been set
+    RCS_FILE="/src/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/rcS"
+    if ! grep -q EKF2_AID_MASK "$RCS_FILE"; then
+        echo "Enabled External Vision in SITL, set EKF2_HGT_MODE to 3 and EKF2_AID_MASK to 24 (EV_POS+EV_YAW)"
+        sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_HGT_MODE 3' "$RCS_FILE"
+        sed -i '/param set IMU_INTEG_RATE 250/a param set EKF2_AID_MASK 24' "$RCS_FILE"
+    fi
+fi
+
 /ros_entrypoint.sh "$@"

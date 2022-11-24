@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  docs-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -20,3 +20,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REQUIREMENTS: docs/requirements.txt
+          CUSTOM_DOMAIN: docs.starlinguas.dev
