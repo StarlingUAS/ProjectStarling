@@ -98,7 +98,7 @@ target "starling-mavros" {
 
 target "starling-mavros2" {
     context = "system/mavros2"
-    dockerfile = "core.Dockerfile"
+    dockerfile = "Dockerfile"
     tags = [
         "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros2:${BAKE_VERSION}",
         notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/starling-mavros2:${BAKE_RELEASENAME}": "",
