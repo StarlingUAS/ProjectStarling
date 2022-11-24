@@ -3,22 +3,22 @@ FROM ros:foxy-ros-base-focal AS builder
 WORKDIR /ros_ws
 
 # Install mavros dependencies
-COPY mavros/libmavconn/package.xml /ros_ws/src/mavros/libmavconn/package.xml
-COPY mavros/mavros/package.xml /ros_ws/src/mavros/mavros/package.xml
-COPY mavros/mavros_msgs/package.xml /ros_ws/src/mavros/mavros_msgs/package.xml
-COPY mavros/mavros_extras/package.xml /ros_ws/src/mavros/mavros_extras/package.xml
+# COPY mavros/libmavconn/package.xml /ros_ws/src/mavros/libmavconn/package.xml
+# COPY mavros/mavros/package.xml /ros_ws/src/mavros/mavros/package.xml
+# COPY mavros/mavros_msgs/package.xml /ros_ws/src/mavros/mavros_msgs/package.xml
+# COPY mavros/mavros_extras/package.xml /ros_ws/src/mavros/mavros_extras/package.xml
+
+RUN git clone --depth 1 --branch 2.3.0 https://github.com/mavlink/mavros.git /ros_ws/src/mavros
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && apt-get update \
     && rosdep install -y --from-paths src --ignore-src .
 
 # Install mavros itself
-COPY mavros /ros_ws/src/mavros
+# COPY mavros /ros_ws/src/mavros
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && colcon build
-
-RUN /ros_ws/install/mavros/lib/mavros/install_geographiclib_datasets.sh
 
 # Start the main image build
 FROM ros:foxy-ros-core-focal AS image
@@ -40,8 +40,15 @@ RUN rm install/COLCON_IGNORE \
     && SUDO_FORCE_REMOVE=yes apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Part of MAVROS setup
-COPY --from=builder /usr/share/GeographicLib /usr/share/GeographicLib
+# Part of MAVROS setup for lib geographic
+## Ensure geographiclib is properly installed with FindGeographicLib available
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libgeographic-dev \
+        geographiclib-tools \
+    && rm -rf /var/lib/apt/lists/* \
+    && /ros_ws/install/mavros/lib/mavros/install_geographiclib_datasets.sh \
+    && ln -s /usr/share/cmake/geographiclib/FindGeographicLib.cmake /usr/share/cmake-3.16/Modules/
 
 COPY ros_entrypoint.sh /ros_entrypoint.sh
 
