@@ -16,7 +16,7 @@ RUN /opt/ros/${ROS1_DISTRO}/lib/mavros/install_geographiclib_datasets.sh
 # Remove the preinstalled version
 RUN apt-get remove -y ros-foxy-ros1-bridge
 # Get the source from our branch with extra param bridge functionality (supports direction)
-RUN git clone -b feature-paramatize-qos https://github.com/mhl787156/ros1_bridge.git /bridge_ws/src/ros1_bridge
+RUN git clone -b foxy https://github.com/mhl787156/ros1_bridge.git /bridge_ws/src/ros1_bridge
 
 # Build with ROS2 mavros_msgs on path
 RUN cd /bridge_ws \
