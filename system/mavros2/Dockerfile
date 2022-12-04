@@ -16,9 +16,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ## Ensure geographiclib is properly installed with FindGeographicLib available
-RUN wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/install_geographiclib_datasets.sh \
-    && bash install_geographiclib_datasets.sh \
-    && ln -s /usr/share/cmake/geographiclib/FindGeographicLib.cmake /usr/share/cmake-3.16/Modules/
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
+    && ros2 run mavros install_geographiclib_datasets.sh
 
 COPY ros_entrypoint.sh /ros_entrypoint.sh
 
