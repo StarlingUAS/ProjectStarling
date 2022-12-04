@@ -11,6 +11,9 @@ controller-base:
 mavros:
 	$(BAKE) starling-mavros
 
+mavros2:
+	$(BAKE) starling-mavros2
+
 mavros_all_arch:
 	cd $(MAKEFILE_DIR)/.. && docker buildx bake --builder default --load -f $(BAKE_SCRIPT)
 
@@ -26,4 +29,4 @@ vicon:
 ping-monitor:
 	$(BAKE) ping-monitor
 
-.PHONY: mavros mavros_all_arch controller-base rosbridge-suite vicon mavp2p all ping-monitor
+.PHONY: mavros mavros2 mavros_all_arch controller-base rosbridge-suite vicon mavp2p all ping-monitor

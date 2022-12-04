@@ -55,12 +55,12 @@ group "system" {
 target "ping-monitor" {
     context = "system/ping_monitor"
     tags = [
-        "${BAKE_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_VERSION}",
-        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_RELEASENAME}": "",
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/ping-monitor:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/ping-monitor:${BAKE_RELEASENAME}": "",
         ]
     platforms = ["linux/amd64"]
-    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "${BAKE_CACHETO_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_CACHETO_NAME}" : "" ]
-    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}uobflightlabstarling/ping-monitor:${BAKE_CACHEFROM_NAME}" : "" ]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/ping-monitor:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/ping-monitor:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "rosbridge-suite" {
@@ -94,6 +94,18 @@ target "starling-mavros" {
     platforms = ["linux/amd64", "linux/arm64"]
     cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHETO_NAME}" : "" ]
     cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-mavros:${BAKE_CACHEFROM_NAME}" : "" ]
+}
+
+target "starling-mavros2" {
+    context = "system/mavros2"
+    dockerfile = "Dockerfile"
+    tags = [
+        "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-mavros2:${BAKE_VERSION}",
+        notequal("",BAKE_RELEASENAME) ? "${BAKE_REGISTRY}${BAKE_PREFIX}/starling-mavros2:${BAKE_RELEASENAME}": "",
+        ]
+    platforms = ["linux/amd64", "linux/arm64"]
+    cache-to = [ notequal("",BAKE_CACHETO_NAME) ? "type=registry,mode=max,ref=${BAKE_CACHETO_REGISTRY}${BAKE_PREFIX}/starling-mavros2:${BAKE_CACHETO_NAME}" : "" ]
+    cache-from = [ notequal("",BAKE_CACHEFROM_NAME) ? "${BAKE_CACHEFROM_REGISTRY}${BAKE_PREFIX}/starling-mavros2:${BAKE_CACHEFROM_NAME}" : "" ]
 }
 
 target "mavp2p" {

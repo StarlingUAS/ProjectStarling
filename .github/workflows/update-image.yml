@@ -28,19 +28,21 @@ jobs:
           DEFAULT_PRERELEASE_BUMP: none
           DRY_RUN: true # Dont push new tag here, only push on successful build
           PRERELEASE_SUFFIX: ${{ steps.extract_branch.outputs.branch }}
-      
+
   bake_images_stage_1:
     runs-on: ubuntu-latest
     needs: bump_version
     strategy:
       fail-fast: false
       matrix:
-        include: 
+        include:
           - target: rosbridge-suite
             arm64: false
           - target: starling-controller-base
             arm64: true
           - target: starling-mavros
+            arm64: true
+          - target: starling-mavros2
             arm64: true
           - target: starling-vicon
             arm64: true
@@ -98,7 +100,7 @@ jobs:
     needs: [bump_version, bake_images_stage_1]
     strategy:
       matrix:
-        include: 
+        include:
           - target: starling-sim-base-px4
             arm64: false
           - target: starling-sim-px4-sitl
@@ -155,7 +157,7 @@ jobs:
           push: true
           skip_setup: true
 
-    
+
   bake_images_stage_3:
     runs-on: ubuntu-latest
     needs: [bump_version, bake_images_stage_2]
@@ -258,5 +260,3 @@ jobs:
           tag: ${{ needs.bump_version.outputs.tag }}
           name: Release ${{ needs.bump_version.outputs.tag }}
           allowUpdates: true
-
-          
