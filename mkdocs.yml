@@ -57,6 +57,7 @@ nav:
   - "Image Documentation":
     - "starling-ui": "docker-images/ui.md"
     - "starling-mavros": "docker-images/mavros.md"
+    - "starling-mavros2": "docker-images/mavros2.md"
     - "starling-controller-base": "docker-images/controller-base.md"
     - "starling-sim-base-core": "docker-images/sim-base-core.md"
     - "starling-sim-base-px4": "docker-images/sim-base-px4.md"
