@@ -2,8 +2,8 @@ FROM ubuntu:focal
 
 ARG TARGETARCH
 
-ARG MAVP2P_REPO=https://github.com/aler9/mavp2p
-ARG MAVP2P_RELEASE=v0.6.5
+ARG MAVP2P_REPO=https://github.com/bluenviron/mavp2p
+ARG MAVP2P_RELEASE=v0.7.0
 
 ADD ${MAVP2P_REPO}/releases/download/${MAVP2P_RELEASE}/mavp2p_${MAVP2P_RELEASE}_linux_${TARGETARCH}.tar.gz /usr/src/
 
